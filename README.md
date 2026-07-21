@@ -79,4 +79,4 @@ for f in sorted(os.listdir('terminal-training-set')):
 See [LICENSE](LICENSE) for full terms.
 
 For fine-tuning licenses, custom dataset development, or collaboration inquiries,
-see [CONTACT.md](CONTACT.md) or email **zaidkhanalamgir01@gmail.com**.
+see [CONTACT.md](CONTACT.md) or email **zkalamgir@proton.me**.

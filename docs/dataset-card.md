@@ -39,4 +39,4 @@ Curated dataset of 987 real-world Linux System Administration / DevOps scenarios
 
 ## Contact
 
-Mohammad Zaid — zaidkhanalamgir01@gmail.com
+Mohammad Zaid — zkalamgir@proton.me

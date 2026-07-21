@@ -19,7 +19,7 @@ and related infrastructure topics. Each entry includes structured reasoning
 ### Contact
 
 **Mohammad Zaid**  
-📧 zaidkhanalamgir01@gmail.com  
+📧 zkalamgir@proton.me
 🐙 GitHub: [@cl-andro](https://github.com/cl-andro)
 
 ### Licensing
