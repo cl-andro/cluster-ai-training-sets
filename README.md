@@ -1,55 +1,119 @@
-# Cluster AI Training Sets
+# Terminal AI Training Sets
 
-**Proprietary curated datasets for fine-tuning LLMs on Linux System Administration, DevOps, and Database Management.**
+**Curated datasets for fine-tuning LLMs on Linux System Administration, DevOps, and Database Management.**
 
 ---
 
 ## Overview
 
-This repository contains 987 high-quality training entries across 10 categories of real-world system administration scenarios. Each entry consists of:
+This repository contains two datasets:
 
-- **`instruction`** — A realistic, detailed problem statement or task request
-- **`output`** — A structured response with:
-  - `<think>` reasoning block (chain-of-thought analysis)
-  - ````bash` executable code block (production-grade bash for Debian 12 / Ubuntu)
+### 1. `terminal-training-set/` (with thinking reasoning)
+
+**1000** high-quality training entries across 10 categories of real-world system administration scenarios. Each entry includes `<think>` reasoning blocks for chain-of-thought training.
+
+| Category | Entries |
+|----------|---------|
+| System diagnostics & OOM | 100 |
+| systemd service management | 100 |
+| Nginx proxy & SSL | 100 |
+| Git hooks & secrets | 100 |
+| Docker & Compose | 100 |
+| Log cleanup & rotation | 100 |
+| Network & firewall | 100 |
+| Language environments | 100 |
+| Users, perms & storage | 100 |
+| Database maintenance | 100 |
+
+### 2. `terminal-training-set-nonthinking/` (direct command pairs)
+
+**5000** instruction-output command pairs across 20 categories, designed for training models that output direct Bash commands without reasoning blocks. Each entry is `{"instruction": "...", "output": "..."}` — no conversational filler.
+
+| # | Category | Files | Entries |
+|---|----------|-------|---------|
+| 01 | File & directory management | 10 | ~250 |
+| 02 | Git operations | 10 | ~250 |
+| 03 | Package management | 10 | ~250 |
+| 04 | Process & service control | 10 | ~250 |
+| 05 | System diagnostics & usage | 10 | ~250 |
+| 06 | Networking & downloading | 10 | ~250 |
+| 07 | Text & file processing | 10 | ~250 |
+| 08 | Archiving & compression | 10 | ~250 |
+| 09 | Virtual envs & runtimes | 10 | ~250 |
+| 10 | Docker & containers | 10 | ~250 |
+| 11 | Kubernetes (K8s) | 10 | ~250 |
+| 12 | Databases | 10 | ~250 |
+| 13 | Security & permissions | 10 | ~250 |
+| 14 | Monitoring & alerting | 10 | ~250 |
+| 15 | Cloud CLI tools | 10 | ~250 |
+| 16 | Shell scripting & automation | 10 | ~250 |
+| 17 | System configuration | 10 | ~250 |
+| 18 | Performance tuning | 10 | ~250 |
+| 19 | Web servers & proxies | 10 | ~250 |
+| 20 | SSH & remote access | 10 | ~250 |
 
 ### Dataset Structure
 
 ```
-terminal-training-set/
-├── batch1_system_diagnostics_oom.json          # 100 entries — OOM diagnostics, memory tuning
-├── batch2_systemd_services.json                # 100 entries — systemd unit management
-├── batch3_nginx_proxy.json                     # 100 entries — nginx reverse proxy, SSL, caching
-├── batch4_git_security_hooks.json              # 100 entries — git hooks, secret scanning
-├── batch5_docker.json                          # 100 entries — Dockerfiles, Compose, registries
-├── batch6_log_cleanup.json                     # 100 entries — logrotate, journald, audit
-├── batch7_network_ports_firewall.json          # 100 entries — nftables, iptables, port scanning
-├── batch8_language_environments.json           #  87 entries — Python, Node.js, Go, Rust setup
-├── batch9_user_permissions_storage.json        # 100 entries — ACLs, quotas, LUKS, sudoers
-└── batch10_database_maintenance_backups.json   # 100 entries — PostgreSQL, MySQL, MongoDB, backup
+terminal-training-set/           (10 files: batch1–batch10, 1000 entries)
+terminal-training-set-nothinking/ (200 files: 20 categories × 10 batches, 5000 entries)
+  ├── 01-file-directory-management.json .. batch-10.json
+  ├── 02-git-operations.json          .. batch-10.json
+  ├── 03-package-management.json      .. batch-10.json
+  ├── 04-process-service-control.json .. batch-10.json
+  ├── 05-system-diagnostics-usage.json .. batch-10.json
+  ├── 06-networking-downloading.json  .. batch-10.json
+  ├── 07-text-file-processing.json    .. batch-10.json
+  ├── 08-archiving-compression.json   .. batch-10.json
+  ├── 09-virtual-envs-runtimes.json   .. batch-10.json
+  ├── 10-docker-container.json        .. batch-10.json
+  ├── 11-kubernetes-k8s.json          .. batch-10.json
+  ├── 12-databases.json               .. batch-10.json
+  ├── 13-security-permissions.json    .. batch-10.json
+  ├── 14-monitoring-alerting.json     .. batch-10.json
+  ├── 15-cloud-cli-tools.json         .. batch-10.json
+  ├── 16-shell-scripting-automation.json .. batch-10.json
+  ├── 17-system-configuration.json    .. batch-10.json
+  ├── 18-performance-tuning.json      .. batch-10.json
+  ├── 19-web-servers-proxies.json     .. batch-10.json
+  └── 20-ssh-remote-access.json       .. batch-10.json
 ```
 
 ### Dataset Statistics
 
+#### with-thinking (`terminal-training-set/`)
+
 | Metric | Value |
 |--------|-------|
-| Total entries | 987 |
+| Total entries | 1000 |
 | Total size | ~2.6 MB (JSON) |
 | Files | 10 |
 | Topics | System diagnostics, services, proxies, git, Docker, logs, networking, languages, permissions, databases |
-| Target OS | Debian 12 / Ubuntu 22.04+ |
+| Target OS | Linux - Debian 12/13 / Ubuntu 22.04+ |
 | Format | JSON with `instruction` + `output` fields |
 | Reasoning | Every entry includes `<think>` tags for chain-of-thought |
+
+#### no-thinking (`terminal-training-set-nothinking/`)
+
+| Metric | Value |
+|--------|-------|
+| Total entries | 5000 |
+| Total size | ~948 KB (JSON) |
+| Files | 200 |
+| Topics | File mgmt, Git, packages, processes, diagnostics, networking, text processing, archiving, virtual envs, Docker, Kubernetes, databases, security, monitoring, cloud CLI, scripting, system config, performance tuning, web servers, SSH |
+| Target OS | Linux - Debian 12/13/ Ubuntu 22.04+ |
+| Format | JSON with `instruction` + `output` fields |
 
 ## Use Cases
 
 - **Fine-tuning language models** for Linux/DevOps assistant capabilities
 - **Training thinking models** that reason before acting (chain-of-thought)
-- **Training non-thinking models** by stripping `<think>` tags for direct response
+- **Training non-thinking models** for direct command output
 - **Benchmarking** model performance on structured infrastructure tasks
 
-## Format Example
+## Format Examples
 
+### with-thinking format
 ```json
 {
   "instruction": "MySQL keeps crashing on a 64GB RAM server after about 4 hours...",
@@ -57,19 +121,21 @@ terminal-training-set/
 }
 ```
 
+### no-thinking format
+```json
+{"instruction": "List all running services", "output": "systemctl list-units --type=service --state=running"}
+```
+
 ## Getting Started
 
 ```bash
-# Clone
-git clone git@github-third:cl-andro/cluster-ai-training-sets.git
-cd cluster-ai-training-sets
-
-# Quick stats
+# Quick stats for no-thinking set
 python3 -c "
 import json, os
-for f in sorted(os.listdir('terminal-training-set')):
-    with open(f'terminal-training-set/{f}') as fp:
-        print(f'{f}: {len(json.load(fp))} entries')
+for f in sorted(os.listdir('terminal-training-set-nothinking')):
+    if f.endswith('.json'):
+        with open(f'terminal-training-set-nothinking/{f}') as fp:
+            print(f'{f}: {len(json.load(fp))} entries')
 "
 ```
 
