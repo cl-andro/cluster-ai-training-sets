@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Build a Debian package with sbuild",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sbuild` with the correct flags and arguments\n   2. Key flags: --dist, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sbuild` — sbuild command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsbuild --dist=bookworm myapp_1.0-1.dsc"
+  },
+  {
+    "instruction": "Update a cowbuilder chroot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cowbuilder` with the correct flags and arguments\n   2. Key flags: --update\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cowbuilder` — cowbuilder command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncowbuilder --update"
+  },
+  {
+    "instruction": "Build a package inside a cowbuilder chroot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cowbuilder` with the correct flags and arguments\n   2. Key flags: --build, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cowbuilder` — cowbuilder command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncowbuilder --build myapp_1.0-1.dsc"
+  },
+  {
+    "instruction": "Create a cowbuilder chroot for Debian bookworm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cowbuilder` with the correct flags and arguments\n   2. Key flags: --create, --distribution, --basepath, -bookworm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cowbuilder` — cowbuilder command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncowbuilder --create --distribution bookworm --basepath /var/cache/pbuilder/base-bookworm.cow"
+  },
+  {
+    "instruction": "Build a package using pbuilder with a specific distribution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pbuildercowbuilder` with the correct flags and arguments\n   2. Key flags: --distribution, --build, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pbuildercowbuilder` — pbuildercowbuilder command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npbuildercowbuilder --distribution bookworm --build myapp_1.0-1.dsc"
+  },
+  {
+    "instruction": "Create a Debian chroot with debootstrap",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo debootstrap bookworm /chroot/bookworm http://deb.debian.org/debian"
+  },
+  {
+    "instruction": "Enter a schroot session",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `schroot` with the correct flags and arguments\n   2. Key flags: -c, -amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `schroot` — schroot command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nschroot -c bookworm-amd64"
+  },
+  {
+    "instruction": "List available schroot sessions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `schroot` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `schroot` — schroot command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nschroot -l"
+  },
+  {
+    "instruction": "Install apt-cacher-ng for caching packages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo apt-get install apt-cacher-ng -y\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo apt-get install apt-cacher-ng -y"
+  },
+  {
+    "instruction": "Use ccache to speed up rebuilds",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: -buildpackage, -us, -uc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport CCACHE_DIR=/ccache && dpkg-buildpackage -us -uc"
+  },
+  {
+    "instruction": "Build a package using fakeroot to simulate root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fakeroot` with the correct flags and arguments\n   2. Key flags: -buildpackage, -us, -uc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fakeroot` — fakeroot command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfakeroot dpkg-buildpackage -us -uc"
+  },
+  {
+    "instruction": "Extract the control file from a .deb",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-deb` with the correct flags and arguments\n   2. Key flags: -deb, --control, -1_amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-deb` — dpkg-deb command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-deb --control myapp_1.0-1_amd64.deb"
+  },
+  {
+    "instruction": "List installed Debian packages matching a pattern",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: dpkg-query -l 'myapp*'\n   2. Apply the configuration and verify with `dpkg-query status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-query` — dpkg-query command execution and management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-query -l 'myapp*'"
+  },
+  {
+    "instruction": "Install a .deb package manually",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the dpkg configuration with the required parameters\n   2. Apply the configuration and verify with `dpkg status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg` — dpkg command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ndpkg -i myapp_1.0-1_amd64.deb"
+  },
+  {
+    "instruction": "Remove an installed Debian package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the dpkg configuration with the required parameters\n   2. Apply the configuration and verify with `dpkg status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg` — dpkg command execution and management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ndpkg -r myapp"
+  },
+  {
+    "instruction": "Show status of a specific Debian package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-query` with the correct flags and arguments\n   2. Key flags: -query, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-query` — dpkg-query command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-query -s myapp"
+  },
+  {
+    "instruction": "List files owned by a Debian package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-query` with the correct flags and arguments\n   2. Key flags: -query, -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-query` — dpkg-query command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-query -L myapp"
+  },
+  {
+    "instruction": "Verify installed package integrity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the dpkg configuration with the required parameters\n   2. Apply the configuration and verify with `dpkg status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg` — dpkg command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ndpkg --verify myapp"
+  },
+  {
+    "instruction": "Reconfigure an already installed package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: dpkg-reconfigure myapp\n   2. Apply the configuration and verify with `dpkg-reconfigure status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-reconfigure` — dpkg-reconfigure command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-reconfigure myapp"
+  },
+  {
+    "instruction": "Install sbuild on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo apt-get install sbuild -y\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo apt-get install sbuild -y"
+  },
+  {
+    "instruction": "Install cowbuilder on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo apt-get install cowbuilder -y\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo apt-get install cowbuilder -y"
+  },
+  {
+    "instruction": "Install pbuilder on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo apt-get install pbuilder -y\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo apt-get install pbuilder -y"
+  },
+  {
+    "instruction": "Install ccache on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo apt-get install ccache -y\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo apt-get install ccache -y"
+  },
+  {
+    "instruction": "Create a pbuilder base chroot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo pbuildercowbuilder create"
+  },
+  {
+    "instruction": "Execute a custom command in a pbuilder chroot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pbuildercowbuilder` with the correct flags and arguments\n   2. Key flags: --login, --save-after-login\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pbuildercowbuilder` — pbuildercowbuilder command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npbuildercowbuilder --login --save-after-login"
+  }
+]

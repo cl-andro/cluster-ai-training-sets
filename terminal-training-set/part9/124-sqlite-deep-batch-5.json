@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Create a table with auto-increment primary key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);\""
+  },
+  {
+    "instruction": "Use window functions for running totals",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT id, name, amount, SUM(amount) OVER (PARTITION BY user_id ORDER BY created_at) AS running_total FROM orders;\""
+  },
+  {
+    "instruction": "Use GROUP_CONCAT for aggregation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT group_concat(DISTINCT name) FROM users;\""
+  },
+  {
+    "instruction": "Use upsert with ON CONFLICT DO UPDATE",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"INSERT INTO users(id, name, email) VALUES(1, 'John', 'john@example.com') ON CONFLICT(id) DO UPDATE SET name=excluded.name, email=excluded.email;\""
+  },
+  {
+    "instruction": "Use RETURNING clause to get inserted row",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"INSERT INTO users(name, email) VALUES('Jane', 'jane@example.com') RETURNING *;\""
+  },
+  {
+    "instruction": "Show SQL definitions of all user objects",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT sql FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';\""
+  },
+  {
+    "instruction": "Execute SQL from a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db < /path/to/commands.sql"
+  },
+  {
+    "instruction": "Enable foreign keys and check integrity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the sqlite3 configuration with the required parameters\n   2. Apply the configuration and verify with `sqlite3 status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"PRAGMA foreign_keys=ON;\" \"PRAGMA foreign_key_check;\""
+  },
+  {
+    "instruction": "Get database size from shell",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -lh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Supporting tool: `sqlite3` — SQLite database interaction\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -lh mydb.db && sqlite3 mydb.db \"PRAGMA page_count * PRAGMA page_size / 1024 || ' KB';\""
+  },
+  {
+    "instruction": "Use IN operator with a subquery",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsqlite3 mydb.db \"SELECT * FROM users WHERE id IN (SELECT user_id FROM orders WHERE amount > 100);\""
+  },
+  {
+    "instruction": "Use LIKE with ESCAPE clause",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT * FROM users WHERE name LIKE '%100%%' ESCAPE '%';\""
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 100",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -100\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-100'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 101",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -101\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-101'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 102",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -102\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-102'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 103",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -103\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-103'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 104",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -104\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-104'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 105",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -105\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-105'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 106",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -106\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-106'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 107",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -107\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-107'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 108",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -108\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-108'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 109",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -109\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-109'"
+  },
+  {
+    "instruction": "Additional 124-sqlite-deep command 110",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sqlite, -deep, -110\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '124-sqlite-deep-110'"
+  }
+]

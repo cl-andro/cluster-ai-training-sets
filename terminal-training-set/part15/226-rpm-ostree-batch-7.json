@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "How to see the rpm-ostree deployment serial number",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the rpm-ostree configuration with the required parameters\n   2. Apply the configuration and verify with `rpm-ostree status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree status --json | python3 -c 'import sys,json;d=json.load(sys.stdin);print(d[\"deployments\"][0][\"serial\"])'"
+  },
+  {
+    "instruction": "How to override a package from an rpm-ostree compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpm-ostree` with the correct flags and arguments\n   2. Key flags: -ostree, -ostree\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree override remove package && rpm-ostree install package"
+  },
+  {
+    "instruction": "How to check if rpm-ostree supports live updates",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpm-ostree` with the correct flags and arguments\n   2. Key flags: -ostree, --dry-run\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Flag `--dry-run`: simulate without making changes\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree livefs --dry-run"
+  },
+  {
+    "instruction": "How to use rpm-ostree to install packages from a specific repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the rpm-ostree configuration with the required parameters\n   2. Apply the configuration and verify with `rpm-ostree status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree install --repo /etc/yum.repos.d/custom.repo package"
+  },
+  {
+    "instruction": "How to see the rpm-ostree total system update size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpm-ostree` with the correct flags and arguments\n   2. Key flags: -ostree, --download-only, --dry-run\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Flag `--dry-run`: simulate without making changes\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nrpm-ostree upgrade --download-only --dry-run 2>&1 | grep 'Total'"
+  },
+  {
+    "instruction": "How to set rpm-ostree to keep last N deployments",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the rpm-ostree configuration with the required parameters\n   2. Apply the configuration and verify with `rpm-ostree status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree cleanup --base --count=3"
+  },
+  {
+    "instruction": "How to check for rpm-ostree available disk space",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `df` with the correct flags and arguments\n   2. Key flags: -h\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `df` — df command execution and management\n   Flag `-h`: human-readable format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndf -h /sysroot"
+  },
+  {
+    "instruction": "How to reset all overlays in rpm-ostree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpm-ostree` with the correct flags and arguments\n   2. Key flags: -ostree, -rf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree usroverlay && rm -rf /usr/local/*"
+  },
+  {
+    "instruction": "How to view the rpm-ostree deployment os-release",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cat /usr/lib/os-release\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /usr/lib/os-release"
+  },
+  {
+    "instruction": "How to see the rpm-ostree remote metadata",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ostree` with the correct flags and arguments\n   2. Key flags: --repo\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ostree` — ostree command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nostree remote summary --repo=/sysroot/ostree/repo fedora"
+  },
+  {
+    "instruction": "How to disable automatic updates in rpm-ostree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sed` with the correct flags and arguments\n   2. Key flags: -i, -ostreed, -ostreed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsed -i 's/AutomaticUpdatePolicy=.*/AutomaticUpdatePolicy=none/' /etc/rpm-ostreed.conf && systemctl restart rpm-ostreed"
+  },
+  {
+    "instruction": "How to inspect the rpm-ostree deployment history",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the rpm-ostree configuration with the required parameters\n   2. Apply the configuration and verify with `rpm-ostree status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree status --json | python3 -c 'import sys,json;d=json.load(sys.stdin);[print(x[\"timestamp\"],x[\"booted\"]) for x in d[\"deployments\"]]'"
+  },
+  {
+    "instruction": "How to rebuild the rpm-ostree initramfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpm-ostree` with the correct flags and arguments\n   2. Key flags: -ostree, --enable\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree initramfs --enable"
+  },
+  {
+    "instruction": "How to check the rpm-ostree deployment's base package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the rpm-ostree configuration with the required parameters\n   2. Apply the configuration and verify with `rpm-ostree status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree status | grep 'BaseCommit'"
+  },
+  {
+    "instruction": "How to install a local RPM in rpm-ostree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the rpm-ostree configuration with the required parameters\n   2. Apply the configuration and verify with `rpm-ostree status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree install /path/to/package.rpm"
+  },
+  {
+    "instruction": "How to see the size of the rpm-ostree deployment directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: du -sh /sysroot/ostree/deploy/*/\n   2. Apply the configuration and verify with `du status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `du` — du command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndu -sh /sysroot/ostree/deploy/*/"
+  },
+  {
+    "instruction": "How to change rpm-ostree to use a different backend",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpm-ostree` with the correct flags and arguments\n   2. Key flags: -ostree, -image, -signed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Supporting tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nrpm-ostree rebase ostree-image-signed:docker://registry.example.com/image"
+  },
+  {
+    "instruction": "How to check if rpm-ostree is currently downloading an update",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpm-ostree` with the correct flags and arguments\n   2. Key flags: -ostree\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree status | grep 'Downloading'"
+  },
+  {
+    "instruction": "How to see the rpm-ostree remote url",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ostree` with the correct flags and arguments\n   2. Key flags: -url, --repo\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ostree` — ostree command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nostree remote show-url --repo=/sysroot/ostree/repo fedora"
+  },
+  {
+    "instruction": "How to restore a deployment's default packages in rpm-ostree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the rpm-ostree configuration with the required parameters\n   2. Apply the configuration and verify with `rpm-ostree status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `rpm-ostree` — hybrid image/package system\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpm-ostree reset --all"
+  }
+]

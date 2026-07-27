@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Clone a DRBD resource in Pacemaker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -drbd\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource clone DRBD ms-drbd"
+  },
+  {
+    "instruction": "Promote DRBD clone to master role",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -drbd\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource master ms-drbd"
+  },
+  {
+    "instruction": "Create a Pacemaker resource for DLM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource create dlm ocf:pacemaker:controld op monitor interval=30s"
+  },
+  {
+    "instruction": "Create a Pacemaker resource for clvmd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource create clvmd ocf:heartbeat:clvm op monitor interval=30s"
+  },
+  {
+    "instruction": "Build a complete GFS2 cluster stack in Pacemaker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource create dlm ocf:pacemaker:controld clone && pcs resource create clvmd ocf:heartbeat:clvm clone && pcs resource create gfs2-1 ocf:heartbeat:Filesystem device=/dev/drbd0 directory=/mnt/gfs2 fstype=gfs2"
+  },
+  {
+    "instruction": "Check DLM lockspace status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dlm_tool` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dlm_tool` — dlm_tool command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndlm_tool status"
+  },
+  {
+    "instruction": "Check DLM lockspace log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dlm_tool` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dlm_tool` — dlm_tool command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndlm_tool log_plock"
+  },
+  {
+    "instruction": "Check DLM lockspace with lsof",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dlm_tool` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dlm_tool` — dlm_tool command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndlm_tool dump"
+  },
+  {
+    "instruction": "Check O2CB (Oracle Cluster) status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `o2cb` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `o2cb` — o2cb command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\no2cb status"
+  },
+  {
+    "instruction": "Configure O2CB heartbeat for OCFS2",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: o2cb configure-cluster --heartbeat local\n   2. Apply the configuration and verify with `o2cb status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `o2cb` — o2cb command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\no2cb configure-cluster --heartbeat local"
+  },
+  {
+    "instruction": "Mount a GFS2 filesystem from a cluster",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -t gfs2 /dev/drbd0 /mnt/gfs2"
+  },
+  {
+    "instruction": "Create a GFS2 filesystem on DRBD",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkfs.gfs2` with the correct flags and arguments\n   2. Key flags: -p, -j, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkfs.gfs2` — mkfs.gfs2 command execution and management\n   Flag `-p`: create parent directories\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkfs.gfs2 -p lock_dlm -j 3 -t cluster1:gfs2 /dev/drbd0"
+  },
+  {
+    "instruction": "Add a journal to an existing GFS2 filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gfs2_jadd` with the correct flags and arguments\n   2. Key flags: -j\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gfs2_jadd` — gfs2_jadd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngfs2_jadd -j 1 /dev/drbd0"
+  },
+  {
+    "instruction": "Grow a GFS2 filesystem to fill the device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gfs2_grow` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gfs2_grow` — gfs2_grow command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngfs2_grow /dev/drbd0"
+  },
+  {
+    "instruction": "Check the GFS2 filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fsck.gfs2` with the correct flags and arguments\n   2. Key flags: -y\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fsck.gfs2` — fsck.gfs2 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfsck.gfs2 -y /dev/drbd0"
+  },
+  {
+    "instruction": "Edit the Keepalived config for two VRRP instances",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vrrp_instance` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vrrp_instance` — vrrp_instance command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvrrp_instance VI_1 {\n  interface eth0\n  virtual_router_id 51\n  priority 100\n}\nvrrp_instance VI_2 {\n  interface eth1\n  virtual_router_id 52\n  priority 50\n}"
+  },
+  {
+    "instruction": "Configure a VRRP sync group in Keepalived",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: vrrp_sync_group VG1 {\n   2. Apply the configuration and verify with `vrrp_sync_group status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `vrrp_sync_group` — vrrp_sync_group command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvrrp_sync_group VG1 {\n  group {\n    VI_1\n    VI_2\n  }\n}"
+  },
+  {
+    "instruction": "Set Keepalived to use strong hash on the VRRP advertisement",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `use_vmac` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `use_vmac` — use_vmac command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuse_vmac 0"
+  },
+  {
+    "instruction": "Run Keepalived in foreground for debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using keepalived\n   2. Apply corrective actions: keepalived --dont-fork -f /etc/keepalived/keepalived.conf\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `keepalived` — keepalived command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nkeepalived --dont-fork -f /etc/keepalived/keepalived.conf"
+  },
+  {
+    "instruction": "Reload Keepalived configuration after changes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl reload keepalived"
+  },
+  {
+    "instruction": "Show Keepalived logs in real time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -u, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -u keepalived -f"
+  },
+  {
+    "instruction": "Corosync log file location",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tail` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntail -f /var/log/corosync/corosync.log"
+  },
+  {
+    "instruction": "Run Corosync in no-daemon mode for debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using corosync\n   2. Apply corrective actions: corosync -d\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `corosync` — corosync command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncorosync -d"
+  },
+  {
+    "instruction": "Check Corosync configuration syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `corosync-cfgtool` with the correct flags and arguments\n   2. Key flags: -cfgtool, -s, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `corosync-cfgtool` — corosync-cfgtool command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncorosync-cfgtool -s 2>&1 | grep -i error"
+  },
+  {
+    "instruction": "Check if Corosync is running with all expected nodes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `corosync-quorumtool` with the correct flags and arguments\n   2. Key flags: -quorumtool, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `corosync-quorumtool` — corosync-quorumtool command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncorosync-quorumtool -s | grep 'Membership'"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Convert filename encoding",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `convmv` with the correct flags and arguments\n   2. Key flags: -f, -t, --notest\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `convmv` — convmv command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconvmv -f cp1251 -t utf8 --notest file.txt"
+  },
+  {
+    "instruction": "Subset a font with pyftsubset",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pyftsubset` with the correct flags and arguments\n   2. Key flags: --text, --output-file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pyftsubset` — pyftsubset command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npyftsubset DejaVuSans.ttf --text='Hello World' --output-file=subset.ttf"
+  },
+  {
+    "instruction": "Compress woff2 font",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `woff2_compress` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `woff2_compress` — woff2_compress command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwoff2_compress DejaVuSans.ttf"
+  },
+  {
+    "instruction": "Check language pack availability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `check-language-support` with the correct flags and arguments\n   2. Key flags: -language, -support, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `check-language-support` — check-language-support command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncheck-language-support -l de"
+  },
+  {
+    "instruction": "Install German language pack",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y $(check-language-support -l de)"
+  },
+  {
+    "instruction": "Show font catalog",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fc-cat` with the correct flags and arguments\n   2. Key flags: -cat\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fc-cat` — fc-cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfc-cat /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+  },
+  {
+    "instruction": "Show fontconfig configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fc-conflist` with the correct flags and arguments\n   2. Key flags: -conflist\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fc-conflist` — fc-conflist command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfc-conflist"
+  },
+  {
+    "instruction": "Set font anti-aliasing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '<?xml version=\"1.0\"?><!DOCTYPE fontconfig SYSTEM \"fonts.dtd\"><fontconfig><match target=\"font\"><edit name=\"antialias\" mode=\"assign\"><bool>true</bool></edit></match></fontconfig>' > ~/.config/fontconfig/conf.d/10-antialias.conf"
+  },
+  {
+    "instruction": "Set font hinting style",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '<?xml version=\"1.0\"?><!DOCTYPE fontconfig SYSTEM \"fonts.dtd\"><fontconfig><match target=\"font\"><edit name=\"hinting\" mode=\"assign\"><bool>true</bool></edit></match></fontconfig>' > ~/.config/fontconfig/conf.d/10-hinting.conf"
+  },
+  {
+    "instruction": "Clear fontconfig cache and rebuild",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: -rf, -cache, -fv\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nrm -rf ~/.cache/fontconfig && fc-cache -fv"
+  },
+  {
+    "instruction": "Show font format info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fc-scan` with the correct flags and arguments\n   2. Key flags: -scan, -E, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fc-scan` — fc-scan command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfc-scan /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf | grep -E 'format|style' | head -10"
+  },
+  {
+    "instruction": "Find all bold fonts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fc-list` with the correct flags and arguments\n   2. Key flags: -list, -i, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fc-list` — fc-list command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfc-list | grep -i bold | head -20"
+  },
+  {
+    "instruction": "Find monospace fonts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fc-list` with the correct flags and arguments\n   2. Key flags: -list, -i, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fc-list` — fc-list command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfc-list | grep -i mono | head -20"
+  },
+  {
+    "instruction": "List font dirs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fc-list` with the correct flags and arguments\n   2. Key flags: -list, --format, -u, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fc-list` — fc-list command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfc-list --format='%{file}\\n' | sort -u | head -20"
+  },
+  {
+    "instruction": "Create a font directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p, -cache, -fv\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir -p ~/.local/share/fonts && fc-cache -fv"
+  },
+  {
+    "instruction": "Install a font file system-wide",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cp MyFont.ttf /usr/local/share/fonts/ && fc-cache -fv\n   2. Apply the configuration and verify with `cp status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cp` — cp command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncp MyFont.ttf /usr/local/share/fonts/ && fc-cache -fv"
+  },
+  {
+    "instruction": "Install all German locales",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: locale-gen de_DE de_DE.UTF-8 && dpkg-reconfigure locales\n   2. Apply the configuration and verify with `locale-gen status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `locale-gen` — locale-gen command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlocale-gen de_DE de_DE.UTF-8 && dpkg-reconfigure locales"
+  },
+  {
+    "instruction": "Show locale environment vars",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `locale` with the correct flags and arguments\n   2. Key flags: -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `locale` — locale command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlocale -k LC_TIME"
+  },
+  {
+    "instruction": "Install French language support",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y language-pack-fr"
+  },
+  {
+    "instruction": "Convert entire directory encoding",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `convmv` with the correct flags and arguments\n   2. Key flags: -f, -t, --notest\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `convmv` — convmv command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconvmv -f utf8 -t latin1 --notest *.txt"
+  },
+  {
+    "instruction": "Decompress woff2 font",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `woff2_decompress` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `woff2_decompress` — woff2_decompress command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwoff2_decompress font.woff2"
+  },
+  {
+    "instruction": "Show X font server fonts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `xlsfonts` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `xlsfonts` — xlsfonts command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nxlsfonts | grep -i courier"
+  },
+  {
+    "instruction": "Convert BDF to PCF font",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bdftopcf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bdftopcf` — bdftopcf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbdftopcf font.bdf > font.pcf"
+  },
+  {
+    "instruction": "Truncate a BDF font",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bdftruncate` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bdftruncate` — bdftruncate command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbdftruncate 32 127 font.bdf > reduced.bdf"
+  },
+  {
+    "instruction": "Show fontforge version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fontforge` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fontforge` — fontforge command execution and management\n   Flag `--version`: show tool version\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfontforge --version"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Start compose with multiple files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -f, -compose, -f, -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-f`: force execution, suppress errors\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose -f docker-compose.yml -f docker-compose.prod.yml up -d"
+  },
+  {
+    "instruction": "Override a service with a second compose file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'services: web: environment: - NODE_ENV=production' > docker-compose.override.yml"
+  },
+  {
+    "instruction": "Use multiple compose files with merge",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -f, -f, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-f`: force execution, suppress errors\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose -f base.yml -f override.yml up -d"
+  },
+  {
+    "instruction": "Set project name explicitly",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -p, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose -p myproject up -d"
+  },
+  {
+    "instruction": "Use environment variable for project name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `COMPOSE_PROJECT_NAME` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `COMPOSE_PROJECT_NAME` — COMPOSE_PROJECT_NAME command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nCOMPOSE_PROJECT_NAME=myapp docker compose up -d"
+  },
+  {
+    "instruction": "Specify an alternative compose file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -f, -compose, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose -f docker-compose.dev.yml up -d"
+  },
+  {
+    "instruction": "Use .env file with compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\necho 'TAG=latest' > .env && docker compose up -d"
+  },
+  {
+    "instruction": "Use environment interpolation in compose file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'services: web: image: nginx:${TAG}' >> docker-compose.yml"
+  },
+  {
+    "instruction": "Disable environment interpolation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --no-ansi, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose --no-ansi up -d"
+  },
+  {
+    "instruction": "Set ANSI output off in compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --ansi, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose --ansi never up -d"
+  },
+  {
+    "instruction": "Run compose with progress plain output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --progress, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose up --progress plain -d"
+  },
+  {
+    "instruction": "Use compose with parallel limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --parallel, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose up --parallel 2 -d"
+  },
+  {
+    "instruction": "Dry-run compose commands",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --dry-run\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `--dry-run`: simulate without making changes\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose up --dry-run"
+  },
+  {
+    "instruction": "Remove service containers without project",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -s, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-v`: verbose output for debugging\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose rm -s -v web"
+  },
+  {
+    "instruction": "Force recreate containers in compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -d, --force-recreate\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose up -d --force-recreate"
+  },
+  {
+    "instruction": "Compose: do not start linked services",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --no-deps, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose up --no-deps -d web"
+  },
+  {
+    "instruction": "Abort on container exit in compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --abort-on-container-exit\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose up --abort-on-container-exit"
+  },
+  {
+    "instruction": "Exit on failure with timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --abort-on-container-exit, --exit-code-from\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose up --abort-on-container-exit --exit-code-from web"
+  },
+  {
+    "instruction": "Run compose with timeout for stop",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --timeout\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `--timeout`: set maximum execution time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose down --timeout 30"
+  },
+  {
+    "instruction": "Compose with short timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker compose stop -t 10"
+  },
+  {
+    "instruction": "Build with SSH forwarding in compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'services: app: build: ssh: - default' >> docker-compose.yml"
+  },
+  {
+    "instruction": "Build with secrets in compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'services: app: build: secrets: - npm_token secrets: npm_token: file: ./token.txt' >> docker-compose.yml"
+  },
+  {
+    "instruction": "Use include directive in compose (v2.24+)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'include: - path: ./common.yml' > docker-compose.yml"
+  },
+  {
+    "instruction": "Use x-common extensions in compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -logging, -logging, -file, -size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'x-logging: &default-logging driver: json-file options: max-size: 10m services: web: logging: *default-logging' >> docker-compose.yml"
+  },
+  {
+    "instruction": "Use YAML anchors to share config across services",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -env, -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'x-env: &env NODE_ENV: production services: web: environment: *env' >> docker-compose.yml"
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Add a service to OpenRC non-default runlevel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rc-update` with the correct flags and arguments\n   2. Key flags: -update\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rc-update` — rc-update command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrc-update add apache2 sysinit"
+  },
+  {
+    "instruction": "Start OpenRC service with specific config file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rc-service` with the correct flags and arguments\n   2. Key flags: -service, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rc-service` — rc-service command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrc-service -f /etc/conf.d/myapp myapp start"
+  },
+  {
+    "instruction": "Check OpenRC service dependencies",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rc-update` with the correct flags and arguments\n   2. Key flags: -update, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rc-update` — rc-update command execution and management\n   Flag `-v`: verbose output for debugging\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrc-update -v show"
+  },
+  {
+    "instruction": "OpenRC parallel startup setting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'rc_parallel=YES' >> /etc/rc.conf"
+  },
+  {
+    "instruction": "Create a supervice directory for daemontools",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir -p /service/myservice/log"
+  },
+  {
+    "instruction": "Set daemontools supervise timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `svc` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `svc` — svc command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsvc -t 30 /service/myservice"
+  },
+  {
+    "instruction": "Check if supervise is running on a directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `supervise` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `supervise` — supervise command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsupervise /service/myservice &"
+  },
+  {
+    "instruction": "Run multilog with timestamp and rotation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `multilog` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `multilog` — multilog command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmultilog t s1000000 n10 /var/log/myservice"
+  },
+  {
+    "instruction": "Set multilog processing script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `multilog` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `multilog` — multilog command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmultilog t ./main '|/usr/local/bin/processor'"
+  },
+  {
+    "instruction": "Use tai64nlocal to convert current log timestamp",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /var/log/myservice/current | tai64nlocal"
+  },
+  {
+    "instruction": "Run a command under envdir with custom env",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'DATABASE_URL=postgres://localhost' > /etc/myapp/env/DATABASE_URL && envdir /etc/myapp/env myapp"
+  },
+  {
+    "instruction": "Limit memory with softlimit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `softlimit` with the correct flags and arguments\n   2. Key flags: -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `softlimit` — softlimit command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsoftlimit -m 1000000 mycommand"
+  },
+  {
+    "instruction": "Limit open files with softlimit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `softlimit` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `softlimit` — softlimit command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsoftlimit -o 100 mycommand"
+  },
+  {
+    "instruction": "Limit data segment with softlimit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `softlimit` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `softlimit` — softlimit command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsoftlimit -d 500000 mycommand"
+  },
+  {
+    "instruction": "Set daemontools cdb conf via cvm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cvm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cvm` — cvm command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncvm qmail /etc/cvm/users"
+  },
+  {
+    "instruction": "Create a daemontools log/run script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e '"
+  },
+  {
+    "instruction": "Check supervisorctl availability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `supervisorctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `supervisorctl` — supervisorctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsupervisorctl avail"
+  },
+  {
+    "instruction": "Set Supervisor minfds for child processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'minfds=1024' >> /etc/supervisor/supervisord.conf"
+  },
+  {
+    "instruction": "Set Supervisor minprocs for child processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'minprocs=200' >> /etc/supervisor/supervisord.conf"
+  },
+  {
+    "instruction": "Set Supervisor HTTP server credentials",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e '[inet_http_server]\nport=127.0.0.1:9001\nusername=admin\npassword=secret' >> /etc/supervisor/supervisord.conf"
+  },
+  {
+    "instruction": "Set Supervisor unix socket path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e '[unix_http_server]\nfile=/var/run/supervisor.sock' >> /etc/supervisor/supervisord.conf"
+  },
+  {
+    "instruction": "Configure Supervisor child process log directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'childlogdir=/var/log/supervisor' >> /etc/supervisor/supervisord.conf\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'childlogdir=/var/log/supervisor' >> /etc/supervisor/supervisord.conf"
+  },
+  {
+    "instruction": "Set Supervisor serverurl for remote control",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'serverurl=http://127.0.0.1:9001' >> /etc/supervisor/supervisord.conf"
+  },
+  {
+    "instruction": "Create a Superlance crash mail config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e, -p, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e '[eventlistener:crashmail]\ncommand=crashmail -p 1 -m admin@example.com' >> /etc/supervisor/conf.d/crashmail.conf"
+  },
+  {
+    "instruction": "Check Supervisor PID file location",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `supervisorctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `supervisorctl` — supervisorctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsupervisorctl pid"
+  },
+  {
+    "instruction": "Show supervisorctl version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `supervisorctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `supervisorctl` — supervisorctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsupervisorctl version"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Enable systemd-journald for audit logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the journalctl configuration with the required parameters\n   2. Apply the configuration and verify with `journalctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl --flush && journalctl --rotate"
+  },
+  {
+    "instruction": "Forward audit logs to remote syslog",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -remote\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho '*.* @@192.168.1.200:514' > /etc/rsyslog.d/audit-remote.conf && systemctl restart rsyslog"
+  },
+  {
+    "instruction": "Check auditd status and rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `auditctl` with the correct flags and arguments\n   2. Key flags: -s, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `auditctl` — Linux audit framework control\n   Flag `-l`: long listing format\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauditctl -s && auditctl -l"
+  },
+  {
+    "instruction": "Monitor file access with auditd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for auditctl\n   2. Build the command chain with error handling\n   3. Execute: auditctl -w /etc/passwd -p rwxa -k passwd_access\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `auditctl` — Linux audit framework control\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauditctl -w /etc/passwd -p rwxa -k passwd_access"
+  },
+  {
+    "instruction": "Search audit logs for file access",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ausearch` with the correct flags and arguments\n   2. Key flags: -k, --start\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ausearch` — audit log search\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nausearch -k passwd_access --start today"
+  },
+  {
+    "instruction": "Generate an audit summary report",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aureport` with the correct flags and arguments\n   2. Key flags: --summary\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aureport` — aureport command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naureport --summary"
+  },
+  {
+    "instruction": "Check the number of failed logins with aureport",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aureport` with the correct flags and arguments\n   2. Key flags: -l, -i, --failed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aureport` — aureport command execution and management\n   Flag `-l`: long listing format\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naureport -l -i --failed"
+  },
+  {
+    "instruction": "List all authentication failures from logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ausearch` with the correct flags and arguments\n   2. Key flags: -m, -sv, --start, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ausearch` — audit log search\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nausearch -m USER_LOGIN -sv no --start today | head -20"
+  },
+  {
+    "instruction": "Monitor user account modifications",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for auditctl\n   2. Build the command chain with error handling\n   3. Execute: auditctl -w /etc/shadow -p wa -k shadow_changes\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `auditctl` — Linux audit framework control\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauditctl -w /etc/shadow -p wa -k shadow_changes"
+  },
+  {
+    "instruction": "Monitor command execution with auditd (execve syscall)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for auditctl\n   2. Build the command chain with error handling\n   3. Execute: auditctl -a always,exit -S execve -k command_exec\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `auditctl` — Linux audit framework control\n   Flag `-a`: include hidden/all entries\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauditctl -a always,exit -S execve -k command_exec"
+  },
+  {
+    "instruction": "Generate a report of all commands executed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ausearch` with the correct flags and arguments\n   2. Key flags: -k, --start, -x, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ausearch` — audit log search\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nausearch -k command_exec --start today | aureport -x -i"
+  },
+  {
+    "instruction": "Search audit log for a specific user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ausearch` with the correct flags and arguments\n   2. Key flags: -ua, --start\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ausearch` — audit log search\n   Supporting tool: `john` — john command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nausearch -ua john --start today"
+  },
+  {
+    "instruction": "Block an IP with iptables permanently",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -s, -j, -save\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -s 10.0.0.5 -j DROP && iptables-save > /etc/iptables/rules.v4"
+  },
+  {
+    "instruction": "Create an iptables whitelist for SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -p, --dport, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT && iptables -A INPUT -p tcp --dport 22 -j DROP"
+  },
+  {
+    "instruction": "Rate limit SSH with iptables (max 3 connections/min)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -p, --dport, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set && iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 3 -j DROP"
+  },
+  {
+    "instruction": "Block all traffic except HTTP and HTTPS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -p, --dport, -j\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -p tcp --dport 80 -j ACCEPT && iptables -A INPUT -p tcp --dport 443 -j ACCEPT && iptables -A INPUT -j DROP"
+  },
+  {
+    "instruction": "Allow established connections in iptables",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -m, --ctstate, -j\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT"
+  },
+  {
+    "instruction": "Log and drop packets with a prefix",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -j, --log-prefix, --log-level\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -j LOG --log-prefix 'DROPPED: ' --log-level 4 && iptables -A INPUT -j DROP"
+  },
+  {
+    "instruction": "Save iptables rules (Debian/Ubuntu)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y, -persistent, -persistent\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y iptables-persistent && netfilter-persistent save"
+  },
+  {
+    "instruction": "Restore iptables rules on boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for systemctl\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: systemctl enable netfilter-persistent\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl enable netfilter-persistent"
+  },
+  {
+    "instruction": "List nftables rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nft` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nft` — nftables firewall management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\nnft list ruleset"
+  },
+  {
+    "instruction": "Flush nftables rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nft` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nft` — nftables firewall management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\nnft flush ruleset"
+  },
+  {
+    "instruction": "Create a simple nftables firewall",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e '"
+  },
+  {
+    "instruction": "Add an nftables rule to allow a specific IP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nft` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nft` — nftables firewall management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\nnft add rule inet filter input ip saddr 192.168.1.100 accept"
+  }
+]

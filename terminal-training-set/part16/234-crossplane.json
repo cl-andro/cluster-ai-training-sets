@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to install Crossplane on a Kubernetes cluster",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Supporting tool: `helm` — manage Kubernetes Helm charts\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl create namespace crossplane-system && helm repo add crossplane-stable https://charts.crossplane.io/stable && helm install crossplane --namespace crossplane-system crossplane-stable/crossplane"
+  },
+  {
+    "instruction": "How to install Crossplane with alpha features",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Supporting tool: `crossplane` — Kubernetes control plane composition\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm install crossplane --namespace crossplane-system crossplane-stable/crossplane --set alpha.features.deploymentRuntime=true"
+  },
+  {
+    "instruction": "How to install a specific Crossplane version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Supporting tool: `crossplane` — Kubernetes control plane composition\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm install crossplane --namespace crossplane-system crossplane-stable/crossplane --version 1.14.0"
+  },
+  {
+    "instruction": "How to install Crossplane with a custom registry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Supporting tool: `crossplane` — Kubernetes control plane composition\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm install crossplane --namespace crossplane-system crossplane-stable/crossplane --set image.pullSecrets={regcred} --set registry=registry.internal"
+  },
+  {
+    "instruction": "How to install a Crossplane provider",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `kubectl status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f provider-aws.yaml"
+  },
+  {
+    "instruction": "How to install a Crossplane provider with a specific version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `kubectl status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f - <<< 'apiVersion: pkg.crossplane.io/v1\nkind: Provider\nmetadata:\n  name: provider-aws\nspec:\n  package: xpkg.upbound.io/crossplane-contrib/provider-aws:v0.47.0'"
+  },
+  {
+    "instruction": "How to install a Crossplane provider with a controller config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `kubectl status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f - <<< 'apiVersion: pkg.crossplane.io/v1\nkind: Provider\nmetadata:\n  name: provider-aws\nspec:\n  package: xpkg.upbound.io/crossplane-contrib/provider-aws:v0.47.0\n  controllerConfigRef:\n    name: aws-config'"
+  },
+  {
+    "instruction": "How to list all installed Crossplane providers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get providers"
+  },
+  {
+    "instruction": "How to get details of a Crossplane provider",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -aws, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get provider provider-aws -o yaml"
+  },
+  {
+    "instruction": "How to delete a Crossplane provider",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -aws\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl delete provider provider-aws"
+  },
+  {
+    "instruction": "How to list all Crossplane provider revisions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get providerrevisions"
+  },
+  {
+    "instruction": "How to list all Crossplane configurations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get configurations"
+  },
+  {
+    "instruction": "How to install a Crossplane configuration package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `kubectl status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f - <<< 'apiVersion: pkg.crossplane.io/v1\nkind: Configuration\nmetadata:\n  name: my-config\nspec:\n  package: xpkg.upbound.io/myorg/my-config:v1.0.0'"
+  },
+  {
+    "instruction": "How to delete a Crossplane configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl delete configuration my-config"
+  },
+  {
+    "instruction": "How to create a Crossplane ProviderConfig for AWS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -f, -provider, -sys\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f - <<< 'apiVersion: aws.crossplane.io/v1beta1\nkind: ProviderConfig\nmetadata:\n  name: aws-provider\nspec:\n  credentials:\n    source: Secret\n    secretRef:\n      namespace: crossplane-system\n      name: aws-creds\n      key: creds'"
+  },
+  {
+    "instruction": "How to create a Crossplane ProviderConfig for GCP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -f, -provider, -sys\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f - <<< 'apiVersion: gcp.crossplane.io/v1beta1\nkind: ProviderConfig\nmetadata:\n  name: gcp-provider\nspec:\n  credentials:\n    source: Secret\n    secretRef:\n      namespace: crossplane-system\n      name: gcp-creds\n      key: creds'"
+  },
+  {
+    "instruction": "How to create a Crossplane ProviderConfig for Azure",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -f, -provider\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f - <<< 'apiVersion: azure.crossplane.io/v1beta1\nkind: ProviderConfig\nmetadata:\n  name: azure-provider\nspec:\n  credentials:\n    source: Secret\n    secretRef:\n      namespace: crossplane-system\n      name: azure-creds\n      key: creds'"
+  },
+  {
+    "instruction": "How to create a Crossplane secret for AWS credentials",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -creds, -n, -system, --from-file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Supporting tool: `aws` — AWS cloud service management\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl create secret generic aws-creds -n crossplane-system --from-file=creds=~/.aws/credentials"
+  },
+  {
+    "instruction": "How to create a Crossplane secret for GCP credentials",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -creds, -n, -system, --from-file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl create secret generic gcp-creds -n crossplane-system --from-file=creds=~/gcp-service-account.json"
+  },
+  {
+    "instruction": "How to create a Crossplane secret for Azure credentials",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -creds, -n, -system, --from-file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl create secret generic azure-creds -n crossplane-system --from-file=creds=~/azure-credentials.json"
+  },
+  {
+    "instruction": "How to list all Crossplane managed resources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get managed"
+  },
+  {
+    "instruction": "How to list all Crossplane composite resources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get composite"
+  },
+  {
+    "instruction": "How to list all Crossplane claims",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get claim"
+  },
+  {
+    "instruction": "How to list all Crossplane XRDs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get xrd"
+  },
+  {
+    "instruction": "How to list all Crossplane compositions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get composition"
+  }
+]

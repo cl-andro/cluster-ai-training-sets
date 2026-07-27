@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Show ignored files that are tracked by Git",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -files, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Flag `-v`: verbose output for debugging\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit ls-files -v | grep '^S'"
+  },
+  {
+    "instruction": "Mark a file as assume-unchanged (skip tracking changes)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -index, --assume-unchanged\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit update-index --assume-unchanged config.local.js"
+  },
+  {
+    "instruction": "Undo assume-unchanged for a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -index, --no-assume-unchanged\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit update-index --no-assume-unchanged config.local.js"
+  },
+  {
+    "instruction": "List files marked assume-unchanged",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -files, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Flag `-v`: verbose output for debugging\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit ls-files -v | grep '^h'"
+  },
+  {
+    "instruction": "Skip worktree for a file (like assume-unchanged but better)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -index, --skip-worktree\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit update-index --skip-worktree config.yml"
+  },
+  {
+    "instruction": "Undo skip-worktree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -index, --no-skip-worktree\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit update-index --no-skip-worktree config.yml"
+  },
+  {
+    "instruction": "Rebuild the Git index from the working tree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -tree, --reset, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit read-tree --reset -u HEAD"
+  },
+  {
+    "instruction": "Compare two arbitrary files outside Git (using git diff)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --no-index\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit diff --no-index file1.txt file2.txt"
+  },
+  {
+    "instruction": "Use Git as a pager for any diff output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --no-index\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit diff --no-index /dev/null newfile.txt"
+  },
+  {
+    "instruction": "Check if a path is tracked by Git",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -files, --error-unmatch\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit ls-files --error-unmatch file.txt && echo tracked || echo untracked"
+  },
+  {
+    "instruction": "Show where a given Git configuration is set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --show-origin\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit config --show-origin user.name"
+  },
+  {
+    "instruction": "Edit the global Git config in the default editor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --global, --edit\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit config --global --edit"
+  },
+  {
+    "instruction": "Remove a global Git config entry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --global, --unset\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit config --global --unset user.email"
+  },
+  {
+    "instruction": "Set Git default branch name to main",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --global\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit config --global init.defaultBranch main"
+  },
+  {
+    "instruction": "Enable Git color output always",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the git configuration with the required parameters\n   2. Apply the configuration and verify with `git status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit config --global color.ui auto"
+  },
+  {
+    "instruction": "Set Git pager to use delta (diff viewer)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --global\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit config --global core.pager delta"
+  },
+  {
+    "instruction": "Set Git to use SSH instead of HTTP for GitHub",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --global\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit config --global url.ssh://git@github.com/.insteadOf https://github.com/"
+  },
+  {
+    "instruction": "Show a nicer log with graph and decorations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --oneline, --decorate, --graph, --all\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit log --oneline --decorate --graph --all"
+  },
+  {
+    "instruction": "Find the root directory of the current Git repo",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -parse, --show-toplevel\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit rev-parse --show-toplevel"
+  },
+  {
+    "instruction": "Show the .git directory path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -parse, --git-dir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit rev-parse --git-dir"
+  },
+  {
+    "instruction": "Show the absolute path of the working tree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -parse, --show-prefix\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit rev-parse --show-prefix"
+  },
+  {
+    "instruction": "Check if current directory is a Git repo",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -parse, --is-inside-work-tree\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit rev-parse --is-inside-work-tree"
+  },
+  {
+    "instruction": "Show untracked and modified files in one line each",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --porcelain\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit status --porcelain"
+  },
+  {
+    "instruction": "Remove deleted files from the working tree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit add -u"
+  },
+  {
+    "instruction": "Show a filesystem tree of the latest commit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -tree, -r, --name-only, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit ls-tree -r --name-only HEAD | head -30"
+  }
+]

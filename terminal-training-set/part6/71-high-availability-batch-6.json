@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Set up a three-node Pacemaker cluster",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs cluster setup mycluster node1 node2 node3"
+  },
+  {
+    "instruction": "Enable Pacemaker cluster services on boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs cluster enable --all\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs cluster enable --all"
+  },
+  {
+    "instruction": "Disable Pacemaker cluster services on boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: --all\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs cluster disable --all"
+  },
+  {
+    "instruction": "PCS resource create with multiple options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource create WebServer ocf:heartbeat:nginx configfile=/etc/nginx/nginx.conf op monitor interval=30s timeout=10s"
+  },
+  {
+    "instruction": "Show Pacemaker resource history",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm_resource` with the correct flags and arguments\n   2. Key flags: -H, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm_resource` — crm_resource command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm_resource -H -r VirtualIP"
+  },
+  {
+    "instruction": "Check for failed actions in Pacemaker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm_mon` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm_mon` — crm_mon command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm_mon -f"
+  },
+  {
+    "instruction": "Cleanup failed operations on a resource",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm_resource` with the correct flags and arguments\n   2. Key flags: -C, -r, -N\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm_resource` — crm_resource command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm_resource -C -r VirtualIP -N node1"
+  },
+  {
+    "instruction": "Refresh Pacemaker status from CIB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm_resource` with the correct flags and arguments\n   2. Key flags: --refresh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm_resource` — crm_resource command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm_resource --refresh"
+  },
+  {
+    "instruction": "Migrate a resource to another node gracefully",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: --lifetime\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource move WebServer node2 --lifetime=PT1H"
+  },
+  {
+    "instruction": "Constrain resources to avoid co-location",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -INFINITY\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs constraint colocation add resA with resB score=-INFINITY"
+  },
+  {
+    "instruction": "Set a resource location score per node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs constraint location WebServer prefers node3=200"
+  },
+  {
+    "instruction": "Configure resource order with mandatory requirement",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs constraint order resA then resB kind=Mandatory\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs constraint order resA then resB kind=Mandatory"
+  },
+  {
+    "instruction": "Configure resource order with optional requirement",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs constraint order resA then resB kind=Optional\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs constraint order resA then resB kind=Optional"
+  },
+  {
+    "instruction": "Configure resource order with serialization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs constraint order resA then resB kind=Serialize\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs constraint order resA then resB kind=Serialize"
+  },
+  {
+    "instruction": "Show all Pacemaker constraints",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: --full\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs constraint list --full"
+  },
+  {
+    "instruction": "Show Pacemaker constraint refs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs constraint refs"
+  },
+  {
+    "instruction": "Manage Pacemaker ACL with a specific user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: --xpath\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs acl user create admin haclient --xpath /cib"
+  },
+  {
+    "instruction": "Display current Pacemaker ACLs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs acl show"
+  },
+  {
+    "instruction": "Enable Pacemaker ACLs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs property set enable-acl=true\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs property set enable-acl=true"
+  },
+  {
+    "instruction": "Configure a Corosync totem ring number",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sed -i '/ring_number/a \\    ring_number: 1' /etc/corosync/corosync.conf\n   2. Apply the configuration and verify with `sed status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsed -i '/ring_number/a \\    ring_number: 1' /etc/corosync/corosync.conf"
+  },
+  {
+    "instruction": "Set Corosync transport to udpu (unicast)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'transport: udpu' >> /etc/corosync/corosync.conf"
+  },
+  {
+    "instruction": "Set Corosync token timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  token: 5000' >> /etc/corosync/corosync.conf"
+  },
+  {
+    "instruction": "Set Corosync consensus timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  consensus: 6000' >> /etc/corosync/corosync.conf"
+  },
+  {
+    "instruction": "Set Corosync join timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  join: 200' >> /etc/corosync/corosync.conf"
+  },
+  {
+    "instruction": "Set Corosync max messages in a single send",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  max_messages: 20' >> /etc/corosync/corosync.conf"
+  }
+]

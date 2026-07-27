@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create an SSH key with a comment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -t, -C, -key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -t ed25519 -C \"deploy-key@myserver\" -f ~/.ssh/deploy_key"
+  },
+  {
+    "instruction": "Create an SSH key with a passphrase",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -t, -b, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N 'mypassphrase'"
+  },
+  {
+    "instruction": "Convert SSH key format (PEM to OpenSSH)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -p, -m, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -p -m PEM -f ~/.ssh/id_rsa"
+  },
+  {
+    "instruction": "Show the SSH fingerprint of a remote host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keyscan` with the correct flags and arguments\n   2. Key flags: -keyscan, -t, -keygen, -lf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keyscan` — ssh-keyscan command execution and management\n   Flag `-t`: sort by time\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nssh-keyscan -t ed25519 example.com 2>/dev/null | ssh-keygen -lf -"
+  },
+  {
+    "instruction": "Add remote host to known_hosts automatically",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keyscan` with the correct flags and arguments\n   2. Key flags: -keyscan, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keyscan` — ssh-keyscan command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nssh-keyscan -H example.com >> ~/.ssh/known_hosts"
+  },
+  {
+    "instruction": "Remove a host from known_hosts (if key changed)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -R\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Flag `-R`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -R example.com"
+  },
+  {
+    "instruction": "Check known_hosts for a specific host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -F example.com"
+  },
+  {
+    "instruction": "Verify SSH host key fingerprint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -o, -oE\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nssh -o FingerprintHash=md5 user@host 'echo OK' 2>&1 | grep -oE 'MD5:[^ ]+'"
+  },
+  {
+    "instruction": "Create an SSH config file with a jump host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'Host internal\\n\\tHostName 10.0.1.100\\n\\tUser john\\n\\tProxyJump bastion.example.com\\n\\tIdentityFile ~/.ssh/internal_key' >> ~/.ssh/config"
+  },
+  {
+    "instruction": "Set up SSH agent with timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-agent` with the correct flags and arguments\n   2. Key flags: -agent, -t, -add\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-agent` — ssh-agent command execution and management\n   Flag `-t`: sort by time\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-agent -t 3600 && ssh-add ~/.ssh/id_ed25519"
+  },
+  {
+    "instruction": "Forward SSH agent to remote",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -A\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -A user@host && ssh user@target"
+  },
+  {
+    "instruction": "Check if SSH agent has keys",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-add` with the correct flags and arguments\n   2. Key flags: -add, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-add` — ssh-add command execution and management\n   Flag `-l`: long listing format\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-add -l"
+  },
+  {
+    "instruction": "Lock and unlock SSH agent",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-add` with the correct flags and arguments\n   2. Key flags: -add, -x, -add, -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-add` — ssh-add command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-add -x && ssh-add -X"
+  },
+  {
+    "instruction": "Remove a specific key from SSH agent",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-add` with the correct flags and arguments\n   2. Key flags: -add, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-add` — ssh-add command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-add -d ~/.ssh/id_ed25519"
+  },
+  {
+    "instruction": "Temporarily add an SSH key for a single command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-agent` with the correct flags and arguments\n   2. Key flags: -agent, -c, -add\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-agent` — ssh-agent command execution and management\n   Supporting tool: `git` — version control and repository management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-agent sh -c 'ssh-add ~/.ssh/deploy_key && git push deploy main'"
+  },
+  {
+    "instruction": "Set SSH timeouts in config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'Host *\\n\\tServerAliveInterval 30\\n\\tServerAliveCountMax 3\\n\\tConnectTimeout 10' >> ~/.ssh/config"
+  },
+  {
+    "instruction": "Disable SSH host key checking (insecure, dev only)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@host\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@host"
+  },
+  {
+    "instruction": "Compress SSH traffic for slow links",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -C user@host"
+  },
+  {
+    "instruction": "Enable X11 forwarding over SSH (trusted)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the host configuration with the required parameters\n   2. Apply the configuration and verify with `ssh status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -Y user@host"
+  },
+  {
+    "instruction": "Forward a local port to remote with SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -L 5900:localhost:5900 user@host"
+  },
+  {
+    "instruction": "Forward a remote port to local with SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -R\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Flag `-R`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -R 5900:localhost:5900 user@host"
+  },
+  {
+    "instruction": "Create a multi-hop tunnel (localhost -> jump -> target)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -J, -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -J user@jump -L 8080:localhost:80 user@target"
+  },
+  {
+    "instruction": "SSH with a non-default identity file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -i ~/.ssh/custom_key user@host"
+  },
+  {
+    "instruction": "SSH with debug mode and log to file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using ssh\n   2. Apply corrective actions: ssh -vvv -E /tmp/ssh.log user@host\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -vvv -E /tmp/ssh.log user@host"
+  },
+  {
+    "instruction": "Check SSH connection quality",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -o ConnectTimeout=5 user@host 'exit' && echo SSH OK || echo SSH FAIL"
+  }
+]

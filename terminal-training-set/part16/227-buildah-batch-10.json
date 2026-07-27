@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to build with buildah using a podman machine context",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --remote, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah --remote bud -t myimage:latest ."
+  },
+  {
+    "instruction": "How to build with buildah in a CI pipeline",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --no-cache, --format, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --no-cache --format oci -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA} ."
+  },
+  {
+    "instruction": "How to push a CI built image to a registry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nbuildah push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA} docker://${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}"
+  },
+  {
+    "instruction": "How to build and push in a single command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -t, --push\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud -t registry.example.com/myimage:latest --push ."
+  },
+  {
+    "instruction": "How to create a buildah container with a startup script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -container, -container, --entrypoint\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah from docker.io/library/ubuntu:22.04 && buildah copy ubuntu-container ./start.sh /start.sh && buildah run ubuntu-container -- chmod +x /start.sh && buildah config --entrypoint '[\"/start.sh\"]' ubuntu-container && buildah commit ubuntu-container myapp:latest"
+  },
+  {
+    "instruction": "How to check buildah logs for debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using buildah\n   2. Apply corrective actions: buildah --log-level trace bud -t myimage:latest . 2>&1\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbuildah --log-level trace bud -t myimage:latest . 2>&1"
+  },
+  {
+    "instruction": "How to build a container image with pip packages installed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pip configuration with the required parameters\n   2. Apply the configuration and verify with `buildah status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `pip` — Python package installer\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah from docker.io/library/python:3.11-slim && buildah run python-container -- pip install flask requests"
+  },
+  {
+    "instruction": "How to build a container image with npm packages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -container, -container\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `npm` — Node.js package manager\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah from docker.io/library/node:18 && buildah copy node-container ./package.json /app/ && buildah run node-container -- npm install"
+  },
+  {
+    "instruction": "How to copy artifacts between containers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -container, --from, -container\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah copy dest-container --from source-container /built/app /app"
+  },
+  {
+    "instruction": "How to create a container with a specific timezone configured",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the buildah configuration with the required parameters\n   2. Apply the configuration and verify with `buildah status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --env TZ=America/New_York mycontainer"
+  },
+  {
+    "instruction": "How to create an image with a non-root user and group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -r, -r, -g, --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-r`: recursive operation\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah run mycontainer -- groupadd -r appgroup && useradd -r -g appgroup appuser && buildah config --user appuser mycontainer"
+  },
+  {
+    "instruction": "How to build an image that runs as a specific UID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --user 2000 mycontainer"
+  },
+  {
+    "instruction": "How to create an image from a Dockerfile with buildkit syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --build-arg, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --build-arg BUILDKIT_INLINE_CACHE=1 -t myimage:latest ."
+  },
+  {
+    "instruction": "How to build an image with inline cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --cache-from, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --cache-from registry.example.com/myimage:latest -t myimage:latest ."
+  },
+  {
+    "instruction": "How to create an image with a different working directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --workingdir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --workingdir /opt/myapp mycontainer"
+  },
+  {
+    "instruction": "How to set the maintainer label on an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --label\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --label maintainer=admin@example.com mycontainer"
+  },
+  {
+    "instruction": "How to add multiple labels to an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --label, --label, --label\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --label 'app=myapp' --label 'version=2.0' --label 'env=production' mycontainer"
+  },
+  {
+    "instruction": "How to check the image ID of a built image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah images myimage:latest -q"
+  },
+  {
+    "instruction": "How to build an image with a custom hostname",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --hostname\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --hostname appserver mycontainer"
+  },
+  {
+    "instruction": "How to create an image with shell as entrypoint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --entrypoint, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --entrypoint '[\"/bin/sh\", \"-c\"]' mycontainer"
+  },
+  {
+    "instruction": "How to create an image with no entrypoint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --entrypoint\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --entrypoint '[]' mycontainer"
+  },
+  {
+    "instruction": "How to build a multi-stage container with buildah",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -f, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-f`: force execution, suppress errors\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud -f Dockerfile.multistage -t myimage:latest ."
+  },
+  {
+    "instruction": "How to build with a specific target in a multi-stage build",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --target, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --target builder -t myimage:builder ."
+  },
+  {
+    "instruction": "How to build with enhanced logs for debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using buildah\n   2. Apply corrective actions: buildah --log-level debug bud -t myimage:latest . 2>&1 | tail -100\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbuildah --log-level debug bud -t myimage:latest . 2>&1 | tail -100"
+  },
+  {
+    "instruction": "How to show the raw manifest of an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah manifest inspect mymanifest"
+  }
+]

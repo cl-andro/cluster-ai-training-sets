@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "How to rename a logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvrename` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvrename` — lvrename command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvrename vg_data lv_old lv_new"
+  },
+  {
+    "instruction": "How to remove a logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvremove` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvremove` — lvremove command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvremove /dev/vg_data/lv_home"
+  },
+  {
+    "instruction": "How to create a thin pool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -n, -L, --type, -pool\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -n thin_pool -L 100G --type thin-pool vg_data"
+  },
+  {
+    "instruction": "How to create a thin logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -n, -V, --thin-pool\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -n thin_vol -V 500G --thin-pool vg_data/thin_pool"
+  },
+  {
+    "instruction": "How to extend a thin pool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvextend` with the correct flags and arguments\n   2. Key flags: -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvextend` — lvextend command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvextend -L +50G /dev/vg_data/thin_pool"
+  },
+  {
+    "instruction": "How to create a RAID1 logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -n, -L, --type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -n lv_raid1 -L 50G --type raid1 vg_data"
+  },
+  {
+    "instruction": "How to create a RAID5 logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -n, -L, --type, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -n lv_raid5 -L 100G --type raid5 -i 3 vg_data"
+  },
+  {
+    "instruction": "How to create a RAID6 logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -n, -L, --type, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -n lv_raid6 -L 150G --type raid6 -i 4 vg_data"
+  },
+  {
+    "instruction": "How to create a RAID10 logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -n, -L, --type, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -n lv_raid10 -L 100G --type raid10 -i 4 vg_data"
+  },
+  {
+    "instruction": "How to convert a linear LV to RAID1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvconvert` with the correct flags and arguments\n   2. Key flags: --type, -m1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvconvert` — lvconvert command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvconvert --type raid1 -m1 /dev/vg_data/lv_home"
+  },
+  {
+    "instruction": "How to convert a RAID LV to a different level",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvconvert` with the correct flags and arguments\n   2. Key flags: --type, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvconvert` — lvconvert command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvconvert --type raid5 -i 3 /dev/vg_data/lv_raid1"
+  },
+  {
+    "instruction": "How to repair a RAID logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvconvert` with the correct flags and arguments\n   2. Key flags: --repair\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvconvert` — lvconvert command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvconvert --repair /dev/vg_data/lv_raid1"
+  },
+  {
+    "instruction": "How to replace a failed PV in a RAID LV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvconvert` with the correct flags and arguments\n   2. Key flags: --replace\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvconvert` — lvconvert command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvconvert --replace /dev/sda1 /dev/vg_data/lv_raid1"
+  },
+  {
+    "instruction": "How to set up lvmcache with an SSD",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -n, -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -n cache_pool -L 20G vg_data /dev/sdd"
+  },
+  {
+    "instruction": "How to attach a cache pool to a logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvconvert` with the correct flags and arguments\n   2. Key flags: --type, --cachepool\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvconvert` — lvconvert command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvconvert --type cache --cachepool vg_data/cache_pool vg_data/lv_home"
+  },
+  {
+    "instruction": "How to detach a cache from a logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvconvert` with the correct flags and arguments\n   2. Key flags: --uncache\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvconvert` — lvconvert command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvconvert --uncache /dev/vg_data/lv_home"
+  },
+  {
+    "instruction": "How to create a cache pool with metadata and data LVs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -n, -L, -n, -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -n cache_meta -L 1G vg_data /dev/sdd && lvcreate -n cache_data -L 20G vg_data /dev/sdd"
+  },
+  {
+    "instruction": "How to convert an LV to a thin snapshot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for lvcreate\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: lvcreate -s -n snap_home -L 10G /dev/vg_data/lv_home\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -s -n snap_home -L 10G /dev/vg_data/lv_home"
+  },
+  {
+    "instruction": "How to merge a thin snapshot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for lvconvert\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: lvconvert --merge /dev/vg_data/snap_home\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `lvconvert` — lvconvert command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvconvert --merge /dev/vg_data/snap_home"
+  },
+  {
+    "instruction": "How to activate a specific logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvchange` with the correct flags and arguments\n   2. Key flags: -ay\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvchange` — lvchange command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvchange -ay /dev/vg_data/lv_home"
+  },
+  {
+    "instruction": "How to deactivate a specific logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvchange` with the correct flags and arguments\n   2. Key flags: -an\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvchange` — lvchange command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvchange -an /dev/vg_data/lv_home"
+  },
+  {
+    "instruction": "How to set readahead on a logical volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvchange` with the correct flags and arguments\n   2. Key flags: --readahead\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvchange` — lvchange command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvchange --readahead 4096 /dev/vg_data/lv_home"
+  },
+  {
+    "instruction": "How to set an LV to read-only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvchange` with the correct flags and arguments\n   2. Key flags: -pr\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvchange` — lvchange command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvchange -pr /dev/vg_data/lv_home"
+  },
+  {
+    "instruction": "How to show the LVM version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvm` — lvm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvm version"
+  }
+]

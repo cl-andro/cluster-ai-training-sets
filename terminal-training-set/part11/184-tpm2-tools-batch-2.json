@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "How to create a symmetric key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_create` with the correct flags and arguments\n   2. Key flags: -C, -G, -u, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_create` — tpm2_create command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_create -C primary.ctx -G aes128cfb -u sym.pub -r sym.priv"
+  },
+  {
+    "instruction": "How to load a key into the TPM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_load` with the correct flags and arguments\n   2. Key flags: -C, -u, -r, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_load` — tpm2_load command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_load -C primary.ctx -u key.pub -r key.priv -c key.ctx"
+  },
+  {
+    "instruction": "How to load an external key into the TPM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_loadexternal` with the correct flags and arguments\n   2. Key flags: -G, -u, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_loadexternal` — tpm2_loadexternal command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_loadexternal -G rsa2048 -u key.pub -c ext.ctx"
+  },
+  {
+    "instruction": "How to seal a secret to the TPM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_create` with the correct flags and arguments\n   2. Key flags: -C, -u, -r, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_create` — tpm2_create command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_create -C primary.ctx -u seal.pub -r seal.priv -i secret.txt"
+  },
+  {
+    "instruction": "How to seal a 32-byte binary secret",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_create` with the correct flags and arguments\n   2. Key flags: -C, -u, -r, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_create` — tpm2_create command execution and management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_create -C primary.ctx -u seal.pub -r seal.priv -i <(echo -n '0123456789abcdef0123456789abcdef')"
+  },
+  {
+    "instruction": "How to seal with an authorization value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_create` with the correct flags and arguments\n   2. Key flags: -C, -u, -r, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_create` — tpm2_create command execution and management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_create -C primary.ctx -u seal.pub -r seal.priv -p myauth -i secret.txt"
+  },
+  {
+    "instruction": "How to seal with a PCR policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_create` with the correct flags and arguments\n   2. Key flags: -C, -u, -r, -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_create` — tpm2_create command execution and management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_create -C primary.ctx -u seal.pub -r seal.priv -L pcr_policy.dat -i secret.bin"
+  },
+  {
+    "instruction": "How to unseal a secret from the TPM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_unseal` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_unseal` — tpm2_unseal command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_unseal -c seal.ctx"
+  },
+  {
+    "instruction": "How to unseal with authorization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_unseal` with the correct flags and arguments\n   2. Key flags: -c, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_unseal` — tpm2_unseal command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_unseal -c seal.ctx -p myauth"
+  },
+  {
+    "instruction": "How to unseal a key object",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_unseal` with the correct flags and arguments\n   2. Key flags: -c, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_unseal` — tpm2_unseal command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_unseal -c key.ctx -o recovered_key.bin"
+  },
+  {
+    "instruction": "How to evict a persistent handle",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_evictcontrol` with the correct flags and arguments\n   2. Key flags: -C, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_evictcontrol` — tpm2_evictcontrol command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_evictcontrol -C o -c key.ctx"
+  },
+  {
+    "instruction": "How to make a key persistent at a handle",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_evictcontrol` with the correct flags and arguments\n   2. Key flags: -C, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_evictcontrol` — tpm2_evictcontrol command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_evictcontrol -C o -c key.ctx 0x81000001"
+  },
+  {
+    "instruction": "How to read all PCRs from the TPM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_pcrread` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_pcrread` — tpm2_pcrread command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_pcrread"
+  },
+  {
+    "instruction": "How to read specific PCR banks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_pcrread` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_pcrread` — tpm2_pcrread command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_pcrread sha256:0,1,2,3"
+  },
+  {
+    "instruction": "How to extend a PCR with a hash",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_pcrextend` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_pcrextend` — tpm2_pcrextend command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_pcrextend 4:sha256=000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+  },
+  {
+    "instruction": "How to create a PCR policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_startauthsession` with the correct flags and arguments\n   2. Key flags: -S, -S, -l, -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_startauthsession` — tpm2_startauthsession command execution and management\n   Flag `-S`: sort by size\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_startauthsession -S session.dat && tpm2_policypcr -S session.dat -l sha256:0,1 -L pcr_policy.dat"
+  },
+  {
+    "instruction": "How to create a policy authorization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_startauthsession` with the correct flags and arguments\n   2. Key flags: -S, -S, -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_startauthsession` — tpm2_startauthsession command execution and management\n   Flag `-S`: sort by size\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_startauthsession -S session.dat && tpm2_policyauthvalue -S session.dat -L policy.dat"
+  },
+  {
+    "instruction": "How to create a command code policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_startauthsession` with the correct flags and arguments\n   2. Key flags: -S, -S, -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_startauthsession` — tpm2_startauthsession command execution and management\n   Flag `-S`: sort by size\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_startauthsession -S session.dat && tpm2_policycommandcode -S session.dat -L policy.dat TPM2_CC_Unseal"
+  },
+  {
+    "instruction": "How to get random bytes from the TPM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_getrandom` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_getrandom` — tpm2_getrandom command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_getrandom 32"
+  },
+  {
+    "instruction": "How to get TPM fixed properties",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tpm2_getcap` with the correct flags and arguments\n   2. Key flags: -fixed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tpm2_getcap` — tpm2_getcap command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntpm2_getcap properties-fixed"
+  }
+]

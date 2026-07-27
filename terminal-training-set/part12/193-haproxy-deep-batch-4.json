@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "How to configure HAProxy to use TLS termination",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the haproxy configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'frontend web-frontend bind :443 ssl crt /etc/ssl/certs/example.pem' >> /etc/haproxy/haproxy.cfg"
+  },
+  {
+    "instruction": "How to show HAProxy stick-table contents",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -backend, -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'show table web-backend' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to show HAProxy pools via socket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'show pools' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to set max connections in HAProxy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'global maxconn 65535' > /etc/haproxy/global.cfg"
+  },
+  {
+    "instruction": "How to add an ACL entry via socket in HAProxy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'add acl /etc/haproxy/whitelist.lst 10.0.0.1' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to add custom error file in HAProxy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'errorfile 503 /etc/haproxy/errors/503.http' >> /etc/haproxy/haproxy.cfg"
+  },
+  {
+    "instruction": "How to disable a server from HAProxy via socket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -backend, -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'disable server web-backend/web01' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to start HAProxy with a config file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `haproxy` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `haproxy` — TCP/HTTP load balancer\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhaproxy -f /etc/haproxy/haproxy.cfg"
+  },
+  {
+    "instruction": "How to check HAProxy version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `haproxy` with the correct flags and arguments\n   2. Key flags: -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `haproxy` — TCP/HTTP load balancer\n   Flag `-v`: verbose output for debugging\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhaproxy -v"
+  },
+  {
+    "instruction": "How to add HTTP basic auth to HAProxy stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -auth\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'stats auth admin:password123' > /etc/haproxy/stats-auth.cfg"
+  },
+  {
+    "instruction": "How to connect to HAProxy stats socket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'show info' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to show HAProxy stats via socket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'show stat' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to add HTTP request rewriting in HAProxy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -request, -header, -Forwarded, -Proto\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'http-request set-header X-Forwarded-Proto https if { ssl_fc }' >> /etc/haproxy/haproxy.cfg"
+  },
+  {
+    "instruction": "How to configure HAProxy with backup server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the haproxy configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'server web01 10.0.0.1:80 check server web02 10.0.0.2:80 check backup' >> /etc/haproxy/haproxy.cfg"
+  },
+  {
+    "instruction": "How to set server to ready state in HAProxy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -backend, -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'set server web-backend/web01 state ready' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to set up HAProxy logging to a specific facility",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'global log /dev/log local0 info log /dev/log local1 notice' > /etc/haproxy/logging.cfg"
+  },
+  {
+    "instruction": "How to set server weight in HAProxy via socket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -backend, -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'set server web-backend/web01 weight 50' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to show all HAProxy frontends via socket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'show frontend' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to get HAProxy ACL by id via socket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'get acl #0' | socat unix-connect:/var/run/haproxy.sock stdio"
+  },
+  {
+    "instruction": "How to run HAProxy in foreground with verbose logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `haproxy` with the correct flags and arguments\n   2. Key flags: -f, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `haproxy` — TCP/HTTP load balancer\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhaproxy -f /etc/haproxy/haproxy.cfg -d"
+  }
+]

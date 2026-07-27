@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Check initramfs generation after kernel add",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -lh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -lh /boot/initrd.img-*"
+  },
+  {
+    "instruction": "View a boot loader entry file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -13, -amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /boot/loader/entries/6.1.0-13-amd64.conf"
+  },
+  {
+    "instruction": "Remove a kernel via kernel-install",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: kernel-install remove 6.1.0-13-amd64\n   2. Apply the configuration and verify with `kernel-install status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kernel-install` — kernel-install command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nkernel-install remove 6.1.0-13-amd64"
+  },
+  {
+    "instruction": "Show boot loader menu timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bootctl` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bootctl` — bootctl command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbootctl status | grep -i timeout"
+  },
+  {
+    "instruction": "Rebuild initramfs for specific kernel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `update-initramfs` with the correct flags and arguments\n   2. Key flags: -initramfs, -k, -13, -amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `update-initramfs` — update-initramfs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-initramfs -k 6.1.0-13-amd64 -u"
+  },
+  {
+    "instruction": "Check kernel-install layout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ls /boot/*/\n   2. Apply the configuration and verify with `ls status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /boot/*/"
+  },
+  {
+    "instruction": "Add kernel with kernel-install and all plugins",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: kernel-install add 6.1.0-14-amd64 /boot/vmlinuz-6.1.0-14-amd64\n   2. Apply the configuration and verify with `kernel-install status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kernel-install` — kernel-install command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nkernel-install add 6.1.0-14-amd64 /boot/vmlinuz-6.1.0-14-amd64"
+  },
+  {
+    "instruction": "Check if secure boot is enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: mokutil --sb-state\n   2. Apply the configuration and verify with `mokutil status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `mokutil` — mokutil command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmokutil --sb-state"
+  },
+  {
+    "instruction": "Set console mode in loader.conf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: -mode\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf 'console-mode 1\\n' >> /boot/loader/loader.conf"
+  },
+  {
+    "instruction": "Check EFI variables",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `efibootmgr` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `efibootmgr` — efibootmgr command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nefibootmgr"
+  },
+  {
+    "instruction": "View UKI file information",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `objdump` with the correct flags and arguments\n   2. Key flags: -h, -uki, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `objdump` — objdump command execution and management\n   Flag `-h`: human-readable format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nobjdump -h /boot/efi/EFI/Linux/my-uki.efi 2>/dev/null | head -20"
+  },
+  {
+    "instruction": "Show systemd-boot random seed status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bootctl` with the correct flags and arguments\n   2. Key flags: -seed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bootctl` — bootctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbootctl random-seed"
+  },
+  {
+    "instruction": "View boot entries with full details",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bootctl` with the correct flags and arguments\n   2. Key flags: --all\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bootctl` — bootctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbootctl list --all"
+  },
+  {
+    "instruction": "List boot loader entry files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /boot/loader/entries/"
+  },
+  {
+    "instruction": "Set default entry in loader.conf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf 'default @current\\n' > /boot/loader/loader.conf"
+  },
+  {
+    "instruction": "Show boot loader random seed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -seed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat /boot/loader/random-seed 2>/dev/null; echo '(if exists)'"
+  },
+  {
+    "instruction": "Set current kernel as default",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bootctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bootctl` — bootctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbootctl set @current"
+  },
+  {
+    "instruction": "Set boot loader entry-whitelist",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: -whitelist\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf 'entry-whitelist custom\\n' > /boot/loader/loader.conf"
+  },
+  {
+    "instruction": "Update bootloader files only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bootctl` with the correct flags and arguments\n   2. Key flags: --graceful\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bootctl` — bootctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbootctl update --graceful"
+  },
+  {
+    "instruction": "Check bootctl installation path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the bootctl configuration with the required parameters\n   2. Apply the configuration and verify with `bootctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `bootctl` — bootctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbootctl --print-esp-path"
+  },
+  {
+    "instruction": "Edit loader.conf to add editor option",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf 'editor no\\n' >> /boot/loader/loader.conf"
+  },
+  {
+    "instruction": "Check systemd-boot build ID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bootctl` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bootctl` — bootctl command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbootctl status | grep -i firmware"
+  },
+  {
+    "instruction": "List all installed kernels",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ls /boot/vmlinuz-*\n   2. Apply the configuration and verify with `ls status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /boot/vmlinuz-*"
+  },
+  {
+    "instruction": "View boot loader configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /boot/loader/loader.conf"
+  }
+]

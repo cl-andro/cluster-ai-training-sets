@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to compute the hash of a video file to verify integrity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsha256sum video.mp4 > video.mp4.sha256"
+  },
+  {
+    "instruction": "How to compute the hash of a compressed archive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum archive.zip"
+  },
+  {
+    "instruction": "How to verify an archive after extraction",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsha256sum archive.tar.gz > archive.sha256 && tar xzf archive.tar.gz && sha256sum -c archive.sha256"
+  },
+  {
+    "instruction": "How to compute hash of all system files for integrity checking",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -exec, -baseline\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind /etc -type f -exec sha256sum {} \\; > /tmp/etc-baseline.txt 2>/dev/null"
+  },
+  {
+    "instruction": "How to use hashdeep for FIM (File Integrity Monitoring)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for hashdeep\n   2. Build the command chain with error handling\n   3. Execute: hashdeep -r -c sha256 /etc /bin /usr/bin > baseline.txt\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhashdeep -r -c sha256 /etc /bin /usr/bin > baseline.txt"
+  },
+  {
+    "instruction": "How to create a second snapshot for comparison",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for hashdeep\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: hashdeep -r -c sha256 /etc /bin /usr/bin > snapshot2.txt\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhashdeep -r -c sha256 /etc /bin /usr/bin > snapshot2.txt"
+  },
+  {
+    "instruction": "How to compare two hashdeep snapshots",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for hashdeep\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: hashdeep -a -k baseline.txt -l snapshot2.txt\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-a`: include hidden/all entries\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhashdeep -a -k baseline.txt -l snapshot2.txt"
+  },
+  {
+    "instruction": "How to inspect hashdeep audit results",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -a, -k, -l, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-a`: include hidden/all entries\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhashdeep -a -k baseline.txt -l snapshot2.txt | grep -v '^%%%%%'"
+  },
+  {
+    "instruction": "How to compute a hash of a memory dump",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsudo dd if=/dev/mem bs=1M count=100 2>/dev/null | sha256sum"
+  },
+  {
+    "instruction": "How to compute a hash of a process executable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum /proc/$(pidof nginx)/exe"
+  },
+  {
+    "instruction": "How to compute a hash of all libraries loaded by a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lsof` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lsof` — lsof command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlsof -p $(pidof nginx) | grep 'mem' | awk '{print $9}' | xargs sha256sum 2>/dev/null"
+  },
+  {
+    "instruction": "How to hash all files in /boot to check for tampering",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -hashes\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsha256sum /boot/* > /tmp/boot-hashes.txt"
+  },
+  {
+    "instruction": "How to compute the hash of a kernel image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum /boot/vmlinuz-$(uname -r)"
+  },
+  {
+    "instruction": "How to compute the hash of a container image layer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nsha256sum /var/lib/docker/overlay2/*/diff"
+  },
+  {
+    "instruction": "How to compute the hash of a Docker container's filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -ql\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker export $(docker ps -ql) | sha256sum"
+  },
+  {
+    "instruction": "How to compute the hash of a VM disk image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsha256sum disk.qcow2 > disk.qcow2.sha256"
+  },
+  {
+    "instruction": "How to verify a VM disk image copy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum -c disk.qcow2.sha256"
+  },
+  {
+    "instruction": "How to compute the hash of a file shared on a network",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum /mnt/nfs/shared/file.dat"
+  },
+  {
+    "instruction": "How to compute the hash of a file as an asset tag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -id, -d, -f1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"ASSET_TAG=$(sha256sum /etc/machine-id | cut -d' ' -f1)\""
+  },
+  {
+    "instruction": "How to compute a unique ID for a machine using hashes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -id\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/machine-id /proc/sys/kernel/random/boot_id | sha256sum"
+  },
+  {
+    "instruction": "How to compute hash of a file and embed it in the file itself",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho \"# $(sha256sum $0)\" >> script.sh"
+  },
+  {
+    "instruction": "How to verify a file after download using curl and sha256",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -sL\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -sL https://example.com/file.iso | sha256sum"
+  },
+  {
+    "instruction": "How to download and verify in a pipeline",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -sL, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -sL https://example.com/file.iso | tee file.iso | sha256sum -c <(echo 'expected_hash  -')"
+  },
+  {
+    "instruction": "How to compute hash of data with a progress indicator",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pv` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pv` — pv command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npv file.txt | sha256sum"
+  },
+  {
+    "instruction": "How to compute hash of a file with output formatting for a webhook",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hash` with the correct flags and arguments\n   2. Key flags: -d, -f1, -X, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hash` — hash command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nhash=$(sha256sum file.txt | cut -d' ' -f1) && curl -X POST -d \"hash=$hash\" https://webhook.example.com"
+  }
+]

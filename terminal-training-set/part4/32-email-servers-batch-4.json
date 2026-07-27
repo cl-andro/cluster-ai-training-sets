@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Scan a specific email file with SpamAssassin and return a spam score",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `spamassassin` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `spamassassin` — spamassassin command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nspamassassin -t < /tmp/email.txt"
+  },
+  {
+    "instruction": "Check if a message is spam and return the report headers only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `spamassassin` with the correct flags and arguments\n   2. Key flags: -L, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `spamassassin` — spamassassin command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nspamassassin -L -t < /tmp/email.txt 2>/dev/null"
+  },
+  {
+    "instruction": "Train SpamAssassin's Bayesian filter with a known spam message",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sa-learn` with the correct flags and arguments\n   2. Key flags: -learn, --spam, -email\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sa-learn` — sa-learn command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsa-learn --spam /tmp/spam-email.eml"
+  },
+  {
+    "instruction": "Train SpamAssassin's Bayesian filter with a known ham message",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sa-learn` with the correct flags and arguments\n   2. Key flags: -learn, --ham, -email\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sa-learn` — sa-learn command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsa-learn --ham /tmp/ham-email.eml"
+  },
+  {
+    "instruction": "Run sa-learn against a directory of spam messages for bulk training",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sa-learn` with the correct flags and arguments\n   2. Key flags: -learn, --spam, -archive, --no-sync\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sa-learn` — sa-learn command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsa-learn --spam /var/spool/spam-archive/ --no-sync"
+  },
+  {
+    "instruction": "Update SpamAssassin rules from the official rule distribution servers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sa-update` with the correct flags and arguments\n   2. Key flags: -update\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sa-update` — sa-update command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsa-update"
+  },
+  {
+    "instruction": "Update SpamAssassin rules and compile them for immediate use",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sa-update` with the correct flags and arguments\n   2. Key flags: -update, --gpghomedir, --channel\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sa-update` — sa-update command execution and management\n   Supporting tool: `gpg` — file encryption and signing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nsa-update --gpghomedir /etc/spamassassin/gpg --channel updates.spamassassin.org"
+  },
+  {
+    "instruction": "Start the spamd daemon in foreground mode for debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using spamd\n   2. Apply corrective actions: spamd -d -c -x -D\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `spamd` — spamd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nspamd -d -c -x -D"
+  },
+  {
+    "instruction": "Test a message against a running spamd daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `spamc` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `spamc` — spamc command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nspamc -c < /tmp/email.txt"
+  },
+  {
+    "instruction": "Scan an email through spamc with a custom spam threshold",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `spamc` with the correct flags and arguments\n   2. Key flags: -t, -email\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `spamc` — spamc command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nspamc -t 3.5 < /tmp/email.txt > /tmp/clean-email.txt"
+  },
+  {
+    "instruction": "Check if the spamd daemon is running and listening",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lsof` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lsof` — lsof command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlsof -i :783"
+  },
+  {
+    "instruction": "Scan a file or directory for viruses using ClamAV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `clamdscan` with the correct flags and arguments\n   2. Key flags: -attachments\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `clamdscan` — clamdscan command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nclamdscan /tmp/email-attachments/"
+  },
+  {
+    "instruction": "Scan a specific email attachment with ClamAV removing infected files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `clamdscan` with the correct flags and arguments\n   2. Key flags: --remove, --fdpass, -attachment\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `clamdscan` — clamdscan command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nclamdscan --remove --fdpass /tmp/suspicious-attachment.pdf"
+  },
+  {
+    "instruction": "Update ClamAV virus definition database manually",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `freshclam` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `freshclam` — freshclam command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfreshclam"
+  },
+  {
+    "instruction": "Show detailed ClamAV database version information",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `freshclam` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `freshclam` — freshclam command execution and management\n   Flag `--version`: show tool version\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfreshclam --version"
+  },
+  {
+    "instruction": "Display the status of the ClamAV virus database and daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `clamdscan` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `clamdscan` — clamdscan command execution and management\n   Flag `--version`: show tool version\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nclamdscan --version"
+  },
+  {
+    "instruction": "View SpamAssassin's Bayesian database token statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sa-learn` with the correct flags and arguments\n   2. Key flags: -learn, --dump\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sa-learn` — sa-learn command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsa-learn --dump magic"
+  },
+  {
+    "instruction": "Forget all training data in SpamAssassin's Bayesian classifier",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sa-learn` with the correct flags and arguments\n   2. Key flags: -learn, --forget\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sa-learn` — sa-learn command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsa-learn --forget"
+  },
+  {
+    "instruction": "Scan a mail directory recursively with ClamAV showing only infected files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `clamscan` with the correct flags and arguments\n   2. Key flags: -r, --infected\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `clamscan` — clamscan command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nclamscan -r --infected /var/spool/mail/"
+  },
+  {
+    "instruction": "Run freshclam as a daemon with automatic updates every hour",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `freshclam` with the correct flags and arguments\n   2. Key flags: -d, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `freshclam` — freshclam command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfreshclam -d -c 6"
+  },
+  {
+    "instruction": "Check SpamAssassin rule versions and last update time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sa-update` with the correct flags and arguments\n   2. Key flags: -update, --check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sa-update` — sa-update command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsa-update --check"
+  },
+  {
+    "instruction": "Test a multipart MIME message through SpamAssassin with debug output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using spamassassin\n   2. Apply corrective actions: spamassassin -D -t < /tmp/mime-email.txt 2>&1 | head -100\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `spamassassin` — spamassassin command execution and management\n   Flag `-t`: sort by time\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nspamassassin -D -t < /tmp/mime-email.txt 2>&1 | head -100"
+  }
+]

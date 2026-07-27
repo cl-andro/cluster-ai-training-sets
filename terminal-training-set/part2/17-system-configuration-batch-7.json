@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "Create a new user with home directory and bash shell",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `useradd` with the correct flags and arguments\n   2. Key flags: -m, -s, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `useradd` — useradd command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuseradd -m -s /bin/bash -c \"John Doe\" john"
+  },
+  {
+    "instruction": "Create a system user without login",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `useradd` with the correct flags and arguments\n   2. Key flags: -r, -s, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `useradd` — useradd command execution and management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuseradd -r -s /sbin/nologin -c \"App Service\" appuser"
+  },
+  {
+    "instruction": "Add a user to multiple supplementary groups",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `usermod` with the correct flags and arguments\n   2. Key flags: -aG, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `usermod` — usermod command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Supporting tool: `john` — john command execution and management\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nusermod -aG sudo,docker,www-data john"
+  },
+  {
+    "instruction": "Lock a user account",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `usermod` with the correct flags and arguments\n   2. Key flags: -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `usermod` — usermod command execution and management\n   Supporting tool: `john` — john command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nusermod -L john"
+  },
+  {
+    "instruction": "Unlock a user account",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `usermod` with the correct flags and arguments\n   2. Key flags: -U\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `usermod` — usermod command execution and management\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nusermod -U john"
+  },
+  {
+    "instruction": "Delete a user and remove their home directory and mail spool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `userdel` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `userdel` — userdel command execution and management\n   Supporting tool: `john` — john command execution and management\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuserdel -r john"
+  },
+  {
+    "instruction": "Create a new group with a specific GID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `groupadd` with the correct flags and arguments\n   2. Key flags: -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `groupadd` — groupadd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngroupadd -g 2000 projectx"
+  },
+  {
+    "instruction": "Delete a group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `groupdel` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `groupdel` — groupdel command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngroupdel developers"
+  },
+  {
+    "instruction": "Set a password for a user non-interactively",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'john:StrongPass123' | chpasswd"
+  },
+  {
+    "instruction": "Force password change on next login",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chage` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chage` — chage command execution and management\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchage -d 0 john"
+  },
+  {
+    "instruction": "Set maximum days before password change",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chage` with the correct flags and arguments\n   2. Key flags: -M\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chage` — chage command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchage -M 90 john"
+  },
+  {
+    "instruction": "Set password expiry warning days",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chage` with the correct flags and arguments\n   2. Key flags: -W\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chage` — chage command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchage -W 14 john"
+  },
+  {
+    "instruction": "Set account expiration date",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chage` with the correct flags and arguments\n   2. Key flags: -E, -12, -31\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chage` — chage command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchage -E 2026-12-31 john"
+  },
+  {
+    "instruction": "Display user account aging information",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chage` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chage` — chage command execution and management\n   Supporting tool: `john` — john command execution and management\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchage -l john"
+  },
+  {
+    "instruction": "Add a user to a group using gpasswd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpasswd` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpasswd` — gpasswd command execution and management\n   Supporting tool: `john` — john command execution and management\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngpasswd -a john sudo"
+  },
+  {
+    "instruction": "Remove a user from a group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpasswd` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpasswd` — gpasswd command execution and management\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngpasswd -d john developers"
+  },
+  {
+    "instruction": "Configure default values for new users",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: useradd -D -b /home -s /bin/bash -g 100\n   2. Apply the configuration and verify with `useradd status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `useradd` — useradd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuseradd -D -b /home -s /bin/bash -g 100"
+  },
+  {
+    "instruction": "Set the system-wide minimum UID for regular users",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sed` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsed -i 's/^UID_MIN.*/UID_MIN 2000/' /etc/login.defs"
+  },
+  {
+    "instruction": "Set password aging defaults system-wide",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sed` with the correct flags and arguments\n   2. Key flags: -i, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsed -i 's/^PASS_MAX_DAYS.*/PASS_MAX_DAYS 90/' /etc/login.defs && sed -i 's/^PASS_WARN_AGE.*/PASS_WARN_AGE 14/' /etc/login.defs"
+  },
+  {
+    "instruction": "Expire a user account immediately",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `usermod` with the correct flags and arguments\n   2. Key flags: -e, -01, -01\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `usermod` — usermod command execution and management\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nusermod -e 1970-01-01 john"
+  }
+]

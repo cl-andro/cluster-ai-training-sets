@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to add an abort handler for denied requests",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { @blocked remote_ip 10.0.0.0/8 handle @blocked { abort } reverse_proxy localhost:8080 }' > /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to show Caddy version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `caddy` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `caddy` — caddy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncaddy version"
+  },
+  {
+    "instruction": "How to add request matcher for specific path prefix",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { @api path /api/* handle @api { reverse_proxy localhost:8080 } }' > /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to create a Caddy API request to add a server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST -H 'Content-Type: application/json' -d '{\"@id\":\"app\",\"handle\":[{\"handler\":\"reverse_proxy\",\"upstreams\":[{\"dial\":\"localhost:8080\"}]}]}' http://localhost:2019/config/apps/http/servers"
+  },
+  {
+    "instruction": "How to add path-based routing in Caddyfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { handle_path /api/* { reverse_proxy localhost:8080 } handle { root * /var/www/html file_server } }' > /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to get Caddy config via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:2019/config/"
+  },
+  {
+    "instruction": "How to use Caddy API to check server status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -o, -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s -o /dev/null -w '%{http_code}' http://localhost:2019/config/"
+  },
+  {
+    "instruction": "How to change Caddy config via API with PATCH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PATCH -H 'Content-Type: application/json' -d '{\"listen\":[\":443\"]}' http://localhost:2019/config/apps/http/servers/srv0"
+  },
+  {
+    "instruction": "How to run Caddy as a file server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `caddy` with the correct flags and arguments\n   2. Key flags: -server, --root, --listen\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `caddy` — caddy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncaddy file-server --root /var/www/html --listen :8080"
+  },
+  {
+    "instruction": "How to add request matcher by query parameter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { @debug query debug=1 handle @debug { respond 200 Debug } }' > /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to format a Caddyfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `caddy` with the correct flags and arguments\n   2. Key flags: --overwrite\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `caddy` — caddy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncaddy fmt --overwrite /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to add a basic Caddyfile for static files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { root * /var/www/html file_server }' > /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to add a redirect in Caddyfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { redir https://www.example.com{uri} permanent }' >> /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to start Caddy as a daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `caddy` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `caddy` — caddy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncaddy start"
+  },
+  {
+    "instruction": "How to add URL rewriting in Caddyfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { @oldpath path /old/* rewrite @oldpath /new{path} file_server }' > /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to delete part of Caddy config via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X DELETE http://localhost:2019/config/apps/http/servers/srv0/routes/0"
+  },
+  {
+    "instruction": "How to run Caddy as a reverse proxy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `caddy` with the correct flags and arguments\n   2. Key flags: -proxy, --from, --to\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `caddy` — caddy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncaddy reverse-proxy --from example.com --to localhost:3000"
+  },
+  {
+    "instruction": "How to reload Caddy configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `caddy` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `caddy` — caddy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncaddy reload"
+  },
+  {
+    "instruction": "How to set up Caddy to serve multiple sites from one Caddyfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'site1.example.com { root * /var/www/site1 file_server } site2.example.com { root * /var/www/site2 file_server }' > /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to add gzip compression in Caddyfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { encode gzip zstd file_server }' > /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to import a snippet in Caddyfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -Content, -Type, -Options, -Frame\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '(headers) { header { X-Content-Type-Options nosniff X-Frame-Options DENY } } example.com { import headers reverse_proxy localhost:8080 }' > /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to start Caddy in the foreground",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `caddy` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `caddy` — caddy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncaddy run"
+  },
+  {
+    "instruction": "How to add request/response headers in Caddyfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -Transport, -Security, -age, -Frame\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { header { Strict-Transport-Security max-age=31536000 X-Frame-Options DENY } reverse_proxy localhost:8080 }' >> /etc/caddy/Caddyfile"
+  },
+  {
+    "instruction": "How to get Caddy metrics endpoint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:2019/metrics"
+  },
+  {
+    "instruction": "How to set custom log format in Caddyfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `caddy` — caddy command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'example.com { log { output file /var/log/caddy/access.log format json } reverse_proxy localhost:8080 }' >> /etc/caddy/Caddyfile"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Start Grafana service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl start grafana-server"
+  },
+  {
+    "instruction": "Enable Grafana on boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl enable grafana-server"
+  },
+  {
+    "instruction": "Check Grafana service status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl status grafana-server"
+  },
+  {
+    "instruction": "Check Grafana logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -server, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `journalctl` — query systemd journal logs\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo journalctl -u grafana-server -f"
+  },
+  {
+    "instruction": "Install Grafana Enterprise",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo apt-get install -y grafana-enterprise\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo apt-get install -y grafana-enterprise"
+  },
+  {
+    "instruction": "Generate Grafana API token via ENV for provisioning",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nexport GRAFANA_TOKEN=glsa_abc123 && curl -H \"Authorization: Bearer $GRAFANA_TOKEN\" http://localhost:3000/api/dashboards/uid/abc"
+  },
+  {
+    "instruction": "Use Grafana API with service account token",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -H \"Authorization: Bearer glsa_abc123\" http://localhost:3000/api/search"
+  },
+  {
+    "instruction": "Get Grafana datasource ID by UID via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -uid\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/datasources/uid/prom-uid | jq '.id'"
+  },
+  {
+    "instruction": "Check if Grafana datasource exists via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -o, -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s -o /dev/null -w '%{http_code}' http://admin:admin@localhost:3000/api/datasources/name/prometheus"
+  },
+  {
+    "instruction": "Bulk create dashboards from directory via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nfor f in /dashboards/*.json; do curl -X POST http://admin:admin@localhost:3000/api/dashboards/db -H 'Content-Type: application/json' -d \"{\\\"dashboard\\\":$(cat $f),\\\"overwrite\\\":true}\"; done"
+  },
+  {
+    "instruction": "Delete expired Grafana snapshots via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for curl\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: curl -s http://admin:admin@localhost:3000/api/snapshots | jq -r '.[].key' | whil\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/snapshots | jq -r '.[].key' | while read key; do curl -X DELETE \"http://admin:admin@localhost:3000/api/snapshots/$key\"; done"
+  },
+  {
+    "instruction": "Get Grafana dashboard list with UIDs and titles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/search | jq -r '.[] | \"\\(.uid) \\(.title)\"'"
+  },
+  {
+    "instruction": "Clone a Grafana dashboard by UID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/dashboards/uid/abc | jq '.dashboard + {\"title\": \"Clone of Dashboard\"}' | curl -X POST http://admin:admin@localhost:3000/api/dashboards/db -H 'Content-Type: application/json' -d @-"
+  },
+  {
+    "instruction": "Export all Grafana dashboards",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -db, -r, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/search?type=dash-db | jq -r '.[].uid' | while read uid; do curl -s http://admin:admin@localhost:3000/api/dashboards/uid/$uid | jq '.dashboard' > \"${uid}.json\"; done"
+  },
+  {
+    "instruction": "Import all dashboards from directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -r, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nfor f in *.json; do uid=$(jq -r '.uid' $f); curl -X POST http://admin:admin@localhost:3000/api/dashboards/db -H 'Content-Type: application/json' -d \"{\\\"dashboard\\\":$(cat $f),\\\"overwrite\\\":true,\\\"message\\\":\\\"imported\\\"}\"; done"
+  },
+  {
+    "instruction": "Get Grafana org creation date via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/orgs/1 | jq '.createdAt'"
+  },
+  {
+    "instruction": "Restrict Grafana dashboard access by IP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -EMAIL\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[auth.proxy] enabled = true header_name = X-EMAIL header_property = email' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Enable Grafana dashboard version history",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[versions] enabled = true' >> /etc/grafana/grafana.ini\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[versions] enabled = true' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Configure Grafana session with Redis",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[sessions] provider = redis provider_config = addr=redis:6379,pool_size=10\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[sessions] provider = redis provider_config = addr=redis:6379,pool_size=100' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Configure Grafana feature toggles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[feature_toggles] enable = transformations newVizTooltip' >> /etc/grafana/\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[feature_toggles] enable = transformations newVizTooltip' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Set Grafana max dashboard import size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[server] enable_gzip = true' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Configure Grafana custom auth proxy header",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[auth.proxy] enabled = true header_name = X-WEBAUTH-USER auto_sign_up = tr\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[auth.proxy] enabled = true header_name = X-WEBAUTH-USER auto_sign_up = true' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Set Grafana rate limiting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[rate_limiting] enabled = true rate = 50' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Enable Grafana oauth2 generic OIDC",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[auth.generic_oauth] enabled = true client_id = oidc_client client_secret \n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[auth.generic_oauth] enabled = true client_id = oidc_client client_secret = secret scopes = openid,profile,email auth_url = https://idp.example.com/auth token_url = https://idp.example.com/token api_url = https://idp.example.com/userinfo' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Configure Grafana SAML authentication",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[auth.saml] enabled = true idp_metadata_url = https://idp.example.com/meta\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[auth.saml] enabled = true idp_metadata_url = https://idp.example.com/metadata' >> /etc/grafana/grafana.ini"
+  }
+]

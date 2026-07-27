@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Install Cockpit web console",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y cockpit && systemctl enable --now cockpit && ufw allow 9090/tcp"
+  },
+  {
+    "instruction": "Add Cockpit session recording",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y, -session, -recording\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y cockpit-session-recording && systemctl restart cockpit"
+  },
+  {
+    "instruction": "Check Cockpit service status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --no-pager, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Flag `-l`: long listing format\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status cockpit --no-pager -l"
+  },
+  {
+    "instruction": "Install monit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y monit && systemctl enable --now monit"
+  },
+  {
+    "instruction": "Check monit status summary",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `monit` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `monit` — monit command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmonit summary"
+  },
+  {
+    "instruction": "Validate monit config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `monit` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `monit` — monit command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmonit -t"
+  },
+  {
+    "instruction": "Reload monit configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `monit` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `monit` — monit command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmonit reload"
+  },
+  {
+    "instruction": "Install and configure munin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y munin munin-node && systemctl enable --now munin-node"
+  },
+  {
+    "instruction": "Check munin-node status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `munin-node-configure` with the correct flags and arguments\n   2. Key flags: -node, -configure, --suggest, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `munin-node-configure` — munin-node-configure command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmunin-node-configure --suggest | head -20"
+  },
+  {
+    "instruction": "Run munin update manually",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `munin-cron` with the correct flags and arguments\n   2. Key flags: -cron\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `munin-cron` — munin-cron command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmunin-cron"
+  },
+  {
+    "instruction": "Install checkmk agent",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `wget status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `dpkg` — dpkg command execution and management\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nwget https://checkmk.example.com/checkmk-agent_2.3.0-1_all.deb -O /tmp/checkmk-agent.deb && dpkg -i /tmp/checkmk-agent.deb && systemctl enable --now checkmk-agent.socket"
+  },
+  {
+    "instruction": "Check checkmk agent status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -agent, --no-pager, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status checkmk-agent.socket --no-pager -l"
+  },
+  {
+    "instruction": "Install influxdb and telegraf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `wget status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `apt` — apt command execution and management\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget -qO- https://repos.influxdata.com/influxdata-archive.key | gpg --dearmor -o /usr/share/keyrings/influxdata-archive.gpg && echo 'deb [signed-by=/usr/share/keyrings/influxdata-archive.gpg] https://repos.influxdata.com/debian stable main' > /etc/apt/sources.list.d/influxdata.list && apt update && apt install -y influxdb2 telegraf && systemctl enable --now influxdb telegraf"
+  },
+  {
+    "instruction": "Verify influxdb is running",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://localhost:8086/health | jq ."
+  },
+  {
+    "instruction": "Create influxdb bucket from CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `influx` with the correct flags and arguments\n   2. Key flags: --name, --org, -org, --retention\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `influx` — influx command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ninflux bucket create --name system_metrics --org my-org --retention 30d --token my-token"
+  },
+  {
+    "instruction": "Check telegraf agent status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --no-pager, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status telegraf --no-pager -l"
+  },
+  {
+    "instruction": "View telegraf input plugins in use",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `telegraf` with the correct flags and arguments\n   2. Key flags: --test, --input-filter, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `telegraf` — telegraf command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntelegraf --test --input-filter cpu:mem:disk | head -30"
+  },
+  {
+    "instruction": "Install VictoriaMetrics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the wget configuration with the required parameters\n   2. Apply the configuration and verify with `wget status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget https://github.com/VictoriaMetrics/VictoriaMetrics/releases/latest/download/victoria-metrics-linux-amd64.tar.gz && tar -xzf victoria-metrics-linux-amd64.tar.gz -C /usr/local/bin/ && useradd --system victoria-metrics && /usr/local/bin/victoria-metrics-prod -storageDataPath /var/lib/victoria-metrics -retentionPeriod 30 &"
+  },
+  {
+    "instruction": "Query VictoriaMetrics for CPU metric",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s 'http://localhost:8428/api/v1/query?query=rate(node_cpu_seconds_total[5m])' | jq .data.result"
+  },
+  {
+    "instruction": "Install pyroscope for continuous profiling",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the wget configuration with the required parameters\n   2. Apply the configuration and verify with `wget status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget https://github.com/pyroscope-io/pyroscope/releases/latest/download/pyroscope_linux_amd64 -O /usr/local/bin/pyroscope && chmod +x /usr/local/bin/pyroscope && useradd --system pyroscope && pyroscope server &"
+  },
+  {
+    "instruction": "Install thanos sidecar",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the wget configuration with the required parameters\n   2. Apply the configuration and verify with `wget status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget https://github.com/thanos-io/thanos/releases/latest/download/thanos-0.37.0.linux-amd64.tar.gz && tar -xzf thanos-0.37.0.linux-amd64.tar.gz -C /usr/local/bin/ --strip-components=1 && useradd --system thanos && thanos sidecar --tsdb.path /var/lib/prometheus --prometheus.url http://localhost:9090 &"
+  },
+  {
+    "instruction": "Query thanos store gateway",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `thanos` with the correct flags and arguments\n   2. Key flags: --objstore, --delete-delay\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `thanos` — thanos command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nthanos tools bucket verify --objstore.config='{\"type\":\"FILESYSTEM\",\"config\":{\"directory\":\"/data/thanos\"}}' --delete-delay=30m"
+  },
+  {
+    "instruction": "Install mtail log parser",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the wget configuration with the required parameters\n   2. Apply the configuration and verify with `wget status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget https://github.com/google/mtail/releases/latest/download/mtail_linux_amd64 -O /usr/local/bin/mtail && chmod +x /usr/local/bin/mtail && useradd --system mtail && mtail --progs /etc/mtail --logs /var/log/syslog &"
+  },
+  {
+    "instruction": "Install cAdvisor for container metrics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the docker configuration with the required parameters\n   2. Apply the configuration and verify with `docker status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --restart=always --name=cadvisor -p 8080:8080 -v /:/rootfs:ro -v /var/run:/var/run:ro -v /sys:/sys:ro -v /var/lib/docker/:/var/lib/docker:ro gcr.io/cadvisor/cadvisor:latest"
+  },
+  {
+    "instruction": "Check cAdvisor metrics endpoint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://localhost:8080/metrics | grep '^container_cpu' | head -10"
+  }
+]

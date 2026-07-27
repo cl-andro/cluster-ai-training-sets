@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Generate a new DKIM key pair for a domain using opendkim-genkey",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `opendkim-genkey` with the correct flags and arguments\n   2. Key flags: -genkey, -D, -d, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `opendkim-genkey` — opendkim-genkey command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nopendkim-genkey -D /etc/opendkim/keys/example.com/ -d example.com -s default"
+  },
+  {
+    "instruction": "Generate a 2048-bit DKIM key pair for a specific selector",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `opendkim-genkey` with the correct flags and arguments\n   2. Key flags: -genkey, -b, -d, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `opendkim-genkey` — opendkim-genkey command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nopendkim-genkey -b 2048 -d example.com -s mail2024 -D /etc/opendkim/keys/"
+  },
+  {
+    "instruction": "Test a DKIM DNS record to verify it matches the private key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `opendkim-testkey` with the correct flags and arguments\n   2. Key flags: -testkey, -d, -s, -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `opendkim-testkey` — opendkim-testkey command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nopendkim-testkey -d example.com -s default -k /etc/opendkim/keys/default.private"
+  },
+  {
+    "instruction": "Verify a DKIM-signed email file using opendkim-testkey",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `opendkim-testkey` with the correct flags and arguments\n   2. Key flags: -testkey, -d, -s, -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `opendkim-testkey` — opendkim-testkey command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nopendkim-testkey -d example.com -s default -k /etc/opendkim/keys/default.private -vvv"
+  },
+  {
+    "instruction": "Check the OpenDKIM statistics for signing and verification",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `opendkim-stats` with the correct flags and arguments\n   2. Key flags: -stats\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `opendkim-stats` — opendkim-stats command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nopendkim-stats"
+  },
+  {
+    "instruction": "Test an OpenDMARC report against a sample email file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `opendmarc-check` with the correct flags and arguments\n   2. Key flags: -check, -email\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `opendmarc-check` — opendmarc-check command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nopendmarc-check /tmp/signed-email.txt"
+  },
+  {
+    "instruction": "Query rspamd for statistics and operational status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rspamc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rspamc` — rspamc command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrspamc stat"
+  },
+  {
+    "instruction": "Scan an email message with rspamd and return a JSON verdict",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rspamc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rspamc` — rspamc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrspamc symbols < /tmp/email.txt"
+  },
+  {
+    "instruction": "Check rspamd configuration for syntax correctness",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rspamd-config` with the correct flags and arguments\n   2. Key flags: -config, -c, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rspamd-config` — rspamd-config command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrspamd-config -c /etc/rspamd/rspamd.conf -t"
+  },
+  {
+    "instruction": "Reload rspamd configuration without restarting the daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rspamc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rspamc` — rspamc command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrspamc reload"
+  },
+  {
+    "instruction": "View rspamd history of scored messages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rspamc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rspamc` — rspamc command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrspamc history"
+  },
+  {
+    "instruction": "Test OpenDMARC configuration by checking a DMARC DNS record",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dig` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dig` — dig command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndig _dmarc.example.com TXT +short"
+  },
+  {
+    "instruction": "Show the currently loaded DKIM keys in opendkim",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `opendkim` with the correct flags and arguments\n   2. Key flags: -l, -vv, -c, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `opendkim` — opendkim command execution and management\n   Flag `-l`: long listing format\n   Flag `-vv`: very verbose debugging\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nopendkim -l -vv -c /etc/opendkim.conf 2>&1 | grep -i key"
+  },
+  {
+    "instruction": "Create a DNS TXT record file for DKIM from an existing private key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `opendkim-genkey` with the correct flags and arguments\n   2. Key flags: -genkey, -r, -s, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `opendkim-genkey` — opendkim-genkey command execution and management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nopendkim-genkey -r -s mail -d example.com --subdomains"
+  },
+  {
+    "instruction": "Restart the OpenDKIM service after configuration changes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart opendkim"
+  },
+  {
+    "instruction": "Check OpenDMARC service status and recent log entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -u, --no-pager, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -u opendmarc --no-pager -n 20"
+  },
+  {
+    "instruction": "Scan a message with rspamd and check for phishing detection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rspamc` with the correct flags and arguments\n   2. Key flags: -test\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rspamc` — rspamc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrspamc check < /tmp/phishing-test.eml"
+  },
+  {
+    "instruction": "List all custom rspamd rules and their scores",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rspamc` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rspamc` — rspamc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrspamc config -w"
+  },
+  {
+    "instruction": "View the DKIM public key from the generated DNS record file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/opendkim/keys/example.com/default.txt"
+  },
+  {
+    "instruction": "Check rspamd worker and controller process status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rspamc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rspamc` — rspamc command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrspamc uptime"
+  },
+  {
+    "instruction": "Test OpenDKIM signing by piping a message through it",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -testkey, -d, -s, -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /tmp/email.txt | opendkim-testkey -d example.com -s mail -k /etc/opendkim/keys/mail.private"
+  }
+]

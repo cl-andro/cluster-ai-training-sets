@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to list all Flux objects in the cluster",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux get all"
+  },
+  {
+    "instruction": "How to list Flux objects in a specific namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -n, -namespace\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux get all -n my-namespace"
+  },
+  {
+    "instruction": "How to get the status of a Flux Kustomization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -kustomization, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux get kustomization my-kustomization -o json"
+  },
+  {
+    "instruction": "How to get the status of a Flux HelmRelease",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -release, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux get helmrelease my-release -o json"
+  },
+  {
+    "instruction": "How to get the status of a Flux GitRepository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -source, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Supporting tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux get source git my-source -o json"
+  },
+  {
+    "instruction": "How to get the status of a Flux OCIRepository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -oci, -repo, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux get source oci my-oci-repo -o json"
+  },
+  {
+    "instruction": "How to view the logs of a Flux Kustomization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: --kind, --name, -kustomization\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux logs --kind=Kustomization --name=my-kustomization"
+  },
+  {
+    "instruction": "How to view the logs of a Flux HelmRelease",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: --kind, --name, -release\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux logs --kind=HelmRelease --name=my-release"
+  },
+  {
+    "instruction": "How to view the logs of a Flux controller",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -system, -controller, --tail\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl logs -n flux-system deployment/kustomize-controller --tail=50"
+  },
+  {
+    "instruction": "How to view the logs of the Flux source controller",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -system, -controller, --tail\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl logs -n flux-system deployment/source-controller --tail=50"
+  },
+  {
+    "instruction": "How to view the logs of the Flux helm controller",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -system, -controller, --tail\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl logs -n flux-system deployment/helm-controller --tail=50"
+  },
+  {
+    "instruction": "How to view the logs of the Flux notification controller",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -system, -controller, --tail\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl logs -n flux-system deployment/notification-controller --tail=50"
+  },
+  {
+    "instruction": "How to view the logs of the Flux image automation controller",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -system, -automation, -controller\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl logs -n flux-system deployment/image-automation-controller --tail=50"
+  },
+  {
+    "instruction": "How to view the logs of the Flux image reflector controller",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -system, -reflector, -controller\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl logs -n flux-system deployment/image-reflector-controller --tail=50"
+  },
+  {
+    "instruction": "How to create a Flux OCIRepository source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -oci, -repo, --url, --tag\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux create source oci my-oci-repo --url=oci://registry.example.com/app --tag=latest --interval=10m"
+  },
+  {
+    "instruction": "How to list Flux OCIRepository sources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux get sources oci"
+  },
+  {
+    "instruction": "How to delete a Flux OCIRepository source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -oci, -repo\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux delete source oci my-oci-repo"
+  },
+  {
+    "instruction": "How to create a Flux Bucket source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -bucket, --url, -bucket, --bucket-region\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux create source bucket my-bucket --url=s3://my-bucket --bucket-region=us-east-1 --interval=10m"
+  },
+  {
+    "instruction": "How to create a Flux Bucket source with authentication",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -bucket, --url, -bucket, --secret-ref\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux create source bucket my-bucket --url=s3://my-bucket --secret-ref=aws-creds --interval=10m"
+  },
+  {
+    "instruction": "How to list Flux Bucket sources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux get sources bucket"
+  },
+  {
+    "instruction": "How to delete a Flux Bucket source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -bucket\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux delete source bucket my-bucket"
+  },
+  {
+    "instruction": "How to create a Flux ImagePolicy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -policy, --image-ref, -image, --semver\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nflux create image policy my-policy --image-ref=my-image --semver='>=1.0.0'"
+  },
+  {
+    "instruction": "How to create a Flux ImageRepository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -image, --image, --interval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux create image repository my-image --image=nginx --interval=10m"
+  },
+  {
+    "instruction": "How to create a Flux ImageRepository with authentication",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: -image, --image, --secret-ref, --interval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux create image repository my-image --image=registry.example.com/private/app --secret-ref=regcred --interval=10m"
+  },
+  {
+    "instruction": "How to list Flux ImageRepository objects",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flux` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flux` — FluxCD GitOps operator\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflux get images repository"
+  }
+]

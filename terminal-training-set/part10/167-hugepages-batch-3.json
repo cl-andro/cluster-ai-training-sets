@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Set number of hugepages to 512",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 512 | sudo tee /proc/sys/vm/nr_hugepages"
+  },
+  {
+    "instruction": "List all hugepage filesystem mounts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -t hugetlbfs"
+  },
+  {
+    "instruction": "Set NUMA node 0 hugepages to 64",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -2048kB\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 64 | sudo tee /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages"
+  },
+  {
+    "instruction": "Set hugetlb SHM group to GID 1000",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 1000 | sudo tee /proc/sys/vm/hugetlb_shm_group"
+  },
+  {
+    "instruction": "View THP khugepaged full scans counter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/mm/transparent_hugepage/khugepaged/full_scans"
+  },
+  {
+    "instruction": "Check hugepage pool maximum setting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat /proc/sys/vm/hugetlb_pool_max 2>/dev/null; echo '(may not exist)'"
+  },
+  {
+    "instruction": "Enable transparent hugepages always",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled"
+  },
+  {
+    "instruction": "Check HugePages_Total value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep HugePages_Total /proc/meminfo"
+  },
+  {
+    "instruction": "View all hugepage nr_hugepages values per size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -name, -exec, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind /sys/kernel/mm/hugepages -name nr_hugepages -exec sh -c 'echo \"$1: $(cat $1)\"' _ {} \\;"
+  },
+  {
+    "instruction": "Check THP max_ptes_none value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/mm/transparent_hugepage/khugepaged/max_ptes_none"
+  },
+  {
+    "instruction": "Check nr_overcommit_hugepages current value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/vm/nr_overcommit_hugepages"
+  },
+  {
+    "instruction": "Check free hugepages count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep HugePages_Free /proc/meminfo"
+  },
+  {
+    "instruction": "Display memory info for huge and total fields",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/meminfo | grep -E '^(MemTotal|MemFree|Huge)'"
+  },
+  {
+    "instruction": "Check hugepage and THP vmstat counters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `vmstat` — vmstat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/vmstat | grep -E 'huge|thp'"
+  },
+  {
+    "instruction": "Check overcommit hugepages value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/vm/nr_overcommit_hugepages"
+  },
+  {
+    "instruction": "View THP allocation statistics from vmstat",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Supporting tool: `vmstat` — vmstat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep thp_ /proc/vmstat"
+  },
+  {
+    "instruction": "List available hugepage sizes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /sys/kernel/mm/hugepages/"
+  },
+  {
+    "instruction": "Check hugetlbfs mount details",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount | grep hugetlbfs"
+  },
+  {
+    "instruction": "Check available hugepage sizes from hstates directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /sys/kernel/mm/hugepages/"
+  },
+  {
+    "instruction": "List all processes that currently use hugepages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngrep -l HugePages /proc/*/smaps 2>/dev/null"
+  },
+  {
+    "instruction": "Calculate hugepage usage percentage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `awk` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `awk` — awk command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nawk '/HugePages_Total/{t=$2} /HugePages_Free/{f=$2} END {printf \"Usage: %.1f%%\\n\", (1-f/t)*100}' /proc/meminfo"
+  }
+]

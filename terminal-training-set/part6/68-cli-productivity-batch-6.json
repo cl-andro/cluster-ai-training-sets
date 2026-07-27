@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Use rg to find 'async def' in all Python files with context",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rg` with the correct flags and arguments\n   2. Key flags: --type, -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rg` — rg command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrg --type py -C 2 'async def' ./src"
+  },
+  {
+    "instruction": "rg: find all files containing a regex with JSON output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rg` with the correct flags and arguments\n   2. Key flags: --json\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rg` — rg command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nrg --json 'ERROR' /var/log/syslog > errors.json"
+  },
+  {
+    "instruction": "rg: only show filenames with matches sorted by modification time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rg` with the correct flags and arguments\n   2. Key flags: -l, --sort\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rg` — rg command execution and management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrg -l 'TODO' --sort modified ./"
+  },
+  {
+    "instruction": "fd: find all symlinks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fd` with the correct flags and arguments\n   2. Key flags: --type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fd` — fd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfd --type symlink ."
+  },
+  {
+    "instruction": "fd: find empty files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fd` with the correct flags and arguments\n   2. Key flags: --type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fd` — fd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfd --type empty ."
+  },
+  {
+    "instruction": "fd: find files owned by a specific user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fd` with the correct flags and arguments\n   2. Key flags: --owner\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fd` — fd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfd --owner $(whoami) ."
+  },
+  {
+    "instruction": "fzf: combined with rg for content search",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rg` with the correct flags and arguments\n   2. Key flags: -l, --preview, --color\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rg` — rg command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrg -l 'error' | fzf --preview 'bat --color=always {}'"
+  },
+  {
+    "instruction": "fzf: select a process to kill by port",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ss` with the correct flags and arguments\n   2. Key flags: -tlnp, -d, -f2, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ss` — socket statistics and connection monitoring\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nss -tlnp | fzf | awk '{print \\$NF}' | cut -d',' -f2 | tr -d 'pid=' | xargs kill"
+  },
+  {
+    "instruction": "bat: diff a file against git HEAD",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bat` with the correct flags and arguments\n   2. Key flags: --diff\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bat` — bat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbat --diff file.txt"
+  },
+  {
+    "instruction": "eza: sort by newest first and show git status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `eza` with the correct flags and arguments\n   2. Key flags: -l, --sort, --git, --header\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `eza` — eza command execution and management\n   Supporting tool: `git` — version control and repository management\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\neza -l --sort newest --git --header"
+  },
+  {
+    "instruction": "fd: find all files named 'Dockerfile' in any subdirectory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fd` with the correct flags and arguments\n   2. Key flags: --full-path\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fd` — fd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfd --full-path 'Dockerfile$' ."
+  },
+  {
+    "instruction": "fd: find all Python files and count total lines",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fd` with the correct flags and arguments\n   2. Key flags: -e, -X, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fd` — fd command execution and management\n   Flag `-l`: long listing format\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfd -e py -X wc -l"
+  },
+  {
+    "instruction": "rg: count total matches across all files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rg` with the correct flags and arguments\n   2. Key flags: -c, --type, -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rg` — rg command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrg -c 'import' --type py ./ | awk -F: '{s+=\\$2} END {print s}'"
+  },
+  {
+    "instruction": "fzf: use preview with bat for searching git log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --oneline, --color, --ansi, --preview\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit log --oneline --color=always | fzf --ansi --preview 'git show --stat {+1}'"
+  },
+  {
+    "instruction": "cheat: get cheatsheet from cheatsheets repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cheat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cheat` — cheat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncheat ls"
+  },
+  {
+    "instruction": "navi: browse all available snippets",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `navi` with the correct flags and arguments\n   2. Key flags: --print\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `navi` — navi command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnavi --print"
+  },
+  {
+    "instruction": "rg: search pattern with Perl-compatible regex",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rg` with the correct flags and arguments\n   2. Key flags: -P\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rg` — rg command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrg -P '(?<=foo)bar' ./src"
+  },
+  {
+    "instruction": "fd: find files with permissions 755",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: fd --type f --perm 755 .\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `fd` — fd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfd --type f --perm 755 ."
+  },
+  {
+    "instruction": "fzf: use header to show context at top",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fzf` with the correct flags and arguments\n   2. Key flags: --header, --preview, --color\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fzf` — fzf command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfzf --header 'Select a file to edit' --preview 'bat --color=always {}'"
+  },
+  {
+    "instruction": "rg: search without showing file paths (only match text)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rg` with the correct flags and arguments\n   2. Key flags: -N\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rg` — rg command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrg -N 'pattern' ./file"
+  },
+  {
+    "instruction": "fd: find and chmod files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fd` with the correct flags and arguments\n   2. Key flags: -e, -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fd` — fd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfd -e sh -X chmod +x"
+  }
+]

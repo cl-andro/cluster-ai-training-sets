@@ -10,7 +10,7 @@ This repository contains two datasets:
 
 ### 1. `terminal-training-set/` (with thinking reasoning)
 
-**1000** high-quality training entries across 10 categories of real-world system administration scenarios. Each entry includes `<think>` reasoning blocks.
+**66,463** trainable entries — 2,810 files across 280 categories. Each entry includes a `<think>` reasoning block followed by the exact executable command. Think blocks provide task breakdown, tool selection logic, and safety/edge-case analysis.
 
 ### 2. `terminal-training-set-nothinking/` (direct command pairs)
 
@@ -19,8 +19,8 @@ This repository contains two datasets:
 ### Dataset Structure
 
 ```
-terminal-training-set/               (10 files, 1000 entries)
-terminal-training-set-nothinking/    (2,800 files, 65,463 entries)
+terminal-training-set/               (2,810 files, 66,463 entries — think blocks)
+terminal-training-set-nothinking/    (2,800 files, 65,463 entries — bare commands)
   ├── part1/   (categories 01–10)     100 files
   ├── part2/   (categories 11–20)     100 files
   ├── part3/   (category 21)           10 files
@@ -50,12 +50,12 @@ terminal-training-set-nothinking/    (2,800 files, 65,463 entries)
 
 | Metric | Value |
 |--------|-------|
-| Total entries | 1000 |
-| Total size | ~2.6 MB |
-| Files | 10 |
-| Categories | 10 |
+| Total entries | 66,463 |
+| Total size | ~32 MB |
+| Files | 2,810 |
+| Categories | 280 |
 | Target OS | Debian 12 / Ubuntu 22.04+ |
-| Format | JSON with `instruction` + `output` (+ `<think>` tags) |
+| Format | `{"instruction": "...", "output": "<think>...</think>\\n[command]"}` |
 
 #### no-thinking (`terminal-training-set-nothinking/`)
 

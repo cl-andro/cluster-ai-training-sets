@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Trace system calls of a program with strace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -c, -f, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -c -f -o strace.log ./myapp && cat strace.log"
+  },
+  {
+    "instruction": "Trace library calls of a program with ltrace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ltrace` with the correct flags and arguments\n   2. Key flags: -c, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ltrace` — ltrace command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nltrace -c -o ltrace.log ./myapp && cat ltrace.log"
+  },
+  {
+    "instruction": "Filter strace to only show file operations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -p, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=open,openat,read,write -p 1234 -o file_trace.log"
+  },
+  {
+    "instruction": "Use strace to show timestamps per syscall",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -ttt, -T, -p, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -ttt -T -p 1234 2>&1 | head -20"
+  },
+  {
+    "instruction": "Check for memory leaks with valgrind memcheck",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --leak-check, --show-leak-kinds, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nvalgrind --leak-check=full --show-leak-kinds=all ./myapp 2>&1 | tail -30"
+  },
+  {
+    "instruction": "Profile CPU cache usage with valgrind cachegrind",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --tool, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --tool=cachegrind ./myapp && cg_annotate cachegrind.out.* | head -30"
+  },
+  {
+    "instruction": "Profile call graph with valgrind callgrind",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --tool, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --tool=callgrind ./myapp && callgrind_annotate callgrind.out.* | head -30"
+  },
+  {
+    "instruction": "Profile heap memory with valgrind massif",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --tool, -50\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --tool=massif ./myapp && ms_print massif.out.* | head -50"
+  },
+  {
+    "instruction": "Check for thread data races with valgrind helgrind",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --tool, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nvalgrind --tool=helgrind ./myapp 2>&1 | head -30"
+  },
+  {
+    "instruction": "Debug a running process with gdb",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using gdb\n   2. Apply corrective actions: gdb -p 1234 -batch -ex 'thread apply all bt' 2>&1 | head -50\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `gdb` — debugging and crash analysis\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngdb -p 1234 -batch -ex 'thread apply all bt' 2>&1 | head -50"
+  },
+  {
+    "instruction": "Attach gdb and capture stack traces every 1 second",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gdb` with the correct flags and arguments\n   2. Key flags: -p, -batch, -ex, -ex\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gdb` — debugging and crash analysis\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngdb -p 1234 -batch -ex 'while 1' -ex 'thread apply all bt' -ex 'sleep 1' -ex 'end' 2>&1 | head -100"
+  },
+  {
+    "instruction": "Run a low-priority backup job with nice",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for nice\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: nice -n 19 tar czf /backup/archive.tar.gz /home\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `nice` — nice command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnice -n 19 tar czf /backup/archive.tar.gz /home"
+  },
+  {
+    "instruction": "Change priority of a running process with renice",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `renice` with the correct flags and arguments\n   2. Key flags: -n, -10, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `renice` — renice command execution and management\n   Flag `-n`: dry-run mode\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrenice -n -10 -p 1234"
+  },
+  {
+    "instruction": "Set I/O priority to idle for a background task",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ionice` with the correct flags and arguments\n   2. Key flags: -c, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ionice` — ionice command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nionice -c 3 -p 1234"
+  },
+  {
+    "instruction": "Run a background task with best-effort I/O priority",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ionice` with the correct flags and arguments\n   2. Key flags: -c, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ionice` — ionice command execution and management\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nionice -c 2 -n 7 dd if=/dev/zero of=/tmp/large bs=1M count=1024"
+  },
+  {
+    "instruction": "Set real-time scheduling policy with chrt",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -f 50 ./myapp"
+  },
+  {
+    "instruction": "Check scheduling policy of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -p 1234"
+  },
+  {
+    "instruction": "Set round-robin scheduling for a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -r 99 ./myapp"
+  },
+  {
+    "instruction": "Allocate 2 MB hugepages for an application",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 512 > /proc/sys/vm/nr_hugepages && grep HugePages /proc/meminfo"
+  },
+  {
+    "instruction": "Mount a hugetlbfs filesystem for hugepage-backed files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Flag `-t`: sort by time\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -t hugetlbfs hugetlbfs /dev/hugepages && grep hugetlbfs /proc/mounts"
+  },
+  {
+    "instruction": "Drop all filesystem caches to test cold-cache performance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 3 > /proc/sys/vm/drop_caches && sync"
+  },
+  {
+    "instruction": "Drop dentries and inodes only from cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 2 > /proc/sys/vm/drop_caches"
+  },
+  {
+    "instruction": "View swappiness value and explain it",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/vm/swappiness && echo 'Lower = less swapping, higher = more aggressive swap'"
+  },
+  {
+    "instruction": "Check kernel ring buffer for performance errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: --level, -iE, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg --level=err,warn | grep -iE 'cpu|irq|timer|acpi|pci' | tail -20"
+  }
+]

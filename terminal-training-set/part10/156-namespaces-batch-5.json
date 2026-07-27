@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Create new user namespace with full root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -r, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -r /bin/bash -c 'whoami; id'"
+  },
+  {
+    "instruction": "Enter user namespace of process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nsenter` with the correct flags and arguments\n   2. Key flags: -U, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nsenter` — enter existing namespace\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnsenter -U -t 1234 /bin/bash"
+  },
+  {
+    "instruction": "Mix user and mount namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U -r -m /bin/bash"
+  },
+  {
+    "instruction": "Mix user and pid namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, --pid, --fork\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U -r --pid --fork --mount-proc /bin/bash"
+  },
+  {
+    "instruction": "Mix user and net namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U -r -n /bin/bash"
+  },
+  {
+    "instruction": "Create user namespace and run ip link",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -r, -n, -c, -c1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Supporting tool: `ping` — ping command execution and management\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -r -n bash -c 'ip link set lo up; ip addr; ping -c1 127.0.0.1'"
+  },
+  {
+    "instruction": "All namespaces together as non-root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -m, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U -r -m -n -p --fork --mount-proc /bin/bash"
+  },
+  {
+    "instruction": "Test seccomp in namespaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U -r bash -c 'echo \"seccomp: $(cat /proc/self/status | grep Seccomp)\" '"
+  },
+  {
+    "instruction": "Create user namespace with subuid",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -c, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nunshare -U bash -c 'echo \"0 $(id -u) 1\" > /proc/self/uid_map 2>/dev/null; id'"
+  },
+  {
+    "instruction": "Run as unprivileged user in user ns",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -c, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U -r bash -c 'su nobody -c \"id\"'"
+  },
+  {
+    "instruction": "Use newuidmap for user mapping",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U bash -c 'newuidmap $$ 0 100000 65536 && newgidmap $$ 0 100000 65536'"
+  },
+  {
+    "instruction": "Check kernel support for user namespaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/user/max_user_namespaces"
+  },
+  {
+    "instruction": "Enable unprivileged user namespaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl -w kernel.unprivileged_userns_clone=1 2>/dev/null || echo 'Unavailable'\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsysctl -w kernel.unprivileged_userns_clone=1 2>/dev/null || echo 'Unavailable'"
+  },
+  {
+    "instruction": "User namespace root vs real root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -r, -c, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -r bash -c 'cat /proc/self/status | grep CapEff; id -u'"
+  },
+  {
+    "instruction": "Map multiple UIDs in user namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nunshare -U bash -c 'echo \"0 1000 10\" > /proc/self/uid_map 2>/dev/null; cat /proc/self/uid_map'"
+  },
+  {
+    "instruction": "Access files with user namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -c, -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nunshare -U -r bash -c 'ls -la /root' 2>&1"
+  },
+  {
+    "instruction": "Create user namespace and mount",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -m, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U -r -m bash -c 'mount -t tmpfs tmpfs /tmp; df -h /tmp'"
+  },
+  {
+    "instruction": "Write to /proc/sys in user namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nunshare -U -r bash -c 'echo 1 > /proc/sys/net/ipv4/ip_forward 2>&1 || echo cannot'"
+  },
+  {
+    "instruction": "Read sysctl inside user namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U -r bash -c 'sysctl net.ipv4.ip_forward'"
+  },
+  {
+    "instruction": "Create user namespace with setgroups deny",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nunshare -U bash -c 'echo deny > /proc/self/setgroups 2>/dev/null; id'"
+  },
+  {
+    "instruction": "Check setgroups file in user ns",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nunshare -U bash -c 'cat /proc/self/setgroups 2>/dev/null'"
+  },
+  {
+    "instruction": "Test user namespace ping as root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -U, -r, -n, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Supporting tool: `ping` — ping command execution and management\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -U -r -n bash -c 'ip link set lo up; ping -c1 127.0.0.1'"
+  }
+]

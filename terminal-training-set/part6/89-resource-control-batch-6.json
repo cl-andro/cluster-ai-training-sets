@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Set cgroup v2 pids.max to limit processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 50 > /sys/fs/cgroup/mygroup/pids.max"
+  },
+  {
+    "instruction": "Read cgroup v2 pids.current",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/fs/cgroup/mygroup/pids.current"
+  },
+  {
+    "instruction": "Set cgroup v2 cpu.max for hard CPU limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '50000 100000' > /sys/fs/cgroup/mygroup/cpu.max"
+  },
+  {
+    "instruction": "Read cgroup v2 cpu.max",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/fs/cgroup/mygroup/cpu.max"
+  },
+  {
+    "instruction": "Set cgroup v2 cpu.weight.nice for nice-compatible weight",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 5 > /sys/fs/cgroup/mygroup/cpu.weight.nice"
+  },
+  {
+    "instruction": "Create cgroup v2 with cgcreate and set cpu/memory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cgcreate` with the correct flags and arguments\n   2. Key flags: -g, -r, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cgcreate` — cgcreate command execution and management\n   Flag `-r`: recursive operation\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncgcreate -g cpu,memory:/workdir/highprio && cgset -r cpu.weight=900 -r memory.max=2G highprio"
+  },
+  {
+    "instruction": "Move current shell to cgroup with cgclassify",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cgclassify` with the correct flags and arguments\n   2. Key flags: -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cgclassify` — cgclassify command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncgclassify -g cpu,memory:/mygroup $$"
+  },
+  {
+    "instruction": "Run a command directly inside a cgroup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cgexec` with the correct flags and arguments\n   2. Key flags: -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cgexec` — cgexec command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncgexec -g cpu,memory:/mygroup mycommand"
+  },
+  {
+    "instruction": "Configure cgrules for automatic cgroup assignment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo -e 'myuser:myprocess cpu,memory /highprio\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'myuser:myprocess cpu,memory /highprio\n*:firefox cpu,memory /lowprio' >> /etc/cgrules.conf"
+  },
+  {
+    "instruction": "Start cgrules daemon for auto cgroup assignment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl start cgred"
+  },
+  {
+    "instruction": "Set ionice for a command with best-effort class",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ionice` with the correct flags and arguments\n   2. Key flags: -c, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ionice` — ionice command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nionice -c 2 -n 7 tar cf backup.tar /data"
+  },
+  {
+    "instruction": "Run command with ionice idle and nice 19",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ionice` with the correct flags and arguments\n   2. Key flags: -c, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ionice` — ionice command execution and management\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nionice -c 3 nice -n 19 make"
+  },
+  {
+    "instruction": "Set ionice for all processes of a user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ionice` with the correct flags and arguments\n   2. Key flags: -c, -n, -u, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ionice` — ionice command execution and management\n   Supporting tool: `john` — john command execution and management\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nionice -c 2 -n 5 -u $(id -u john) true"
+  },
+  {
+    "instruction": "Use chrt with SCHED_DEADLINE for a real-time task",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -d, --sched-runtime, --sched-deadline, --sched-period\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -d --sched-runtime 5000000 --sched-deadline 10000000 --sched-period 20000000 0 ./realtime_task"
+  },
+  {
+    "instruction": "Show all chrt policies available",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -m"
+  },
+  {
+    "instruction": "Set task scheduling to SCHED_RR with max priority",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -r, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Flag `-r`: recursive operation\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -r -p 99 1234"
+  },
+  {
+    "instruction": "Set task scheduling to SCHED_FIFO with priority 1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -f, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -f -p 1 1234"
+  },
+  {
+    "instruction": "Reset SCHED_OTHER for a real-time process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -o, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -o -p 0 1234"
+  },
+  {
+    "instruction": "Show ulimit all limits in human-readable format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ulimit` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ulimit` — ulimit command execution and management\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nulimit -a"
+  },
+  {
+    "instruction": "Set ulimit and run a command in one line",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ulimit` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ulimit` — ulimit command execution and management\n   Flag `-n`: dry-run mode\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nulimit -n 1024 && mycommand"
+  },
+  {
+    "instruction": "Check system-wide max PID limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/kernel/pid_max"
+  },
+  {
+    "instruction": "Check RLIMIT_NPROC for current user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: --nproc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit --nproc"
+  },
+  {
+    "instruction": "Check RLIMIT_FSIZE for a specific PID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p, --fsize\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234 --fsize"
+  },
+  {
+    "instruction": "Set RLIMIT_NOFILE with prlimit for a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p, --nofile\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234 --nofile=2048"
+  },
+  {
+    "instruction": "Set RLIMIT_AS (address space) with prlimit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p, --as\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234 --as=1073741824"
+  },
+  {
+    "instruction": "Set RLIMIT_RTPRIO (max real-time priority) with prlimit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p, --rtprio\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234 --rtprio=0"
+  }
+]

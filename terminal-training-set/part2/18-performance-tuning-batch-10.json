@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Set OOM score adjustment to protect a critical process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -1000\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -1000 > /proc/1234/oom_score_adj"
+  },
+  {
+    "instruction": "Check OOM score adjustment of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/oom_score_adj"
+  },
+  {
+    "instruction": "Disable transparent hugepages for latency-sensitive apps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho never > /sys/kernel/mm/transparent_hugepage/enabled && echo never > /sys/kernel/mm/transparent_hugepage/defrag"
+  },
+  {
+    "instruction": "Check transparent hugepage status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/mm/transparent_hugepage/enabled"
+  },
+  {
+    "instruction": "Enable kernel page allocator coalescing for performance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl -w vm.compact_memory=1 && echo 1 > /proc/sys/vm/compact_memory\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsysctl -w vm.compact_memory=1 && echo 1 > /proc/sys/vm/compact_memory"
+  },
+  {
+    "instruction": "Tune NUMA memory allocation strategy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via sysctl -w vm.zone_reclaim_mode=1 && sysctl -w kernel.numa_balancing=0\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w vm.zone_reclaim_mode=1 && sysctl -w kernel.numa_balancing=0"
+  },
+  {
+    "instruction": "Adjust TCP keepalive parameters for faster dead connection detection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w, -w, -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.ipv4.tcp_keepalive_time=120 && sysctl -w net.ipv4.tcp_keepalive_intvl=10 && sysctl -w net.ipv4.tcp_keepalive_probes=3"
+  },
+  {
+    "instruction": "Increase PID limit for high-throughput servers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w kernel.pid_max=4194304"
+  },
+  {
+    "instruction": "Increase max user processes limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w, -max, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w kernel.threads-max=1200000 && ulimit -u 1200000"
+  },
+  {
+    "instruction": "Disable TCP slow start after idle",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.ipv4.tcp_slow_start_after_idle=0"
+  },
+  {
+    "instruction": "Use memlock to pin process memory and prevent swapping",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ulimit` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ulimit` — ulimit command execution and management\n   Flag `-l`: long listing format\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nulimit -l unlimited && ./myapp"
+  },
+  {
+    "instruction": "Benchmark memory allocation with sysbench memory test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysbench` with the correct flags and arguments\n   2. Key flags: --memory-block-size, --memory-total-size, --num-threads\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysbench` — sysbench command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysbench memory --memory-block-size=1M --memory-total-size=10G --num-threads=$(nproc) run"
+  },
+  {
+    "instruction": "Benchmark mutex performance with sysbench",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysbench` with the correct flags and arguments\n   2. Key flags: --threads, --mutex-num, --mutex-locks\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysbench` — sysbench command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysbench mutex --threads=$(nproc) --mutex-num=4096 --mutex-locks=50000 run"
+  },
+  {
+    "instruction": "Benchmark thread creation/destruction with sysbench",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysbench` with the correct flags and arguments\n   2. Key flags: --threads, --thread-yields, --thread-locks\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysbench` — sysbench command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysbench threads --threads=$(nproc) --thread-yields=1000 --thread-locks=4 run"
+  },
+  {
+    "instruction": "Run fio sequential read benchmark",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fio` with the correct flags and arguments\n   2. Key flags: --name, --ioengine, --iodepth, --rw\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fio` — fio command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfio --name=seqread --ioengine=libaio --iodepth=64 --rw=read --bs=1M --direct=1 --size=2G --runtime=30 --group_reporting"
+  },
+  {
+    "instruction": "Run fio latency-sensitive single-threaded 4k test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fio` with the correct flags and arguments\n   2. Key flags: --name, --ioengine, --iodepth, --rw\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fio` — fio command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfio --name=latency --ioengine=sync --iodepth=1 --rw=randread --bs=4k --direct=1 --size=256M --runtime=10 --lat_percentiles=1 --output-format=json"
+  },
+  {
+    "instruction": "Run fio with mixed sequential workload",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fio` with the correct flags and arguments\n   2. Key flags: --name, --ioengine, --iodepth, --rw\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fio` — fio command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfio --name=mixed --ioengine=libaio --iodepth=32 --rw=rw --rwmixread=50 --bs=64k --direct=1 --size=1G --runtime=30 --group_reporting"
+  },
+  {
+    "instruction": "Test disk cache behavior with hdparm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hdparm` with the correct flags and arguments\n   2. Key flags: -Tt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hdparm` — hdparm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhdparm -Tt /dev/sda"
+  },
+  {
+    "instruction": "Get detailed ATA disk information",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hdparm` with the correct flags and arguments\n   2. Key flags: -I, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hdparm` — hdparm command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhdparm -I /dev/sda | grep -E 'Model|Serial|Firmware|SATA|Speed|Transfer'"
+  },
+  {
+    "instruction": "Measure write latency with dd and fdatasync",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dd` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dd` — dd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\ndd if=/dev/zero of=/tmp/latency bs=4k count=10000 conv=fdatasync oflag=direct 2>&1"
+  },
+  {
+    "instruction": "Benchmark sequential write with dd and multiple block sizes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor bs in 512 4k 64k 1M; do dd if=/dev/zero of=/tmp/bs_$bs bs=$bs count=1024 conv=fdatasync 2>&1 | tail -1; done"
+  },
+  {
+    "instruction": "Use perforator mem to sample memory accesses",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perf` with the correct flags and arguments\n   2. Key flags: -a, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perf` — performance monitoring and profiling\n   Flag `-a`: include hidden/all entries\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nperf mem record -a sleep 5 && perf mem report | head -30"
+  },
+  {
+    "instruction": "Use perforator c2c to detect false sharing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perf` with the correct flags and arguments\n   2. Key flags: -a, -40\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perf` — performance monitoring and profiling\n   Flag `-a`: include hidden/all entries\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nperf c2c record -a sleep 5 && perf c2c report | head -40"
+  },
+  {
+    "instruction": "Profile kernel with perf stat per CPU",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perf` with the correct flags and arguments\n   2. Key flags: -a, -C, -e, -misses\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perf` — performance monitoring and profiling\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nperf stat -a -C 0,1,2,3 -e cycles,instructions,cache-misses sleep 5"
+  },
+  {
+    "instruction": "Profile branch prediction with perf stat per process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perf` with the correct flags and arguments\n   2. Key flags: -e, -misses, -loads, -load\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perf` — performance monitoring and profiling\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nperf stat -e branches,branch-misses,branch-loads,branch-load-misses -p 1234 sleep 10"
+  }
+]

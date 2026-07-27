@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "How to check if the package file is a valid Arch pkg",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -tf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar -tf /path/to/package.pkg.tar.zst | head"
+  },
+  {
+    "instruction": "How to list the Arch system capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pacman` with the correct flags and arguments\n   2. Key flags: -Si, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -Si | grep '^Provides' | sort -u"
+  },
+  {
+    "instruction": "How to use pacdiff to manage .pacnew and .pacsave files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pacdiff` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pacdiff` — pacdiff command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npacdiff"
+  },
+  {
+    "instruction": "How to find out why a package is being installed via pacman",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pacman configuration with the required parameters\n   2. Apply the configuration and verify with `pacman status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -Qi nginx | grep 'Install Reason'"
+  },
+  {
+    "instruction": "How to install a list of AUR packages from a text file using yay",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: yay -S --needed $(cat /tmp/aur-packages.txt | xargs)\n   2. Apply the configuration and verify with `yay status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `yay` — yay command execution and management\n   Flag `-S`: sort by size\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyay -S --needed $(cat /tmp/aur-packages.txt | xargs)"
+  },
+  {
+    "instruction": "How to check the pkgrel of an installed package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pacman configuration with the required parameters\n   2. Apply the configuration and verify with `pacman status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -Qi nginx | grep Version"
+  },
+  {
+    "instruction": "How to use pacman with the --needed flag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pacman` with the correct flags and arguments\n   2. Key flags: -S, --needed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -S --needed nginx"
+  },
+  {
+    "instruction": "How to check for broken packages in the database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pacman` with the correct flags and arguments\n   2. Key flags: -Dk, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -Dk 2>&1 | grep -i 'error'"
+  },
+  {
+    "instruction": "How to use pacman to install only the package signature",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pacman configuration with the required parameters\n   2. Apply the configuration and verify with `pacman status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -S --print-format='%s' nginx | xargs pacman -U"
+  },
+  {
+    "instruction": "How to create a unified diff of changed package files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pacman` with the correct flags and arguments\n   2. Key flags: -Qkk, -I, -u, -Ql\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -Qkk nginx 2>&1 | grep 'MODIFIED' | awk '{print $2}' | xargs -I{} diff -u {} <(pacman -Ql nginx | grep {} | head -1)"
+  },
+  {
+    "instruction": "How to list the total size of all installed packages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: expac -H M '%m\\t%n' | sort -h | tail -5\n   2. Apply the configuration and verify with `expac status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `expac` — expac command execution and management\n   Flag `-h`: human-readable format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexpac -H M '%m\\t%n' | sort -h | tail -5"
+  },
+  {
+    "instruction": "How to see the ini file of a repo in pacman.conf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/pacman.conf"
+  },
+  {
+    "instruction": "How to run pacman with a custom root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pacman` with the correct flags and arguments\n   2. Key flags: -r, -Syu\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -r /mnt -Syu"
+  },
+  {
+    "instruction": "How to check the available disk space for pacman cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `df` with the correct flags and arguments\n   2. Key flags: -h\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `df` — df command execution and management\n   Supporting tool: `pacman` — Arch Linux package manager\n   Flag `-h`: human-readable format\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ndf -h /var/cache/pacman/pkg"
+  },
+  {
+    "instruction": "How to list all pacman hooks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /usr/share/libalpm/hooks/"
+  },
+  {
+    "instruction": "How to see the AUR comment section for a package with yay",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yay` with the correct flags and arguments\n   2. Key flags: -S, --requesttarget\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yay` — yay command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyay -S --requesttarget nginx"
+  },
+  {
+    "instruction": "How to check for Arch Linux security announcements",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pacman` with the correct flags and arguments\n   2. Key flags: -Qu, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -Qu 2>&1 | grep -i 'security'"
+  },
+  {
+    "instruction": "How to use paru to generate a report of outdated packages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `paru` with the correct flags and arguments\n   2. Key flags: -Qua\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `paru` — paru command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nparu -Qua"
+  },
+  {
+    "instruction": "How to see the pacman debug logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using tail\n   2. Apply corrective actions: tail -f /var/log/pacman.log\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntail -f /var/log/pacman.log"
+  },
+  {
+    "instruction": "How to convert a package list to installable format for pacstrap",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pacman configuration with the required parameters\n   2. Apply the configuration and verify with `pacman status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pacman` — Arch Linux package manager\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\npacman -Sq --print-format='%n %v' base > base-pkgs.txt"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to generate a new RSA private key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -algorithm, -out, -pkeyopt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048"
+  },
+  {
+    "instruction": "How to generate a 4096-bit RSA private key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -out\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl genrsa -out private.pem 4096"
+  },
+  {
+    "instruction": "How to generate an ECDSA private key (P-256)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -genkey, -name, -out, -private\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl ecparam -genkey -name prime256v1 -out ec-private.pem"
+  },
+  {
+    "instruction": "How to generate an Ed25519 private key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -algorithm, -out, -private\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl genpkey -algorithm ED25519 -out ed25519-private.pem"
+  },
+  {
+    "instruction": "How to extract the public key from a private key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -pubout, -out\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl pkey -in private.pem -pubout -out public.pem"
+  },
+  {
+    "instruction": "How to create a CSR (Certificate Signing Request)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -new, -key, -out, -subj\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl req -new -key private.pem -out request.csr -subj '/CN=example.com/O=MyOrg'"
+  },
+  {
+    "instruction": "How to create a self-signed certificate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -x509, -new, -key, -days\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl req -x509 -new -key private.pem -days 365 -out cert.pem -subj '/CN=localhost'"
+  },
+  {
+    "instruction": "How to create a self-signed cert with SAN",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -x509, -new, -key, -days\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl req -x509 -new -key private.pem -days 365 -out cert.pem -subj '/CN=example.com' -addext 'subjectAltName=DNS:example.com,DNS:www.example.com'"
+  },
+  {
+    "instruction": "How to view the details of a certificate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -text, -noout\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl x509 -in cert.pem -text -noout"
+  },
+  {
+    "instruction": "How to view the details of a CSR",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -text, -noout\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl req -in request.csr -text -noout"
+  },
+  {
+    "instruction": "How to view the details of a private key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -text, -noout\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl pkey -in private.pem -text -noout"
+  },
+  {
+    "instruction": "How to test an SSL/TLS connection to a server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -connect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl s_client -connect example.com:443"
+  },
+  {
+    "instruction": "How to show the full certificate chain in a connection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -connect, -showcerts\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl s_client -connect example.com:443 -showcerts"
+  },
+  {
+    "instruction": "How to start a simple SSL server for testing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -key, -cert, -accept\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl s_server -key private.pem -cert cert.pem -accept 4443"
+  },
+  {
+    "instruction": "How to list all available ciphers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -V\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl ciphers -V"
+  },
+  {
+    "instruction": "How to list ciphers by TLS version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -V\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl ciphers -V 'TLSv1.2'"
+  },
+  {
+    "instruction": "How to test cipher support with a server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -connect, -cipher, -RSA, -AES256\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl s_client -connect example.com:443 -cipher 'ECDHE-RSA-AES256-GCM-SHA384'"
+  },
+  {
+    "instruction": "How to convert a PEM certificate to DER format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -outform, -out\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl x509 -in cert.pem -outform DER -out cert.der"
+  },
+  {
+    "instruction": "How to convert a DER certificate to PEM format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -inform, -out, -outform\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl x509 -in cert.der -inform DER -out cert.pem -outform PEM"
+  },
+  {
+    "instruction": "How to convert PEM to PKCS12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -export, -in, -inkey, -out\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl pkcs12 -export -in cert.pem -inkey private.pem -out bundle.p12"
+  },
+  {
+    "instruction": "How to convert PKCS12 to PEM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -nodes, -out\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl pkcs12 -in bundle.p12 -nodes -out bundle.pem"
+  },
+  {
+    "instruction": "How to check the modulus of a key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -noout, -modulus, -in\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl rsa -noout -modulus -in private.pem | openssl md5"
+  },
+  {
+    "instruction": "How to verify a certificate matches a private key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -noout, -modulus, -in, -noout\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl x509 -noout -modulus -in cert.pem | openssl md5 && openssl rsa -noout -modulus -in private.pem | openssl md5"
+  },
+  {
+    "instruction": "How to generate a random number using OpenSSL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -hex\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl rand -hex 32"
+  },
+  {
+    "instruction": "How to generate a random base64 string",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -base64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl rand -base64 32"
+  }
+]

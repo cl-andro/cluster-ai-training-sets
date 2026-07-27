@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Install lighttpd with WebDAV and SSL support",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nsudo apt install lighttpd lighttpd-mod-webdav lighttpd-mod-openssl && sudo lighty-enable-mod webdav ssl"
+  },
+  {
+    "instruction": "Configure lighttpd WebDAV SSL certificate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '$SERVER[\"socket\"] == \":443\" {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '$SERVER[\"socket\"] == \":443\" {\n    ssl.engine = \"enable\"\n    ssl.pemfile = \"/etc/lighttpd/server.pem\"\n    webdav.opts = ( \"require-user\" => \"alice\" )\n}' | sudo tee /etc/lighttpd/conf-available/90-webdav-ssl.conf"
+  },
+  {
+    "instruction": "Check lighttpd modules loaded",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lighttpd` with the correct flags and arguments\n   2. Key flags: -f, -tt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lighttpd` — lighttpd command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlighttpd -f /etc/lighttpd/lighttpd.conf -tt"
+  },
+  {
+    "instruction": "Enable DAV locking in lighttpd WebDAV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'webdav.opts = ( \"locking\" => \"enable\" )' | sudo tee -a /etc/lighttpd/conf-\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'webdav.opts = ( \"locking\" => \"enable\" )' | sudo tee -a /etc/lighttpd/conf-available/90-webdav.conf"
+  },
+  {
+    "instruction": "Disable WebDAV XML logging in lighttpd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -xml, -a, -available, -webdav\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'webdav.log-xml = \"disable\"' | sudo tee -a /etc/lighttpd/conf-available/90-webdav.conf"
+  },
+  {
+    "instruction": "Set lighttpd WebDAV max size for upload",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -request, -size, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'server.max-request-size = 102400' | sudo tee -a /etc/lighttpd/lighttpd.conf && sudo systemctl restart lighttpd"
+  },
+  {
+    "instruction": "Configure Apache WebDAV with digest auth and DAVLockDB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo htdigest -c /etc/apache2/webdav-digest.passwd 'WebDAV Realm' alice && echo 'DAVLockDB /var/www/webdav/DAVLock.dir' | sudo tee /etc/apache2/conf-available/davlock.conf && sudo a2enconf davlock && sudo systemctl reload apache2"
+  },
+  {
+    "instruction": "Create ownCloud external storage S3 bucket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data, --mount-point, --storage-type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ files_external:create --mount-point /s3backup --storage-type amazon-s3 --backend s3::bucket=mybackup --config access_key=AKID --config secret_key=secret"
+  },
+  {
+    "instruction": "List ownCloud external storages with occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ files_external:list"
+  },
+  {
+    "instruction": "Delete ownCloud external storage with occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ files_external:delete 1"
+  },
+  {
+    "instruction": "Verify ownCloud data directory permissions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: sudo -u www-data php /var/www/owncloud/occ files:scan --all --quiet\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ files:scan --all --quiet"
+  },
+  {
+    "instruction": "Check ownCloud server info with occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ check"
+  },
+  {
+    "instruction": "Send ownCloud system notification via occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ notification:generate alice 'Scheduled maintenance in 1 hour'"
+  },
+  {
+    "instruction": "Repair ownCloud installation with occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the php configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ maintenance:repair"
+  },
+  {
+    "instruction": "Clear ownCloud cache with occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ files:cleanup"
+  },
+  {
+    "instruction": "Update ownCloud app via occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data, --all\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ app:update --all"
+  },
+  {
+    "instruction": "Enable maintenance mode in Nextcloud via occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo -u www-data nextcloud.occ maintenance:mode --on\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ maintenance:mode --on"
+  },
+  {
+    "instruction": "Disable maintenance mode in Nextcloud via occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data, --off\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ maintenance:mode --off"
+  },
+  {
+    "instruction": "Run Nextcloud database migration with occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data, --no-interaction\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ db:migrate --no-interaction"
+  },
+  {
+    "instruction": "Add missing indices in Nextcloud via occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data, -missing, -indices\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ db:add-missing-indices"
+  },
+  {
+    "instruction": "Convert Nextcloud filecache charset via occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data, -filecache, -bigint\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ db:convert-filecache-bigint"
+  },
+  {
+    "instruction": "Install rclone from official script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl https://rclone.org/install.sh | sudo bash"
+  }
+]

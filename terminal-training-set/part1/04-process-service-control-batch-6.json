@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "List all systemd services that failed to start",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --state\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl --state=failed"
+  },
+  {
+    "instruction": "Reset a failed service to try again",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -failed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl reset-failed nginx"
+  },
+  {
+    "instruction": "Show the full service status with all properties",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl show nginx"
+  },
+  {
+    "instruction": "List all environment variables of a service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl show nginx -p Environment"
+  },
+  {
+    "instruction": "Override a service's ExecStart without editing the unit file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl edit nginx"
+  },
+  {
+    "instruction": "Revert a service to its original unit file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl revert nginx"
+  },
+  {
+    "instruction": "Add a drop-in config snippet for a service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p, -e, -reload\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nmkdir -p /etc/systemd/system/nginx.service.d && echo -e '[Service]\\nRestart=always' > /etc/systemd/system/nginx.service.d/override.conf && systemctl daemon-reload"
+  },
+  {
+    "instruction": "Set a service to automatically restart on failure",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --full, -i, -reload\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl edit --full nginx && sed -i '/\\[Service\\]/a Restart=always' /etc/systemd/system/nginx.service && systemctl daemon-reload"
+  },
+  {
+    "instruction": "Check the main PID of a service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl show -p MainPID nginx"
+  },
+  {
+    "instruction": "Show all service dependencies",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -dependencies\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl list-dependencies nginx"
+  },
+  {
+    "instruction": "Show reverse dependencies (what depends on this)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -dependencies, --reverse\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl list-dependencies --reverse nginx"
+  },
+  {
+    "instruction": "Start a transient service (runs once, no unit file)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-run` with the correct flags and arguments\n   2. Key flags: -run, --unit, --remain-after-exit\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-run` — systemd-run command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-run --unit=myjob --remain-after-exit echo hello"
+  },
+  {
+    "instruction": "Run a command as a user service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-run` with the correct flags and arguments\n   2. Key flags: -run, --user, --unit, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-run` — systemd-run command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-run --user --unit=myuserjob /bin/bash -c 'sleep 10; echo done'"
+  },
+  {
+    "instruction": "Show all user services for the current user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --user, -units\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl --user list-units"
+  },
+  {
+    "instruction": "Enable lingering for a user (keep user services on logout)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the john configuration with the required parameters\n   2. Apply the configuration and verify with `loginctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `loginctl` — loginctl command execution and management\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nloginctl enable-linger john"
+  },
+  {
+    "instruction": "List all logged-in users",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `who` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `who` — who command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwho"
+  },
+  {
+    "instruction": "List all user sessions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `loginctl` with the correct flags and arguments\n   2. Key flags: -sessions\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `loginctl` — loginctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nloginctl list-sessions"
+  },
+  {
+    "instruction": "Terminate a user session",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `loginctl` with the correct flags and arguments\n   2. Key flags: -user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `loginctl` — loginctl command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nloginctl terminate-user john"
+  },
+  {
+    "instruction": "Show the last system boot time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `who` with the correct flags and arguments\n   2. Key flags: -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `who` — who command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwho -b"
+  },
+  {
+    "instruction": "Show the list of users who have logged in",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `last` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `last` — last command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlast"
+  },
+  {
+    "instruction": "Show the last 10 login attempts with failed logins",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `last` with the correct flags and arguments\n   2. Key flags: -10, -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `last` — last command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlast -10 -F"
+  },
+  {
+    "instruction": "Show failed login attempts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lastb` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lastb` — lastb command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlastb"
+  },
+  {
+    "instruction": "Show current runlevel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `runlevel` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `runlevel` — runlevel command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrunlevel"
+  },
+  {
+    "instruction": "Show which services are socket-activated",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -sockets\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl list-sockets"
+  },
+  {
+    "instruction": "Reload all systemd manager configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -reload\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl daemon-reload"
+  }
+]

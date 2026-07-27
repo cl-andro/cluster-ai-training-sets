@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a compressed tar with progress bar",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -s, -sb\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ntar czf - ./dir/ | pv -s $(du -sb ./dir/ | awk '{print $1}') > archive.tar.gz"
+  },
+  {
+    "instruction": "Extract a tar.gz with progress bar",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pv` with the correct flags and arguments\n   2. Key flags: -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pv` — pv command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npv archive.tar.gz | tar xzf - -C /target/"
+  },
+  {
+    "instruction": "Create a tar of many small files with parallel processing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -print0, -0, --will-cite\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind ./dir/ -type f -print0 | parallel -0 --will-cite 'tar rf /tmp/bundle.tar' && gzip /tmp/bundle.tar"
+  },
+  {
+    "instruction": "Use tar with multi-volume support",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -M, -L, -F, -cf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar -M -L 1G -F 'echo next volume' -cf volume.tar ./dir/"
+  },
+  {
+    "instruction": "Compress a file with ppmd algorithm (7z extreme)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: -m0, -mx\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n7z a -m0=PPMd -mx=9 archive.7z file.txt"
+  },
+  {
+    "instruction": "Show the default compression level of gzip",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gzip` with the correct flags and arguments\n   2. Key flags: --fast, --best, -1, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gzip` — gzip command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngzip --fast --best 2>&1 | head -1 || man gzip | col -b | grep -A2 '-"
+  },
+  {
+    "instruction": "Compress a file with the fastest gzip level (1)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gzip` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gzip` — gzip command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngzip -1 fastfile.txt"
+  },
+  {
+    "instruction": "Compress a file with level 3 (balanced)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gzip` with the correct flags and arguments\n   2. Key flags: -3\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gzip` — gzip command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngzip -3 file.txt"
+  },
+  {
+    "instruction": "Compress a file with level 6 (default)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gzip` with the correct flags and arguments\n   2. Key flags: -6\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gzip` — gzip command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngzip -6 file.txt"
+  },
+  {
+    "instruction": "Compress a file with level 9 (best)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gzip` with the correct flags and arguments\n   2. Key flags: -9\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gzip` — gzip command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngzip -9 file.txt"
+  },
+  {
+    "instruction": "Recompress a directory from gz to bz2 (smaller)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -dc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor f in *.tar.gz; do gzip -dc \"$f\" | bzip2 > \"${f%.tar.gz}.tar.bz2\"; done"
+  },
+  {
+    "instruction": "Recompress from bz2 to xz (even smaller)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -dc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor f in *.tar.bz2; do bzip2 -dc \"$f\" | xz > \"${f%.tar.bz2}.tar.xz\"; done"
+  },
+  {
+    "instruction": "Compare sizes of compression algorithms on the same data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -c, -lh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ntar cf /tmp/test.tar ./testdata/ && for algo in gzip bzip2 xz zstd; do time \"$algo\" -c /tmp/test.tar > /tmp/test.tar.\"$algo\" && ls -lh /tmp/test.tar.\"$algo\"; done"
+  },
+  {
+    "instruction": "Create a tar without the directory's parent path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar czf archive.tar.gz -C /full/path/to/dir ."
+  },
+  {
+    "instruction": "Extract a tar removing the top-level directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: --strip-components, -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar xzf archive.tar.gz --strip-components=1 -C /target/dir/"
+  },
+  {
+    "instruction": "Create a tar with verbose file list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ntar czvf archive.tar.gz ./dir/ > file_list.txt 2>&1"
+  },
+  {
+    "instruction": "Create a tar listing files that would be included (dry-run)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ntar czvf - ./dir/ > /dev/null 2>&1; echo done"
+  },
+  {
+    "instruction": "Check if the system supports a compression tool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `which` with the correct flags and arguments\n   2. Key flags: -n1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `which` — which command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nwhich gzip bzip2 xz zstd lz4 2>/dev/null | xargs -n1 basename"
+  },
+  {
+    "instruction": "Install all common archiving tools",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y gzip bzip2 xz-utils zstd lz4 p7zip-full unrar zip unzip"
+  },
+  {
+    "instruction": "Install compression development libraries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y zlib1g-dev libbz2-dev liblzma-dev libzstd-dev liblz4-dev"
+  },
+  {
+    "instruction": "Compress a file and stream it to S3 (AWS CLI)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Supporting tool: `aws` — AWS cloud service management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar czf - ./dir/ | aws s3 cp - s3://mybucket/backup.tar.gz"
+  },
+  {
+    "instruction": "Compress and upload with gsutil (GCS)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Supporting tool: `gsutil` — gsutil command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar czf - ./dir/ | gsutil cp - gs://mybucket/backup.tar.gz"
+  },
+  {
+    "instruction": "Create an encrypted backup with age encryption",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for tar\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: tar czf - ./dir/ | age -r age1publickey -o backup.tar.gz.age\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar czf - ./dir/ | age -r age1publickey -o backup.tar.gz.age"
+  },
+  {
+    "instruction": "Decrypt and extract age-encrypted backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for age\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: age -d backup.tar.gz.age | tar xzf - -C /restore/\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `age` — age command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nage -d backup.tar.gz.age | tar xzf - -C /restore/"
+  },
+  {
+    "instruction": "Create a tar archive with GPG symmetric encryption and compression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: --symmetric, --cipher-algo, --batch, --passphrase\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Supporting tool: `gpg` — file encryption and signing\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ntar cf - ./dir/ | gpg --symmetric --cipher-algo AES256 --batch --passphrase 'secret' -o encrypted.tar.gz.gpg"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "nats pub my-subject \"hello world\"",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Published` with the correct flags and arguments\n   2. Key flags: -subject\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Published` — Published command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nPublished 11 bytes to my-subject"
+  },
+  {
+    "instruction": "nats sub my-subject",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Subscribed` with the correct flags and arguments\n   2. Key flags: -subject\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Subscribed` — Subscribed command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nSubscribed to my-subject\n["
+  },
+  {
+    "instruction": "nats req my-subject \"request payload\"",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Published` with the correct flags and arguments\n   2. Key flags: -subject\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Published` — Published command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nPublished request on my-subject\nReceived response on _INBOX.abc123: response payload"
+  },
+  {
+    "instruction": "nats reply my-subject \"reply message\"",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Listening` with the correct flags and arguments\n   2. Key flags: -subject\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Listening` — Listening command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nListening for requests on my-subject\nResponded to request #1"
+  },
+  {
+    "instruction": "nats stream add --name mystream --subjects \"events.>\" --storage file --retention limits --max-msgs 10000",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Stream` with the correct flags and arguments\n   2. Key flags: -07, -25T10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Stream` — Stream command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nStream mystream was created\n\nInformation for Stream mystream created 2024-07-25T10:00:00Z\n\nConfiguration:\n\n             Subjects: events.>\n     Acknowledgements: true\n            Retention: File - Limits\n             Replicas: 1\n       Maximum Age: 168h0m0s\n\nState:\n\n           Messages: 0\n               Bytes: 0 B\n            FirstSeq: 0\n             LastSeq: 0"
+  },
+  {
+    "instruction": "nats consumer add mystream myconsumer --pull --ack explicit --max-pending 100",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Consumer` with the correct flags and arguments\n   2. Key flags: -07, -25T10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Consumer` — Consumer command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nConsumer myconsumer created\n\nInformation for Consumer mystream > myconsumer created 2024-07-25T10:00:00Z\n\nSubject: events.>\nAcknowledgment: explicit\n Deliver Policy: all\n Deliver Group: \nFilter Subject: "
+  },
+  {
+    "instruction": "nats context save mycontext --server nats://admin:pass@localhost:4222",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Saved` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Saved` — Saved command execution and management\n   Supporting tool: `named` — BIND9 DNS server\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nSaved context named \"mycontext\""
+  },
+  {
+    "instruction": "nats context select mycontext",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Selected` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Selected` — Selected command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nSelected context \"mycontext\""
+  },
+  {
+    "instruction": "nats context ls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Available` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Available` — Available command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n               Available NATS contexts:\n\n                  mycontext (*)\n                  default"
+  },
+  {
+    "instruction": "nats context rm mycontext",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Removed` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Removed` — Removed command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nRemoved context \"mycontext\""
+  },
+  {
+    "instruction": "nats server check --uptime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nats-server` with the correct flags and arguments\n   2. Key flags: -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nats-server` — nats-server command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnats-server uptime: 24h30m0s"
+  },
+  {
+    "instruction": "nats server ping",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nats-server` with the correct flags and arguments\n   2. Key flags: -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nats-server` — nats-server command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnats-server at nats://localhost:4222 is available (version 2.10.14)"
+  },
+  {
+    "instruction": "nats account info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Account` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Account` — Account command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nAccount: $G\n\nConnections: 5\nTotal Data: 1.2 MB\n\nJetStream Info:\n  Memory: 0 B / 0 B\n  Store: 1 KB / 10 GB\n  Streams: 2\n  Consumers: 3"
+  },
+  {
+    "instruction": "nats benchmark --pub 1 --sub 1 --subject test --size 256 --msgs 100000",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Starting` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Starting` — Starting command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nStarting benchmark [msgs=100000, msgsize=256, pubs=1, subs=1]\nNATS Pub/Sub throughput: 50000 msgs/sec, 12.2 MB/sec"
+  },
+  {
+    "instruction": "pulsar-admin clusters list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n[\"standalone\"]"
+  },
+  {
+    "instruction": "pulsar-admin clusters get standalone",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n{\"serviceUrl\": \"http://localhost:8080/\"}"
+  },
+  {
+    "instruction": "pulsar-admin tenants list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n[\"public\", \"sample\"]"
+  },
+  {
+    "instruction": "pulsar-admin tenants create my-tenant --allowed-clusters standalone",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Created` with the correct flags and arguments\n   2. Key flags: -tenant\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Created` — Created command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nCreated tenant my-tenant"
+  },
+  {
+    "instruction": "pulsar-admin namespaces list my-tenant",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n[]"
+  },
+  {
+    "instruction": "pulsar-admin namespaces create my-tenant/my-namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Created` with the correct flags and arguments\n   2. Key flags: -tenant, -namespace\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Created` — Created command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nCreated namespace my-tenant/my-namespace"
+  },
+  {
+    "instruction": "pulsar-admin topics list my-tenant/my-namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n[]"
+  },
+  {
+    "instruction": "pulsar-admin topics create persistent://my-tenant/my-namespace/my-topic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `Created` with the correct flags and arguments\n   2. Key flags: -tenant, -namespace, -topic\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `Created` — Created command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nCreated topic persistent://my-tenant/my-namespace/my-topic"
+  }
+]

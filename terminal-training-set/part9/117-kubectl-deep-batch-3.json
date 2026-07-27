@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Get a pod's UID with jsonpath",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -app, -5d8f9c, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get pod web-app-5d8f9c -o jsonpath='{.metadata.uid}'"
+  },
+  {
+    "instruction": "List all container images per pod with jsonpath",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get pods -o jsonpath='{range .items[*]}{.spec.containers[*].image}{\"\\n\"}{end}'"
+  },
+  {
+    "instruction": "Count pods per phase with jsonpath and shell",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -o, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get pods -o jsonpath='{range .items[*]}{.status.phase}{\"\\n\"}{end}' | sort | uniq -c"
+  },
+  {
+    "instruction": "Get the service CIDR from kube-proxy configmap",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -system, -proxy, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get cm -n kube-system kube-proxy -o jsonpath='{.data.config}' | grep clusterCIDR"
+  },
+  {
+    "instruction": "Rollback a deployment to previous revision",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl rollout undo deployment/web-app"
+  },
+  {
+    "instruction": "Rollback to a specific revision",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -app, --to-revision\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl rollout undo deployment/web-app --to-revision=3"
+  },
+  {
+    "instruction": "Check rollout status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -app\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl rollout status deployment/web-app"
+  },
+  {
+    "instruction": "View rollout history of a deployment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl rollout history deployment/web-app"
+  },
+  {
+    "instruction": "Scale a deployment to 5 replicas",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl scale deployment/web-app --replicas=5"
+  },
+  {
+    "instruction": "Scale a StatefulSet to 3 replicas",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: --replicas\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl scale sts/postgres --replicas=3"
+  },
+  {
+    "instruction": "Scale a deployment to zero replicas",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl scale deployment/web-app --replicas=0"
+  },
+  {
+    "instruction": "Pause a rollout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -app\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl rollout pause deployment/web-app"
+  },
+  {
+    "instruction": "Resume a paused rollout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -app\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl rollout resume deployment/web-app"
+  },
+  {
+    "instruction": "Restart all pods in a deployment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl rollout restart deployment/web-app"
+  },
+  {
+    "instruction": "Forward local port 8080 to pod port 80",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -forward, -app, -5d8f9c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl port-forward pod/web-app-5d8f9c 8080:80"
+  },
+  {
+    "instruction": "Forward local port to a service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -forward\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl port-forward svc/postgres 5432:5432"
+  },
+  {
+    "instruction": "Start an API server proxy on port 8001",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: --port\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl proxy --port=8001"
+  },
+  {
+    "instruction": "Forward multiple ports to a deployment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl port-forward deploy/web-app 8080:80 8443:443"
+  },
+  {
+    "instruction": "Show pod resource usage across all namespaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: --all-namespaces\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Supporting tool: `top` — top command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl top pods --all-namespaces"
+  },
+  {
+    "instruction": "Show node resource usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Supporting tool: `top` — top command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl top nodes"
+  },
+  {
+    "instruction": "Show pod resource usage by label",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -l, -app\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Supporting tool: `top` — top command execution and management\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl top pods -l app=web-app"
+  },
+  {
+    "instruction": "Check if user can create deployments",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl auth can-i create deployments"
+  }
+]

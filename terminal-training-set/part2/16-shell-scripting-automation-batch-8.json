@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a named pipe with mkfifo and use it",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkfifo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkfifo` — mkfifo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmkfifo mypipe; cat file.txt > mypipe &; cat < mypipe"
+  },
+  {
+    "instruction": "Use mkfifo for bidirectional communication",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkfifo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkfifo` — mkfifo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmkfifo fifo1 fifo2; cmd1 < fifo1 > fifo2 &; cmd2 < fifo2 > fifo1 &; wait"
+  },
+  {
+    "instruction": "Use coproc to run a background process with I/O",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `coproc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `coproc` — coproc command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncoproc MYPROC { command; }; echo 'input' >&${MYPROC[1]}; read output <&${MYPROC[0]}"
+  },
+  {
+    "instruction": "Use coproc to communicate with bc for math",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `coproc` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `coproc` — coproc command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncoproc BC { bc -l; }; echo 'scale=4; 355/113' >&${BC[1]}; read result <&${BC[0]}; echo $result"
+  },
+  {
+    "instruction": "Use /dev/fd to pass file descriptors in process substitution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `diff` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `diff` — diff command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndiff /dev/fd/3 /dev/fd/4 3< <(ls dir1) 4< <(ls dir2)"
+  },
+  {
+    "instruction": "Use process substitution with while read loop",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `while` with the correct flags and arguments\n   2. Key flags: -r, --upgradable, -oP\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `while` — while command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nwhile IFS= read -r pkg; do echo \"Installing $pkg\"; done < <(apt list --upgradable 2>/dev/null | grep -oP '^[^/]+')"
+  },
+  {
+    "instruction": "Use exec to replace the current shell with a command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `exec` with the correct flags and arguments\n   2. Key flags: --login\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `exec` — exec command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexec /usr/bin/env bash --login"
+  },
+  {
+    "instruction": "Use exec to redirect all script output to a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `exec` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `exec` — exec command execution and management\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nexec > >(tee -a /var/log/script.log) 2>&1; echo \"All output logged\""
+  },
+  {
+    "instruction": "Use exec with custom file descriptors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `exec` with the correct flags and arguments\n   2. Key flags: -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `exec` — exec command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nexec 3<input.txt 4>output.txt; read -u 3 line; echo \"$line\" >&4; exec 3>&- 4>&-"
+  },
+  {
+    "instruction": "Use eval with caution for dynamic variable assignment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `key` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `key` — key command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nkey=var1; val=hello; eval \"$key=\\\"$val\\\"\"; echo $var1"
+  },
+  {
+    "instruction": "Use eval to build and run a command from string fragments",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cmd` with the correct flags and arguments\n   2. Key flags: -rn\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cmd` — cmd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncmd='grep'; args='-rn \"TODO\" src/'; eval \"$cmd $args\""
+  },
+  {
+    "instruction": "Use shopt -s dotglob to include hidden files in glob",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `shopt` with the correct flags and arguments\n   2. Key flags: -s, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `shopt` — shopt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nshopt -s dotglob; for f in *; do echo \"$f\"; done; shopt -u dotglob"
+  },
+  {
+    "instruction": "Use shopt -s extglob for extended pattern matching",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `shopt` with the correct flags and arguments\n   2. Key flags: -s, -rf, -file, -this\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `shopt` — shopt command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nshopt -s extglob; rm -rf !(important-file|keep-this)"
+  },
+  {
+    "instruction": "Use shopt -s globstar to match nested directories recursively",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `shopt` with the correct flags and arguments\n   2. Key flags: -s, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `shopt` — shopt command execution and management\n   Flag `-l`: long listing format\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nshopt -s globstar; wc -l **/*.py"
+  },
+  {
+    "instruction": "Use set -o noclobber to prevent accidental file overwrite",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `set` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `set` — set command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nset -o noclobber; echo new > existing.txt 2>&1 || echo \"File exists, not overwritten\"; set +o noclobber"
+  },
+  {
+    "instruction": "Use set -o ignoreeof to prevent Ctrl+D from exiting shell",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `set` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `set` — set command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nset -o ignoreeof;"
+  },
+  {
+    "instruction": "Use set -o vi to enable vi-style command-line editing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: set -o vi\n   2. Apply the configuration and verify with `set status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `set` — set command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nset -o vi"
+  },
+  {
+    "instruction": "Use set -o emacs to switch back to emacs editing mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `set` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `set` — set command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nset -o emacs"
+  },
+  {
+    "instruction": "Use source with a return value check",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `source` with the correct flags and arguments\n   2. Key flags: -release\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `source` — source command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsource /etc/os-release; if [ \"$ID\" = debian ]; then echo \"Is Debian\"; fi"
+  },
+  {
+    "instruction": "Use brace expansion to create directory structure",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Supporting tool: `java` — java command execution and management\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir -p project/{src/{main,test}/java,docs,config}"
+  },
+  {
+    "instruction": "Use brace expansion with sequences",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `touch` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `touch` — touch command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntouch file_{a..z}.txt"
+  },
+  {
+    "instruction": "Use brace expansion with step values",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho {1..10..2}"
+  },
+  {
+    "instruction": "Use glob patterns to match file ranges",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho [a-f]*.txt"
+  },
+  {
+    "instruction": "Use globbing with character classes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls [[:digit:]]*"
+  },
+  {
+    "instruction": "Create and use a persistent alias across sessions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ltr, --color\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'alias llt=\"ls -ltr --color=auto\"' >> ~/.bash_aliases && source ~/.bash_aliases"
+  }
+]

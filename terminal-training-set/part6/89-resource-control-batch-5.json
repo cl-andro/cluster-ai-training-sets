@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Use niced daemon for automatic nice adjustment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `niced` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `niced` — niced command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nniced mycommand"
+  },
+  {
+    "instruction": "Run nohang daemon for OOM prevention",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nohang` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nohang` — nohang command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnohang"
+  },
+  {
+    "instruction": "Check nohang status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status nohang"
+  },
+  {
+    "instruction": "Configure earlyoom to ignore specific processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '--ignore MYAPP' >> /etc/default/earlyoom\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '--ignore MYAPP' >> /etc/default/earlyoom"
+  },
+  {
+    "instruction": "Set systemd IOWeight for a service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -property\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl set-property nginx.service IOWeight=100"
+  },
+  {
+    "instruction": "Set systemd BlockIOWeight for legacy cgroup v1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -property\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl set-property nginx.service BlockIOWeight=500"
+  },
+  {
+    "instruction": "Run a systemd service with CPUQuota limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -property\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl set-property nginx.service CPUQuota=50%"
+  },
+  {
+    "instruction": "Set AllowedCPUs for a systemd service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -property, -3\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl set-property nginx.service AllowedCPUs=0-3"
+  },
+  {
+    "instruction": "Set AllowedMemoryNodes for a systemd service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -property\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl set-property nginx.service AllowedMemoryNodes=0"
+  },
+  {
+    "instruction": "Show systemd service resource properties",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -p, -p, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Flag `-p`: create parent directories\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl show -p CPUWeight -p MemoryMax -p TasksMax nginx.service"
+  },
+  {
+    "instruction": "Run systemd-run with IOWeight",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-run` with the correct flags and arguments\n   2. Key flags: -run, -p, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-run` — systemd-run command execution and management\n   Flag `-p`: create parent directories\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-run -p IOWeight=200 -t command"
+  },
+  {
+    "instruction": "Run systemd-run with CPUShares (legacy)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-run` with the correct flags and arguments\n   2. Key flags: -run, -p, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-run` — systemd-run command execution and management\n   Flag `-p`: create parent directories\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-run -p CPUShares=1024 -t command"
+  },
+  {
+    "instruction": "Use systemd-cgls to show cgroup hierarchy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-cgls` with the correct flags and arguments\n   2. Key flags: -cgls\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-cgls` — systemd-cgls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-cgls"
+  },
+  {
+    "instruction": "Use systemd-cgls for a specific slice",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-cgls` with the correct flags and arguments\n   2. Key flags: -cgls\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-cgls` — systemd-cgls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-cgls system.slice"
+  },
+  {
+    "instruction": "Create a cgroup v2 subdirectory with controllers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -io\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '+cpu +memory -io' > /sys/fs/cgroup/mygroup/cgroup.subtree_control"
+  },
+  {
+    "instruction": "Move a process into a cgroup v2 by writing pid",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1234 > /sys/fs/cgroup/mygroup/cgroup.procs"
+  },
+  {
+    "instruction": "List processes in a cgroup v2",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/fs/cgroup/mygroup/cgroup.procs"
+  },
+  {
+    "instruction": "Enable cpu controller on cgroup v2 root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '+cpu' > /sys/fs/cgroup/cgroup.subtree_control\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '+cpu' > /sys/fs/cgroup/cgroup.subtree_control"
+  },
+  {
+    "instruction": "Enable memory controller on cgroup v2 root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '+memory' > /sys/fs/cgroup/cgroup.subtree_control\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '+memory' > /sys/fs/cgroup/cgroup.subtree_control"
+  },
+  {
+    "instruction": "Read memory pressure level notifications in cgroup v2",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/fs/cgroup/mygroup/memory.pressure"
+  },
+  {
+    "instruction": "Set cgroup v2 memory.high for best-effort limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 500M > /sys/fs/cgroup/mygroup/memory.high"
+  },
+  {
+    "instruction": "Set cgroup v2 memory.low for guaranteed protection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 256M > /sys/fs/cgroup/mygroup/memory.low"
+  },
+  {
+    "instruction": "Set cgroup v2 memory.min for absolute protection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 128M > /sys/fs/cgroup/mygroup/memory.min"
+  },
+  {
+    "instruction": "Read cgroup v2 io.stat",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/fs/cgroup/mygroup/io.stat"
+  },
+  {
+    "instruction": "Set cgroup v2 io.max read bandwidth",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '8:0 rbps=104857600' > /sys/fs/cgroup/mygroup/io.max"
+  },
+  {
+    "instruction": "Set cgroup v2 io.max write IOPS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '8:0 wiops=1000' > /sys/fs/cgroup/mygroup/io.max"
+  }
+]

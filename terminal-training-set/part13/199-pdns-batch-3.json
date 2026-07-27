@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to install PowerDNS authoritative server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install pdns-server pdns-backend-mysql"
+  },
+  {
+    "instruction": "How to install PowerDNS recursor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install pdns-recursor"
+  },
+  {
+    "instruction": "How to install dnsdist",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install dnsdist"
+  },
+  {
+    "instruction": "How to create a primary zone with pdnsutil",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pdnsutil` with the correct flags and arguments\n   2. Key flags: -zone\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pdnsutil` — PowerDNS zone management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npdnsutil create-zone example.com ns1.example.com admin.example.com"
+  },
+  {
+    "instruction": "How to set up a secondary zone in PowerDNS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -slave, -zone\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `pdnsutil` — PowerDNS zone management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'slave=yes' >> /etc/powerdns/pdns.conf && pdnsutil create-slave-zone example.com 192.168.1.1"
+  },
+  {
+    "instruction": "How to retrieve a slave zone immediately",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pdns_control` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pdns_control` — pdns_control command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npdns_control retrieve example.com"
+  },
+  {
+    "instruction": "How to notify slaves of zone change",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pdns_control` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pdns_control` — pdns_control command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npdns_control notify example.com"
+  },
+  {
+    "instruction": "How to redirect query in dnsdist",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnsdist` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'addAction(QType(\"A\"), RCodeAction(dnsdist.NXDOMAIN))'"
+  },
+  {
+    "instruction": "How to add dnsdist console ACL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -acl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'console-acl=127.0.0.0/8' >> /etc/dnsdist/dnsdist.conf"
+  },
+  {
+    "instruction": "How to set dnsdist to listen on port 53",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'setLocal(\"0.0.0.0:53\")' >> /etc/dnsdist/dnsdist.conf"
+  },
+  {
+    "instruction": "How to add pool backends in dnsdist",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnsdist` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'newServer({address=\"192.168.1.1:53\", pool=\"auth\"})'"
+  },
+  {
+    "instruction": "How to set dnsdist load balancing policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnsdist` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'setServerPolicy(leastOutstanding)'"
+  },
+  {
+    "instruction": "How to set dnsdist to drop large queries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnsdist` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'addAction(MaxQSizeAction(512), DropAction())'"
+  },
+  {
+    "instruction": "How to enable DNSSEC processing in dnsdist",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: dnsdist -e 'setDNSSECPool(\"dnssec-pool\")'\n   2. Apply the configuration and verify with `dnsdist status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'setDNSSECPool(\"dnssec-pool\")'"
+  },
+  {
+    "instruction": "How to view dnsdist top queries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnsdist` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'topQueries()'"
+  },
+  {
+    "instruction": "How to view dnsdist client statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnsdist` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'showServers()'"
+  },
+  {
+    "instruction": "How to check dnsdist latency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnsdist` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'showResponseLatencies()'"
+  },
+  {
+    "instruction": "How to restart dnsdist service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart dnsdist"
+  },
+  {
+    "instruction": "How to add a Lua action in dnsdist",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnsdist` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'addAction(AllRule(), DelayAction(100))'"
+  },
+  {
+    "instruction": "How to rate limit in dnsdist",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnsdist` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnsdist` — dnsdist command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnsdist -e 'addAction(QType(\"A\"), RCodeAction(dnsdist.NXDOMAIN))'"
+  },
+  {
+    "instruction": "How to use rec_control to flush cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rec_control` with the correct flags and arguments\n   2. Key flags: -cache\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rec_control` — rec_control command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrec_control flush-cache example.com"
+  },
+  {
+    "instruction": "How to view recursor cache dump",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rec_control` with the correct flags and arguments\n   2. Key flags: -cache\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rec_control` — rec_control command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrec_control dump-cache /tmp/cache.dump"
+  },
+  {
+    "instruction": "How to set rec-control as server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rec_control` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rec_control` — rec_control command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrec_control ping"
+  },
+  {
+    "instruction": "How to check recursor trace for a domain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rec_control` with the correct flags and arguments\n   2. Key flags: -regex\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rec_control` — rec_control command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrec_control trace-regex \".*example.com\""
+  },
+  {
+    "instruction": "How to add forward zone in pdns-recursor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -zones\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'forward-zones=example.com=8.8.8.8' >> /etc/powerdns/recursor.conf"
+  }
+]

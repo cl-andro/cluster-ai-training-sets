@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Query rate of HTTP requests over 5 minutes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rate` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rate` — rate command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrate(http_requests_total[5m])"
+  },
+  {
+    "instruction": "Query average request duration in last minute",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `avg` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `avg` — avg command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\navg(rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m]))"
+  },
+  {
+    "instruction": "Query 99th percentile of request duration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `histogram_quantile` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `histogram_quantile` — histogram_quantile command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhistogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))"
+  },
+  {
+    "instruction": "Query CPU usage percentage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
+  },
+  {
+    "instruction": "Query memory usage percentage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)"
+  },
+  {
+    "instruction": "Query disk usage percentage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n100 - (node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay\"} / node_filesystem_size_bytes{fstype!~\"tmpfs|overlay\"} * 100)"
+  },
+  {
+    "instruction": "Count distinct label values",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `count` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `count` — count command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncount(count by (instance) (up))"
+  },
+  {
+    "instruction": "Sum of metrics by a label",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sum` — sum command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsum by (job) (rate(http_requests_total[5m]))"
+  },
+  {
+    "instruction": "Top 5 instances by CPU usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `topk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `topk` — topk command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntopk(5, avg by (instance) (rate(node_cpu_seconds_total{mode!=\"idle\"}[5m])))"
+  },
+  {
+    "instruction": "Bottom 5 instances by free memory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bottomk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bottomk` — bottomk command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbottomk(5, node_memory_MemAvailable_bytes)"
+  },
+  {
+    "instruction": "Use offset modifier to compare with previous week",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_cpu_seconds_total` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_cpu_seconds_total` — node_cpu_seconds_total command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode_cpu_seconds_total offset 1w"
+  },
+  {
+    "instruction": "Use offset to compare current and previous value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_memory_MemAvailable_bytes` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_memory_MemAvailable_bytes` — node_memory_MemAvailable_bytes command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode_memory_MemAvailable_bytes - node_memory_MemAvailable_bytes offset 1h"
+  },
+  {
+    "instruction": "Use @ modifier to query at a specific timestamp",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_cpu_seconds_total` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_cpu_seconds_total` — node_cpu_seconds_total command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode_cpu_seconds_total @ 1721923200"
+  },
+  {
+    "instruction": "Check if any target is down",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `up` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `up` — up command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nup == 0"
+  },
+  {
+    "instruction": "Predict disk fill time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `predict_linear` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `predict_linear` — predict_linear command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npredict_linear(node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay\"}[6h], 86400)"
+  },
+  {
+    "instruction": "Absent function to detect missing series",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `absent` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `absent` — absent command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nabsent(up{job=\"node\"})"
+  },
+  {
+    "instruction": "Changes function to detect changes over time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `changes` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `changes` — changes command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nchanges(node_cpu_seconds_total[10m]) > 0"
+  },
+  {
+    "instruction": "Delta over a range vector",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `delta` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `delta` — delta command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndelta(node_cpu_seconds_total[5m])"
+  },
+  {
+    "instruction": "Increase over a range",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `increase` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `increase` — increase command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nincrease(http_requests_total[1h])"
+  },
+  {
+    "instruction": "Irate for instant rate with high-res",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `irate` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `irate` — irate command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nirate(node_network_receive_bytes_total[5m])"
+  },
+  {
+    "instruction": "Deriv of a gauge over time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `deriv` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `deriv` — deriv command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nderiv(node_memory_MemFree_bytes[30m])"
+  },
+  {
+    "instruction": "Histogram quantile for latency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `histogram_quantile` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `histogram_quantile` — histogram_quantile command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhistogram_quantile(0.95, sum(rate(grpc_server_handling_seconds_bucket[5m])) by (le, service))"
+  },
+  {
+    "instruction": "Label replace function",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `label_replace` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `label_replace` — label_replace command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlabel_replace(up, \"dc\", \"$1\", \"instance\", \"(.*):.*\")"
+  },
+  {
+    "instruction": "Label join function",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `label_join` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `label_join` — label_join command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlabel_join(up, \"full_name\", \":\", \"job\", \"instance\")"
+  },
+  {
+    "instruction": "Sort by value ascending",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sort` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sort` — sort command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsort(node_memory_MemFree_bytes)"
+  }
+]

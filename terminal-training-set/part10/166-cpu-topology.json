@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Show memory used per NUMA node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --hardware\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Supporting tool: `free` — free command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --hardware | grep 'free'"
+  },
+  {
+    "instruction": "Show process NUMA policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --show\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --show"
+  },
+  {
+    "instruction": "Show CPU flags",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lscpu` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lscpu` — lscpu command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlscpu | grep Flags"
+  },
+  {
+    "instruction": "Run command on dedicated CPUs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `taskset` with the correct flags and arguments\n   2. Key flags: -c, -3\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `taskset` — taskset command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntaskset -c 0-3 myapp"
+  },
+  {
+    "instruction": "Show CPU parsing JSON",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lscpu` with the correct flags and arguments\n   2. Key flags: --all, --json\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lscpu` — lscpu command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlscpu --all --json"
+  },
+  {
+    "instruction": "Show process CPU affinity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `taskset` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `taskset` — taskset command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntaskset -p $$"
+  },
+  {
+    "instruction": "Bind a command to a specific NUMA node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --cpunodebind, --membind\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --cpunodebind=0 --membind=0 myapp"
+  },
+  {
+    "instruction": "Show CPU isolation info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/devices/system/cpu/isolated"
+  },
+  {
+    "instruction": "Show CPU topology from sysfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/devices/system/cpu/cpu0/topology/core_cpus_list"
+  },
+  {
+    "instruction": "Show architecture specific info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `x86info` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `x86info` — x86info command execution and management\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nx86info -a"
+  },
+  {
+    "instruction": "Set CPU governor to performance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor"
+  },
+  {
+    "instruction": "Show cache index0 type",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/devices/system/cpu/cpu0/cache/index0/type"
+  },
+  {
+    "instruction": "Show cache index0 size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/devices/system/cpu/cpu0/cache/index0/size"
+  },
+  {
+    "instruction": "Show NUMA node memory info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --hardware\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --hardware | grep 'node.*size'"
+  },
+  {
+    "instruction": "Show CPU vulnerability info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/devices/system/cpu/vulnerabilities/*"
+  },
+  {
+    "instruction": "Show all CPU info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/cpuinfo"
+  },
+  {
+    "instruction": "Run with memory policy local",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --localalloc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --localalloc myapp"
+  },
+  {
+    "instruction": "Run with policy interleaved",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --interleave\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --interleave=all myapp"
+  },
+  {
+    "instruction": "Show CPU governor settings",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor"
+  },
+  {
+    "instruction": "Show all topology info per core",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor i in /sys/devices/system/cpu/cpu*/topology/; do echo \"=== $i ===\"; cat \"$i/core_cpus_list\" 2>/dev/null; done"
+  },
+  {
+    "instruction": "Show detailed CPUID info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cpuid` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cpuid` — cpuid command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncpuid -1"
+  },
+  {
+    "instruction": "Show cluster topology",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/devices/system/cpu/cpu*/topology/cluster_cpus_list"
+  }
+]

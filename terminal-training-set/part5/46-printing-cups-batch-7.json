@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a temporary printer that uses PDF output to file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -p, -E, -v, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-p`: create parent directories\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo lpadmin -p PDFPrinter -E -v file:///tmp/output.pdf -m drv:///sample.drv/generic.ppd"
+  },
+  {
+    "instruction": "Print a job with printing priority (1-100, higher = sooner)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -q 100 urgent_memo.pdf"
+  },
+  {
+    "instruction": "Hold a specific print job indefinitely via lp -i",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -i, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -i 23 -H hold"
+  },
+  {
+    "instruction": "Move print job 23 to printer 'BackupQueue'",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for lp\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: lp -i 23 -d BackupQueue\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -i 23 -d BackupQueue"
+  },
+  {
+    "instruction": "Re-print a completed job by job ID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -i, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -i 50 -H reprint"
+  },
+  {
+    "instruction": "Set job-originating-hostname option for tracking",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -o, -originating, -hostname\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -o job-originating-hostname=workstation42 report.pdf"
+  },
+  {
+    "instruction": "Print with a job-hold-until specified time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -o, -hold, -until\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -o job-hold-until=22:00 deferred.pdf"
+  },
+  {
+    "instruction": "Authenticate as different user with lpr for a specific printer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpr` with the correct flags and arguments\n   2. Key flags: -P, -U\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpr` — lpr command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpr -P OfficeJet -U alice memo.txt"
+  },
+  {
+    "instruction": "Print a raw PCL file directly to a printer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpr` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpr` — lpr command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpr -o raw /usr/share/ppd/sample.pcl"
+  },
+  {
+    "instruction": "Remove job 42 with lprm and suppress errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lprm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lprm` — lprm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlprm 42 2>/dev/null"
+  },
+  {
+    "instruction": "Remove all jobs from queue with lprm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lprm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lprm` — lprm command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlprm -"
+  },
+  {
+    "instruction": "Cancel a range of print jobs (10-20)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cancel` with the correct flags and arguments\n   2. Key flags: -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cancel` — cancel command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncancel 10-20"
+  },
+  {
+    "instruction": "Cancel all jobs owned by a specific user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cancel` with the correct flags and arguments\n   2. Key flags: -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cancel` — cancel command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncancel -u bob"
+  },
+  {
+    "instruction": "List available IPP attributes for a printer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ipptool` with the correct flags and arguments\n   2. Key flags: -tv, -attributes, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ipptool` — ipptool command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nipptool -tv ipp://printer.local:631/ipp/print get-attributes.test 2>&1 | grep -i attribute"
+  },
+  {
+    "instruction": "Send a raw IPP print-job request manually",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ipptool` with the correct flags and arguments\n   2. Key flags: -f, -tv, -job\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ipptool` — ipptool command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nipptool -f document.pdf -tv ipp://printer.local:631/ipp/print print-job.test"
+  },
+  {
+    "instruction": "Use ippfind to locate printers with a specific TXT record",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ippfind` with the correct flags and arguments\n   2. Key flags: --txt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ippfind` — ippfind command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nippfind --txt 'ty=HP' _ipp._tcp"
+  },
+  {
+    "instruction": "List all discovered network printers by IP address",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ippfind` with the correct flags and arguments\n   2. Key flags: --registration-type, --ls\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ippfind` — ippfind command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nippfind --registration-type _ipps._tcp --ls"
+  },
+  {
+    "instruction": "Validate a PPD file is strictly conforming",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cupstestppd` with the correct flags and arguments\n   2. Key flags: -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cupstestppd` — cupstestppd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncupstestppd -q /etc/cups/ppd/test.ppd"
+  },
+  {
+    "instruction": "Run a cupsfilter with custom option to set page size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cupsfilter` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cupsfilter` — cupsfilter command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncupsfilter -o media=A4 input.txt > output.ps"
+  },
+  {
+    "instruction": "Filter a file to PDF format with custom page size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cupsfilter` with the correct flags and arguments\n   2. Key flags: -o, -bottom, -o, -top\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cupsfilter` — cupsfilter command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncupsfilter -o page-bottom=36 -o page-top=36 letter.txt > letter.pdf"
+  },
+  {
+    "instruction": "Convert a file to PostScript using cupsfilter outputting to stdout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cupsfilter` with the correct flags and arguments\n   2. Key flags: -m, -postscript\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cupsfilter` — cupsfilter command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncupsfilter -m application/vnd.cups-postscript file.txt"
+  },
+  {
+    "instruction": "Show printer's current configuration including device URI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -l, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Flag `-l`: long listing format\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -l -p HP_LaserJet"
+  },
+  {
+    "instruction": "Print a text file with line numbering using pr",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pr` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pr` — pr command execution and management\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npr -n source.c | lp"
+  },
+  {
+    "instruction": "Format a text file with custom page length and indent",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pr` with the correct flags and arguments\n   2. Key flags: -l, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pr` — pr command execution and management\n   Flag `-l`: long listing format\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npr -l 66 -i 4 script.sh | lpr"
+  },
+  {
+    "instruction": "Send a text file directly to printer with enscript",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `enscript` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `enscript` — enscript command execution and management\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nenscript -p - readme.txt | lp"
+  }
+]

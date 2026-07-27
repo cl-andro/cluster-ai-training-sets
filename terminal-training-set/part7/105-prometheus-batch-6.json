@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Snapshot Prometheus TSDB via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for curl\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: curl -X POST 'http://localhost:9090/api/v1/admin/tsdb/snapshot'\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST 'http://localhost:9090/api/v1/admin/tsdb/snapshot'"
+  },
+  {
+    "instruction": "Delete series via Prometheus admin API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST -g 'http://localhost:9090/api/v1/admin/tsdb/delete_series?match[]=up{job=\"node\"}'"
+  },
+  {
+    "instruction": "Clean tombstones in Prometheus TSDB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST 'http://localhost:9090/api/v1/admin/tsdb/clean_tombstones'"
+  },
+  {
+    "instruction": "Start Prometheus with retention size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --storage\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --storage.tsdb.retention.size 100GB"
+  },
+  {
+    "instruction": "Start Prometheus with WAL compression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --storage, -compression\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --storage.tsdb.wal-compression"
+  },
+  {
+    "instruction": "Start Prometheus without TSDB locks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --storage, -lockfile\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --storage.tsdb.no-lockfile"
+  },
+  {
+    "instruction": "Start Prometheus with max block duration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --storage, -block, -duration\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --storage.tsdb.max-block-duration 2h"
+  },
+  {
+    "instruction": "Start Prometheus with min block duration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --storage, -block, -duration\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --storage.tsdb.min-block-duration 30m"
+  },
+  {
+    "instruction": "Install node_exporter as a service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -L https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz | tar xz && sudo ./node_exporter-1.8.2.linux-amd64/node_exporter"
+  },
+  {
+    "instruction": "Run node_exporter with disabled collectors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_exporter` with the correct flags and arguments\n   2. Key flags: --no-collector, --no-collector\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_exporter` — node_exporter command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode_exporter --no-collector.mdadm --no-collector.zfs"
+  },
+  {
+    "instruction": "Run node_exporter with specific collectors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_exporter` with the correct flags and arguments\n   2. Key flags: --collector, --collector, --collector, --collector\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_exporter` — node_exporter command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode_exporter --collector.diskstats --collector.filesystem --collector.cpu --collector.network --collector.meminfo"
+  },
+  {
+    "instruction": "Run node_exporter with custom listen port",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_exporter` with the correct flags and arguments\n   2. Key flags: --web, -address\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_exporter` — node_exporter command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode_exporter --web.listen-address :9101"
+  },
+  {
+    "instruction": "Run node_exporter with custom path prefix",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_exporter` with the correct flags and arguments\n   2. Key flags: --web, -path, -metrics\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_exporter` — node_exporter command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode_exporter --web.telemetry-path /node-metrics"
+  },
+  {
+    "instruction": "Run node_exporter with rootfs for disk stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_exporter` with the correct flags and arguments\n   2. Key flags: --path\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_exporter` — node_exporter command execution and management\n   Supporting tool: `host` — host command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode_exporter --path.rootfs /host"
+  },
+  {
+    "instruction": "Run node_exporter with systemd collector",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_exporter` with the correct flags and arguments\n   2. Key flags: --collector, --collector, -whitelist\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_exporter` — node_exporter command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Supporting tool: `nginx` — web server and reverse proxy\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nnode_exporter --collector.systemd --collector.systemd.unit-whitelist=\"(docker|sshd|nginx)\\.service\""
+  },
+  {
+    "instruction": "Run node_exporter with textfile collector",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node_exporter` with the correct flags and arguments\n   2. Key flags: --collector\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node_exporter` — node_exporter command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode_exporter --collector.textfile.directory /var/lib/node_exporter/textfile"
+  },
+  {
+    "instruction": "Install blackbox_exporter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -L https://github.com/prometheus/blackbox_exporter/releases/download/v0.25.0/blackbox_exporter-0.25.0.linux-amd64.tar.gz | tar xz && ./blackbox_exporter-0.25.0.linux-amd64/blackbox_exporter"
+  },
+  {
+    "instruction": "Scrape blackbox_exporter for HTTP probe",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'scrape_configs: - job_name: http_probe params: module: [http_2xx] target: [\"https://example.com\"] static_configs: - targets: - blackbox:9115' >> prometheus.yml"
+  },
+  {
+    "instruction": "Configure blackbox ICMP probe module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'modules: icmp: prober: icmp timeout: 5s icmp: preferred_ip_protocol: ip4' \n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'modules: icmp: prober: icmp timeout: 5s icmp: preferred_ip_protocol: ip4' > blackbox.yml"
+  },
+  {
+    "instruction": "Configure blackbox TCP probe module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'modules: tcp_connect: prober: tcp timeout: 5s tcp: query_response: []' >> \n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'modules: tcp_connect: prober: tcp timeout: 5s tcp: query_response: []' >> blackbox.yml"
+  },
+  {
+    "instruction": "Install Prometheus in Docker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the docker configuration with the required parameters\n   2. Apply the configuration and verify with `docker status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name prometheus -p 9090:9090 -v $PWD/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus"
+  },
+  {
+    "instruction": "Install node_exporter in Docker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the host configuration with the required parameters\n   2. Apply the configuration and verify with `docker status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Supporting tool: `host` — host command execution and management\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name node_exporter -p 9100:9100 -v /proc:/host/proc:ro -v /sys:/host/sys:ro -v /:/rootfs:ro prom/node-exporter --path.rootfs /host"
+  },
+  {
+    "instruction": "Install Alertmanager in Docker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the docker configuration with the required parameters\n   2. Apply the configuration and verify with `docker status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name alertmanager -p 9093:9093 -v $PWD/alertmanager.yml:/etc/alertmanager/alertmanager.yml prom/alertmanager"
+  },
+  {
+    "instruction": "Upgrade Prometheus by replacing binary",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -L, -2, -amd64, -2\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -L https://github.com/prometheus/prometheus/releases/download/v2.54.0/prometheus-2.54.0.linux-amd64.tar.gz | tar xz && sudo cp prometheus-2.54.0.linux-amd64/prometheus /usr/local/bin/ && sudo systemctl restart prometheus"
+  },
+  {
+    "instruction": "Start Prometheus in debug logging mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using prometheus\n   2. Apply corrective actions: prometheus --config.file prometheus.yml --log.level debug\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --log.level debug"
+  }
+]

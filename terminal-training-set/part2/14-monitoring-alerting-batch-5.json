@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Set up a cron job to check disk space and email alert",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo '0 * * * * df -h | mail -s \"Disk usage\" admin@example.com' | crontab -\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-h`: human-readable format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '0 * * * * df -h | mail -s \"Disk usage\" admin@example.com' | crontab -"
+  },
+  {
+    "instruction": "Create a simple bash monitoring script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo -e '\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e '"
+  },
+  {
+    "instruction": "Set up a dead man's switch cron",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -fsS, --retry, -ping, -uuid\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Flag `--retry`: retry on transient failures\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\necho '*/5 * * * * curl -fsS --retry 3 https://hc-ping.com/my-uuid > /dev/null' | crontab -"
+  },
+  {
+    "instruction": "Monitor a log file for specific keywords and alert",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo -e '\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e '"
+  },
+  {
+    "instruction": "Use monit for process monitoring",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for apt\n   2. Build the command chain with error handling\n   3. Execute: apt install -y monit && cat > /etc/monit/conf.d/nginx << 'EOF'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y monit && cat > /etc/monit/conf.d/nginx << 'EOF'\ncheck process nginx with pidfile /run/nginx.pid\n  start program = \"/usr/sbin/nginx\"\n  stop program = \"/usr/sbin/nginx -s stop\"\n  if failed port 80 protocol http then restart\n  if 5 restarts within 5 cycles then timeout\nEOF && monit reload && monit start nginx"
+  },
+  {
+    "instruction": "Check monit status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `monit` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `monit` — monit command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmonit status"
+  },
+  {
+    "instruction": "Start all monit monitored processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for monit\n   2. Build the command chain with error handling\n   3. Execute: monit start all\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `monit` — monit command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmonit start all"
+  },
+  {
+    "instruction": "Use god (process monitor in Ruby)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for gem\n   2. Build the command chain with error handling\n   3. Execute: gem install god && cat > /etc/god/conf.god << 'EOF'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `gem` — gem command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngem install god && cat > /etc/god/conf.god << 'EOF'\nGod.watch do |w|\n  w.name = \"nginx\"\n  w.start = \"nginx\"\n  w.restart = \"nginx -s reload\"\n  w.keepalive\nend\nEOF && god start"
+  },
+  {
+    "instruction": "Install supervisor (process control system)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y supervisor && systemctl enable --now supervisor"
+  },
+  {
+    "instruction": "Add a supervisor program config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `john` — john command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/supervisor/conf.d/myapp.conf << 'EOF'\n[program:myapp]\ncommand=/usr/local/bin/myapp\nuser=john\nautostart=true\nautorestart=true\nstderr_logfile=/var/log/myapp.err.log\nstdout_logfile=/var/log/myapp.out.log\nEOF && supervisorctl update"
+  },
+  {
+    "instruction": "Check supervisor program status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `supervisorctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `supervisorctl` — supervisorctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsupervisorctl status"
+  },
+  {
+    "instruction": "Restart a supervisor program",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `supervisorctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `supervisorctl` — supervisorctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsupervisorctl restart myapp"
+  },
+  {
+    "instruction": "Stop a supervisor program",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `supervisorctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `supervisorctl` — supervisorctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsupervisorctl stop myapp"
+  },
+  {
+    "instruction": "Check if any service is consuming too much memory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: --sort\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nps aux --sort=-%mem | awk 'NR>1{if($4>10) print $11\" uses \"$4\"% memory\"}'"
+  },
+  {
+    "instruction": "Check if any process is using swap heavily",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -k2, -rh, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor f in /proc/*/status; do awk '/VmSwap|Name/{printf \"%s \", $2} END {print \"\"}' $f 2>/dev/null; done | sort -k2 -rh | head -10"
+  },
+  {
+    "instruction": "Check the number of running processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps aux | wc -l"
+  },
+  {
+    "instruction": "Check the number of open file handles system-wide",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -nr\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/fs/file-nr | awk '{print \"Open: \" $1 \" Max: \" $3}'"
+  },
+  {
+    "instruction": "Check TCP connection states counts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `netstat` with the correct flags and arguments\n   2. Key flags: -ant, -c, -rh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `netstat` — netstat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetstat -ant | awk '{print $6}' | sort | uniq -c | sort -rh"
+  },
+  {
+    "instruction": "Check the number of users currently logged in",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `who` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `who` — who command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwho | wc -l"
+  },
+  {
+    "instruction": "Check system uptime trend over last week",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `last` with the correct flags and arguments\n   2. Key flags: -x, -7\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `last` — last command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlast -x | grep reboot | tail -7"
+  },
+  {
+    "instruction": "Install and run mtr for network path quality",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `mtr` — mtr command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y mtr-tiny && mtr --report -c 10 8.8.8.8"
+  },
+  {
+    "instruction": "Install and run smokeping (latency graphing)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y smokeping && systemctl enable --now smokeping"
+  },
+  {
+    "instruction": "Check Smokeping targets",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/smokeping/config.d/Targets | head -30"
+  },
+  {
+    "instruction": "Install and run Icinga Web 2",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y icingaweb2 icingacli && icingacli setup token create"
+  },
+  {
+    "instruction": "Get Icinga Web 2 setup token",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: icingacli setup token show\n   2. Apply the configuration and verify with `icingacli status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `icingacli` — icingacli command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nicingacli setup token show"
+  }
+]

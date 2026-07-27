@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Install pwntools and check ELF security",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pip configuration with the required parameters\n   2. Apply the configuration and verify with `pip status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pip` — Python package installer\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npip install pwntools && python3 -c 'from pwn import *; e = ELF(\"/bin/ls\"); print(e.checksec())'"
+  },
+  {
+    "instruction": "Check ELF security properties with checksec script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `checksec` with the correct flags and arguments\n   2. Key flags: --file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `checksec` — checksec command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchecksec --file=/bin/ls"
+  },
+  {
+    "instruction": "Check kernel ASLR and NX settings",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `checksec` with the correct flags and arguments\n   2. Key flags: --kernel\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `checksec` — checksec command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchecksec --kernel"
+  },
+  {
+    "instruction": "Check binary for executable stack",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `execstack` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `execstack` — execstack command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexecstack /bin/ls"
+  },
+  {
+    "instruction": "Remove executable stack from a binary",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `execstack` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `execstack` — execstack command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexecstack -c /bin/ls"
+  },
+  {
+    "instruction": "Set executable stack on a binary",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `execstack` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `execstack` — execstack command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexecstack -s /bin/ls"
+  },
+  {
+    "instruction": "Use capstone CLI to disassemble bytes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from capstone import *; md = Cs(CS_ARCH_X86, CS_MODE_64); code = open(\"/bin/ls\",\"rb\").read()[:100]; for i in md.disasm(code, 0x400000): print(f\"0x{i.address:x}: {i.mnemonic} {i.op_str}\")'"
+  },
+  {
+    "instruction": "Capstone disassembly of specific offset",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c \"from capstone import *; md=Cs(CS_ARCH_X86,CS_MODE_64); d=open('/bin/ls','rb').read()[0x1000:0x1100]; [print(f'0x{i.address:x}: {i.mnemonic} {i.op_str}') for i in md.disasm(d,0x400000)]\""
+  },
+  {
+    "instruction": "Pwntools cyclic pattern generation for buffer overflow",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from pwn import *; print(cyclic(100))'"
+  },
+  {
+    "instruction": "Pwntools find offset from core dump",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from pwn import *; print(cyclic_find(\"kaaa\"))'"
+  },
+  {
+    "instruction": "Pwntools ROP gadget search on binary",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npython3 -c 'from pwn import *; e=ELF(\"/bin/ls\"); rop=ROP(e); rop.dump()' 2>/dev/null | head -20"
+  },
+  {
+    "instruction": "Pwntools assemble shellcode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from pwn import *; print(asm(\"xor rdi, rdi; mov rax, 60; syscall\"))'"
+  },
+  {
+    "instruction": "Pwntools disassemble hex bytes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from pwn import *; print(disasm(b\"\\x90\\x90\\xcc\"))'"
+  },
+  {
+    "instruction": "Pwntools connect to remote service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from pwn import *; r=remote(\"example.com\", 1337); r.interactive()'"
+  },
+  {
+    "instruction": "Pwntools ELF symbol lookup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from pwn import *; e=ELF(\"/bin/ls\"); print(e.symbols[\"main\"])'"
+  },
+  {
+    "instruction": "Checksec fortify source check",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `checksec` with the correct flags and arguments\n   2. Key flags: --fortify-file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `checksec` — checksec command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchecksec --fortify-file=/bin/ls"
+  },
+  {
+    "instruction": "Check all running processes for security properties",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `checksec` with the correct flags and arguments\n   2. Key flags: --proc-all\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `checksec` — checksec command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchecksec --proc-all"
+  },
+  {
+    "instruction": "Capstone list all instruction groups for x86-64",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from capstone import *; md=Cs(CS_ARCH_X86,CS_MODE_64); print([g for g in md.disasm(b\"\\x90\\x90\",0)[0].groups])'"
+  },
+  {
+    "instruction": "Pwntools pack and unpack integers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from pwn import *; print(p32(0xdeadbeef)); print(u32(p32(0xdeadbeef)))'"
+  },
+  {
+    "instruction": "Checksec JSON output for parsing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `checksec` with the correct flags and arguments\n   2. Key flags: --file, --json\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `checksec` — checksec command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchecksec --file=/bin/ls --json"
+  },
+  {
+    "instruction": "Capstone architecture listing for ARM64",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from capstone import *; md=Cs(CS_ARCH_ARM64,CS_MODE_ARM); d=bytes([0]*8); [print(f\"{i.mnemonic} {i.op_str}\") for i in md.disasm(d,0)]'"
+  },
+  {
+    "instruction": "Pwntools hex dump display",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'from pwn import *; print(hexdump(bytes(range(64))))'"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Create a systemd mount unit file for /mnt/data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo tee /etc/systemd/system/mnt-data.mount <<< '[Mount]\\nWhat=/dev/sdb1\\nWhere=/mnt/data\\nType=ext4\\nOptions=defaults,noatime'"
+  },
+  {
+    "instruction": "Create a systemd automount unit for on-demand mounting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo tee /etc/systemd/system/mnt-data.automount <<< '[Automount]\\nWhere=/mnt/data\\nTimeoutIdleSec=30'"
+  },
+  {
+    "instruction": "Set What= in a .mount unit to use UUID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -abcd, -1234, -abcd, -123456789abc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'What=UUID=abc12345-abcd-1234-abcd-123456789abc' | sudo tee -a /etc/systemd/system/mnt-data.mount"
+  },
+  {
+    "instruction": "Set the filesystem Type in a .mount unit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `btrfs` — Btrfs filesystem management\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'Type=btrfs' | sudo tee -a /etc/systemd/system/mnt-data.mount"
+  },
+  {
+    "instruction": "Set mount options (compress,noatime) in a .mount unit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'Options=compress=zstd,noatime,discard' | sudo tee -a /etc/systemd/system/mnt-data.mount"
+  },
+  {
+    "instruction": "Add TimeoutSec for mount attempt in a .mount unit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'TimeoutSec=30s' | sudo tee -a /etc/systemd/system/mnt-data.mount"
+  },
+  {
+    "instruction": "Add SloppyOptions=true to ignore invalid mount options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'SloppyOptions=true' | sudo tee -a /etc/systemd/system/mnt-data.mount"
+  },
+  {
+    "instruction": "Add ForceUnmount=true to forcefully unmount on stop",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'ForceUnmount=true' | sudo tee -a /etc/systemd/system/mnt-data.mount"
+  },
+  {
+    "instruction": "Add DirectoryMode to set permissions on mount point dir",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: echo 'DirectoryMode=0755' | sudo tee -a /etc/systemd/system/mnt-data.mount\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'DirectoryMode=0755' | sudo tee -a /etc/systemd/system/mnt-data.mount"
+  },
+  {
+    "instruction": "Enable and start a systemd mount unit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl enable --now mnt-data.mount"
+  },
+  {
+    "instruction": "Enable and start a systemd automount unit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl enable --now mnt-data.automount"
+  },
+  {
+    "instruction": "Start a mount unit explicitly",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl start mnt-data.mount"
+  },
+  {
+    "instruction": "Stop a systemd mount unit and unmount",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl stop mnt-data.mount"
+  },
+  {
+    "instruction": "Reload systemd after creating new mount units",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -reload\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl daemon-reload"
+  },
+  {
+    "instruction": "Check status of a systemd mount unit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl status mnt-data.mount"
+  },
+  {
+    "instruction": "List all systemd mount units",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -units, --type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl list-units --type=mount"
+  },
+  {
+    "instruction": "Use systemd-mount to mount a device directly",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -mount\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo systemd-mount /dev/sdb1 /mnt/data"
+  },
+  {
+    "instruction": "Use systemd-mount with options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -mount, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo systemd-mount -o noatime,nodiratime /dev/sdb1 /mnt/data"
+  },
+  {
+    "instruction": "Use systemd-mount with automount enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo systemd-mount --automount=yes /dev/sdb1 /mnt/data\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo systemd-mount --automount=yes /dev/sdb1 /mnt/data"
+  },
+  {
+    "instruction": "Use systemd-mount with timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -mount, --timeout-idle-sec\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo systemd-mount --timeout-idle-sec=60 /dev/sdb1 /mnt/data"
+  },
+  {
+    "instruction": "Use systemd-umount to unmount a path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -umount\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo systemd-umount /mnt/data"
+  },
+  {
+    "instruction": "Escape a path for use in systemd unit names",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-escape` with the correct flags and arguments\n   2. Key flags: -escape\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-escape` — systemd-escape command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-escape /mnt/disk/data"
+  },
+  {
+    "instruction": "Unescape a systemd-escaped mount path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-escape` with the correct flags and arguments\n   2. Key flags: -escape, -u, -disk, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-escape` — systemd-escape command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-escape -u mnt-disk-data"
+  },
+  {
+    "instruction": "Create a complete .mount unit for NFS with systemd-mount",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -mount, --type, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo systemd-mount --type=nfs -o soft,intr server:/export /mnt/nfs"
+  }
+]

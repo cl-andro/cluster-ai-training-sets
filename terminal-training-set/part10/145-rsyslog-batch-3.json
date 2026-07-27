@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Configure rsyslog to compress rotated logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'global(compress=\"on\")' > /etc/rsyslog.d/compress.conf\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'global(compress=\"on\")' > /etc/rsyslog.d/compress.conf"
+  },
+  {
+    "instruction": "Set syslog-ng to log from specific facility only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ng, -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'filter f_authpriv { facility(authpriv); };' >> /etc/syslog-ng/conf.d/authpriv.conf && echo 'destination d_authpriv { file(\"/var/log/authpriv.log\"); };' >> /etc/syslog-ng/conf.d/authpriv_dest.conf"
+  },
+  {
+    "instruction": "Use rsyslog to log to a PostgreSQL database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'module(load=\"ompgsql\")' > /etc/rsyslog.d/pgsql.conf && echo 'action(type=\"ompgsql\" server=\"localhost\" db=\"syslog\" uid=\"rsyslog\" pwd=\"password\")' >> /etc/rsyslog.d/pgsql.conf"
+  },
+  {
+    "instruction": "Create syslog-ng configuration with TLS mutual auth",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -untrusted\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'source s_tls_mutual { tcp(ip(\"0.0.0.0\") port(6514) tls(key_file(\"/etc/ssl/private/syslog.key\") cert_file(\"/etc/ssl/certs/syslog.crt\") peer_verify(\"required-untrusted\") ca_dir(\"/etc/ssl/certs\"))); };' >> /etc/syslog-ng/conf.d/tls_mutual.conf"
+  },
+  {
+    "instruction": "Filter messages by message content in rsyslog",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho ':msg, contains, \"error\" /var/log/error.log' >> /etc/rsyslog.d/error_match.conf"
+  },
+  {
+    "instruction": "Set up syslog-ng daily log rotation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -date, -short, -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'destination d_rotated { file(\"/var/log/messages-\" iso-date-short); };' >> /etc/syslog-ng/conf.d/daily_rotate.conf"
+  },
+  {
+    "instruction": "Use rsyslog to anonymize IP addresses in logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -9, -9, -9, -9\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'module(load=\"mmanon\")' > /etc/rsyslog.d/anonymize.conf && echo 'set $.ip = re_extract($msg, \"[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\", 0, \"\", $ip);' >> /etc/rsyslog.d/anonymize.conf"
+  },
+  {
+    "instruction": "Configure syslog-ng with logrotate integration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'destination d_rotated { file(\"/var/log/messages\" perm(0640) owner(\"root\") \n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'destination d_rotated { file(\"/var/log/messages\" perm(0640) owner(\"root\") group(\"adm\")); };' >> /etc/syslog-ng/conf.d/logrotate.conf"
+  },
+  {
+    "instruction": "Set up rsyslog to monitor journald logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'module(load=\"imjournal\")' > /etc/rsyslog.d/journal.conf && echo 'input(typ\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'module(load=\"imjournal\")' > /etc/rsyslog.d/journal.conf && echo 'input(type=\"imjournal\")' >> /etc/rsyslog.d/journal.conf"
+  },
+  {
+    "instruction": "Create syslog-ng filter for multiple facilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'filter f_multi { facility(local0,local1,local2); };' >> /etc/syslog-ng/conf.d/multi_facility.conf"
+  },
+  {
+    "instruction": "Use rsyslog deduplication module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'module(load=\"mmdedup\")' > /etc/rsyslog.d/dedup_module.conf && echo 'action(type=\"mmdedup\")' >> /etc/rsyslog.d/dedup_module.conf"
+  },
+  {
+    "instruction": "Configure syslog-ng to ignore debug messages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using echo\n   2. Apply corrective actions: echo 'filter f_no_debug { not level(debug); };' >> /etc/syslog-ng/conf.d/no_debu\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'filter f_no_debug { not level(debug); };' >> /etc/syslog-ng/conf.d/no_debug.conf"
+  },
+  {
+    "instruction": "Set up rsyslog for high-performance logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'global(workDirectory=\"/var/spool/rsyslog\")' > /etc/rsyslog.d/performance.conf && echo 'action(type=\"omfwd\" target=\"192.168.1.100\" port=\"514\" protocol=\"tcp\" queue.type=\"linkedlist\" queue.size=\"1000000\" queue.dequeueBatchSize=\"1000\")' >> /etc/rsyslog.d/performance.conf"
+  },
+  {
+    "instruction": "Create syslog-ng template for systemd journal style",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'template t_journal { template(\"%ISODATE %HOST %MSG\\n\"); };' >> /etc/syslog-ng/conf.d/journal_template.conf"
+  },
+  {
+    "instruction": "Filter rsyslog output by tag pattern",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho ':syslogtag, contains, \"nginx\" /var/log/nginx_access.log' >> /etc/rsyslog.d/nginx_tag.conf"
+  },
+  {
+    "instruction": "Set up syslog-ng to store logs in MongoDB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ng, -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '@version: 4.0' > /etc/syslog-ng/conf.d/mongodb.conf && echo 'destination d_mongodb { mongodb(uri(\"mongodb://localhost:27017\") collection(\"logs\")); };' >> /etc/syslog-ng/conf.d/mongodb.conf"
+  },
+  {
+    "instruction": "Use rsyslog user-based filtering",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho ':msg, regex, \"user .* logged in\" /var/log/user_login.log' >> /etc/syslog-ng/conf.d/user_login.conf"
+  },
+  {
+    "instruction": "Configure syslog-ng for elasticsearch output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the elasticsearch configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `elasticsearch` — elasticsearch command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'destination d_elasticsearch { elasticsearch(server(\"localhost\") port(9200) index(\"syslog-%Y.%m.%d\") type(\"syslog\")); };' >> /etc/syslog-ng/conf.d/elastic.conf"
+  },
+  {
+    "instruction": "Set up rsyslog to discard duplicate syslog messages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'module(load=\"mmnormalize\")' > /etc/rsyslog.d/normalize.conf"
+  },
+  {
+    "instruction": "Configure syslog-ng to use a central configuration directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '@include \"/etc/syslog-ng/conf.d/*.conf\"' >> /etc/syslog-ng/syslog-ng.conf\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '@include \"/etc/syslog-ng/conf.d/*.conf\"' >> /etc/syslog-ng/syslog-ng.conf"
+  },
+  {
+    "instruction": "Use rsyslog to separate logs by month",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'template(name=\"MonthLog\" type=\"string\" string=\"/var/log/syslog-%$year%-%$month%.log\")' > /etc/rsyslog.d/monthly.conf && echo '*.* action(type=\"omfile\" dynaFile=\"MonthLog\")' >> /etc/rsyslog.d/monthly.conf"
+  },
+  {
+    "instruction": "Create syslog-ng parser for Cisco ASA logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -parser, -none, -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `host` — host command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'parser p_cisco { csv-parser(columns(\"timestamp\",\"host\",\"msg\") delimiters(\" \") flags(escape-none)); };' >> /etc/syslog-ng/conf.d/cisco_parser.conf"
+  },
+  {
+    "instruction": "Filter rsyslog by priority range",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '*.info;mail.none;authpriv.none;cron.none /var/log/messages' >> /etc/rsyslog.d/priority_filter.conf"
+  },
+  {
+    "instruction": "Set up syslog-ng to handle multi-line messages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -padding, -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'options { keep-padding(no); };' >> /etc/syslog-ng/conf.d/multiline.conf"
+  },
+  {
+    "instruction": "Configure rsyslog to send logs to syslog-ng via RELP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'module(load=\"omrelp\")' > /etc/rsyslog.d/relp_forward.conf && echo 'action(\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'module(load=\"omrelp\")' > /etc/rsyslog.d/relp_forward.conf && echo 'action(type=\"omrelp\" target=\"192.168.1.100\" port=\"20514\" tls=\"on\")' >> /etc/rsyslog.d/relp_forward.conf"
+  }
+]

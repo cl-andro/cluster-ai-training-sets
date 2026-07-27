@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to compute a SHA-256 hash of a file and store it in a variable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hash` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hash` — hash command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhash=$(sha256sum file.txt | awk '{print $1}')"
+  },
+  {
+    "instruction": "How to compute SHA-256 of a file and use in a conditional",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `if` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `if` — if command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nif sha256sum -c checksum.txt; then echo 'OK'; else echo 'FAIL'; fi"
+  },
+  {
+    "instruction": "How to compute SHA-256 hash of all files in a directory tree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -type, -hashes\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor f in $(find . -type f); do sha256sum \"$f\" >> all-hashes.txt; done"
+  },
+  {
+    "instruction": "How to compute hash of a file with a relative path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum file.txt | sed 's|\\./||'"
+  },
+  {
+    "instruction": "How to verify a set of hashes ignoring missing files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -c, --ignore-missing\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum -c --ignore-missing checksums.txt"
+  },
+  {
+    "instruction": "How to verify a set of hashes with warnings suppressed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -c, --quiet\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Flag `--quiet`: suppress non-essential output\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum -c --quiet checksums.txt"
+  },
+  {
+    "instruction": "How to verify a set of hashes with status only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -c, --status\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum -c --status checksums.txt && echo 'All OK'"
+  },
+  {
+    "instruction": "How to compute hash of a symlink target",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum $(readlink -f link.txt)"
+  },
+  {
+    "instruction": "How to compute hash of a file with spaces in the name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum 'my file.txt'"
+  },
+  {
+    "instruction": "How to compute hash of a file excluding the path prefix",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -f1, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum file.txt | cut -f1 -d' '"
+  },
+  {
+    "instruction": "How to compute a hash for a device node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sha256sum /dev/sdb1"
+  },
+  {
+    "instruction": "How to compute the hash of a memory block in /dev",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sha256sum /dev/mem"
+  },
+  {
+    "instruction": "How to compute the hash of a process's memory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sha256sum /proc/1/exe"
+  },
+  {
+    "instruction": "How to compute a rolling hash for a large file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `split` with the correct flags and arguments\n   2. Key flags: -b, -hashes\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `split` — split command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsplit -b 1M largefile.iso && sha256sum x* > split-hashes.txt"
+  },
+  {
+    "instruction": "How to compute hash for each block of a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -hashes\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor i in $(seq 0 100); do dd if=file.bin bs=4096 skip=$i count=1 2>/dev/null | sha256sum >> block-hashes.txt; done"
+  },
+  {
+    "instruction": "How to compute hashdeep with a specific output format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -c, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhashdeep -r -c md5 -o html dir/ > report.html"
+  },
+  {
+    "instruction": "How to compute hashdeep with a whitelist filter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -c, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhashdeep -r -c sha256 -i '*.txt' dir/"
+  },
+  {
+    "instruction": "How to compute hashdeep excluding certain files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -c, -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhashdeep -r -c sha256 -x '*.log' dir/"
+  },
+  {
+    "instruction": "How to use hashdeep to find changed files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -k, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhashdeep -r -k baseline.txt -a current/"
+  },
+  {
+    "instruction": "How to compute hashdeep with a sorted output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -l, -k3, -hashes\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhashdeep -r -l dir/ | sort -k3 > sorted-hashes.txt"
+  },
+  {
+    "instruction": "How to compute hashdeep of a network share",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -baseline\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhashdeep -r /mnt/nfs/share/ > nfs-baseline.txt"
+  },
+  {
+    "instruction": "How to compute hash with shasum and binary mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `shasum` with the correct flags and arguments\n   2. Key flags: -b, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `shasum` — shasum command execution and management\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nshasum -b -a 256 file.txt"
+  },
+  {
+    "instruction": "How to compute hash with shasum and text mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `shasum` with the correct flags and arguments\n   2. Key flags: -t, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `shasum` — shasum command execution and management\n   Flag `-t`: sort by time\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nshasum -t -a 256 file.txt"
+  },
+  {
+    "instruction": "How to compute hash with shasum from stdin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'data' | shasum -a 256"
+  },
+  {
+    "instruction": "How to show shasum version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `shasum` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `shasum` — shasum command execution and management\n   Flag `--version`: show tool version\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nshasum --version"
+  }
+]

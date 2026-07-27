@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Configure rsync daemon with a module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo -e '[backup]\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e '[backup]\npath = /data/backup\ncomment = Backup share\nread only = no\ntimeout = 300' >> /etc/rsyncd.conf"
+  },
+  {
+    "instruction": "Initialize a Seafile client",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seaf-cli` with the correct flags and arguments\n   2. Key flags: -cli, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seaf-cli` — seaf-cli command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseaf-cli init -d ~/.seafile"
+  },
+  {
+    "instruction": "Start Seafile client daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seaf-cli` with the correct flags and arguments\n   2. Key flags: -cli\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seaf-cli` — seaf-cli command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseaf-cli start"
+  },
+  {
+    "instruction": "Stop Seafile client daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seaf-cli` with the correct flags and arguments\n   2. Key flags: -cli\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seaf-cli` — seaf-cli command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseaf-cli stop"
+  },
+  {
+    "instruction": "Sync a Seafile library to a local folder",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seaf-cli` with the correct flags and arguments\n   2. Key flags: -cli, -l, -ID, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seaf-cli` — seaf-cli command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseaf-cli sync -l LIB-ID -s https://seafile.example.com -d ~/seafile-data -u user@example.com -p password"
+  },
+  {
+    "instruction": "List Seafile synced libraries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seaf-cli` with the correct flags and arguments\n   2. Key flags: -cli\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seaf-cli` — seaf-cli command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseaf-cli list"
+  },
+  {
+    "instruction": "Show Seafile sync status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seaf-cli` with the correct flags and arguments\n   2. Key flags: -cli\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seaf-cli` — seaf-cli command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseaf-cli status"
+  },
+  {
+    "instruction": "Download a Seafile library without syncing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seaf-cli` with the correct flags and arguments\n   2. Key flags: -cli, -l, -ID, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seaf-cli` — seaf-cli command execution and management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseaf-cli download -l LIB-ID -d ~/seafile-dl"
+  },
+  {
+    "instruction": "Desync a Seafile library",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seaf-cli` with the correct flags and arguments\n   2. Key flags: -cli, -l, -ID\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seaf-cli` — seaf-cli command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseaf-cli desync -l LIB-ID"
+  },
+  {
+    "instruction": "Sync an ownCloud folder",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `owncloudcmd` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `owncloudcmd` — owncloudcmd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nowncloudcmd ~/owncloud https://owncloud.example.com"
+  },
+  {
+    "instruction": "Sync ownCloud with specific folder",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `owncloudcmd` with the correct flags and arguments\n   2. Key flags: -s, --user, --password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `owncloudcmd` — owncloudcmd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nowncloudcmd -s --user user --password pass ~/owncloud https://owncloud.example.com/photos"
+  },
+  {
+    "instruction": "Sync a Nextcloud folder non-interactively",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nextcloudcmd` with the correct flags and arguments\n   2. Key flags: --user, --password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nextcloudcmd` — nextcloudcmd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnextcloudcmd --user user --password pass ~/nextcloud https://nextcloud.example.com"
+  },
+  {
+    "instruction": "Nextcloud sync with exclude list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nextcloudcmd` with the correct flags and arguments\n   2. Key flags: --exclude\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nextcloudcmd` — nextcloudcmd command execution and management\n   Flag `--exclude`: skip matching patterns\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnextcloudcmd --exclude /path/to/exclude.lst ~/nextcloud https://nextcloud.example.com"
+  },
+  {
+    "instruction": "Nextcloud sync trusted certificate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nextcloudcmd` with the correct flags and arguments\n   2. Key flags: --trust\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nextcloudcmd` — nextcloudcmd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnextcloudcmd --trust ~/nextcloud https://nextcloud.example.com"
+  },
+  {
+    "instruction": "Nextcloud sync with single file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nextcloudcmd` with the correct flags and arguments\n   2. Key flags: --path\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nextcloudcmd` — nextcloudcmd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnextcloudcmd ~/nextcloud https://nextcloud.example.com --path /Documents"
+  },
+  {
+    "instruction": "Initialize a git-annex repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex init 'My Laptop'"
+  },
+  {
+    "instruction": "Add a file to git-annex",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex add largefile.iso"
+  },
+  {
+    "instruction": "Get a file from git-annex (download content)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex get largefile.iso"
+  },
+  {
+    "instruction": "Drop file content from git-annex local",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex drop largefile.iso"
+  },
+  {
+    "instruction": "Move file content in git-annex",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --to\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex move largefile.iso --to remote"
+  },
+  {
+    "instruction": "Copy file content in git-annex",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: --to\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex copy largefile.iso --to remote"
+  },
+  {
+    "instruction": "Unlock a git-annex file for editing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex unlock largefile.iso"
+  },
+  {
+    "instruction": "Lock a git-annex file (undo unlock)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex lock largefile.iso"
+  },
+  {
+    "instruction": "Show where git-annex file content is stored",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex whereis largefile.iso"
+  },
+  {
+    "instruction": "Find unused git-annex content",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex unused"
+  },
+  {
+    "instruction": "Fsck git-annex repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit annex fsck"
+  }
+]

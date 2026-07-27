@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to add flow that matches TCP port 80",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 dl_type=0x0800,nw_proto=6,tp_dst=80,action=output:2"
+  },
+  {
+    "instruction": "How to add flow that matches source IP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 ip,nw_src=10.0.0.1,action=output:2"
+  },
+  {
+    "instruction": "How to add flow that matches destination IP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 ip,nw_dst=192.168.1.100,action=output:3"
+  },
+  {
+    "instruction": "How to add flow with NAT action in OVS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow, -trk\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 priority=100,ct_state=-trk,ip,action=ct(table=0)"
+  },
+  {
+    "instruction": "How to add connection tracking zone flow",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 priority=100,ct_state=+trk,ip,action=output:2"
+  },
+  {
+    "instruction": "How to add flow with set-field action in OVS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\novs-ofctl add-flow br0 in_port=1,action=set_field:10.0.0.2->nw_dst,output:2"
+  },
+  {
+    "instruction": "How to add flow with mod_vlan_vid in OVS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 in_port=1,action=mod_vlan_vid:200,output:2"
+  },
+  {
+    "instruction": "How to add flow that strips VLAN in OVS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 in_port=1,action=strip_vlan,output:2"
+  },
+  {
+    "instruction": "How to add flow that pushes VLAN in OVS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\novs-ofctl add-flow br0 in_port=1,action=push_vlan:0x8100,set_field:100->vlan_vid,output:2"
+  },
+  {
+    "instruction": "How to add flow with decrement TTL in OVS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 ip,in_port=1,action=dec_ttl,output:2"
+  },
+  {
+    "instruction": "How to add flow that matches on MPLS label",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 mpls_label=100,action=output:2"
+  },
+  {
+    "instruction": "How to add flow that pushes MPLS label in OVS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\novs-ofctl add-flow br0 ip,in_port=1,action=push_mpls:0x8847,set_field:100->mpls_label,output:2"
+  },
+  {
+    "instruction": "How to add flow that pops MPLS label in OVS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 dl_type=0x8847,in_port=1,action=pop_mpls:0x0800,output:2"
+  },
+  {
+    "instruction": "How to add flow for VXLAN decapsulation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 in_port=vxlan0,dl_type=0x0800,action=output:2"
+  },
+  {
+    "instruction": "How to add flow for VXLAN encapsulation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-ofctl` with the correct flags and arguments\n   2. Key flags: -ofctl, -flow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl add-flow br0 in_port=2,dl_type=0x0800,action=output:vxlan0"
+  },
+  {
+    "instruction": "How to check OVS system datapath types",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-vsctl` with the correct flags and arguments\n   2. Key flags: -vsctl, -type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-vsctl list system-type"
+  },
+  {
+    "instruction": "How to list OVS datapaths",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-dpctl` with the correct flags and arguments\n   2. Key flags: -dpctl, -dps\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-dpctl` — ovs-dpctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-dpctl dump-dps"
+  },
+  {
+    "instruction": "How to add a new OVS datapath",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-dpctl` with the correct flags and arguments\n   2. Key flags: -dpctl, -dp\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-dpctl` — ovs-dpctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-dpctl add-dp dp0"
+  },
+  {
+    "instruction": "How to delete an OVS datapath",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-dpctl` with the correct flags and arguments\n   2. Key flags: -dpctl, -dp\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-dpctl` — ovs-dpctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-dpctl del-dp dp0"
+  },
+  {
+    "instruction": "How to show OVS datapath statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-dpctl` with the correct flags and arguments\n   2. Key flags: -dpctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-dpctl` — ovs-dpctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-dpctl show dp0"
+  },
+  {
+    "instruction": "How to dump OVS datapath flows",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-dpctl` with the correct flags and arguments\n   2. Key flags: -dpctl, -flows\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-dpctl` — ovs-dpctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-dpctl dump-flows dp0"
+  },
+  {
+    "instruction": "How to check OVS datapath cache stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-appctl` with the correct flags and arguments\n   2. Key flags: -appctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-appctl` — ovs-appctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-appctl dpif/show"
+  },
+  {
+    "instruction": "How to check OVS upcall statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-appctl` with the correct flags and arguments\n   2. Key flags: -appctl, -flows\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-appctl` — ovs-appctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-appctl dpif/dump-flows br0"
+  },
+  {
+    "instruction": "How to set OVS bridge datapath type",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-vsctl` with the correct flags and arguments\n   2. Key flags: -vsctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-vsctl set bridge br0 datapath_type=netdev"
+  },
+  {
+    "instruction": "How to enable OVS userspace datapath",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `ovs-vsctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\novs-vsctl set bridge br0 datapath_type=netdev && systemctl restart openvswitch-switch"
+  }
+]

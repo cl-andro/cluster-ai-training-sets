@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a VPC in AWS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -vpc, --cidr-block, --query\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 create-vpc --cidr-block 10.0.0.0/16 --query 'Vpc.VpcId'"
+  },
+  {
+    "instruction": "Create a subnet in AWS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -subnet, --vpc-id, -xxx, --cidr-block\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 create-subnet --vpc-id vpc-xxx --cidr-block 10.0.1.0/24"
+  },
+  {
+    "instruction": "Create a security group in AWS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -security, -group, --group-name, -sg\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 create-security-group --group-name my-sg --description \"My SG\" --vpc-id vpc-xxx"
+  },
+  {
+    "instruction": "Authorize ingress in AWS security group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -security, -group, -ingress, --group-id\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 authorize-security-group-ingress --group-id sg-xxx --protocol tcp --port 22 --cidr 0.0.0.0/0"
+  },
+  {
+    "instruction": "Create and attach an Internet Gateway in AWS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -internet, -gateway, -internet, -gateway\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 create-internet-gateway && aws ec2 attach-internet-gateway --internet-gateway-id igw-xxx --vpc-id vpc-xxx"
+  },
+  {
+    "instruction": "Create a route table in AWS with internet access",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -route, -table, --vpc-id, -xxx\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 create-route-table --vpc-id vpc-xxx && aws ec2 create-route --route-table-id rtb-xxx --destination-cidr-block 0.0.0.0/0 --gateway-id igw-xxx"
+  },
+  {
+    "instruction": "Allocate and associate an Elastic IP in AWS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -address, --domain, -address, --allocation-id\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 allocate-address --domain vpc && aws ec2 associate-address --allocation-id eipalloc-xxx --instance-id i-xxx"
+  },
+  {
+    "instruction": "Create an SQS queue",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -queue, --queue-name, -queue\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws sqs create-queue --queue-name my-queue"
+  },
+  {
+    "instruction": "Send a message to SQS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -message, --queue-url, -queue, --message-body\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws sqs send-message --queue-url https://sqs.region.amazonaws.com/account/my-queue --message-body 'Hello'"
+  },
+  {
+    "instruction": "Receive a message from SQS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -message, --queue-url, -queue\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws sqs receive-message --queue-url https://sqs.region.amazonaws.com/account/my-queue"
+  },
+  {
+    "instruction": "Delete a message from SQS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -message, --queue-url, -queue, --receipt-handle\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws sqs delete-message --queue-url https://sqs.region.amazonaws.com/account/my-queue --receipt-handle xxx"
+  },
+  {
+    "instruction": "Create an SNS topic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -topic, --name, -topic\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws sns create-topic --name my-topic"
+  },
+  {
+    "instruction": "Subscribe an email to SNS topic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: --topic-arn, -topic, --protocol, --notification-endpoint\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws sns subscribe --topic-arn arn:aws:sns:region:account:my-topic --protocol email --notification-endpoint user@example.com"
+  },
+  {
+    "instruction": "Publish a message to SNS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: --topic-arn, -topic, --message\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws sns publish --topic-arn arn:aws:sns:region:account:my-topic --message 'Alert message'"
+  },
+  {
+    "instruction": "List CloudFormation stack resources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -stack, -resources, --stack-name, -stack\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws cloudformation describe-stack-resources --stack-name my-stack"
+  },
+  {
+    "instruction": "Delete a CloudFormation stack",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -stack, --stack-name, -stack\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws cloudformation delete-stack --stack-name my-stack"
+  },
+  {
+    "instruction": "List ECS clusters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -clusters\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ecs list-clusters"
+  },
+  {
+    "instruction": "Run a task on ECS (Fargate)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -task, --cluster, -cluster, --launch-type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ecs run-task --cluster my-cluster --launch-type FARGATE --task-definition my-task:1 --network-configuration 'awsvpcConfiguration={subnets=[subnet-xxx],securityGroups=[sg-xxx]}'"
+  },
+  {
+    "instruction": "List EKS clusters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -clusters\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws eks list-clusters"
+  },
+  {
+    "instruction": "Update kubeconfig for EKS cluster",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -kubeconfig, --name, -cluster, --region\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws eks update-kubeconfig --name my-cluster --region us-east-1"
+  },
+  {
+    "instruction": "Create an S3 bucket policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -bucket, -policy, --bucket, -bucket\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws s3api put-bucket-policy --bucket my-bucket --policy file://policy.json"
+  },
+  {
+    "instruction": "Enable S3 bucket versioning",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the aws configuration with the required parameters\n   2. Apply the configuration and verify with `aws status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws s3api put-bucket-versioning --bucket my-bucket --versioning-configuration Status=Enabled"
+  },
+  {
+    "instruction": "List S3 bucket lifecycle rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -bucket, -lifecycle, -configuration, --bucket\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws s3api get-bucket-lifecycle-configuration --bucket my-bucket"
+  },
+  {
+    "instruction": "Set up S3 static website hosting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -bucket, --index-document, --error-document\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws s3 website s3://my-bucket --index-document index.html --error-document error.html"
+  },
+  {
+    "instruction": "Create a Route53 DNS record",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -resource, -record, -sets, --hosted-zone-id\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws route53 change-resource-record-sets --hosted-zone-id ZONE --change-batch '{\"Changes\":[{\"Action\":\"CREATE\",\"ResourceRecordSet\":{\"Name\":\"www.example.com\",\"Type\":\"A\",\"TTL\":300,\"ResourceRecords\":[{\"Value\":\"1.2.3.4\"}]}}]}'"
+  }
+]

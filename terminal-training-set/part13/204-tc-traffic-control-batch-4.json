@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to add a basic filter with ematch",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc filter add dev eth0 parent 1: basic match 'cmp(u16 at 2 layer ip eq 2048)' action drop"
+  },
+  {
+    "instruction": "How to add a u32 filter with src/dst IP and port",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc filter add dev eth0 parent 1: protocol ip prio 1 u32 match ip src 10.0.0.0/24 match ip dport 80 0xffff flowid 1:10"
+  },
+  {
+    "instruction": "How to add a u32 filter with TCP flags",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc filter add dev eth0 parent 1: protocol ip prio 1 u32 match tcp flags 0x02 0xff flowid 1:10"
+  },
+  {
+    "instruction": "How to add a u32 filter with offset",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc filter add dev eth0 parent 1: protocol ip prio 1 u32 match ip sport 0 0xffff at 0 flowid 1:10"
+  },
+  {
+    "instruction": "How to add a u32 filter for ICMP type",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc filter add dev eth0 parent 1: protocol ip prio 1 u32 match ip protocol 1 0xff match u8 8 at 20 flowid 1:10"
+  },
+  {
+    "instruction": "How to add a filter to set pkt mark for QoS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc filter add dev eth0 parent 1: protocol ip prio 1 u32 match ip dst 10.0.0.1 action skbedit mark 1"
+  },
+  {
+    "instruction": "How to add a tc filter that mirrors traffic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc filter add dev eth0 parent 1: protocol ip prio 1 u32 match ip src 10.0.0.1 action mirred egress mirror dev eth1"
+  },
+  {
+    "instruction": "How to add a tc filter that redirects traffic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc filter add dev eth0 parent 1: protocol ip prio 1 u32 match ip src 10.0.0.1 action mirred egress redirect dev eth1"
+  },
+  {
+    "instruction": "How to set up a CBQ (Class Based Queueing) qdisc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc add dev eth0 root handle 1: cbq bandwidth 100mbit avpkt 1000 cell 8"
+  },
+  {
+    "instruction": "How to add a CBQ class",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc class add dev eth0 parent 1: classid 1:10 cbq bandwidth 100mbit rate 10mbit weight 1mbit allot 1514 prio 5 maxburst 20 avpkt 1000"
+  },
+  {
+    "instruction": "How to add a HFSC (Hierarchical Fair Service Curve) qdisc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc add dev eth0 root handle 1: hfsc default 30"
+  },
+  {
+    "instruction": "How to add an HFSC class",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc class add dev eth0 parent 1: classid 1:10 hfsc sc mtu 1500 rate 10mbit ul mtu 1500 rate 10mbit"
+  },
+  {
+    "instruction": "How to add a DSMARK qdisc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc add dev eth0 root handle 1: dsmark indices 64 default_index 1"
+  },
+  {
+    "instruction": "How to set a DSMARK value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc class change dev eth0 classid 1:1 dsmark mask 0xfc value 0x10"
+  },
+  {
+    "instruction": "How to add a choke qdisc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc add dev eth0 root choke limit 30000 min 5000 max 15000 probability 0.02 avpkt 1000 bandwidth 10mbit ecn"
+  },
+  {
+    "instruction": "How to add a codel qdisc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc add dev eth0 root codel limit 1000 target 5ms interval 100ms"
+  },
+  {
+    "instruction": "How to add a pie qdisc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc add dev eth0 root pie limit 1000 target 15ms tupdate 30ms alpha 2 beta 20"
+  },
+  {
+    "instruction": "How to add a fq (Fair Queue) qdisc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc add dev eth0 root fq limit 10000 flow_limit 100 quantum 3000"
+  },
+  {
+    "instruction": "How to set the default qdisc for all interfaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.core.default_qdisc=fq_codel"
+  },
+  {
+    "instruction": "How to check the current default qdisc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl net.core.default_qdisc"
+  },
+  {
+    "instruction": "How to show all tc qdisc parameters for eth0",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc -d qdisc show dev eth0"
+  },
+  {
+    "instruction": "How to show all class traffic stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc -s class show dev eth0"
+  },
+  {
+    "instruction": "How to reset tc statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: -s, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc -s -s qdisc show dev eth0"
+  },
+  {
+    "instruction": "How to add a qdisc on a child interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc add dev eth0.100 root fq_codel"
+  },
+  {
+    "instruction": "How to show tc qdisc for all interfaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc show"
+  }
+]

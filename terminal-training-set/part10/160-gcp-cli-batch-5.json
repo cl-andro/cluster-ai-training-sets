@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "Create a service account",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: -accounts, -sa, --display-name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud iam service-accounts create my-sa --display-name 'My Service Account'"
+  },
+  {
+    "instruction": "Get GKE cluster credentials",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: -credentials, -cluster, --zone, -central1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud container clusters get-credentials my-cluster --zone us-central1-a"
+  },
+  {
+    "instruction": "List GKE clusters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud container clusters list --format='table(name,location,status,masterVersion)'"
+  },
+  {
+    "instruction": "Deploy a Cloud Run service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the gcloud configuration with the required parameters\n   2. Apply the configuration and verify with `gcloud status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud run deploy my-service --image gcr.io/my-project/my-image --region us-central1"
+  },
+  {
+    "instruction": "Create a GCS bucket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gsutil` with the correct flags and arguments\n   2. Key flags: -new, -bucket\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gsutil` — gsutil command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngsutil mb gs://my-new-bucket/"
+  },
+  {
+    "instruction": "Filter running instances",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: --filter, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud compute instances list --filter=status=RUNNING --format='table(name,zone,networkInterfaces[0].networkIP)'"
+  },
+  {
+    "instruction": "Remove IAM policy binding",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: -iam, -policy, -binding, -project\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud projects remove-iam-policy-binding my-project-id --member user:user@example.com --role roles/viewer"
+  },
+  {
+    "instruction": "List Pub/Sub topics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud pubsub topics list --format='table(name)'"
+  },
+  {
+    "instruction": "List IAM roles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud iam roles list --format='table(name,title)'"
+  },
+  {
+    "instruction": "List service accounts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: -accounts, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud iam service-accounts list --format='table(email,displayName)'"
+  },
+  {
+    "instruction": "Create static external IP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: -static, -ip, --region, -central1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud compute addresses create my-static-ip --region us-central1"
+  },
+  {
+    "instruction": "Query BigQuery with dry run",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bq` with the correct flags and arguments\n   2. Key flags: --dry_run, --use_legacy_sql\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bq` — bq command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbq query --dry_run --use_legacy_sql=false 'SELECT * FROM `my_dataset.my_table` LIMIT 100'"
+  },
+  {
+    "instruction": "Run a BigQuery query",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bq` with the correct flags and arguments\n   2. Key flags: --use_legacy_sql\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bq` — bq command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbq query --use_legacy_sql=false 'SELECT name, COUNT(*) FROM `my_dataset.my_table` GROUP BY name'"
+  },
+  {
+    "instruction": "Publish Pub/Sub message",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: -topic, --message\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud pubsub topics publish my-topic --message 'Hello World'"
+  },
+  {
+    "instruction": "Create GKE cluster",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: -cluster, --zone, -central1, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud container clusters create my-cluster --zone us-central1-a --num-nodes 3"
+  },
+  {
+    "instruction": "List Cloud Run services",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: --region, -central1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud run services list --region us-central1"
+  },
+  {
+    "instruction": "Deploy a Cloud Function",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the gcloud configuration with the required parameters\n   2. Apply the configuration and verify with `gcloud status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud functions deploy my-function --runtime python39 --trigger-http --allow-unauthenticated"
+  },
+  {
+    "instruction": "Create IAM role from YAML",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: --project, -project, -id, --file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud iam roles create myCustomRole --project my-project-id --file role-definition.yaml"
+  },
+  {
+    "instruction": "Create managed instance group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: -groups, -mig, --base-instance-name, -instance\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud compute instance-groups managed create my-mig --base-instance-name my-instance --size 3 --template my-template --zone us-central1-a"
+  },
+  {
+    "instruction": "Create a firewall rule",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcloud` with the correct flags and arguments\n   2. Key flags: -rules, -http, --allow, --source-ranges\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcloud` — GCP cloud CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcloud compute firewall-rules create allow-http --allow tcp:80 --source-ranges 0.0.0.0/0 --target-tags http-server"
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Disable root SSH login entirely in sshd_config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^"
+  },
+  {
+    "instruction": "Enable only Ed25519 and ED25519-SK host keys for SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo sed -i 's/^HostKey.*/\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^HostKey.*/"
+  },
+  {
+    "instruction": "Restrict SSH access to only the 'admin' and 'devops' groups using AllowGroups",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'AllowGroups admin devops' | sudo tee -a /etc/ssh/sshd_config && sudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Whitelist specific users for SSH access with AllowUsers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'AllowUsers alice bob charlie' | sudo tee -a /etc/ssh/sshd_config && sudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Disable password authentication entirely for SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^"
+  },
+  {
+    "instruction": "Only allow key-based public key authentication",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^"
+  },
+  {
+    "instruction": "Set a custom AuthorizedKeysFile pointing to a centralized location",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'AuthorizedKeysFile /etc/ssh/authorized_keys/%u' | sudo tee -a /etc/ssh/sshd_config && sudo mkdir -p /etc/ssh/authorized_keys && sudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Use a Match block to apply different settings for users from a specific address",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -a, -robot\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat | sudo tee -a /etc/ssh/sshd_config << 'EOF'\nMatch Address 10.0.0.0/8\n  PasswordAuthentication yes\n  AllowUsers backup-robot\nEOF\nsudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Chroot a SFTP-only user to their home directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -m, -s, -user, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo useradd -m -s /usr/sbin/nologin sftp-user && sudo mkdir -p /home/sftp-user/uploads && sudo chown root:root /home/sftp-user && sudo chmod 755 /home/sftp-user && cat | sudo tee -a /etc/ssh/sshd_config << 'EOF'\nMatch User sftp-user\n  ChrootDirectory /home/sftp-user\n  ForceCommand internal-sftp\n  X11Forwarding no\n  AllowTcpForwarding no\n  PermitTTY no\nEOF\nsudo systemctl restart sshd"
+  },
+  {
+    "instruction": "ForceCommand to run a script when a specific user logs in",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -a, -monitor\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat | sudo tee -a /etc/ssh/sshd_config << 'EOF'\nMatch User monitor\n  ForceCommand /usr/local/bin/run-monitor.sh\n  PermitTTY yes\n  X11Forwarding no\nEOF\nsudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Disable X11 forwarding globally in sshd_config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^"
+  },
+  {
+    "instruction": "Disable TCP port forwarding globally",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^"
+  },
+  {
+    "instruction": "Limit SSH to protocol version 2 only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'Protocol 2' | sudo tee -a /etc/ssh/sshd_config && sudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Reduce the login grace time and max auth tries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via sudo sed -i 's/^\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^"
+  },
+  {
+    "instruction": "Set MaxSessions and MaxStartups to prevent connection flooding",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^"
+  },
+  {
+    "instruction": "Change the SSH listening port to 2222",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^"
+  },
+  {
+    "instruction": "Bind SSH to a specific IP address only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'ListenAddress 192.168.1.10' | sudo tee -a /etc/ssh/sshd_config && sudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Enable verbose SSH logging and send logs to authpriv",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo sed -i 's/^\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sed -i 's/^"
+  },
+  {
+    "instruction": "Enable two-factor authentication with libpam-google-authenticator",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo apt-get install -y libpam-google-authenticator && google-authenticator -t -\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `sudo status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo apt-get install -y libpam-google-authenticator && google-authenticator -t -d -f -r 3 -R 30 -w 3 && echo 'auth required pam_google_authenticator.so' | sudo tee -a /etc/pam.d/sshd && sudo sed -i 's/^"
+  },
+  {
+    "instruction": "Set a banner message displayed before SSH login",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'Authorized access only. All activity is logged.' | sudo tee /etc/ssh/banner && echo 'Banner /etc/ssh/banner' | sudo tee -a /etc/ssh/sshd_config && sudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Use a Match block to restrict a user group to a specific source IP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat | sudo tee -a /etc/ssh/sshd_config << 'EOF'\nMatch Group developers Address 192.168.1.0/24\n  PasswordAuthentication no\n  PubkeyAuthentication yes\nEOF\nsudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Deny a specific user (john) from SSH access with a DenyUsers directive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `john` — john command execution and management\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'DenyUsers john' | sudo tee -a /etc/ssh/sshd_config && sudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Permit root login only with key-based authentication from a specific subnet",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -a, -password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat | sudo tee -a /etc/ssh/sshd_config << 'EOF'\nPermitRootLogin prohibit-password\nMatch Address 10.10.0.0/16\n  PermitRootLogin yes\nEOF\nsudo systemctl restart sshd"
+  },
+  {
+    "instruction": "Test the sshd_config for syntax errors before restarting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sshd -t"
+  },
+  {
+    "instruction": "Reload sshd configuration without dropping active connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl reload sshd"
+  },
+  {
+    "instruction": "Display current SSH server configuration with all active settings",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -T\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sshd -T | less"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Use a registered variable in an ad-hoc command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, --register, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m shell -a 'uptime' --register result -a 'echo \"{{ result.stdout }}\"'"
+  },
+  {
+    "instruction": "Set a custom fact on a host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m set_fact -a 'app_version=2.5.1 deploy_ts={{ ansible_date_time.iso8601 }}'"
+  },
+  {
+    "instruction": "Run a shell command and store stdout to a variable implicitly",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m command -a 'cat /proc/uptime'"
+  },
+  {
+    "instruction": "Ignore errors on a task and continue",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, --ignore-errors\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m command -a 'some_command_that_may_fail' --ignore-errors"
+  },
+  {
+    "instruction": "Poll async job id for status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m async_status -a 'jid=1234567890.1234'"
+  },
+  {
+    "instruction": "Run a playbook with a concurrency of 1 (linear strategy)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-playbook` with the correct flags and arguments\n   2. Key flags: -playbook, --forks\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-playbook` — ansible-playbook command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-playbook site.yml --forks 1"
+  },
+  {
+    "instruction": "Use the free strategy to run tasks per host independently",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-playbook` with the correct flags and arguments\n   2. Key flags: -playbook, --strategy\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-playbook` — ansible-playbook command execution and management\n   Supporting tool: `free` — free command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-playbook site.yml --strategy free"
+  },
+  {
+    "instruction": "Use host_pinned serial strategy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-playbook` with the correct flags and arguments\n   2. Key flags: -playbook, --serial\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-playbook` — ansible-playbook command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-playbook site.yml --serial '1,5,100%'"
+  },
+  {
+    "instruction": "Use a custom callback plugin via environment variable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ANSIBLE_CALLBACK_WHITELIST` with the correct flags and arguments\n   2. Key flags: -playbook\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ANSIBLE_CALLBACK_WHITELIST` — ANSIBLE_CALLBACK_WHITELIST command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nANSIBLE_CALLBACK_WHITELIST=profile_tasks ansible-playbook site.yml"
+  },
+  {
+    "instruction": "Enable timer callback plugin for timing output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ANSIBLE_CALLBACK_WHITELIST=timer ansible-playbook site.yml\n   2. Apply the configuration and verify with `ANSIBLE_CALLBACK_WHITELIST status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ANSIBLE_CALLBACK_WHITELIST` — ANSIBLE_CALLBACK_WHITELIST command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nANSIBLE_CALLBACK_WHITELIST=timer ansible-playbook site.yml"
+  },
+  {
+    "instruction": "Enable actionable callback to reduce output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ANSIBLE_CALLBACK_WHITELIST=actionable ansible-playbook site.yml\n   2. Apply the configuration and verify with `ANSIBLE_CALLBACK_WHITELIST status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ANSIBLE_CALLBACK_WHITELIST` — ANSIBLE_CALLBACK_WHITELIST command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nANSIBLE_CALLBACK_WHITELIST=actionable ansible-playbook site.yml"
+  },
+  {
+    "instruction": "Enable json callback for machine-readable output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ANSIBLE_STDOUT_CALLBACK=json ansible-playbook site.yml\n   2. Apply the configuration and verify with `ANSIBLE_STDOUT_CALLBACK status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ANSIBLE_STDOUT_CALLBACK` — ANSIBLE_STDOUT_CALLBACK command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nANSIBLE_STDOUT_CALLBACK=json ansible-playbook site.yml"
+  },
+  {
+    "instruction": "Enable yaml callback for structured output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook site.yml\n   2. Apply the configuration and verify with `ANSIBLE_STDOUT_CALLBACK status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ANSIBLE_STDOUT_CALLBACK` — ANSIBLE_STDOUT_CALLBACK command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook site.yml"
+  },
+  {
+    "instruction": "Generate a retry file for failed hosts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-playbook` with the correct flags and arguments\n   2. Key flags: -playbook, --retry-files-enabled, --retry-files-save-filename\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-playbook` — ansible-playbook command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-playbook site.yml --retry-files-enabled --retry-files-save-filename=retry.txt"
+  },
+  {
+    "instruction": "Set maximum number of retries in ansible configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-config` with the correct flags and arguments\n   2. Key flags: -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-config` — ansible-config command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-config set DEFAULT_RETRIES 5"
+  },
+  {
+    "instruction": "Enable gathering of facts only on specific subset",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ansible all -m setup -a 'gather_subset=!all,!min,network'\n   2. Apply the configuration and verify with `ansible status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m setup -a 'gather_subset=!all,!min,network'"
+  },
+  {
+    "instruction": "Filter gathered facts by specific key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m setup -a 'filter=ansible_eth*'"
+  },
+  {
+    "instruction": "Set hostname with the hostname module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m hostname -a 'name=web01.example.com' -b"
+  },
+  {
+    "instruction": "Set locale using locale_gen module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -8, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m locale_gen -a 'name=en_US.UTF-8 state=present' -b"
+  },
+  {
+    "instruction": "Manage timezone using the timezone module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m timezone -a 'name=America/New_York' -b"
+  },
+  {
+    "instruction": "Configure an NTP server via ansible",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ansible all -m package -a 'name=chrony state=present' -b\n   2. Apply the configuration and verify with `ansible status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m package -a 'name=chrony state=present' -b"
+  },
+  {
+    "instruction": "Generate a CSR with openssl module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m openssl_csr -a 'common_name=example.com privatekey_path=/tmp/key.pem path=/tmp/csr.csr'"
+  },
+  {
+    "instruction": "Self-signed certificate with openssl module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m openssl_certificate -a 'path=/tmp/cert.pem privatekey_path=/tmp/key.pem csr_path=/tmp/csr.csr provider=selfsigned'"
+  },
+  {
+    "instruction": "Fetch Let's Encrypt cert via acme_certificate module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -v02\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m acme_certificate -a 'acme_directory=https://acme-v02.api.letsencrypt.org/directory account_key_src=/etc/ssl/account.key challenge=dns csr=/etc/ssl/csr.pem dest=/etc/ssl/cert.pem'"
+  },
+  {
+    "instruction": "Use the known_hosts module to add a host key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -keyscan\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m known_hosts -a 'name=github.com state=present key=\"{{ lookup(\"pipe\", \"ssh-keyscan github.com\") }}\"'"
+  }
+]

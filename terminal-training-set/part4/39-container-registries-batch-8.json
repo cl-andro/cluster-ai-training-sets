@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Initialize Docker Content Trust for a repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nexport DOCKER_CONTENT_TRUST=1 && docker trust key generate myuser"
+  },
+  {
+    "instruction": "Sign an image with Docker Content Trust",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nexport DOCKER_CONTENT_TRUST=1 && docker push myuser/myapp:1.0"
+  },
+  {
+    "instruction": "Show the trust data for a Docker image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker trust inspect myuser/myapp:1.0"
+  },
+  {
+    "instruction": "Revoke a signer's key in Docker Content Trust",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker trust signer remove myuser myuser/myapp"
+  },
+  {
+    "instruction": "Generate a cosign key pair",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: -key, -pair\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign generate-key-pair"
+  },
+  {
+    "instruction": "Sign a container image with cosign",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: --key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign sign --key cosign.key myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Verify a cosign signature on a container image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: --key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign verify --key cosign.pub myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Triangulate the signature location for an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign triangulate myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Download the SBOM for a signed image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign download sbom myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Download all signatures for an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign download signature myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Verify an image with a cosign policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: --policy\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign verify --policy policy.yaml myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Sign a container image with a key stored in a KMS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: --key, -project, -central1, -keyring\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign sign --key gcpkms://projects/my-project/locations/us-central1/keyRings/my-keyring/cryptoKeys/my-key/versions/1 myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Verify an image without specifying the public key (keyless)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign verify myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Sign an image with keyless signing via OIDC",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign sign myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Copy an image along with its cosign signatures",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: -registry\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign copy myregistry.example.com/myapp:1.0 other-registry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Clean up cosign signatures for an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign clean myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Install cosign on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the wget configuration with the required parameters\n   2. Apply the configuration and verify with `wget status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -O /usr/local/bin/cosign && chmod +x /usr/local/bin/cosign"
+  },
+  {
+    "instruction": "Verify that Docker Content Trust is enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo $DOCKER_CONTENT_TRUST\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho $DOCKER_CONTENT_TRUST"
+  },
+  {
+    "instruction": "Load a Docker trust key for signing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker trust key load myuser.pem --name myuser"
+  },
+  {
+    "instruction": "Add a signer with Docker trust",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker trust signer add --key cert.pem myuser myuser/myapp"
+  },
+  {
+    "instruction": "List the available cosign keys",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: --key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign list --key cosign.pub myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Verify an image with a custom OIDC issuer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: --issuer, --audience\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign verify --issuer https://token.actions.githubusercontent.com --audience https://github.com/org/repo myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Attach an SBOM to a container image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: --sbom\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign attach sbom --sbom sbom.spdx myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Attach an attestation to a container image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: --predicate, --key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign attest --predicate predicate.json --key cosign.key myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Verify an in-toto attestation on an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cosign` with the correct flags and arguments\n   2. Key flags: -attestation, --key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cosign` — cosign command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncosign verify-attestation --key cosign.pub myregistry.example.com/myapp:1.0"
+  }
+]

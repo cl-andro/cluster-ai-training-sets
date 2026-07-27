@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to install ODL from debian package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install opendaylight"
+  },
+  {
+    "instruction": "How to download ODL from nexus",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wget` with the correct flags and arguments\n   2. Key flags: -0\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/karaf/0.10.0/karaf-0.10.0.tar.gz"
+  },
+  {
+    "instruction": "How to unpack and start ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -0, -0\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar xzf karaf-0.10.0.tar.gz && cd karaf-0.10.0 && bin/start"
+  },
+  {
+    "instruction": "How to view ODL OpenFlow port status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -inventory, -node, -inventory\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin http://localhost:8181/restconf/operational/opendaylight-inventory:nodes/node/openflow:1 | jq '.node[0].\"flow-node-inventory:node-connector\"'"
+  },
+  {
+    "instruction": "How to add OpenFlow IPv4 flow in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"ipv4-flow\",\"priority\":100,\"match\":{\"ipv4-source\":\"10.0.0.0/24\",\"ethernet-match\":{\"ethernet-type\":{\"type\":2048}}}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add ARP flow in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"arp-flow\",\"priority\":100,\"match\":{\"ethernet-match\":{\"ethernet-type\":{\"type\":0x0806}}}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to install VPN service in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: feature:install odl-vpnservice-api\n   2. Apply the configuration and verify with `feature status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `feature` — feature command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfeature:install odl-vpnservice-api"
+  },
+  {
+    "instruction": "How to configure OVS with ODL controller",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ovs-vsctl set-controller br0 tcp:192.168.1.10:6653\n   2. Apply the configuration and verify with `ovs-vsctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-vsctl set-controller br0 tcp:192.168.1.10:6653"
+  },
+  {
+    "instruction": "How to set OVS connection to ODL via SSL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-vsctl` with the correct flags and arguments\n   2. Key flags: -vsctl, -controller\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-vsctl set-controller br0 ssl:192.168.1.10:6653"
+  },
+  {
+    "instruction": "How to check OVS ODL connection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-vsctl` with the correct flags and arguments\n   2. Key flags: -vsctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-vsctl show | grep Controller"
+  },
+  {
+    "instruction": "How to create a TUNNEL in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"network-topology:node\":[{\"node-id\":\"tunnel-node\"}]}' http://localhost:8181/restconf/config/network-topology:network-topology/topology/ovsdb:1"
+  },
+  {
+    "instruction": "How to get ODL operational datastore state",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -topology, -topology\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin http://localhost:8181/restconf/operational/network-topology:network-topology/topology/ovsdb:1"
+  },
+  {
+    "instruction": "How to enable OpenFlow TLS in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: feature:install odl-openflowplugin-flow-services-tls\n   2. Apply the configuration and verify with `feature status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `feature` — feature command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfeature:install odl-openflowplugin-flow-services-tls"
+  },
+  {
+    "instruction": "How to generate ODL certificates for OpenFlow",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `keytool` with the correct flags and arguments\n   2. Key flags: -genkey, -alias, -keyalg, -keystore\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `keytool` — keytool command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nkeytool -genkey -alias odl -keyalg RSA -keystore odl.jks -keysize 2048"
+  },
+  {
+    "instruction": "How to set https in ODL Karaf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport ORG_OSGI_SERVICE_HTTPS_PORT=8443 && bin/karaf"
+  },
+  {
+    "instruction": "How to list OpenDaylight identity providers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -providers\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin http://localhost:8181/restconf/config/aaa:id-providers"
+  },
+  {
+    "instruction": "How to create ODL network topology from YAML",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X POST -H 'Content-Type: application/json' -d @topology.json http://localhost:8181/restconf/config/network-topology:network-topology"
+  },
+  {
+    "instruction": "How to check ODL module health",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `http` with the correct flags and arguments\n   2. Key flags: -status\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `http` — http command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhttp://localhost:8181/restconf/operational/module:module-status"
+  },
+  {
+    "instruction": "How to remove an ODL feature",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `feature` with the correct flags and arguments\n   2. Key flags: -openflowplugin, -flow, -services\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `feature` — feature command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfeature:uninstall odl-openflowplugin-flow-services"
+  },
+  {
+    "instruction": "How to enable concurrent session for ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: export KARAF_INTERACTIVE_SESSION_TIMEOUT=0 && bin/karaf\n   2. Apply the configuration and verify with `export status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport KARAF_INTERACTIVE_SESSION_TIMEOUT=0 && bin/karaf"
+  },
+  {
+    "instruction": "How to check ODL MDSAL datastore type",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -operational, -datastore\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin http://localhost:8181/restconf/operational/mdsal-operational-datastore"
+  },
+  {
+    "instruction": "How to install odl-mdsal-clustering",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: feature:install odl-mdsal-clustering\n   2. Apply the configuration and verify with `feature status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `feature` — feature command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfeature:install odl-mdsal-clustering"
+  },
+  {
+    "instruction": "How to install odl-topology-processing-framework",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: feature:install odl-topology-processing-framework\n   2. Apply the configuration and verify with `feature status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `feature` — feature command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfeature:install odl-topology-processing-framework"
+  },
+  {
+    "instruction": "How to check ODL shard status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -operational, -datastore\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin http://localhost:8181/restconf/operational/mdsal-operational-datastore/shard:shards"
+  },
+  {
+    "instruction": "How to change ODL cluster member role",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"member-role\":\"member\"}' http://localhost:8181/restconf/config/odl-cluster:cluster"
+  }
+]

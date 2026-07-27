@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "How to optimize Apache for high concurrency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via a2enmod mpm_event && a2dismod mpm_prefork mpm_worker && systemctl restart apache\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `a2enmod` — a2enmod command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\na2enmod mpm_event && a2dismod mpm_prefork mpm_worker && systemctl restart apache2"
+  },
+  {
+    "instruction": "How to enable mod_cache in Apache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the a2enmod configuration with the required parameters\n   2. Apply the configuration and verify with `a2enmod status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `a2enmod` — a2enmod command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\na2enmod cache cache_disk"
+  },
+  {
+    "instruction": "How to restart Apache gracefully",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napachectl graceful"
+  },
+  {
+    "instruction": "How to check SSL configuration in Apache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: -t, -D, -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napachectl -t -D DUMP_VHOSTS -D FORWARD"
+  },
+  {
+    "instruction": "How to dump parsed Apache configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: -t, -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napachectl -t -D DUMP_MODULES"
+  },
+  {
+    "instruction": "How to show Apache loaded modules sorted",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: -M\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napachectl -M | sort"
+  },
+  {
+    "instruction": "How to enable Apache modules for WebDAV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the a2enmod configuration with the required parameters\n   2. Apply the configuration and verify with `a2enmod status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `a2enmod` — a2enmod command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\na2enmod dav dav_fs dav_lock"
+  },
+  {
+    "instruction": "How to check Apache access log in real-time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tail` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntail -f /var/log/apache2/access.log"
+  },
+  {
+    "instruction": "How to list loaded Apache modules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: -M\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napachectl -M"
+  },
+  {
+    "instruction": "How to test .htaccess file syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: -t, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\napachectl -t -c 'Include /var/www/html/.htaccess' 2>&1"
+  },
+  {
+    "instruction": "How to disable an Apache configuration fragment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `a2disconf` with the correct flags and arguments\n   2. Key flags: -fpm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `a2disconf` — a2disconf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\na2disconf php7.4-fpm"
+  },
+  {
+    "instruction": "How to check enabled Apache sites",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ls -la /etc/apache2/sites-enabled/\n   2. Apply the configuration and verify with `ls status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /etc/apache2/sites-enabled/"
+  },
+  {
+    "instruction": "How to check available Apache sites",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la, -available\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /etc/apache2/sites-available/"
+  },
+  {
+    "instruction": "How to enable an Apache site",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: a2ensite example.com\n   2. Apply the configuration and verify with `a2ensite status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `a2ensite` — a2ensite command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\na2ensite example.com"
+  },
+  {
+    "instruction": "How to stop Apache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napachectl stop"
+  },
+  {
+    "instruction": "How to disable MPM prefork in Apache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `a2dismod` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `a2dismod` — a2dismod command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\na2dismod mpm_prefork"
+  },
+  {
+    "instruction": "How to dump all vhosts and their locations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: -S\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Flag `-S`: sort by size\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\napachectl -S 2>&1"
+  },
+  {
+    "instruction": "How to show Apache server limit configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: -t, -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\napachectl -t -D DUMP_RUN_CFG 2>&1"
+  },
+  {
+    "instruction": "How to enable MPM event in Apache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the a2enmod configuration with the required parameters\n   2. Apply the configuration and verify with `a2enmod status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `a2enmod` — a2enmod command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\na2enmod mpm_event"
+  },
+  {
+    "instruction": "How to disable an Apache module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `a2dismod` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `a2dismod` — a2dismod command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\na2dismod rewrite"
+  },
+  {
+    "instruction": "How to list all Apache directives",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apachectl` with the correct flags and arguments\n   2. Key flags: -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apachectl` — apachectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napachectl -L"
+  },
+  {
+    "instruction": "How to check Apache error log in real-time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tail` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntail -f /var/log/apache2/error.log"
+  }
+]

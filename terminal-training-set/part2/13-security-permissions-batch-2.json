@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Find all world-writable directories",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -perm, -o, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind / -type d -perm -o+w 2>/dev/null | head -20"
+  },
+  {
+    "instruction": "Find files owned by a specific user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -user, -type, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind / -user john -type f 2>/dev/null | head -20"
+  },
+  {
+    "instruction": "Find files owned by a specific group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -group, -type, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind / -group staff -type f 2>/dev/null | head -20"
+  },
+  {
+    "instruction": "Find all empty files in a directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -empty\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -type f -empty"
+  },
+  {
+    "instruction": "Find all broken symlinks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -exec, -e, -print\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -type l ! -exec test -e {} \\; -print"
+  },
+  {
+    "instruction": "Set password expiry forcing change on next login",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chage` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chage` — chage command execution and management\n   Supporting tool: `john` — john command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchage -d 0 john"
+  },
+  {
+    "instruction": "Check if sudo command is available",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-v`: verbose output for debugging\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -v"
+  },
+  {
+    "instruction": "Run a command as another user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `su` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `su` — su command execution and management\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsu - john -c 'command'"
+  },
+  {
+    "instruction": "Execute a command with elevated privileges (as root)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo whoami"
+  },
+  {
+    "instruction": "Edit a file as root with sudoedit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudoedit` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudoedit` — sudoedit command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudoedit /etc/hosts"
+  },
+  {
+    "instruction": "View sudoers file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/sudoers"
+  },
+  {
+    "instruction": "Add a user to sudoers with NOPASSWD",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `john` — john command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'john ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/john"
+  },
+  {
+    "instruction": "List all sudoers entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/sudoers.d/*"
+  },
+  {
+    "instruction": "Run a command as root but without full shell",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -s, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -s /bin/bash -c 'command'"
+  },
+  {
+    "instruction": "Check if passwordless sudo is configured",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo -n true 2>/dev/null && echo NOPASSWD configured || echo password required\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-n`: dry-run mode\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsudo -n true 2>/dev/null && echo NOPASSWD configured || echo password required"
+  },
+  {
+    "instruction": "Check user password hash algorithm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -d, -f2, -d, -f2\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/shadow | grep john | cut -d: -f2 | cut -d'$' -f2"
+  },
+  {
+    "instruction": "Force user to change password on next login",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chage` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chage` — chage command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchage -d 0 john"
+  },
+  {
+    "instruction": "Set password min length to 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'minlen=12' >> /etc/security/pwquality.conf"
+  },
+  {
+    "instruction": "Show user password aging info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chage` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chage` — chage command execution and management\n   Supporting tool: `john` — john command execution and management\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchage -l john"
+  },
+  {
+    "instruction": "Lock user account after 3 failed attempts (PAM)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e, -auth\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'auth required pam_tally2.so deny=3 unlock_time=600' >> /etc/pam.d/common-auth"
+  },
+  {
+    "instruction": "Check PAM configuration for SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/pam.d/sshd"
+  },
+  {
+    "instruction": "Check apparmor profiles loaded",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apparmor_status` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apparmor_status` — apparmor_status command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napparmor_status"
+  },
+  {
+    "instruction": "Set an apparmor profile to complain mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aa-complain` with the correct flags and arguments\n   2. Key flags: -complain\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aa-complain` — aa-complain command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naa-complain /etc/apparmor.d/usr.bin.nginx"
+  },
+  {
+    "instruction": "Set an apparmor profile to enforce mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aa-enforce` with the correct flags and arguments\n   2. Key flags: -enforce\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aa-enforce` — aa-enforce command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naa-enforce /etc/apparmor.d/usr.bin.nginx"
+  },
+  {
+    "instruction": "Disable apparmor temporarily",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl stop apparmor && systemctl disable apparmor"
+  }
+]

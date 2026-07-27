@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "List all systemd journal logs by priority (info and above)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -p, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Flag `-p`: create parent directories\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -p info -n 20"
+  },
+  {
+    "instruction": "Show journal logs for a specific executable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl /usr/sbin/nginx"
+  },
+  {
+    "instruction": "Show journal logs with a specific kernel facility",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -k, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -k -p err"
+  },
+  {
+    "instruction": "Export journal logs in JSON format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -o, -pretty, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -o json-pretty | head -20"
+  },
+  {
+    "instruction": "List all journal boots",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: --list-boots\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl --list-boots"
+  },
+  {
+    "instruction": "Check disk usage of journal logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: --disk-usage\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl --disk-usage"
+  },
+  {
+    "instruction": "Rotate and trim journal logs to 50MB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: --vacuum-size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl --vacuum-size=50M"
+  },
+  {
+    "instruction": "Keep journal logs for only 7 days",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: --vacuum-time\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl --vacuum-time=7d"
+  },
+  {
+    "instruction": "Limit journal log file count to 3",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: --vacuum-files\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl --vacuum-files=3"
+  },
+  {
+    "instruction": "Configure journald to use less disk space",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho -e '[Journal]\\nSystemMaxUse=100M' > /etc/systemd/journald.conf.d/limit.conf && systemctl restart systemd-journald"
+  },
+  {
+    "instruction": "Show logs from all kernels since boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -k"
+  },
+  {
+    "instruction": "Show logs since last boot (short format)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -b, --no-pager, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -b --no-pager | tail -30"
+  },
+  {
+    "instruction": "Show kernel messages for a specific device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg | grep -i sda"
+  },
+  {
+    "instruction": "Check if NUMA is enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: numactl --show\n   2. Apply the configuration and verify with `numactl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --show"
+  },
+  {
+    "instruction": "Show NUMA node distances",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --hardware\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --hardware | grep distance"
+  },
+  {
+    "instruction": "Bind a process to a specific NUMA node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --cpunodebind, --membind\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --cpunodebind=0 --membind=0 ./myapp"
+  },
+  {
+    "instruction": "Start a process interleaved across all NUMA nodes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --interleave\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --interleave=all ./myapp"
+  },
+  {
+    "instruction": "Show hugepages configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/meminfo | grep -i huge"
+  },
+  {
+    "instruction": "Set the number of hugepages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 512 > /proc/sys/vm/nr_hugepages"
+  },
+  {
+    "instruction": "Show transparent hugepages status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/mm/transparent_hugepage/enabled"
+  },
+  {
+    "instruction": "Disable transparent hugepages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho never > /sys/kernel/mm/transparent_hugepage/enabled"
+  },
+  {
+    "instruction": "Check if KVM is supported",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/cpuinfo | grep -E 'vmx|svm' && echo KVM supported || echo no KVM"
+  },
+  {
+    "instruction": "Check if KVM kernel module is loaded",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lsmod` with the correct flags and arguments\n   2. Key flags: -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lsmod` — lsmod command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlsmod | grep -q kvm && echo KVM loaded || echo KVM not loaded"
+  },
+  {
+    "instruction": "Show /dev device files by type",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /dev/ | head -30"
+  },
+  {
+    "instruction": "List all character and block devices",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la, -E, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /dev/ | grep -E '^c|^b' | head -20"
+  }
+]

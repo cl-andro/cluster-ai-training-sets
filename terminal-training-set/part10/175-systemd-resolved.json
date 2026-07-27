@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Point /etc/resolv.conf to stub resolver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ln` with the correct flags and arguments\n   2. Key flags: -sf, -resolv\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ln` — ln command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf"
+  },
+  {
+    "instruction": "Set default DNS server for all interfaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dns 8.8.8.8"
+  },
+  {
+    "instruction": "Set LLMNR mode for interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl llmnr eth0 yes"
+  },
+  {
+    "instruction": "Check DNS servers from resolved config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl status | grep 'DNS Server'"
+  },
+  {
+    "instruction": "Query a specific record type (SRV) for service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: --type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl query --type=SRV _http._tcp.example.com"
+  },
+  {
+    "instruction": "Check DNSSEC setting for an interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dnssec eth0"
+  },
+  {
+    "instruction": "View resolved journal logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -u, -resolved\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -u systemd-resolved"
+  },
+  {
+    "instruction": "Set DNS cache max TTL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[Resolve]\\nCacheMaxTTL=3600\\n' >> /etc/systemd/resolved.conf"
+  },
+  {
+    "instruction": "Query DNS over TLS status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dnsovertls"
+  },
+  {
+    "instruction": "Point /etc/resolv.conf to actual DNS servers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ln` with the correct flags and arguments\n   2. Key flags: -sf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ln` — ln command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf"
+  },
+  {
+    "instruction": "Set DNS search domain for interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl domain eth0 example.com"
+  },
+  {
+    "instruction": "Set DNS over TLS for interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dnsovertls eth0 true"
+  },
+  {
+    "instruction": "Query with cache disabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: --cache\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl query --cache=no example.com"
+  },
+  {
+    "instruction": "Query DNS in reverse for IP address",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl query 8.8.8.8"
+  },
+  {
+    "instruction": "Flush all DNS caches",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: -caches\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl flush-caches"
+  },
+  {
+    "instruction": "Set network manager integration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[Resolve]\\nMulticastDNS=yes\\nLLMNR=yes\\n' >> /etc/systemd/resolved.conf"
+  },
+  {
+    "instruction": "Set DNS stub listener to localhost only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[Resolve]\\nDNSStubListener=local\\n' >> /etc/systemd/resolved.conf"
+  },
+  {
+    "instruction": "Check DNSSEC status globally",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dnssec"
+  },
+  {
+    "instruction": "Set DNS server for an interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dns eth0 1.1.1.1"
+  },
+  {
+    "instruction": "Query with DNSSEC validation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: --dnssec\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl query --dnssec example.com"
+  },
+  {
+    "instruction": "Disable DNSSEC validation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dnssec eth0 no"
+  }
+]

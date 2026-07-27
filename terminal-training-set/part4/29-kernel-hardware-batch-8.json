@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Load a kernel via kexec (prepare)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kexec` with the correct flags and arguments\n   2. Key flags: -l, -6, -17, -amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kexec` — kexec command execution and management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DOWNTIME: notify users in advance; sync disks (`sync`); schedule during off-peak hours\n</think>\nkexec -l /boot/vmlinuz-6.1.0-17-amd64 --initrd=/boot/initrd.img-6.1.0-17-amd64 --command-line='root=/dev/sda1 ro'"
+  },
+  {
+    "instruction": "Load and execute kernel via kexec immediately",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kexec` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kexec` — kexec command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DOWNTIME: notify users in advance; sync disks (`sync`); schedule during off-peak hours\n</think>\nkexec -e"
+  },
+  {
+    "instruction": "Load kernel via kexec with panic kernel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kexec` with the correct flags and arguments\n   2. Key flags: -p, -6, -17, -amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kexec` — kexec command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DOWNTIME: notify users in advance; sync disks (`sync`); schedule during off-peak hours\n</think>\nkexec -p /boot/vmlinuz-6.1.0-17-amd64 --initrd=/boot/initrd.img-6.1.0-17-amd64"
+  },
+  {
+    "instruction": "Show kexec-loaded kernel info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kexec` with the correct flags and arguments\n   2. Key flags: -l, --status\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kexec` — kexec command execution and management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DOWNTIME: notify users in advance; sync disks (`sync`); schedule during off-peak hours\n</think>\nkexec -l --status"
+  },
+  {
+    "instruction": "List systemd-repart partitions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-repart` with the correct flags and arguments\n   2. Key flags: -repart, --list\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-repart` — systemd-repart command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-repart --list"
+  },
+  {
+    "instruction": "Run systemd-repart to grow partitions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-repart` with the correct flags and arguments\n   2. Key flags: -repart, --dry-run\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-repart` — systemd-repart command execution and management\n   Flag `--dry-run`: simulate without making changes\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-repart --dry-run=no"
+  },
+  {
+    "instruction": "Dry-run systemd-repart",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-repart` with the correct flags and arguments\n   2. Key flags: -repart, --dry-run\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-repart` — systemd-repart command execution and management\n   Flag `--dry-run`: simulate without making changes\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-repart --dry-run=yes"
+  },
+  {
+    "instruction": "Grow filesystem with systemd-growfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-growfs` with the correct flags and arguments\n   2. Key flags: -growfs\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-growfs` — systemd-growfs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-growfs /"
+  },
+  {
+    "instruction": "Grow a specific mount with systemd-growfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-growfs` with the correct flags and arguments\n   2. Key flags: -growfs\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-growfs` — systemd-growfs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-growfs /mnt/data"
+  },
+  {
+    "instruction": "Configure kernel compilation: start menuconfig",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: make menuconfig\n   2. Apply the configuration and verify with `make status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake menuconfig"
+  },
+  {
+    "instruction": "Configure kernel with nconfig",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: make nconfig\n   2. Apply the configuration and verify with `make status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake nconfig"
+  },
+  {
+    "instruction": "Compile kernel with 4 parallel jobs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `make` with the correct flags and arguments\n   2. Key flags: -j4\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake -j4"
+  },
+  {
+    "instruction": "Compile kernel detecting CPU cores",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `make` with the correct flags and arguments\n   2. Key flags: -j\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake -j$(nproc)"
+  },
+  {
+    "instruction": "Install kernel modules to /lib/modules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: make modules_install\n   2. Apply the configuration and verify with `make status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake modules_install"
+  },
+  {
+    "instruction": "Install kernel image and System.map",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: make install\n   2. Apply the configuration and verify with `make status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake install"
+  },
+  {
+    "instruction": "Clean kernel build tree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `make` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake clean"
+  },
+  {
+    "instruction": "Make kernel deb package for installation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: make deb-pkg -j$(nproc)\n   2. Apply the configuration and verify with `make status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake deb-pkg -j$(nproc)"
+  },
+  {
+    "instruction": "Configure kernel with oldconfig from current config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: make oldconfig\n   2. Apply the configuration and verify with `make status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake oldconfig"
+  },
+  {
+    "instruction": "Configure kernel with localmodconfig (minimal)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: make localmodconfig\n   2. Apply the configuration and verify with `make status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake localmodconfig"
+  },
+  {
+    "instruction": "Make kernel headers package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `make` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake headers_install"
+  },
+  {
+    "instruction": "Show kernel .config summary",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `scripts` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `scripts` — scripts command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nscripts/diffconfig .config.old .config"
+  },
+  {
+    "instruction": "Save kernel config to file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cp` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cp` — cp command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncp .config /boot/config-$(make kernelrelease 2>/dev/null)"
+  },
+  {
+    "instruction": "Verify kernel config against another",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `make` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake listnewconfig"
+  },
+  {
+    "instruction": "Build kernel with debug info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using make\n   2. Apply corrective actions: make -j$(nproc) DEBUG_KERNEL=y\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmake -j$(nproc) DEBUG_KERNEL=y"
+  },
+  {
+    "instruction": "Clean modules after build failure",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `make` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `make` — make command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmake modules_clean 2>/dev/null; make M=drivers/usb clean"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "How to extract an AppImage to a specific directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `APPIMAGE_EXTRACT_DIR` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `APPIMAGE_EXTRACT_DIR` — APPIMAGE_EXTRACT_DIR command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nAPPIMAGE_EXTRACT_DIR=/tmp/extracted ./application.AppImage"
+  },
+  {
+    "instruction": "How to set up appimaged for automatic desktop integration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p, --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nmkdir -p ~/.config/systemd/user && cp /usr/lib/systemd/user/appimaged.service ~/.config/systemd/user/ && systemctl --user enable appimaged"
+  },
+  {
+    "instruction": "How to validate an AppImage's signature",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --verify\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --verify ./application.AppImage"
+  },
+  {
+    "instruction": "How to ensure appimaged auto-starts on login",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --user, --now\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl --user enable --now appimaged"
+  },
+  {
+    "instruction": "How to use appimagetool with a recipe file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `appimagetool` with the correct flags and arguments\n   2. Key flags: -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `appimagetool` — appimagetool command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nappimagetool -g AppImageBuilder.yml"
+  },
+  {
+    "instruction": "How to run an AppImage with strace for debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using strace\n   2. Apply corrective actions: strace -o /tmp/appimage.log ./application.AppImage\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -o /tmp/appimage.log ./application.AppImage"
+  },
+  {
+    "instruction": "How to check the architecture of an AppImage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `readelf` with the correct flags and arguments\n   2. Key flags: -h\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `readelf` — readelf command execution and management\n   Flag `-h`: human-readable format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nreadelf -h ./application.AppImage | grep Machine"
+  },
+  {
+    "instruction": "How to prevent an AppImage from integrating into the desktop",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `APPIMAGE_NO_DT_HOOK` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `APPIMAGE_NO_DT_HOOK` — APPIMAGE_NO_DT_HOOK command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nAPPIMAGE_NO_DT_HOOK=1 ./application.AppImage"
+  },
+  {
+    "instruction": "How to see the runtime environment of an AppImage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `APPIMAGE_DEBUG` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `APPIMAGE_DEBUG` — APPIMAGE_DEBUG command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nAPPIMAGE_DEBUG=1 ./application.AppImage 2>&1"
+  },
+  {
+    "instruction": "How to install an AppImage system-wide",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo cp ./application.AppImage /usr/local/bin/ && sudo chmod +x /usr/local/bin/a\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo cp ./application.AppImage /usr/local/bin/ && sudo chmod +x /usr/local/bin/application.AppImage"
+  },
+  {
+    "instruction": "How to check if libfuse3 is installed for AppImage support",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ldconfig -p | grep libfuse\n   2. Apply the configuration and verify with `ldconfig status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ldconfig` — ldconfig command execution and management\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldconfig -p | grep libfuse"
+  },
+  {
+    "instruction": "How to create a minimal AppDir for appimagetool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Flag `-p`: create parent directories\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir -p AppDir/usr/bin && cp /bin/bash AppDir/usr/bin/ && mkdir -p AppDir/usr/share/applications && cp my.desktop AppDir/usr/share/applications/"
+  },
+  {
+    "instruction": "How to run an AppImage with a custom temp directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `TMPDIR` with the correct flags and arguments\n   2. Key flags: -tmp\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `TMPDIR` — TMPDIR command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nTMPDIR=/big-tmp ./application.AppImage"
+  },
+  {
+    "instruction": "How to check the update information embedded in an AppImage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: --appimage-update-information\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n./application.AppImage --appimage-update-information"
+  },
+  {
+    "instruction": "How to use appimaged to watch a specific directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for appimaged\n   2. Build the command chain with error handling\n   3. Execute: appimaged ~/Applications\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `appimaged` — appimaged command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nappimaged ~/Applications"
+  },
+  {
+    "instruction": "How to extract the icon from an AppImage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: --appimage-extract\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n./application.AppImage --appimage-extract .DirIcon"
+  },
+  {
+    "instruction": "How to set up binfmt support for direct AppImage execution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -binfmts, --enable\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo update-binfmts --enable"
+  },
+  {
+    "instruction": "How to see the FUSE mount options of a running AppImage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount | grep /tmp/.mount"
+  },
+  {
+    "instruction": "How to check the digest of an AppImage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum ./application.AppImage"
+  },
+  {
+    "instruction": "How to create an AppImage with a custom output name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `appimagetool` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `appimagetool` — appimagetool command execution and management\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nappimagetool -n /path/to/AppDir MyCustomName.AppImage"
+  }
+]

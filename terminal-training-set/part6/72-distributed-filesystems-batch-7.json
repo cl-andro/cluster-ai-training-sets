@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Format a Lustre OST (Object Storage Target)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkfs.lustre` with the correct flags and arguments\n   2. Key flags: --ost, --mgsnode, --fsname, --index\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkfs.lustre` — mkfs.lustre command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkfs.lustre --ost --mgsnode=mgsnode@tcp0 --fsname=lustre --index=0 --backfstype ldiskfs /dev/sdd"
+  },
+  {
+    "instruction": "Format Lustre with ZFS backend",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkfs.lustre` with the correct flags and arguments\n   2. Key flags: --mgs, --backfstype, --fsname\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkfs.lustre` — mkfs.lustre command execution and management\n   Supporting tool: `zfs` — ZFS pool and dataset management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkfs.lustre --mgs --backfstype zfs --fsname=lustre mgspool/mgt"
+  },
+  {
+    "instruction": "Change Lustre filesystem parameters with tunefs.lustre",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via tunefs.lustre --param sys.timeout=200 /dev/sdb\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `tunefs.lustre` — tunefs.lustre command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntunefs.lustre --param sys.timeout=200 /dev/sdb"
+  },
+  {
+    "instruction": "Add a failover node to Lustre MGS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tunefs.lustre` with the correct flags and arguments\n   2. Key flags: --failnode\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tunefs.lustre` — tunefs.lustre command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntunefs.lustre --failnode=node2 /dev/sdb"
+  },
+  {
+    "instruction": "Decode a Lustre FID to find its location",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ll_decode_filter_fid` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ll_decode_filter_fid` — ll_decode_filter_fid command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nll_decode_filter_fid [0x200000001:0x1:0x0]"
+  },
+  {
+    "instruction": "Verify a Lustre network device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `llverdev` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `llverdev` — llverdev command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nllverdev /dev/sdb"
+  },
+  {
+    "instruction": "Show Lustre mounts from a client perspective",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lshowmount` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lshowmount` — lshowmount command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlshowmount"
+  },
+  {
+    "instruction": "Show active Lustre mounts across the network",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lshowmount` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lshowmount` — lshowmount command execution and management\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlshowmount -a"
+  },
+  {
+    "instruction": "Create a GlusterFS arbiter volume for split-brain prevention",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: -node1, -node2, -node3\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume create gvol1 replica 3 arbiter 1 gluster-node1:/brick1 gluster-node2:/brick2 gluster-node3:/brick3"
+  },
+  {
+    "instruction": "Add a brick to a GlusterFS volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: -brick, -node4\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume add-brick gvol1 gluster-node4:/brick4"
+  },
+  {
+    "instruction": "Remove a brick from GlusterFS volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: -brick, -node4\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume remove-brick gvol1 gluster-node4:/brick4 start"
+  },
+  {
+    "instruction": "Remove a brick from GlusterFS with commit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: -brick, -node4\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume remove-brick gvol1 gluster-node4:/brick4 commit"
+  },
+  {
+    "instruction": "Replace a faulty brick in GlusterFS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: -brick, -node1, -brick, -node1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume replace-brick gvol1 gluster-node1:/old-brick gluster-node1:/new-brick commit"
+  },
+  {
+    "instruction": "Reset all GlusterFS volume options to defaults",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume reset gvol1 all"
+  },
+  {
+    "instruction": "Set GlusterFS auth.allow on a volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume set gvol1 auth.allow 192.168.1.*"
+  },
+  {
+    "instruction": "Set GlusterFS performance cache size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: -size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume set gvol1 performance.cache-size 512MB"
+  },
+  {
+    "instruction": "Enable GlusterFS write-behind",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the gluster configuration with the required parameters\n   2. Apply the configuration and verify with `gluster status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume set gvol1 performance.write-behind on"
+  },
+  {
+    "instruction": "Disable GlusterFS read-ahead",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: -ahead\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume set gvol1 performance.read-ahead off"
+  },
+  {
+    "instruction": "Set GlusterFS log level to DEBUG",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using gluster\n   2. Apply corrective actions: gluster volume set gvol1 diagnostics.brick-log-level DEBUG\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume set gvol1 diagnostics.brick-log-level DEBUG"
+  },
+  {
+    "instruction": "Set GlusterFS cluster.min-free-disk to 10%",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: -free, -disk\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume set gvol1 cluster.min-free-disk 10%"
+  },
+  {
+    "instruction": "Set GlusterFS self-heal daemon to off",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: -heal, -daemon\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume set gvol1 cluster.self-heal-daemon off"
+  },
+  {
+    "instruction": "Enable GlusterFS quota and set default limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the gluster configuration with the required parameters\n   2. Apply the configuration and verify with `gluster status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume quota gvol1 enable && gluster volume quota gvol1 limit-usage / 1TB"
+  },
+  {
+    "instruction": "Remove GlusterFS quota on a directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume quota gvol1 remove /data"
+  },
+  {
+    "instruction": "Check GlusterFS quota hard timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume quota gvol1 list"
+  },
+  {
+    "instruction": "Show GlusterFS volume options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gluster` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gluster` — gluster command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngluster volume get gvol1 all"
+  }
+]

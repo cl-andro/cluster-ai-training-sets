@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a Dockerfile with a simple Node.js app",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -alpine\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `npm` — Node.js package manager\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > Dockerfile << 'EOF'\nFROM node:20-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm install\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"app.js\"]\nEOF"
+  },
+  {
+    "instruction": "Create a multi-stage Dockerfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -o, --from\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > Dockerfile << 'EOF'\nFROM golang:1.22 AS builder\nWORKDIR /src\nCOPY . .\nRUN go build -o /app .\nFROM alpine:3.19\nCOPY --from=builder /app /app\nCMD [\"/app\"]\nEOF"
+  },
+  {
+    "instruction": "Create a Dockerfile for Python Flask app",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -slim, -r, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `pip` — Python package installer\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > Dockerfile << 'EOF'\nFROM python:3.12-slim\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install -r requirements.txt\nCOPY . .\nCMD [\"gunicorn\", \"-b\", \"0.0.0.0:5000\", \"app:app\"]\nEOF"
+  },
+  {
+    "instruction": "Create a .dockerignore file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'node_modules\\n.git\\n*.md\\n.env' > .dockerignore"
+  },
+  {
+    "instruction": "Build an image with a specific platform",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --platform, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker build --platform linux/amd64 -t myapp:latest ."
+  },
+  {
+    "instruction": "Create a Docker Compose file for web + db",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -compose, -alpine\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > docker-compose.yml << 'EOF'\nversion: '3'\nservices:\n  web:\n    build: .\n    ports:\n      - \"3000:3000\"\n    depends_on:\n      - db\n  db:\n    image: postgres:16-alpine\n    environment:\n      POSTGRES_PASSWORD: secret\nEOF"
+  },
+  {
+    "instruction": "Start specific service in docker-compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose up -d db"
+  },
+  {
+    "instruction": "Rebuild and restart specific docker-compose service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose, -d, --build\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose up -d --build web"
+  },
+  {
+    "instruction": "Scale a service with docker-compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose, -d, --scale\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose up -d --scale web=3"
+  },
+  {
+    "instruction": "View docker-compose logs for a service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose logs -f web"
+  },
+  {
+    "instruction": "Execute a command in a docker-compose service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose exec web bash"
+  },
+  {
+    "instruction": "Stop services without removing them",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose stop"
+  },
+  {
+    "instruction": "Stop and remove docker-compose services + volumes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Flag `-v`: verbose output for debugging\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose down -v"
+  },
+  {
+    "instruction": "Pull all images defined in docker-compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose pull"
+  },
+  {
+    "instruction": "List docker-compose services and their status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose ps"
+  },
+  {
+    "instruction": "Build all images in docker-compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose build"
+  },
+  {
+    "instruction": "Push all images in docker-compose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose push"
+  },
+  {
+    "instruction": "Validate docker-compose file syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker-compose` with the correct flags and arguments\n   2. Key flags: -compose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker-compose` — docker-compose command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndocker-compose config"
+  },
+  {
+    "instruction": "Create a Docker Swarm init",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker swarm init"
+  },
+  {
+    "instruction": "Show Docker Swarm node list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker node ls"
+  },
+  {
+    "instruction": "Deploy a stack from docker-compose to Swarm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the docker configuration with the required parameters\n   2. Apply the configuration and verify with `docker status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Supporting tool: `stack` — stack command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker stack deploy -c docker-compose.yml mystack"
+  },
+  {
+    "instruction": "List Swarm services",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker service ls"
+  },
+  {
+    "instruction": "Scale a Swarm service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker service scale web=5"
+  },
+  {
+    "instruction": "View Swarm service logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker service logs -f web"
+  },
+  {
+    "instruction": "Remove a Swarm stack",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Supporting tool: `stack` — stack command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker stack rm mystack"
+  }
+]

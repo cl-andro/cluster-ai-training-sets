@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "How to show charon logging in real time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -u, -starter, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -u strongswan-starter -f"
+  },
+  {
+    "instruction": "How to set charon debug log level",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using echo\n   2. Apply corrective actions: echo 'charon {\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'charon {\n  syslog {\n    default = 2\n  }\n}' >> /etc/strongswan.d/charon-logging.conf"
+  },
+  {
+    "instruction": "How to check IPsec kernel SA count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ipsec` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ipsec` — IPsec VPN management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nipsec listall | grep -c 'ESP\\|AH'"
+  },
+  {
+    "instruction": "How to flush IPsec SAs from kernel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ipsec` with the correct flags and arguments\n   2. Key flags: -connection\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ipsec` — IPsec VPN management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nipsec down my-connection"
+  },
+  {
+    "instruction": "How to flush all IPsec SAs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ipsec` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ipsec` — IPsec VPN management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nipsec stop && ipsec start"
+  },
+  {
+    "instruction": "How to list active IKE SAs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --list-sas, -A10, -sas\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --list-sas | grep -A10 'child-sas'"
+  },
+  {
+    "instruction": "How to check IKE version being used",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --list-sas, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --list-sas | grep -i ike"
+  },
+  {
+    "instruction": "How to show IPsec interface stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/net/ipsec_esp/statistics"
+  },
+  {
+    "instruction": "How to check strongSwan version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ipsec` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ipsec` — IPsec VPN management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nipsec version"
+  },
+  {
+    "instruction": "How to check charon version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `charon` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `charon` — charon command execution and management\n   Flag `--version`: show tool version\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncharon --version"
+  },
+  {
+    "instruction": "How to configure IKEv2 in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'connections {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  ikev2 {\n    version = 2\n    local_addrs = 192.168.1.10\n    remote_addrs = 192.168.2.10\n    local {\n      auth = pubkey\n      certs = server.crt\n      id = server.example.com\n    }\n    remote {\n      auth = pubkey\n      id = client.example.com\n    }\n    children {\n      net {\n        local_ts = 10.0.0.0/24\n        remote_ts = 10.0.1.0/24\n      }\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to generate a CA certificate with pki",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pki` with the correct flags and arguments\n   2. Key flags: --gen, --type, --size, --outform\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pki` — pki command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npki --gen --type ecdsa --size 256 --outform pem > ca.key && pki --self --ca --lifetime 3650 --in ca.key --dn 'CN=VPN CA, O=Example' --outform pem > ca.crt"
+  },
+  {
+    "instruction": "How to generate a server certificate with pki",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pki` with the correct flags and arguments\n   2. Key flags: --gen, --type, --size, --outform\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pki` — pki command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npki --gen --type ecdsa --size 256 --outform pem > server.key && pki --pub --in server.key | pki --issue --cacert ca.crt --cakey ca.key --dn 'CN=server.example.com, O=Example' --san server.example.com --flag serverAuth --flag ikeIntermediate --outform pem > server.crt"
+  },
+  {
+    "instruction": "How to generate a client certificate with pki",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pki` with the correct flags and arguments\n   2. Key flags: --gen, --type, --size, --outform\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pki` — pki command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npki --gen --type ecdsa --size 256 --outform pem > client.key && pki --pub --in client.key | pki --issue --cacert ca.crt --cakey ca.key --dn 'CN=client.example.com, O=Example' --san client.example.com --outform pem > client.crt"
+  },
+  {
+    "instruction": "How to generate a preshared key for IPsec",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'mypresharedsecret' > /etc/ipsec.secrets"
+  },
+  {
+    "instruction": "How to set up PSK authentication in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '192.168.2.10 : PSK \"mypresharedkey\"' > /etc/ipsec.secrets"
+  },
+  {
+    "instruction": "How to configure swanctl.conf for IKEv2 PSK",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'connections {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  ikev2-psk {\n    version = 2\n    local_addrs = 192.168.1.10\n    remote_addrs = 192.168.2.10\n    local {\n      auth = psk\n      id = server\n    }\n    remote {\n      auth = psk\n      id = client\n    }\n    children {\n      net {\n        local_ts = 0.0.0.0/0\n        remote_ts = 0.0.0.0/0\n      }\n    }\n  }\n}' > /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set up EAP for strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  eap {\n    version = 2\n    local_addrs = 192.168.1.10\n    remote_addrs = %any\n    pools = pool1\n    local {\n      auth = pubkey\n      certs = server.crt\n      id = server.example.com\n    }\n    remote {\n      auth = eap-mschapv2\n      eap_id = %any\n    }\n    children {\n      net {\n        local_ts = 0.0.0.0/0\n      }\n    }\n  }\n  pools {\n    pool1 {\n      addrs = 10.8.0.0/24\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to add a user for EAP in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'user1 : EAP \"password1\"' > /etc/ipsec.secrets"
+  },
+  {
+    "instruction": "How to reload swanctl credentials",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --load-creds\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --load-creds"
+  },
+  {
+    "instruction": "How to reload swanctl connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --load-conns\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --load-conns"
+  },
+  {
+    "instruction": "How to verify swanctl configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --load-conns\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nswanctl --load-conns 2>&1"
+  },
+  {
+    "instruction": "How to test IPsec connection without bringing it up",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ipsec` with the correct flags and arguments\n   2. Key flags: -connection\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ipsec` — IPsec VPN management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nipsec statusall | grep my-connection"
+  },
+  {
+    "instruction": "How to show strongSwan pools",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --list-pools\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --list-pools"
+  },
+  {
+    "instruction": "How to show IPsec kernel policies",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ip` — configure network interfaces and routing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nip xfrm policy list"
+  },
+  {
+    "instruction": "How to show kernel SAD entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ip` — configure network interfaces and routing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nip xfrm state list"
+  }
+]

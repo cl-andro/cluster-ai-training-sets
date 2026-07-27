@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a multi-stage Docker build targeting production",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --target, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker build --target production -t myapp:prod ."
+  },
+  {
+    "instruction": "Bake multiple images using a docker-bake.hcl file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -f, -bake\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker buildx bake -f docker-bake.hcl"
+  },
+  {
+    "instruction": "Build a container on multiple architectures with podman farm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --farm, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman farm build --farm myfarm -t myapp:latest ."
+  },
+  {
+    "instruction": "Create a new container from a base image using Buildah",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nbuildah from docker://docker.io/library/debian:bookworm"
+  },
+  {
+    "instruction": "Commit a Buildah container to an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah commit mycontainer myapp:1.0"
+  },
+  {
+    "instruction": "Push a Buildah image to a registry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nbuildah push myapp:1.0 docker://docker.io/myuser/myapp:1.0"
+  },
+  {
+    "instruction": "Mount a Buildah container's root filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah mount mycontainer"
+  },
+  {
+    "instruction": "Run a command inside a Buildah container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -get\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah run mycontainer -- apt-get update"
+  },
+  {
+    "instruction": "Copy files into a Buildah container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah copy mycontainer ./app /opt/app"
+  },
+  {
+    "instruction": "Set environment variables in a Buildah container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --env\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --env PATH=/usr/local/bin mycontainer"
+  },
+  {
+    "instruction": "Set the entrypoint for a Buildah image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --entrypoint\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --entrypoint '[\"/opt/app/start.sh\"]' mycontainer"
+  },
+  {
+    "instruction": "Set the working directory in a Buildah container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --workingdir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah config --workingdir /opt/app mycontainer"
+  },
+  {
+    "instruction": "Inspect the last Buildah image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --last\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah inspect --last"
+  },
+  {
+    "instruction": "List all Buildah containers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah containers"
+  },
+  {
+    "instruction": "Remove all Buildah containers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah rm -a"
+  },
+  {
+    "instruction": "Build an OCI-compliant image with Buildah",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --format, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --format=oci -t myapp:1.0 ."
+  },
+  {
+    "instruction": "Build a container with Podman using a rootless network",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --network, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `host` — host command execution and management\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman build --network=host -t myapp:1.0 ."
+  },
+  {
+    "instruction": "Push a multi-architecture manifest with docker buildx",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --push, --platform, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker buildx build --push --platform linux/amd64,linux/arm64 -t myuser/myapp:latest ."
+  },
+  {
+    "instruction": "Create a buildx bake file for multi-image builds",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -bake\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > docker-bake.hcl << 'EOF'\ngroup \"default\" {\n  targets = [\"app\", \"worker\"]\n}\ntarget \"app\" {\n  dockerfile = \"Dockerfile.app\"\n  platforms = [\"linux/amd64\"]\n}\ntarget \"worker\" {\n  dockerfile = \"Dockerfile.worker\"\n}\nEOF"
+  },
+  {
+    "instruction": "Tag an image with Buildah",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah tag myapp:1.0 myuser/myapp:latest"
+  },
+  {
+    "instruction": "Pull a base image for building with Buildah",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah pull debian:bookworm"
+  },
+  {
+    "instruction": "Install podman and buildah on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the buildah configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `buildah` — OCI container image builder\n   Supporting tool: `podman` — rootless container management\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nsudo apt-get install podman buildah -y"
+  },
+  {
+    "instruction": "Inspect a Podman image's configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman inspect myapp:1.0"
+  },
+  {
+    "instruction": "Run a temporary container for testing a build",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --rm, -it\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --rm -it myapp:1.0 /bin/bash"
+  },
+  {
+    "instruction": "Build an RPM inside a container using buildah",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: -ba\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah run mycontainer -- rpmbuild -ba /tmp/myapp.spec"
+  }
+]

@@ -1,0 +1,94 @@
+[
+  {
+    "instruction": "Configure a static IP with systemd-networkd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat > /etc/systemd/network/10-eth0.network << 'EOF'\n[Match]\nName=eth0\n[Network]\nAddress=192.168.1.100/24\nGateway=192.168.1.1\nDNS=8.8.8.8\nEOF && systemctl restart systemd-networkd"
+  },
+  {
+    "instruction": "Configure DHCP on an interface with systemd-networkd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat > /etc/systemd/network/20-wlan0.network << 'EOF'\n[Match]\nName=wlan0\n[Network]\nDHCP=yes\nEOF && systemctl restart systemd-networkd"
+  },
+  {
+    "instruction": "Create a bond interface with systemd-networkd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -bond0, -networkd\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat > /etc/systemd/network/30-bond0.netdev << 'EOF'\n[NetDev]\nName=bond0\nKind=bond\n[Bond]\nMode=802.3ad\nMIIMonitorSec=1\nEOF && systemctl restart systemd-networkd"
+  },
+  {
+    "instruction": "Create a bridge interface with systemd-networkd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -br0, -networkd\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat > /etc/systemd/network/50-br0.netdev << 'EOF'\n[NetDev]\nName=br0\nKind=bridge\nEOF && systemctl restart systemd-networkd"
+  },
+  {
+    "instruction": "Show network interface status with networkctl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `networkctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl status"
+  },
+  {
+    "instruction": "Reload systemd-networkd configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `networkctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl reload"
+  },
+  {
+    "instruction": "Configure netplan with static IP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cat > /etc/netplan/01-netcfg.yaml << 'EOF'\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/netplan/01-netcfg.yaml << 'EOF'\nnetwork:\n  version: 2\n  ethernets:\n    eth0:\n      addresses: [192.168.1.100/24]\n      gateway4: 192.168.1.1\n      nameservers:\n        addresses: [8.8.8.8, 1.1.1.1]\nEOF && netplan apply"
+  },
+  {
+    "instruction": "Test netplan configuration without applying",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `netplan` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `netplan` — netplan command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetplan try"
+  },
+  {
+    "instruction": "Create a network namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ip` — configure network interfaces and routing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nip netns add red"
+  },
+  {
+    "instruction": "Run a command inside a network namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ip` — configure network interfaces and routing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nip netns exec red ip addr"
+  },
+  {
+    "instruction": "Configure a static interface in /etc/network/interfaces.d/",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat > /etc/network/interfaces.d/eth0 << 'EOF'\nauto eth0\niface eth0 inet static\n  address 192.168.1.100/24\n  gateway 192.168.1.1\nEOF && systemctl restart networking"
+  },
+  {
+    "instruction": "Configure /etc/apt/sources.list for Debian 12 bookworm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ncat > /etc/apt/sources.list << 'EOF'\ndeb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware\ndeb http://deb.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware\ndeb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware\nEOF && apt update"
+  },
+  {
+    "instruction": "Pin a package to a specific version with apt preferences",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -docker, -ce, -Priority\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ncat > /etc/apt/preferences.d/pin-docker << 'EOF'\nPackage: docker-ce\nPin: version 24.0.*\nPin-Priority: 1001\nEOF"
+  },
+  {
+    "instruction": "Hold a package to prevent upgrades",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt-mark` with the correct flags and arguments\n   2. Key flags: -mark, -ce\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt-mark` — apt-mark command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napt-mark hold docker-ce"
+  },
+  {
+    "instruction": "Query installed package files with dpkg",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the dpkg configuration with the required parameters\n   2. Apply the configuration and verify with `dpkg status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg` — dpkg command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ndpkg -L openssh-server"
+  },
+  {
+    "instruction": "Find which package owns a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg` with the correct flags and arguments\n   2. Key flags: -S\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg` — dpkg command execution and management\n   Flag `-S`: sort by size\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ndpkg -S /etc/ssh/sshd_config"
+  },
+  {
+    "instruction": "Reconfigure a package interactively",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: dpkg-reconfigure tzdata\n   2. Apply the configuration and verify with `dpkg-reconfigure status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-reconfigure` — dpkg-reconfigure command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-reconfigure tzdata"
+  },
+  {
+    "instruction": "Set the default Java version with update-alternatives",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `update-alternatives` with the correct flags and arguments\n   2. Key flags: -alternatives, --config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `update-alternatives` — update-alternatives command execution and management\n   Supporting tool: `java` — java command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-alternatives --config java"
+  },
+  {
+    "instruction": "Add a custom alternative symlink",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `update-alternatives` with the correct flags and arguments\n   2. Key flags: -alternatives, --install, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `update-alternatives` — update-alternatives command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-alternatives --install /usr/bin/myapp myapp /opt/myapp-1.0/bin/myapp 10"
+  },
+  {
+    "instruction": "Remove an alternative from the system",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `update-alternatives` with the correct flags and arguments\n   2. Key flags: -alternatives, --remove, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `update-alternatives` — update-alternatives command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-alternatives --remove myapp /opt/myapp-1.0/bin/myapp"
+  },
+  {
+    "instruction": "Display auto-mode status for an alternative",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `update-alternatives` with the correct flags and arguments\n   2. Key flags: -alternatives, --display\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `update-alternatives` — update-alternatives command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-alternatives --display myapp"
+  },
+  {
+    "instruction": "Add a static host entry in /etc/hosts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -server, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '192.168.1.50 db-server.internal db-server' >> /etc/hosts"
+  },
+  {
+    "instruction": "Set the system hostname permanently",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -hostname\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'myserver' > /etc/hostname && hostnamectl set-hostname myserver"
+  }
+]

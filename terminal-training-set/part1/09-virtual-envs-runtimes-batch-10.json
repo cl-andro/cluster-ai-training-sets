@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Check if a specific Python module is available",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'import requests' && echo available || echo not available"
+  },
+  {
+    "instruction": "Show Python module path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'import requests; print(requests.__file__)'"
+  },
+  {
+    "instruction": "List all external Python modules installed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pip configuration with the required parameters\n   2. Apply the configuration and verify with `pip status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pip` — Python package installer\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npip list --format=columns | tail -n +3"
+  },
+  {
+    "instruction": "Find outdated Python packages with pip",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pip` with the correct flags and arguments\n   2. Key flags: --outdated, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pip` — Python package installer\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npip list --outdated --format=columns"
+  },
+  {
+    "instruction": "Install pip packages with constraints",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pip configuration with the required parameters\n   2. Apply the configuration and verify with `pip status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pip` — Python package installer\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npip install -c constraints.txt requests"
+  },
+  {
+    "instruction": "Install an editable package (pip install -e)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pip configuration with the required parameters\n   2. Apply the configuration and verify with `pip status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pip` — Python package installer\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npip install -e ./mylocalpkg"
+  },
+  {
+    "instruction": "Check pip cache usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pip` — Python package installer\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npip cache info"
+  },
+  {
+    "instruction": "Remove all pip cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pip` — Python package installer\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npip cache purge"
+  },
+  {
+    "instruction": "List all pip package licenses",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pip` with the correct flags and arguments\n   2. Key flags: --format, -n, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pip` — Python package installer\n   Flag `-n`: dry-run mode\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npip list --format=columns | tail -n +3 | while read pkg v; do echo -n \"$pkg: \"; pip show \"$pkg\" 2>/dev/null | grep License; done"
+  },
+  {
+    "instruction": "Check conda version and environment info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conda` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda info"
+  },
+  {
+    "instruction": "Update conda to latest version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conda` with the correct flags and arguments\n   2. Key flags: -n, -y\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda update -n base conda -y"
+  },
+  {
+    "instruction": "Search for a package in conda",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conda` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda search numpy"
+  },
+  {
+    "instruction": "Install a package from conda-forge channel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: conda install -c conda-forge numpy\n   2. Apply the configuration and verify with `conda status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda install -c conda-forge numpy"
+  },
+  {
+    "instruction": "Clone a conda environment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conda` with the correct flags and arguments\n   2. Key flags: --name, --clone\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda create --name newenv --clone oldenv"
+  },
+  {
+    "instruction": "Rename a conda environment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conda` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda rename -n oldname newname"
+  },
+  {
+    "instruction": "Export conda env as explicit list of packages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conda` with the correct flags and arguments\n   2. Key flags: --explicit, -spec\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nconda list --explicit > env-spec.txt"
+  },
+  {
+    "instruction": "Create conda env from explicit list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conda` with the correct flags and arguments\n   2. Key flags: --name, --file, -spec\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda create --name myenv --file env-spec.txt"
+  },
+  {
+    "instruction": "Install Mamba (faster conda alternative)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: conda install -c conda-forge mamba -y\n   2. Apply the configuration and verify with `conda status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda install -c conda-forge mamba -y"
+  },
+  {
+    "instruction": "Install packages with mamba",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: mamba install numpy pandas scikit-learn\n   2. Apply the configuration and verify with `mamba status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `mamba` — mamba command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmamba install numpy pandas scikit-learn"
+  },
+  {
+    "instruction": "Install R in conda",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: conda install -c conda-forge r-base r-essentials\n   2. Apply the configuration and verify with `conda status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda install -c conda-forge r-base r-essentials"
+  },
+  {
+    "instruction": "Install JupyterLab in conda",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: conda install -c conda-forge jupyterlab -y\n   2. Apply the configuration and verify with `conda status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `conda` — conda command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconda install -c conda-forge jupyterlab -y"
+  },
+  {
+    "instruction": "Launch JupyterLab",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jupyter` with the correct flags and arguments\n   2. Key flags: --no-browser, --port\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jupyter` — jupyter command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njupyter lab --no-browser --port 8888"
+  },
+  {
+    "instruction": "Start a Jupyter Notebook",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jupyter` with the correct flags and arguments\n   2. Key flags: --no-browser, --ip, --port\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jupyter` — jupyter command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njupyter notebook --no-browser --ip=0.0.0.0 --port=9999"
+  },
+  {
+    "instruction": "List all Jupyter kernels",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jupyter` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jupyter` — jupyter command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njupyter kernelspec list"
+  },
+  {
+    "instruction": "Install a new Jupyter kernel for a virtual env",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the pip configuration with the required parameters\n   2. Apply the configuration and verify with `pip status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pip` — Python package installer\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npip install ipykernel && python -m ipykernel install --user --name=myenv --display-name=\"Python (myenv)\""
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Run log profiler iteration 22",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aa-logprof` with the correct flags and arguments\n   2. Key flags: -logprof\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aa-logprof` — aa-logprof command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naa-logprof"
+  },
+  {
+    "instruction": "Parse and load nginx profile 22",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apparmor_parser` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apparmor_parser` — apparmor_parser command execution and management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napparmor_parser -r /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "Load profile with kernel cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apparmor_parser` with the correct flags and arguments\n   2. Key flags: -r, -W\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apparmor_parser` — apparmor_parser command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napparmor_parser -r -W /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "Force reload skip cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apparmor_parser` with the correct flags and arguments\n   2. Key flags: -r, -R\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apparmor_parser` — apparmor_parser command execution and management\n   Flag `-r`: recursive operation\n   Flag `-R`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napparmor_parser -r -R /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "Rebuild AppArmor cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apparmor_parser` with the correct flags and arguments\n   2. Key flags: -r, --skip-cache\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apparmor_parser` — apparmor_parser command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napparmor_parser -r --skip-cache /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "List enforce mode profiles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aa-status` with the correct flags and arguments\n   2. Key flags: -status, --enforced\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aa-status` — aa-status command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naa-status --enforced"
+  },
+  {
+    "instruction": "List complain mode profiles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aa-status` with the correct flags and arguments\n   2. Key flags: -status, --complaining\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aa-status` — aa-status command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naa-status --complaining"
+  },
+  {
+    "instruction": "Check if kernel module enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cat /sys/module/apparmor/parameters/enabled\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/module/apparmor/parameters/enabled"
+  },
+  {
+    "instruction": "View nginx profile file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "Create basic profile template",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho \"#include <tunables/global>\nprofile test /usr/bin/test {\n  #include <abstractions/base>\n  /usr/bin/test r,\n}\" > /etc/apparmor.d/usr.bin.test"
+  },
+  {
+    "instruction": "Reload all AppArmor profiles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl reload apparmor"
+  },
+  {
+    "instruction": "Restart AppArmor service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart apparmor"
+  },
+  {
+    "instruction": "Add capability to profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho \"  capability net_bind_service,\" >> /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "Add file read rule",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho \"  /var/log/nginx/*.log r,\" >> /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "Add file write rule",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho \"  /var/run/nginx.pid rw,\" >> /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "Add network rule",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho \"  network tcp,\" >> /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "Add deny rule",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho \"  deny /etc/shadow r,\" >> /etc/apparmor.d/usr.sbin.nginx"
+  },
+  {
+    "instruction": "Check if process is confined",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1/attr/current"
+  },
+  {
+    "instruction": "Run command under profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aa-exec` with the correct flags and arguments\n   2. Key flags: -exec, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aa-exec` — aa-exec command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naa-exec -p /usr/sbin/nginx -- /bin/bash"
+  },
+  {
+    "instruction": "Change profile at runtime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho /usr/sbin/nginx > /proc/$(pidof nginx)/attr/current"
+  },
+  {
+    "instruction": "List all profile files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind /etc/apparmor.d -type f -name '*.*' 2>/dev/null"
+  },
+  {
+    "instruction": "Remove a profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aa-disable` with the correct flags and arguments\n   2. Key flags: -disable\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aa-disable` — aa-disable command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naa-disable /usr/bin/test"
+  },
+  {
+    "instruction": "Check profile mode for process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/$(pidof nginx)/attr/current"
+  },
+  {
+    "instruction": "Load profile without cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apparmor_parser` with the correct flags and arguments\n   2. Key flags: -r, -K\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apparmor_parser` — apparmor_parser command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napparmor_parser -r -K /etc/apparmor.d/usr.sbin.nginx"
+  }
+]

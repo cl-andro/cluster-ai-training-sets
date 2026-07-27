@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to generate a UUID for a Docker container name using uuidgen",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -d, --name, -d, -c8\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name \"svc-$(uuidgen | tr -d '-' | head -c8)\" nginx"
+  },
+  {
+    "instruction": "How to generate a UUID for a new TLS session ID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -hex\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl rand -hex 32"
+  },
+  {
+    "instruction": "How to generate a UUID for a MongoDB document _id field",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"{\\\"_id\\\": \\\"$(uuidgen)\\\", \\\"name\\\": \\\"test\\\"}\""
+  },
+  {
+    "instruction": "How to generate a UUID and set it as an HTTP cookie value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -Cookie\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"Set-Cookie: session_id=$(uuidgen); HttpOnly; Secure\""
+  },
+  {
+    "instruction": "How to generate a UUID for a new GitHub release tag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -c8, --notes\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh release create \"v1.0-$(uuidgen | head -c8)\" --notes 'Release notes here'"
+  },
+  {
+    "instruction": "How to generate a UUID for a Prometheus metric label",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -X, --data-binary\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\necho 'my_metric{uuid=\"'$(uuidgen)'\"} 1' | curl -X POST --data-binary @- http://localhost:9091/metrics/job/test"
+  },
+  {
+    "instruction": "How to generate a UUID for a Nomad job ID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -c8\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"job \\\"app-$(uuidgen | head -c8)\\\" { ... }\""
+  },
+  {
+    "instruction": "How to generate a UUID for a Consul service registration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PUT -d '{\"ID\": \"'$(uuidgen)'\", \"Name\": \"web\"}' localhost:8500/v1/agent/service/register"
+  },
+  {
+    "instruction": "How to generate a UUID for a RabbitMQ message correlation ID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rabbitmqadmin` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rabbitmqadmin` — rabbitmqadmin command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrabbitmqadmin publish routing_key=queue payload='hello' properties='{\"correlation_id\": \"'$(uuidgen)'\"}'"
+  },
+  {
+    "instruction": "How to generate a UUID for a Terraform run ID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho \"run_id = \\\"$(uuidgen)\\\"\" >> terraform.tfvars"
+  },
+  {
+    "instruction": "How to generate a UUID for a Vault token metadata",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vault` with the correct flags and arguments\n   2. Key flags: -metadata\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vault` — secrets management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nvault token create -metadata=uuid=$(uuidgen)"
+  },
+  {
+    "instruction": "How to generate a UUID for a new AWS CloudFormation stack",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -stack, --stack-name, -c8, --template-body\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Supporting tool: `stack` — stack command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws cloudformation create-stack --stack-name \"stack-$(uuidgen | head -c8)\" --template-body file://template.yaml"
+  },
+  {
+    "instruction": "How to generate a UUID for a Cassandra row key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"INSERT INTO my_keyspace.users (id, name) VALUES ($(uuidgen | tr -d '-'), 'John');\""
+  },
+  {
+    "instruction": "How to generate a UUID for a K8s ConfigMap name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -c8, --from-literal\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl create configmap \"cm-$(uuidgen | head -c8)\" --from-literal=key=value"
+  },
+  {
+    "instruction": "How to generate a UUID for an Elasticsearch document ID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -index, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PUT \"localhost:9200/my-index/_doc/$(uuidgen)\" -H 'Content-Type: application/json' -d '{\"title\": \"test\"}'"
+  },
+  {
+    "instruction": "How to generate a UUID for a NATS message subject",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nats` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nats` — nats command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnats pub \"events.$(uuidgen)\" '{\"event\": \"test\"}'"
+  },
+  {
+    "instruction": "How to generate a UUID for a new systemd service instance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `UUID` with the correct flags and arguments\n   2. Key flags: -c8, -run, --unit\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `UUID` — UUID command execution and management\n   Supporting tool: `systemd-run` — systemd-run command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nUUID=$(uuidgen | head -c8) && systemd-run --unit=\"app-$UUID\" /usr/local/bin/app"
+  },
+  {
+    "instruction": "How to generate a UUID for a MySQL binary log event",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysqlbinlog` with the correct flags and arguments\n   2. Key flags: --hexdump, -5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysqlbinlog` — mysqlbinlog command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmysqlbinlog --hexdump binlog.000001 | head -5"
+  },
+  {
+    "instruction": "How to generate a UUID and use it for a Git branch name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -b, -c8\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit checkout -b \"feature/$(uuidgen | head -c8)\""
+  },
+  {
+    "instruction": "How to generate a UUID for a LetsEncrypt certificate thumbprint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --issue, -d, --debug\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --issue -d example.com --debug | grep thumbprint | awk '{print $NF}'"
+  },
+  {
+    "instruction": "How to generate a UUID for a new Linux LVM volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -L, -n, -c8\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -L 10G -n \"lv-$(uuidgen | head -c8)\" vg0"
+  },
+  {
+    "instruction": "How to generate a UUID and use it for a systemd journald log correlation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -cat, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-t`: sort by time\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"CORR=$(uuidgen) Starting service\" | systemd-cat -t myapp"
+  },
+  {
+    "instruction": "How to generate a UUID for a DistSQL prepared statement",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -e, -c4\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -e \"PREPARE stmt_$(uuidgen | head -c4) FROM 'SELECT ?;'\""
+  },
+  {
+    "instruction": "How to generate a UUID for an HAProxy stick table entry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `socat` — socat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"set table http_stick_table key $(uuidgen) data.gpc0 1\" | socat /var/run/haproxy.sock -"
+  },
+  {
+    "instruction": "How to generate a UUID for a new ZooKeeper znode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `zkCli.sh` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `zkCli.sh` — zkCli.sh command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nzkCli.sh create /app/config/$(uuidgen) '{\"key\": \"value\"}'"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "Create CloudWatch alarm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for aws\n   2. Build the command chain with error handling\n   3. Execute: aws cloudwatch put-metric-alarm --alarm-name HighCPU --metric-name CPUUtilizatio\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws cloudwatch put-metric-alarm --alarm-name HighCPU --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average --period 300 --threshold 80 --comparison-operator GreaterThanThreshold"
+  },
+  {
+    "instruction": "Describe IAM roles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -roles, --query, --output\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws iam list-roles --query 'Roles[*].[RoleName,Arn]' --output table"
+  },
+  {
+    "instruction": "List SNS topics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -topics, --query, --output\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws sns list-topics --query 'Topics[*].TopicArn' --output table"
+  },
+  {
+    "instruction": "Tag an EC2 instance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -tags, --resources, -1234567890abcdef0, --tags\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 create-tags --resources i-1234567890abcdef0 --tags Key=Name,Value=WebServer"
+  },
+  {
+    "instruction": "Create Lambda function",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -function, --function-name, -func, --runtime\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws lambda create-function --function-name my-func --runtime python3.9 --role arn:aws:iam::123456789012:role/lambda-role --handler index.handler --zip-file fileb://func.zip"
+  },
+  {
+    "instruction": "List all S3 buckets",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws s3 ls"
+  },
+  {
+    "instruction": "Describe EC2 instance types",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -instance, -types, --filters, -type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 describe-instance-types --filters Name=instance-type,Values=t3.* --query 'InstanceTypes[*].[InstanceType,VCpuInfo.DefaultVCpus]' --output table"
+  },
+  {
+    "instruction": "Invoke Lambda async",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: --function-name, -function, --invocation-type, --payload\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws lambda invoke --function-name my-function --invocation-type Event --payload '{}' /dev/null"
+  },
+  {
+    "instruction": "Describe EC2 subnets",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -subnets, --filters, -id, -12345678\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 describe-subnets --filters Name=vpc-id,Values=vpc-12345678 --query 'Subnets[*].[SubnetId,CidrBlock,AvailabilityZone]' --output table"
+  },
+  {
+    "instruction": "Paginate through all EC2 instances",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -instances, --page-size, --query, --output\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 describe-instances --page-size 100 --query 'Reservations[*].Instances[*].InstanceId' --output text"
+  },
+  {
+    "instruction": "List Lambda functions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -functions, --query, --output\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws lambda list-functions --query 'Functions[*].[FunctionName,Runtime]' --output table"
+  },
+  {
+    "instruction": "Describe saved CloudFormation stack",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -stacks, --stack-name, -stack, --query\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws cloudformation describe-stacks --stack-name my-stack --query 'Stacks[*].Outputs' --output table"
+  },
+  {
+    "instruction": "List EBS volumes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -volumes, --query, --output\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 describe-volumes --query 'Volumes[*].[VolumeId,Size,State]' --output table"
+  },
+  {
+    "instruction": "Copy file to S3",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -bucket\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws s3 cp myfile.txt s3://my-bucket/"
+  },
+  {
+    "instruction": "List Lambda event source mappings",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -event, -source, -mappings, --function-name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws lambda list-event-source-mappings --function-name my-function"
+  },
+  {
+    "instruction": "List load balancers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -load, -balancers, --query, --output\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws elbv2 describe-load-balancers --query 'LoadBalancers[*].[LoadBalancerName,DNSName]' --output table"
+  },
+  {
+    "instruction": "Describe VPCs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -vpcs, --query, --output\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 describe-vpcs --query 'Vpcs[*].[VpcId,IsDefault]' --output table"
+  },
+  {
+    "instruction": "Create EBS snapshot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for aws\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: aws ec2 create-snapshot --volume-id vol-1234567890abcdef0 --description 'Backup \n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 create-snapshot --volume-id vol-1234567890abcdef0 --description 'Backup snapshot'"
+  },
+  {
+    "instruction": "List running EC2 instances with name tag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -instances, --filters, -state, -name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[*].Instances[*].[InstanceId,Tags[?Key==`Name`].Value|[0]]' --output table"
+  },
+  {
+    "instruction": "Create target group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: -target, -group, --name, -targets\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws elbv2 create-target-group --name my-targets --protocol HTTP --port 80 --vpc-id vpc-12345678"
+  }
+]

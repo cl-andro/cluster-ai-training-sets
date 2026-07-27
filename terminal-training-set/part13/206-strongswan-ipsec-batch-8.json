@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to configure IKEv1 Aggressive Mode in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'connections {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  ikev1-agg {\n    version = 1\n    aggressive = yes\n    local_addrs = 192.168.1.10\n    remote_addrs = 192.168.2.10\n    local {\n      auth = psk\n      id = server\n    }\n    remote {\n      auth = psk\n      id = participant\n    }\n    children {\n      net {}\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to configure IKEv1 Main Mode in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'connections {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  ikev1-main {\n    version = 1\n    local_addrs = 192.168.1.10\n    remote_addrs = 192.168.2.10\n    local {\n      auth = psk\n    }\n    remote {\n      auth = psk\n    }\n    children {\n      net {}\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to configure IPsec with AH protocol",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'connections {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  ah {\n    children {\n      net {\n        ah_proposals = sha256\n        mode = tunnel\n      }\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to configure ESP with no encryption (null cipher)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'connections {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  null-enc {\n    children {\n      net {\n        esp_proposals = null-sha256\n      }\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set particular DH group in IKE",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connection, -sha256, -modp3072\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  my-connection {\n    proposals = aes256-sha256-modp3072\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to use custom ESP lifetime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'children {\n  net {\n    life_time = 12h\n    rekey_time = 11h\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set the inactivity timeout in IPsec",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'children {\n  net {\n    inactivity = 30m\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set IPsec hardware offload",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -netlink, -kernel, -netlink\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'charon {\n  plugins {\n    kernel-netlink {\n      hw_offload = yes\n    }\n  }\n}' >> /etc/strongswan.d/charon-kernel-netlink.conf"
+  },
+  {
+    "instruction": "How to check IPsec hardware offload status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ethtool` with the correct flags and arguments\n   2. Key flags: -k, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ethtool` — ethtool command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nethtool -k eth0 | grep -i esp"
+  },
+  {
+    "instruction": "How to enable IPsec hw offload via ethtool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ethtool -K eth0 esp-hw-offload on\n   2. Apply the configuration and verify with `ethtool status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ethtool` — ethtool command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nethtool -K eth0 esp-hw-offload on"
+  },
+  {
+    "instruction": "How to configure IPsec for VLAN interfaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'connections {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  vlan {\n    local_addrs = 192.168.1.10\n    remote_addrs = 192.168.2.10\n    if_id_in = 100\n    if_id_out = 100\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to create a VTI (Virtual Tunnel Interface)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ip` — configure network interfaces and routing\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nip tunnel add vti0 local 192.168.1.10 remote 192.168.2.10 mode vti key 42 && ip link set vti0 up"
+  },
+  {
+    "instruction": "How to route to VTI for IPsec",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ip` — configure network interfaces and routing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nip route add 10.0.2.0/24 dev vti0"
+  },
+  {
+    "instruction": "How to use iptables with VTI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -i, -j, -A\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Flag `-i`: interactive mode or case-insensitive\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A FORWARD -i vti0 -j ACCEPT && iptables -A FORWARD -o vti0 -j ACCEPT"
+  },
+  {
+    "instruction": "How to assign IP to VTI interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ip` — configure network interfaces and routing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nip addr add 10.200.0.1/30 dev vti0"
+  },
+  {
+    "instruction": "How to set up IPsec with VTI in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -conn\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  vti-conn {\n    local_addrs = 192.168.1.10\n    remote_addrs = 192.168.2.10\n    vti = vti0\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set VTI mark in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -conn\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  vti-conn {\n    vti = 42\n    mark_in = 42\n    mark_out = 42\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to show VTI traffic stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ip` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ip` — configure network interfaces and routing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nip -s link show vti0"
+  },
+  {
+    "instruction": "How to delete VTI interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ip` — configure network interfaces and routing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nip tunnel del vti0"
+  },
+  {
+    "instruction": "How to configure IPsec with DSCP marking",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'connections {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  my-connection {\n    tos = 0x04\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set IPsec inbound DSCP copying",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connection\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  my-connection {\n    copy_df = no\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to limit IPsec maximum segment size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connection\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  my-connection {\n    mss = 1360\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set IPsec minimum MTU",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -connection\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  my-connection {\n    mtu = 1400\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to configure IPsec to ignore DF bit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'charon {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'charon {\n  syslog {\n    default = 2\n  }\n}' >> /etc/strongswan.d/charon.conf"
+  },
+  {
+    "instruction": "How to enable IPsec TCP MSS clamping",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the iptables configuration with the required parameters\n   2. Apply the configuration and verify with `iptables status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu"
+  }
+]

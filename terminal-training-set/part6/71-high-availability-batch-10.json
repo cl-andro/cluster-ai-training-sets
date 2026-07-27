@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a DRBD split-brain handler script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `split-brain` with the correct flags and arguments\n   2. Key flags: -brain, -split, -brain\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `split-brain` — split-brain command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsplit-brain /usr/local/bin/drbd-split-brain.sh"
+  },
+  {
+    "instruction": "Show DRBD statistics with drbdsetup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: drbdsetup show r0\n   2. Apply the configuration and verify with `drbdsetup status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdsetup` — drbdsetup command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdsetup show r0"
+  },
+  {
+    "instruction": "Set DRBD AL (activity log) size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdmeta` with the correct flags and arguments\n   2. Key flags: -gi\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdmeta` — drbdmeta command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdmeta /dev/sdb v06 0 set-gi 0"
+  },
+  {
+    "instruction": "Initialize DRBD metadata with force overwrite",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: -md, --force\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Flag `--force`: override warnings and proceed\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm create-md --force r0"
+  },
+  {
+    "instruction": "Set up a DRBD device with write-back cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: -options, --set-defaults, --disk-barrier\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm disk-options --set-defaults --disk-barrier=safe r0"
+  },
+  {
+    "instruction": "Configure Corosync with redundant ring",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: nodelist {\n   2. Apply the configuration and verify with `nodelist status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `nodelist` — nodelist command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnodelist {\n  node {\n    ring0_addr: 192.168.1.10\n    ring1_addr: 10.0.0.10\n    nodeid: 1\n  }\n  node {\n    ring0_addr: 192.168.1.11\n    ring1_addr: 10.0.0.11\n    nodeid: 2\n  }\n}"
+  },
+  {
+    "instruction": "Configure Corosync encryption with NSS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: crypto_hash: sha256\n   2. Apply the configuration and verify with `crypto_hash status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `crypto_hash` — crypto_hash command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrypto_hash: sha256\ncrypto_cipher: aes256"
+  },
+  {
+    "instruction": "Set Corosync logging to debug mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using logging\n   2. Apply corrective actions: logging {\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `logging` — logging command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogging {\n  fileline: on\n  to_syslog: yes\n  to_logfile: yes\n  logfile: /var/log/corosync/corosync.log\n  debug: on\n}"
+  },
+  {
+    "instruction": "Configure Corosync with quorum device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: quorum {\n   2. Apply the configuration and verify with `quorum status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `quorum` — quorum command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nquorum {\n  provider: corosync_votequorum\n  qdevice_setup: yes\n  qdevice_model: net\n}"
+  },
+  {
+    "instruction": "Configure a Corosync external vote quorum device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the host configuration with the required parameters\n   2. Apply the configuration and verify with `quorum.device.net status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `quorum.device.net` — quorum.device.net command execution and management\n   Supporting tool: `host` — host command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nquorum.device.net {\n  host: 10.0.0.200\n  port: 5403\n  key: /etc/corosync/qnetd-auth.key\n}"
+  },
+  {
+    "instruction": "Enable quorum device in Corosync",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the host configuration with the required parameters\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Supporting tool: `host` — host command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs quorum device add model net host=10.0.0.200 algorithm=ffsplit"
+  },
+  {
+    "instruction": "Remove quorum device from cluster",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs quorum device remove"
+  },
+  {
+    "instruction": "Show quorum device status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs quorum device status"
+  },
+  {
+    "instruction": "Set up a Corosync QDevice on a separate host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: --enable, --start\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs qdevice setup model net --enable --start 10.0.0.200"
+  },
+  {
+    "instruction": "Change Pacemaker quorum policy to freeze",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -quorum, -policy\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs property set no-quorum-policy=freeze"
+  },
+  {
+    "instruction": "Change Pacemaker quorum policy to stop",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -quorum, -policy\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs property set no-quorum-policy=stop"
+  },
+  {
+    "instruction": "Change Pacemaker quorum policy to suicide",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -quorum, -policy\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs property set no-quorum-policy=suicide"
+  },
+  {
+    "instruction": "Configure Pacemaker concurrent-fencing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs property set concurrent-fencing=true\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs property set concurrent-fencing=true"
+  },
+  {
+    "instruction": "Configure Pacemaker shutdown policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs property set shutdown-escalation=10\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs property set shutdown-escalation=10"
+  },
+  {
+    "instruction": "Configure Pacemaker startup fencing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs property set startup-fencing=false\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs property set startup-fencing=false"
+  },
+  {
+    "instruction": "Set Pacemaker cluster recheck interval",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -recheck, -interval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs property set cluster-recheck-interval=5min"
+  },
+  {
+    "instruction": "Configure two-node cluster in Pacemaker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs property set two-node=1\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs property set two-node=1"
+  },
+  {
+    "instruction": "Set minimum quorum votes in Corosync",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -votes\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs quorum expected-votes 2"
+  },
+  {
+    "instruction": "Wait for cluster to settle in Pacemaker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm_resource` with the correct flags and arguments\n   2. Key flags: --wait\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm_resource` — crm_resource command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm_resource --wait"
+  },
+  {
+    "instruction": "Check if cluster is quorate in Pacemaker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm_mon` with the correct flags and arguments\n   2. Key flags: --one-shot, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm_mon` — crm_mon command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm_mon --one-shot | grep -i quorum"
+  }
+]

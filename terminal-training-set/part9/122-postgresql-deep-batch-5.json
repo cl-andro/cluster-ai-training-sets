@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Show tables needing vacuum soon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT relname, n_dead_tup, last_vacuum, last_autovacuum FROM pg_stat_user_tables ORDER BY n_dead_tup DESC LIMIT 10\""
+  },
+  {
+    "instruction": "Show queries running longer than 5 minutes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT pid, now() - pg_stat_activity.query_start AS duration, query, state FROM pg_stat_activity WHERE state = 'active' AND now() - pg_stat_activity.query_start > interval '5 minutes' ORDER BY duration DESC\""
+  },
+  {
+    "instruction": "List all sequences in the database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT schemaname, sequencename, start_value, min_value, max_value, increment_by FROM pg_sequences\""
+  },
+  {
+    "instruction": "Create a partitioned table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"CREATE TABLE orders_part (id INT, created_at DATE) PARTITION BY RANGE (created_at)\""
+  },
+  {
+    "instruction": "Create a table partition",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c, -01, -01, -01\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"CREATE TABLE orders_2024 PARTITION OF orders_part FOR VALUES FROM ('2024-01-01') TO ('2025-01-01')\""
+  },
+  {
+    "instruction": "Drop a table partition",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"DROP TABLE orders_2024\""
+  },
+  {
+    "instruction": "Set a role's password",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"ALTER ROLE appuser WITH PASSWORD 'newpassword'\""
+  },
+  {
+    "instruction": "Add a column to a table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"ALTER TABLE users ADD COLUMN last_login TIMESTAMP\""
+  },
+  {
+    "instruction": "Drop a column from a table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"ALTER TABLE users DROP COLUMN temp_field\""
+  },
+  {
+    "instruction": "Rename a column",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"ALTER TABLE users RENAME COLUMN last_login TO last_login_at\""
+  },
+  {
+    "instruction": "Create a new table with constraints",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"CREATE TABLE products (id SERIAL PRIMARY KEY, name TEXT NOT NULL, price NUMERIC CHECK (price > 0))\""
+  },
+  {
+    "instruction": "Show all schemas in the database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT schema_name FROM information_schema.schemata\""
+  },
+  {
+    "instruction": "Terminate all idle connections to a database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'mydb' AND state = 'idle'\""
+  },
+  {
+    "instruction": "Show the size of a specific table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT pg_size_pretty(pg_total_relation_size('orders'))\""
+  },
+  {
+    "instruction": "Show the size of the entire database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT pg_size_pretty(pg_database_size('mydb'))\""
+  },
+  {
+    "instruction": "Enable tuple tracking for a table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the psql configuration with the required parameters\n   2. Apply the configuration and verify with `psql status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"ALTER TABLE mytable SET (autovacuum_enabled = true)\""
+  },
+  {
+    "instruction": "Additional 122-postgresql-deep command 105",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -postgresql, -deep, -105\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '122-postgresql-deep-105'"
+  },
+  {
+    "instruction": "Additional 122-postgresql-deep command 106",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -postgresql, -deep, -106\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '122-postgresql-deep-106'"
+  },
+  {
+    "instruction": "Additional 122-postgresql-deep command 107",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -postgresql, -deep, -107\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '122-postgresql-deep-107'"
+  },
+  {
+    "instruction": "Additional 122-postgresql-deep command 108",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -postgresql, -deep, -108\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '122-postgresql-deep-108'"
+  },
+  {
+    "instruction": "Additional 122-postgresql-deep command 109",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -postgresql, -deep, -109\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '122-postgresql-deep-109'"
+  },
+  {
+    "instruction": "Additional 122-postgresql-deep command 110",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -postgresql, -deep, -110\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '122-postgresql-deep-110'"
+  }
+]

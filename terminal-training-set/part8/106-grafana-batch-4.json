@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a Grafana alert rule via provisioning API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl -X POST http://admin:admin@localhost:3000/api/v1/provisioning/alert-rules -\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/v1/provisioning/alert-rules -H 'Content-Type: application/json' -d '{\"title\":\"HighCPU\",\"condition\":\"avg() OF query(A) IS ABOVE 0.9\",\"data\":[{\"refId\":\"A\",\"relativeTimeRange\":{\"from\":600,\"to\":0},\"datasourceUid\":\"prom\",\"model\":{\"expr\":\"node_cpu_seconds_total > 0.9\",\"intervalMs\":1000,\"maxDataPoints\":100}}],\"ruleGroup\":\"default\",\"noDataState\":\"NoData\",\"execErrState\":\"Alerting\",\"for\":\"5m\"}'"
+  },
+  {
+    "instruction": "Create a Grafana contact point via provisioning API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -points, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/v1/provisioning/contact-points -H 'Content-Type: application/json' -d '{\"name\":\"Slack\",\"type\":\"slack\",\"settings\":{\"url\":\"https://hooks.slack.com/xxx\"},\"disableResolveMessage\":false}'"
+  },
+  {
+    "instruction": "Create Grafana notification policy via provisioning API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PUT http://admin:admin@localhost:3000/api/v1/provisioning/policies -H 'Content-Type: application/json' -d '{\"receiver\":\"Slack\",\"group_by\":[\"alertname\"],\"group_wait\":\"30s\",\"group_interval\":\"5m\",\"repeat_interval\":\"4h\"}'"
+  },
+  {
+    "instruction": "Export a Grafana dashboard as JSON",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -dashboard\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/dashboards/uid/my-dashboard | jq '.dashboard' > dashboard.json"
+  },
+  {
+    "instruction": "Import a Grafana dashboard via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/dashboards/db -H 'Content-Type: application/json' -d @dashboard.json"
+  },
+  {
+    "instruction": "Migrate Grafana between instances via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -dashboard, -X, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://source:3000/api/dashboards/uid/my-dashboard | jq '.dashboard' | curl -X POST http://dest:3000/api/dashboards/db -H 'Content-Type: application/json' -d @-"
+  },
+  {
+    "instruction": "Set Grafana admin password via CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grafana-cli` with the correct flags and arguments\n   2. Key flags: -cli, -admin, -password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grafana-cli` — Grafana plugin and provisioning management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrafana-cli admin reset-admin-password newpass"
+  },
+  {
+    "instruction": "Reset Grafana admin password via env",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -e GF_SECURITY_ADMIN_PASSWORD=newpass grafana/grafana"
+  },
+  {
+    "instruction": "Enable Grafana anonymous access",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[auth.anonymous] enabled = true' >> /etc/grafana/grafana.ini\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[auth.anonymous] enabled = true' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Enable Grafana OAuth with GitHub",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[auth.github] enabled = true client_id = xxx client_secret = yyy allow_sig\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[auth.github] enabled = true client_id = xxx client_secret = yyy allow_sign_up = true' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Enable Grafana LDAP authentication",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[auth.ldap] enabled = true config_file = /etc/grafana/ldap.toml' >> /etc/g\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[auth.ldap] enabled = true config_file = /etc/grafana/ldap.toml' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Set Grafana session timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[auth] login_maximum_inactive_lifetime_days = 7' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Configure Grafana SMTP for email alerts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the host configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[smtp] enabled = true host = smtp.example.com:587 user = admin password = pass from_address = grafana@example.com' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Enable Grafana unified alerting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[unified_alerting] enabled = true' >> /etc/grafana/grafana.ini\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[unified_alerting] enabled = true' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Enable Grafana reporting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[reporting] enabled = true' >> /etc/grafana/grafana.ini\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[reporting] enabled = true' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Set Grafana log level",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[log] level = debug' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Configure Grafana database (MySQL)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the mysql configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Supporting tool: `host` — host command execution and management\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\necho '[database] type = mysql host = mysql:3306 name = grafana user = grafana password = pass' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Configure Grafana database (PostgreSQL)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the host configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `host` — host command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[database] type = postgres host = postgres:5432 name = grafana user = grafana password = pass' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Set Grafana server root URL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[server] domain = grafana.example.com root_url = https://grafana.example.com/' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Enable Grafana HTTPS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[server] protocol = https cert_file = /etc/grafana/grafana.crt cert_key = \n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[server] protocol = https cert_file = /etc/grafana/grafana.crt cert_key = /etc/grafana/grafana.key' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Enable Grafana plugin analytics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[analytics] reporting_enabled = true' >> /etc/grafana/grafana.ini\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[analytics] reporting_enabled = true' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Set Grafana custom branding",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[branding] login_title = My Company' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Enable Grafana explore mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[explore] enabled = true' >> /etc/grafana/grafana.ini\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[explore] enabled = true' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Install Grafana with specific version in Docker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the docker configuration with the required parameters\n   2. Apply the configuration and verify with `docker status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name grafana -p 3000:3000 grafana/grafana:10.4.0"
+  },
+  {
+    "instruction": "Install Grafana plugins in Docker via env",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the docker configuration with the required parameters\n   2. Apply the configuration and verify with `docker status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name grafana -p 3000:3000 -e GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-worldmap-panel grafana/grafana"
+  }
+]

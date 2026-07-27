@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "mirror a website but exclude CSS and JS with httrack",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `httrack` with the correct flags and arguments\n   2. Key flags: -O\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `httrack` — httrack command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhttrack https://example.com -O ./mirror -*.css -*.js"
+  },
+  {
+    "instruction": "Extract JSON from a <script type='application/json'> tag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://example.com | pup 'script[type=\"application/json\"] text{}' | jq '.'"
+  },
+  {
+    "instruction": "Use scrapy to fetch a page and save HTML",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `scrapy` with the correct flags and arguments\n   2. Key flags: --nolog\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `scrapy` — scrapy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nscrapy fetch --nolog https://example.com > page.html"
+  },
+  {
+    "instruction": "recursive wget with a file containing URL blacklist",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wget` with the correct flags and arguments\n   2. Key flags: --recursive, --reject-urls\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Flag `--recursive`: operate on all subdirectories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget --recursive --reject-urls '/(logout|admin)/' https://example.com"
+  },
+  {
+    "instruction": "Intercept and modify headers with curl for testing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -H, -Forwarded, -For, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -H 'X-Forwarded-For: 127.0.0.1' -H 'Accept-Language: fr-CA' https://example.com"
+  },
+  {
+    "instruction": "htmlq: extract all data-* attributes from elements",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: --attribute, -value\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat page.html | htmlq '[data-]' --attribute data-value"
+  },
+  {
+    "instruction": "Get all page anchor targets (href values) sorted unique",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://example.com | pup 'a attr{href}' | sort -u"
+  },
+  {
+    "instruction": "Use katana with passive sources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `katana` with the correct flags and arguments\n   2. Key flags: -u, -ps, -pss\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `katana` — katana command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nkatana -u https://example.com -ps -pss waybackarchive,commoncrawl,alienvault"
+  },
+  {
+    "instruction": "crawl with gospider and output JavaScript endpoints",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gospider` with the correct flags and arguments\n   2. Key flags: -s, --js, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gospider` — gospider command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngospider -s https://example.com --js -o js_endpoints.txt"
+  },
+  {
+    "instruction": "Download a single page with all inlined resources via monolith",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `monolith` with the correct flags and arguments\n   2. Key flags: --no-frames, --no-css, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `monolith` — monolith command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmonolith --no-frames --no-css https://example.com -o page_only_text.html"
+  },
+  {
+    "instruction": "wget with a persistent connection and keep-alive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wget` with the correct flags and arguments\n   2. Key flags: --recursive, --header, -alive\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Flag `--recursive`: operate on all subdirectories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget --recursive --header='Connection: keep-alive' https://example.com"
+  },
+  {
+    "instruction": "curl: download a file based on a cookie session value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -b, -O\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -b 'session_token=abc123' -O https://example.com/protected/doc.pdf"
+  },
+  {
+    "instruction": "Scrapy shell: interact with form selector",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `scrapy` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `scrapy` — scrapy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nscrapy shell https://example.com/form\nresponse.css('input[type=hidden]::attr(value)').getall()"
+  },
+  {
+    "instruction": "Headless crawl with katana and store requests and responses",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `katana` with the correct flags and arguments\n   2. Key flags: -u, -headless, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `katana` — katana command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nkatana -u https://example.com -headless -o katana_output.json"
+  },
+  {
+    "instruction": "Extract meta description from a page using pup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://example.com | pup 'meta[name=description] attr{content}'"
+  },
+  {
+    "instruction": "Use httrack with connection rate limiting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `httrack` with the correct flags and arguments\n   2. Key flags: -O, --max-rate\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `httrack` — httrack command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhttrack https://example.com -O ./mirror --max-rate 1000"
+  },
+  {
+    "instruction": "Check multiple URLs with curl for HTTP/2 support",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -I, --http2, -s, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nfor url in $(cat urls.txt); do curl -I --http2 -s '$url' | head -1 | grep -q 'HTTP/2' && echo '$url HTTP/2' || echo '$url HTTP/1.x'; done"
+  },
+  {
+    "instruction": "Scrapy: dump all items in the pipeline to stdout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `scrapy` with the correct flags and arguments\n   2. Key flags: -O\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `scrapy` — scrapy command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nscrapy crawl myspider -O - 2>/dev/null | jq '.'"
+  },
+  {
+    "instruction": "wget: mirror site but skip larger files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wget` with the correct flags and arguments\n   2. Key flags: --mirror, --max-size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget --mirror --max-size=5m https://example.com"
+  },
+  {
+    "instruction": "Extract all form action URLs with htmlq",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, --attribute\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://example.com | htmlq 'form' --attribute action"
+  },
+  {
+    "instruction": "Benchmark HTTP response times with curl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -o, -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s -o /dev/null -w 'DNS: %{time_namelookup}s, Connect: %{time_connect}s, TTFB: %{time_starttransfer}s, Total: %{time_total}s\\n' https://example.com"
+  }
+]

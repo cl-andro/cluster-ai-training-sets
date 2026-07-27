@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "Show all DNS server info per link",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: --all\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dns --all"
+  },
+  {
+    "instruction": "Query TXT record for domain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: --type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl query --type=TXT example.com"
+  },
+  {
+    "instruction": "Query a specific record type (SRV) for service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: --type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl query --type=SRV _http._tcp.example.com"
+  },
+  {
+    "instruction": "Check LLMNR hostname resolution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: --type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl query --type=A hostname.local"
+  },
+  {
+    "instruction": "Query DNS statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl statistics"
+  },
+  {
+    "instruction": "Show DNS domain list per interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl domain"
+  },
+  {
+    "instruction": "Point /etc/resolv.conf to stub resolver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ln` with the correct flags and arguments\n   2. Key flags: -sf, -resolv\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ln` — ln command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf"
+  },
+  {
+    "instruction": "Set DNS cache negative TTL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[Resolve]\\nCacheNegativeTTL=10\\n' >> /etc/systemd/resolved.conf"
+  },
+  {
+    "instruction": "Restart resolved with debug logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using sudo\n   2. Apply corrective actions: sudo systemctl stop systemd-resolved && sudo /lib/systemd/systemd-resolved --deb\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl stop systemd-resolved && sudo /lib/systemd/systemd-resolved --debug"
+  },
+  {
+    "instruction": "Check DNSSEC status globally",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dnssec"
+  },
+  {
+    "instruction": "Query DNS for a domain name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl query example.com"
+  },
+  {
+    "instruction": "Query DNS over TLS status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dnsovertls"
+  },
+  {
+    "instruction": "Disable mDNS on an interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl mdns eth0 no"
+  },
+  {
+    "instruction": "Check DNS servers from resolved config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl status | grep 'DNS Server'"
+  },
+  {
+    "instruction": "Disable DNS over TLS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl dnsovertls eth0 false"
+  },
+  {
+    "instruction": "Check resolved service status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -resolved\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status systemd-resolved"
+  },
+  {
+    "instruction": "Set multiple search domains",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl domain eth0 example.com example.org"
+  },
+  {
+    "instruction": "Set DNS search domain for interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl domain eth0 example.com"
+  },
+  {
+    "instruction": "Display resolved configuration file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/systemd/resolved.conf"
+  },
+  {
+    "instruction": "Set read-ethers for mDNS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resolvectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resolvectl` — resolvectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresolvectl mdns eth0 resolve"
+  }
+]

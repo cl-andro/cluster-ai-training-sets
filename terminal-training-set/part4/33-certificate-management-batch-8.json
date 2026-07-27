@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Issue a certificate for a domain using acme.sh with the HTTP-01 challenge via webroot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --issue, -d, -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --issue -d example.com -w /var/www/html"
+  },
+  {
+    "instruction": "Issue a wildcard certificate using acme.sh with the DNS-01 challenge via Cloudflare API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --issue, -d, --dns\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --issue -d *.example.com --dns dns_cf"
+  },
+  {
+    "instruction": "Force renewal of a certificate using acme.sh regardless of expiry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --renew, -d, --force\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Flag `--force`: override warnings and proceed\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --renew -d example.com --force"
+  },
+  {
+    "instruction": "Renew all certificates managed by acme.sh that are due for renewal",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --renew-all\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --renew-all"
+  },
+  {
+    "instruction": "Revoke a certificate by its domain name using acme.sh",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --revoke, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --revoke -d example.com"
+  },
+  {
+    "instruction": "Install a certificate from acme.sh into Apache (Debian/Ubuntu style)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `acme.sh status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nacme.sh --install-cert -d example.com --cert-file /etc/apache2/ssl/cert.pem --key-file /etc/apache2/ssl/key.pem --fullchain-file /etc/apache2/ssl/fullchain.pem --reloadcmd \"systemctl reload apache2\""
+  },
+  {
+    "instruction": "Install an acme.sh certificate into Nginx with reload command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `acme.sh status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nacme.sh --install-cert -d example.com --key-file /etc/nginx/ssl/key.pem --fullchain-file /etc/nginx/ssl/fullchain.pem --reloadcmd \"systemctl reload nginx\""
+  },
+  {
+    "instruction": "List all certificates managed by acme.sh with their status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --list\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --list"
+  },
+  {
+    "instruction": "Upgrade acme.sh to the latest version from GitHub",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --upgrade\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --upgrade"
+  },
+  {
+    "instruction": "Set acme.sh as the default CA (Let's Encrypt) for new certificates",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --set-default-ca, --server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --set-default-ca --server letsencrypt"
+  },
+  {
+    "instruction": "Issue a certificate using acme.sh with a custom CA (ZeroSSL)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --issue, -d, --server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --issue -d example.com --server zerossl"
+  },
+  {
+    "instruction": "Display the account details and registered email for acme.sh",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `acme.sh` with the correct flags and arguments\n   2. Key flags: --account\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `acme.sh` — acme.sh command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nacme.sh --account"
+  },
+  {
+    "instruction": "Create a new Smallstep CA with a specific organizational name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: --name, --dns, --address, --provisioner\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep ca init --name \"Example Internal CA\" --dns ca.example.com --address :443 --provisioner admin@example.com"
+  },
+  {
+    "instruction": "Sign a CSR using the Smallstep CA client",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: --ca-url, --root, --provisioner\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep ca sign server.csr server.crt --ca-url https://ca.example.com --root root.crt --provisioner admin@example.com"
+  },
+  {
+    "instruction": "Bootstrap the Smallstep CA client with the root certificate and provisioner password",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: --ca-url, --fingerprint, --install\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep ca bootstrap --ca-url https://ca.example.com --fingerprint abc123def456 --install"
+  },
+  {
+    "instruction": "Create an X.509 certificate using the Smallstep CLI directly",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: --profile, --ca, --ca-key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep certificate create server.example.com server.crt server.key --profile leaf --ca ca.crt --ca-key ca.key"
+  },
+  {
+    "instruction": "Generate a root CA certificate using Smallstep",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: -ca, -ca, --profile, -ca\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep certificate create \"Example Root CA\" root-ca.crt root-ca.key --profile root-ca"
+  },
+  {
+    "instruction": "Create an intermediate CA certificate signed by the root with Smallstep",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: --profile, -ca, --ca, -ca\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep certificate create \"Example Intermediate CA\" intermediate.crt intermediate.key --profile intermediate-ca --ca root-ca.crt --ca-key root-ca.key"
+  },
+  {
+    "instruction": "Renew a certificate using the Smallstep CA client",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: --daemon, --ca-url, --root\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep ca renew --daemon server.crt server.key --ca-url https://ca.example.com --root root.crt"
+  },
+  {
+    "instruction": "Revoke a certificate using the Smallstep CA client",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: --serial, --reason, -compromise, --ca-url\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep ca revoke --serial 1234567890abcdef --reason \"key-compromise\" --ca-url https://ca.example.com --root root.crt"
+  },
+  {
+    "instruction": "Display the contents of a certificate in PEM format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep certificate inspect server.crt"
+  },
+  {
+    "instruction": "Generate a one-time password for Smallstep CA provisioning",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `step` with the correct flags and arguments\n   2. Key flags: --provisioner\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `step` — step command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstep crypto otp generate --provisioner admin@example.com"
+  }
+]

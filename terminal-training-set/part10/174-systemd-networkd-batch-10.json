@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "List all netdev config files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /etc/systemd/network/*.netdev"
+  },
+  {
+    "instruction": "List all network links",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `networkctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl list"
+  },
+  {
+    "instruction": "Check overall network status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `networkctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl status"
+  },
+  {
+    "instruction": "Show link operational state",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `networkctl` with the correct flags and arguments\n   2. Key flags: --no-pager\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl status eth0 --no-pager"
+  },
+  {
+    "instruction": "Configure DHCP use DNS from DHCP server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: printf '[DHCPv4]\\nUseDNS=true\\n' > /etc/systemd/network/10-dhcp-dns.network\n   2. Apply the configuration and verify with `printf status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[DHCPv4]\\nUseDNS=true\\n' > /etc/systemd/network/10-dhcp-dns.network"
+  },
+  {
+    "instruction": "Set MAC address for an interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: -mac\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[Match]\\nName=eth0\\n[Link]\\nMACAddress=00:11:22:33:44:55\\n' > /etc/systemd/network/10-mac.network"
+  },
+  {
+    "instruction": "Forcibly reconfigure all interfaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the networkctl configuration with the required parameters\n   2. Apply the configuration and verify with `networkctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl reconfigure"
+  },
+  {
+    "instruction": "Configure wake on LAN",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: printf '[Link]\\nWakeOnLan=magic\\n' > /etc/systemd/network/10-wol.link\n   2. Apply the configuration and verify with `printf status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[Link]\\nWakeOnLan=magic\\n' > /etc/systemd/network/10-wol.link"
+  },
+  {
+    "instruction": "Check networkd service status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -networkd\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status systemd-networkd"
+  },
+  {
+    "instruction": "Create a bond netdev config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: -bond0\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[NetDev]\\nName=bond0\\nKind=bond\\n[Bond]\\nMode=802.3ad\\nMIIMonitorSec=1s\\n' > /etc/systemd/network/10-bond0.netdev"
+  },
+  {
+    "instruction": "Create a bridge netdev",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: -bridge\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[NetDev]\\nName=br0\\nKind=bridge\\n' > /etc/systemd/network/10-bridge.netdev"
+  },
+  {
+    "instruction": "Display link LLDP neighbors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `networkctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl lldp"
+  },
+  {
+    "instruction": "Create bond member config for eth1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: -eth1, -bond, -member\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[Match]\\nName=eth1\\n[Network]\\nBond=bond0\\n' > /etc/systemd/network/21-eth1-bond-member.network"
+  },
+  {
+    "instruction": "Display networkd config file content",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -eth0\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/systemd/network/10-eth0.network"
+  },
+  {
+    "instruction": "Reload network configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `networkctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl reload"
+  },
+  {
+    "instruction": "Configure DHCP with hostname",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: printf '[Match]\\nName=eth0\\n[Network]\\nDHCP=ipv4\\n[DHCPv4]\\nHostname=myhost\\n' >\n   2. Apply the configuration and verify with `printf status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nDHCP=ipv4\\n[DHCPv4]\\nHostname=myhost\\n' > /etc/systemd/network/10-dhcp-hostname.network"
+  },
+  {
+    "instruction": "Create network config with multiple addresses",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: -multi, -ip\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nAddress=192.168.1.10/24\\nAddress=10.0.0.10/24\\n' > /etc/systemd/network/10-multi-ip.network"
+  },
+  {
+    "instruction": "Renew DHCP lease on an interface",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `networkctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl renew eth0"
+  },
+  {
+    "instruction": "Follow networkd journal in real time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -u, -networkd, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -u systemd-networkd -f"
+  },
+  {
+    "instruction": "Check status of a specific link",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `networkctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `networkctl` — networkctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetworkctl status eth0"
+  }
+]

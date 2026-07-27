@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Show details of a specific file descriptor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stat` — stat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstat /proc/1234/fd/3"
+  },
+  {
+    "instruction": "Show stdin/stdout/stderr of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /proc/1234/fd/{0,1,2}"
+  },
+  {
+    "instruction": "Watch stdin of a process in real time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for cat\n   2. Build the command chain with error handling\n   3. Execute: cat /proc/1234/fd/0\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/fd/0"
+  },
+  {
+    "instruction": "Write to stdin of a running process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho \"command\" > /proc/1234/fd/0"
+  },
+  {
+    "instruction": "Show the control group of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/cgroup"
+  },
+  {
+    "instruction": "Show process scheduling class",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -p, -3\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nchrt -p 1234 2>/dev/null; cat /proc/1234/sched | head -3"
+  },
+  {
+    "instruction": "Show process security context (SELinux)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/attr/current"
+  },
+  {
+    "instruction": "Show the capabilities of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/status | grep Cap"
+  },
+  {
+    "instruction": "Decode process capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `capsh` with the correct flags and arguments\n   2. Key flags: --decode\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `capsh` — capsh command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncapsh --decode=$(cat /proc/1234/status | grep CapEff | awk '{print $2}')"
+  },
+  {
+    "instruction": "Show process namespace IDs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /proc/1234/ns/"
+  },
+  {
+    "instruction": "Enter the namespace of another process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nsenter` with the correct flags and arguments\n   2. Key flags: -t, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nsenter` — enter existing namespace\n   Flag `-t`: sort by time\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnsenter -t 1234 -a /bin/bash"
+  },
+  {
+    "instruction": "Show the PID namespace hierarchy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/status | grep NSpid"
+  },
+  {
+    "instruction": "Check if a process is running inside a container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ncat /proc/1/cgroup | grep -q docker && echo in Docker || echo native"
+  },
+  {
+    "instruction": "Show all PIDs in the current PID namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -E, -9, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /proc/ | grep -E '^[0-9]+$' | sort -n"
+  },
+  {
+    "instruction": "Show the process with highest threads count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: -eo, -rh, -5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps -eo nlwp,pid,cmd | sort -rh | head -5"
+  },
+  {
+    "instruction": "Show the thread pool size of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /proc/1234/task/ | wc -l"
+  },
+  {
+    "instruction": "List all threads of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: -T, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps -T -p 1234"
+  },
+  {
+    "instruction": "Show thread IDs in a tree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: -eLf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps -eLf | grep 1234"
+  },
+  {
+    "instruction": "Check real-time thread priority dispatching",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -m"
+  },
+  {
+    "instruction": "Check if real-time group scheduling is enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cat /proc/sys/kernel/sched_rt_runtime_us\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/kernel/sched_rt_runtime_us"
+  },
+  {
+    "instruction": "Show CPU time spent by a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/stat | awk '{print \"utime=\"$14 \" stime=\"$15}'"
+  },
+  {
+    "instruction": "Show process start time in jiffies",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/stat | awk '{print \"starttime=\"$22}'"
+  },
+  {
+    "instruction": "Show process signal masks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/status | grep -E 'Sig'"
+  },
+  {
+    "instruction": "Show the list of pending signals",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/status | grep Pending"
+  },
+  {
+    "instruction": "Send a signal-based notification to a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kill` with the correct flags and arguments\n   2. Key flags: -USR2, -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kill` — kill command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PROCESS: start with `SIGTERM` (default); escalate to `SIGKILL` only if the process doesn't respond after 5 seconds\n</think>\nkill -USR2 $(pgrep -x myapp)"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Publish with message priority via mosquitto_pub",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_pub` with the correct flags and arguments\n   2. Key flags: --topic, --message, -V, -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_pub` — mosquitto_pub command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_pub --topic 'alerts/critical' --message 'device down' -V 5 -D pub message-expiry-interval '30' -D pub payload-format-indicator '0'"
+  },
+  {
+    "instruction": "Subscribe to system topics with MQTT v5",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_sub` with the correct flags and arguments\n   2. Key flags: --topic\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_sub` — mosquitto_sub command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_sub --topic '$SYS/broker/"
+  },
+  {
+    "instruction": "Set MQTT session expiry to 1 hour on subscribe",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_sub` with the correct flags and arguments\n   2. Key flags: --topic\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_sub` — mosquitto_sub command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_sub --topic 'data/"
+  },
+  {
+    "instruction": "Publish using topic alias in MQTT v5",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_pub` with the correct flags and arguments\n   2. Key flags: --topic, --message, -V, -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_pub` — mosquitto_pub command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_pub --topic 't' --message 'payload' -V 5 -D connect topic-alias-maximum '10' -D publish topic-alias '1'"
+  },
+  {
+    "instruction": "Mosquitto bridge configuration for multi-broker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -to, -remote\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'connection bridge-to-remote\naddress 10.0.0.2:1883\ntopic"
+  },
+  {
+    "instruction": "Reload Mosquitto config after bridge change",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl reload mosquitto"
+  },
+  {
+    "instruction": "Check Mosquitto broker status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl status mosquitto"
+  },
+  {
+    "instruction": "View Mosquitto log file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo tail -f /var/log/mosquitto/mosquitto.log"
+  },
+  {
+    "instruction": "Enable Mosquitto verbose logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'log_type all\nconnection_messages true\nlog_dest file /var/log/mosquitto/mosquitto.log' | sudo tee /etc/mosquitto/conf.d/logging.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Set Mosquitto listener on port 9001 for WebSocket",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'listener 9001\nprotocol websockets' | sudo tee /etc/mosquitto/conf.d/websockets.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Set Mosquitto TLS listener on port 8883",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'listener 8883\ncafile /etc/mosquitto/ca.crt\ncertfile /etc/mosquitto/server.crt\nkeyfile /etc/mosquitto/server.key\nrequire_certificate false' | sudo tee /etc/mosquitto/conf.d/tls.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Set Mosquitto password authentication",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'password_file /etc/mosquitto/passwd\nallow_anonymous false' | sudo tee /etc/mosquitto/conf.d/auth.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Set Mosquitto ACL file for fine-grained access",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'acl_file /etc/mosquitto/acl' | sudo tee /etc/mosquitto/conf.d/acl.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Create Mosquitto ACL rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'user alice\ntopic sensor/"
+  },
+  {
+    "instruction": "Set Mosquitto max connections limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'max_connections 1000' | sudo tee /etc/mosquitto/conf.d/limits.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Set Mosquitto message size limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'message_size_limit 65535' | sudo tee /etc/mosquitto/conf.d/limits.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Set Mosquitto to store retained messages to disk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'persistence true\npersistence_location /var/lib/mosquitto/' | sudo tee /etc/mosquitto/conf.d/persistence.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Set Mosquitto to autosave every 60 seconds",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'autosave_interval 60' | sudo tee -a /etc/mosquitto/conf.d/persistence.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Set Mosquitto queue QoS and max inflight",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'max_inflight_messages 100\nmax_queued_messages 1000' | sudo tee /etc/mosquitto/conf.d/queues.conf && sudo systemctl restart mosquitto"
+  },
+  {
+    "instruction": "Test Mosquitto broker with PING/REQ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_sub` with the correct flags and arguments\n   2. Key flags: --topic, -W, --topic, --message\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_sub` — mosquitto_sub command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_sub --topic 'test/ping' -W 5 && mosquitto_pub --topic 'test/ping' --message '' -n"
+  },
+  {
+    "instruction": "Publish to MQTT via SSL with protocol version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_pub` with the correct flags and arguments\n   2. Key flags: --topic, --message, --tls-version, --cafile\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_pub` — mosquitto_pub command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_pub --topic 'secure/topic' --message 'data' --tls-version tlsv1.3 --cafile /etc/ssl/certs/ca-certificates.crt"
+  },
+  {
+    "instruction": "Subscribe with topic filter that has $ sign",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_sub` with the correct flags and arguments\n   2. Key flags: --topic, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_sub` — mosquitto_sub command execution and management\n   Flag `-v`: verbose output for debugging\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_sub --topic '$SYS/#' -v"
+  }
+]

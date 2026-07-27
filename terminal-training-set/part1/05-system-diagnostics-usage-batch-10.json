@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "List all services running as root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: -U, -u, -o, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps -U root -u root -o pid,cmd | tail -20"
+  },
+  {
+    "instruction": "List all services listening on TCP ports",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ss` with the correct flags and arguments\n   2. Key flags: -tlnp\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ss` — socket statistics and connection monitoring\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nss -tlnp"
+  },
+  {
+    "instruction": "List all services listening on UDP ports",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ss` with the correct flags and arguments\n   2. Key flags: -ulnp\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ss` — socket statistics and connection monitoring\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nss -ulnp"
+  },
+  {
+    "instruction": "Check if the firewall is active (ufw)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ufw` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ufw` — ufw command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nufw status"
+  },
+  {
+    "instruction": "List all ufw rules numbered",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ufw` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ufw` — ufw command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nufw status numbered"
+  },
+  {
+    "instruction": "Enable ufw firewall",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ufw enable\n   2. Apply the configuration and verify with `ufw status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ufw` — ufw command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nufw enable"
+  },
+  {
+    "instruction": "Allow a port through ufw",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ufw` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ufw` — ufw command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nufw allow 22"
+  },
+  {
+    "instruction": "Deny a specific IP through ufw",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ufw` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ufw` — ufw command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nufw deny from 192.168.1.100"
+  },
+  {
+    "instruction": "Delete a ufw rule by number",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ufw` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ufw` — ufw command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nufw delete 3"
+  },
+  {
+    "instruction": "Check if iptables rules are active",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -L, -n, -v, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Flag `-n`: dry-run mode\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -L -n -v | head -30"
+  },
+  {
+    "instruction": "Flush all iptables rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -F"
+  },
+  {
+    "instruction": "Show iptables NAT rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -t, -L, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Flag `-t`: sort by time\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -t nat -L -n"
+  },
+  {
+    "instruction": "Save iptables rules to a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables-save` with the correct flags and arguments\n   2. Key flags: -save\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables-save` — iptables-save command execution and management\n   Supporting tool: `iptables` — Linux firewall rule management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables-save > /etc/iptables/rules.v4"
+  },
+  {
+    "instruction": "Restore iptables rules from file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for iptables-restore\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: iptables-restore < /etc/iptables/rules.v4\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables-restore` — iptables-restore command execution and management\n   Supporting tool: `iptables` — Linux firewall rule management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables-restore < /etc/iptables/rules.v4"
+  },
+  {
+    "instruction": "Show nftables rule set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nft` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nft` — nftables firewall management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\nnft list ruleset"
+  },
+  {
+    "instruction": "Check if auditd is running",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -active\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl is-active auditd"
+  },
+  {
+    "instruction": "List all audit rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `auditctl` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `auditctl` — Linux audit framework control\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauditctl -l"
+  },
+  {
+    "instruction": "Add a file watch audit rule",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for auditctl\n   2. Build the command chain with error handling\n   3. Execute: auditctl -w /etc/passwd -p wa -k passwd_changes\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `auditctl` — Linux audit framework control\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauditctl -w /etc/passwd -p wa -k passwd_changes"
+  },
+  {
+    "instruction": "Search audit logs for a specific key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ausearch` with the correct flags and arguments\n   2. Key flags: -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ausearch` — audit log search\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nausearch -k passwd_changes"
+  },
+  {
+    "instruction": "Generate an audit report",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aureport` with the correct flags and arguments\n   2. Key flags: --summary\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aureport` — aureport command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naureport --summary"
+  },
+  {
+    "instruction": "Show all Linux Security Module (LSM) status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/security/lsm"
+  },
+  {
+    "instruction": "Check if TPM (Trusted Platform Module) is available",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nls /dev/tpm* 2>/dev/null || echo no TPM"
+  },
+  {
+    "instruction": "Show TPM version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat /sys/class/tpm/tpm0/tpm_version_major 2>/dev/null || echo no TPM"
+  },
+  {
+    "instruction": "Show SecureBoot status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: mokutil --sb-state 2>/dev/null || echo no SecureBoot info\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `mokutil` — mokutil command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmokutil --sb-state 2>/dev/null || echo no SecureBoot info"
+  },
+  {
+    "instruction": "Check if Unified Kernel Image is in use",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nls /boot/EFI/Linux/*.efi 2>/dev/null || echo no UKI"
+  }
+]

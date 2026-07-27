@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Check current kernel parameters for performance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -a, -E, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -a | grep -E 'kernel.sched|vm.swappiness|net.core' | head -20"
+  },
+  {
+    "instruction": "Tune swappiness for better desktop responsiveness",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via sysctl -w vm.swappiness=10 && echo 'vm.swappiness=10' >> /etc/sysctl.conf\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsysctl -w vm.swappiness=10 && echo 'vm.swappiness=10' >> /etc/sysctl.conf"
+  },
+  {
+    "instruction": "Increase file descriptor limits for a high-load server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w, -max, -max\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsysctl -w fs.file-max=2097152 && echo 'fs.file-max=2097152' >> /etc/sysctl.conf"
+  },
+  {
+    "instruction": "Tune TCP for high-throughput networking",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via sysctl -w net.core.rmem_max=134217728 && sysctl -w net.core.wmem_max=134217728 &\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.core.rmem_max=134217728 && sysctl -w net.core.wmem_max=134217728 && sysctl -w net.ipv4.tcp_rmem='4096 87380 134217728' && sysctl -w net.ipv4.tcp_wmem='4096 65536 134217728'"
+  },
+  {
+    "instruction": "Enable TCP BBR congestion control for better throughput",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl -w net.core.default_qdisc=fq && sysctl -w net.ipv4.tcp_congestion_control\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.core.default_qdisc=fq && sysctl -w net.ipv4.tcp_congestion_control=bbr"
+  },
+  {
+    "instruction": "Enable fast TCP connection reuse",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl -w net.ipv4.tcp_tw_reuse=1 && sysctl -w net.ipv4.tcp_fin_timeout=15\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.ipv4.tcp_tw_reuse=1 && sysctl -w net.ipv4.tcp_fin_timeout=15"
+  },
+  {
+    "instruction": "Increase the maximum number of connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w, -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.core.somaxconn=65535 && sysctl -w net.ipv4.tcp_max_syn_backlog=65535"
+  },
+  {
+    "instruction": "Tune virtual memory for database workloads",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via sysctl -w vm.dirty_ratio=30 && sysctl -w vm.dirty_background_ratio=5 && sysctl -\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w vm.dirty_ratio=30 && sysctl -w vm.dirty_background_ratio=5 && sysctl -w vm.vfs_cache_pressure=50"
+  },
+  {
+    "instruction": "Disable NUMA balancing for latency-sensitive apps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w kernel.numa_balancing=0"
+  },
+  {
+    "instruction": "Tune the kernel scheduler for throughput",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via sysctl -w kernel.sched_migration_cost_ns=5000000 && sysctl -w kernel.sched_autog\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w kernel.sched_migration_cost_ns=5000000 && sysctl -w kernel.sched_autogroup_enabled=0"
+  },
+  {
+    "instruction": "Set the CPU governor to performance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor i in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do echo performance > $i; done"
+  },
+  {
+    "instruction": "Disable CPU frequency scaling for consistent performance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y cpufrequtils && echo 'GOVERNOR=performance' > /etc/default/cpufrequtils && systemctl disable cpufrequtils"
+  },
+  {
+    "instruction": "Check which processes are using the most CPU",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: --sort, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps aux --sort=-%cpu | head -10"
+  },
+  {
+    "instruction": "Check which processes are using the most memory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: --sort, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps aux --sort=-%mem | head -10"
+  },
+  {
+    "instruction": "Find memory hogs using top in batch mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `top` with the correct flags and arguments\n   2. Key flags: -bn1, -o, -17, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `top` — top command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntop -bn1 -o %MEM | head -17 | tail -10"
+  },
+  {
+    "instruction": "Profile disk read performance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hdparm` with the correct flags and arguments\n   2. Key flags: -Tt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hdparm` — hdparm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhdparm -Tt /dev/sda"
+  },
+  {
+    "instruction": "Measure sequential write speed of disk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dd` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dd` — dd command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\ndd if=/dev/zero of=/tmp/test bs=1M count=1024 conv=fdatasync oflag=direct 2>&1 | tail -1"
+  },
+  {
+    "instruction": "Measure random IO performance with fio",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fio` with the correct flags and arguments\n   2. Key flags: --name, --ioengine, --iodepth, --rw\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fio` — fio command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfio --name=randwrite --ioengine=libaio --iodepth=64 --rw=randwrite --bs=4k --direct=1 --size=1G --numjobs=1 --runtime=30 --group_reporting"
+  },
+  {
+    "instruction": "Check disk latency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iostat` with the correct flags and arguments\n   2. Key flags: -xz, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iostat` — iostat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\niostat -xz 1 3 | grep -E 'Device|sda'"
+  },
+  {
+    "instruction": "Monitor real-time IO per process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for iotop\n   2. Build the command chain with error handling\n   3. Execute: iotop -o\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `iotop` — iotop command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\niotop -o"
+  },
+  {
+    "instruction": "Show system load average interpretation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/loadavg && echo 'Load: 1min 5min 15min' && uptime"
+  },
+  {
+    "instruction": "Check the number of context switches",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vmstat` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vmstat` — vmstat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvmstat 1 3 | tail -1 | awk '{print \"Context switches: \" $12}'"
+  },
+  {
+    "instruction": "Show memory topology and NUMA details",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --hardware\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --hardware"
+  },
+  {
+    "instruction": "Check interleave memory access for a NUMA workload",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --interleave\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --interleave=all ./myapp"
+  },
+  {
+    "instruction": "Benchmark the CPU with sysbench multi-threaded",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysbench` with the correct flags and arguments\n   2. Key flags: --threads, --time\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysbench` — sysbench command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysbench cpu --threads=$(nproc) --time=30 run"
+  }
+]

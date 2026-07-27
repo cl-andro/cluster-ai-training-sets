@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "How to show UUIDs of partitions with blkid",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `blkid` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `blkid` — blkid command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nblkid /dev/sda1"
+  },
+  {
+    "instruction": "How to convert an MBR disk to GPT with gdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gdisk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gdisk` — gdisk command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngdisk /dev/sda <<< 'w\n'"
+  },
+  {
+    "instruction": "How to resize a GPT partition to grow it",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `parted` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `parted` — disk partitioning\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nparted /dev/sda resizepart 1 500MiB"
+  },
+  {
+    "instruction": "How to create a logical partition inside extended",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `parted` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `parted` — disk partitioning\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nparted /dev/sda mkpart logical 512MiB 1GiB"
+  },
+  {
+    "instruction": "How to create a partition aligned to optimal I/O",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `parted` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `parted` — disk partitioning\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nparted -a optimal /dev/sda mkpart primary 0% 100%"
+  },
+  {
+    "instruction": "How to create a swap partition with sgdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sgdisk` with the correct flags and arguments\n   2. Key flags: -n, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sgdisk` — sgdisk command execution and management\n   Flag `-n`: dry-run mode\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsgdisk -n 2:0:+8G -t 2:8200 /dev/sda"
+  },
+  {
+    "instruction": "How to list the partition table of a disk with fdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fdisk` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fdisk` — disk partition table management\n   Flag `-l`: long listing format\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nfdisk -l /dev/sda"
+  },
+  {
+    "instruction": "How to list all disks and partitions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fdisk` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fdisk` — disk partition table management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nfdisk -l"
+  },
+  {
+    "instruction": "How to open fdisk interactively on a disk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fdisk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fdisk` — disk partition table management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nfdisk /dev/sda"
+  },
+  {
+    "instruction": "How to create a GPT partition table with fdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fdisk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fdisk` — disk partition table management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nfdisk /dev/sda <<< 'g\nw\n'"
+  },
+  {
+    "instruction": "How to create an MBR partition table with fdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fdisk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fdisk` — disk partition table management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nfdisk /dev/sda <<< 'o\nw\n'"
+  },
+  {
+    "instruction": "How to delete a partition with fdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fdisk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fdisk` — disk partition table management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nfdisk /dev/sda <<< 'd\nw\n'"
+  },
+  {
+    "instruction": "How to list the partition table with gdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gdisk` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gdisk` — gdisk command execution and management\n   Flag `-l`: long listing format\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngdisk -l /dev/sda"
+  },
+  {
+    "instruction": "How to open gdisk interactively",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gdisk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gdisk` — gdisk command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngdisk /dev/sda"
+  },
+  {
+    "instruction": "How to create a GPT table with sgdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sgdisk` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sgdisk` — sgdisk command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsgdisk -o /dev/sda"
+  },
+  {
+    "instruction": "How to create a 100MB partition with sgdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sgdisk` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sgdisk` — sgdisk command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsgdisk -n 1:0:+100M /dev/sda"
+  },
+  {
+    "instruction": "How to create a partition filling the entire disk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sgdisk` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sgdisk` — sgdisk command execution and management\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsgdisk -n 1:0:0 /dev/sda"
+  },
+  {
+    "instruction": "How to set a partition type code with sgdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sgdisk` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sgdisk` — sgdisk command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsgdisk -t 1:8200 /dev/sda"
+  },
+  {
+    "instruction": "How to set a partition name with sgdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sgdisk` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sgdisk` — sgdisk command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsgdisk -c 1:boot /dev/sda"
+  },
+  {
+    "instruction": "How to delete a partition with sgdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sgdisk` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sgdisk` — sgdisk command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsgdisk -d 1 /dev/sda"
+  },
+  {
+    "instruction": "How to zap GPT and MBR headers with sgdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sgdisk` with the correct flags and arguments\n   2. Key flags: --zap-all\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sgdisk` — sgdisk command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsgdisk --zap-all /dev/sda"
+  }
+]

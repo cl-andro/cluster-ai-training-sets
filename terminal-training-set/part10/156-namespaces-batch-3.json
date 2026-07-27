@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Start a container with all namespaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --mount, --uts, --ipc, --net\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --mount --uts --ipc --net --pid --fork --mount-proc -- /bin/bash"
+  },
+  {
+    "instruction": "Create PID namespace and see pid 1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --pid, --fork, --mount-proc, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --pid --fork --mount-proc /bin/bash -c 'echo PID 1 is: $$; sleep 10 & echo PID of sleep: $!'"
+  },
+  {
+    "instruction": "Show pid namespace nesting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/status | grep NSpid"
+  },
+  {
+    "instruction": "Check /proc in PID namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --pid, --fork, --mount-proc, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --pid --fork --mount-proc /bin/bash -c 'ps aux'"
+  },
+  {
+    "instruction": "Signal init from PID namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --pid, --fork, --mount-proc, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --pid --fork --mount-proc /bin/bash -c 'kill -TERM 1'"
+  },
+  {
+    "instruction": "Mount /proc inside PID namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --pid, --fork, -c, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --pid --fork bash -c 'mount -t proc none /proc && ps aux'"
+  },
+  {
+    "instruction": "Create chroot with mount namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --mount, -c, --bind\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --mount bash -c 'mount --bind /mnt/chroot /mnt/chroot && chroot /mnt/chroot /bin/bash'"
+  },
+  {
+    "instruction": "Private mount namespace example",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --mount, -c, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --mount bash -c 'mount -t tmpfs tmpfs /mnt; df /mnt'"
+  },
+  {
+    "instruction": "Create slave mount namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --mount, --propagation, -c, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --mount --propagation slave bash -c 'mount -t tmpfs tmpfs /mnt; df /mnt'"
+  },
+  {
+    "instruction": "Check mount propagation type",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/mountinfo | grep '/' | head -5"
+  },
+  {
+    "instruction": "Set shared mount propagation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: --make-shared\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount --make-shared /mnt"
+  },
+  {
+    "instruction": "Set slave mount propagation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: --make-slave\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount --make-slave /mnt"
+  },
+  {
+    "instruction": "Set private mount propagation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: --make-private\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount --make-private /mnt"
+  },
+  {
+    "instruction": "Create bind mount inside namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --mount, -c, --bind\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --mount bash -c 'mount --bind /path /mnt && ls /mnt'"
+  },
+  {
+    "instruction": "Mount tmpfs for /tmp in namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --mount, -c, -t, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --mount bash -c 'mount -t tmpfs -o size=100M tmpfs /tmp; df -h /tmp'"
+  },
+  {
+    "instruction": "Unshare mount and pivot root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --mount, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --mount bash -c 'pivot_root /newroot /newroot/oldroot && exec chroot . /bin/bash'"
+  },
+  {
+    "instruction": "Check which namespaces you are in",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfor ns in mnt uts ipc pid net user cgroup time; do echo -n \"$ns: \"; readlink /proc/self/ns/$ns; done"
+  },
+  {
+    "instruction": "Compare namespaces between two processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `diff` with the correct flags and arguments\n   2. Key flags: -la, -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `diff` — diff command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndiff <(ls -la /proc/1/ns/) <(ls -la /proc/$$/ns/)"
+  },
+  {
+    "instruction": "Show namespace inode numbers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stat` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stat` — stat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstat -c '%i' /proc/self/ns/net"
+  },
+  {
+    "instruction": "Determine if two processes share net ns",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using diagnostic tools\n   2. Apply corrective actions: [ $(stat -c '%i' /proc/1234/ns/net) = $(stat -c '%i' /proc/5678/ns/net) ] && ech\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n[ $(stat -c '%i' /proc/1234/ns/net) = $(stat -c '%i' /proc/5678/ns/net) ] && echo 'same' || echo 'different'"
+  },
+  {
+    "instruction": "List all network namespace inodes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -l, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nls -l /proc/*/ns/net 2>/dev/null | awk '{print $11}' | sort -u"
+  },
+  {
+    "instruction": "Count unique PID namespaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -l, -u, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Flag `-l`: long listing format\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nls -l /proc/*/ns/pid 2>/dev/null | awk '{print $11}' | sort -u | wc -l"
+  }
+]

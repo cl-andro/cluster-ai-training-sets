@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Setup Prometheus federation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'scrape_configs: - job_name: federate honor_labels: true metrics_path: /fed\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'scrape_configs: - job_name: federate honor_labels: true metrics_path: /federate params: match[]: - {__name__=~\"job:.*\"} static_configs: - targets: - upstream-prom:9090' >> prometheus.yml"
+  },
+  {
+    "instruction": "Configure Prometheus with scrape config limits",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'scrape_configs: - job_name: big scrape_timeout: 10s scrape_interval: 30s s\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'scrape_configs: - job_name: big scrape_timeout: 10s scrape_interval: 30s sample_limit: 5000 static_configs: - targets: - big:9090' >> prometheus.yml"
+  },
+  {
+    "instruction": "Use Prometheus data via Grafana as datasource",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -datasource\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'apiVersion: 1 datasources: - name: Prometheus type: prometheus access: proxy url: http://localhost:9090 isDefault: true' > grafana-datasource.yml"
+  },
+  {
+    "instruction": "Install prometheus-adapter for k8s metrics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm install prometheus-adapter prometheus-community/prometheus-adapter --set prometheus.url=http://prometheus-server"
+  },
+  {
+    "instruction": "Custom metrics API via prometheus-adapter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'rules: default: false custom: - seriesQuery: http_requests_total resources: overrides: namespace: resource: namespace name: matches: ^(.*) as: \"${1}_total\"' > adapter-config.yaml"
+  },
+  {
+    "instruction": "Install Prometheus Operator in k8s",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm repo add prometheus-community https://prometheus-community.github.io/helm-charts && helm install prometheus prometheus-community/kube-prometheus-stack"
+  },
+  {
+    "instruction": "Expose Prometheus via NodePort in k8s",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -kube, -prometheus, -prometheus, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl patch svc prometheus-kube-prometheus-prometheus -n monitoring -p '{\"spec\":{\"type\":\"NodePort\"}}'"
+  },
+  {
+    "instruction": "Install Thanos sidecar for long-term storage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the docker configuration with the required parameters\n   2. Apply the configuration and verify with `docker status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name thanos-sidecar --volumes-from prometheus quay.io/thanos/thanos sidecar --tsdb.path /prometheus --prometheus.url http://localhost:9090 --objstore.config-file bucket.yml"
+  },
+  {
+    "instruction": "Thanos store gateway config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'type: S3 config: bucket: thanos endpoint: s3.amazonaws.com access_key: AKIA... secret_key: ...' > bucket.yml"
+  },
+  {
+    "instruction": "Query Thanos via querier",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -d, --name, -querier, --grpc-address\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name thanos-querier quay.io/thanos/thanos query --grpc-address 0.0.0.0:10901 --http-address 0.0.0.0:10902 --endpoint thanos-sidecar:10901"
+  },
+  {
+    "instruction": "Thanos compactor for downsampling",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -d, --name, -compactor, --data-dir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name thanos-compactor quay.io/thanos/thanos compact --data-dir /data --objstore.config-file bucket.yml --retention.resolution-raw 30d --retention.resolution-5m 180d --retention.resolution-1h 365d"
+  },
+  {
+    "instruction": "Thanos ruler for rule evaluation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -d, --name, -ruler, --data-dir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -d --name thanos-ruler quay.io/thanos/thanos rule --data-dir /data --rule-file rules.yml --alertmanagers.url http://alertmanager:9093 --objstore.config-file bucket.yml --query endpointexample-thanos-querier:10901"
+  },
+  {
+    "instruction": "Use PromQL with histogram fraction",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `histogram_fraction` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `histogram_fraction` — histogram_fraction command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhistogram_fraction(0.5, 0.9, rate(http_request_duration_seconds_bucket[5m]))"
+  },
+  {
+    "instruction": "Use PromQL datetime functions for alerting window",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for hour\n   2. Build the command chain with error handling\n   3. Execute: hour() >= 9 and hour() < 17 and day_of_week() >= 1 and day_of_week() <= 5\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `hour` — hour command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhour() >= 9 and hour() < 17 and day_of_week() >= 1 and day_of_week() <= 5"
+  },
+  {
+    "instruction": "Calculate error budget with PromQL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n1 - (sum(rate(http_requests_total{status=~\"5..\"}[28d])) / sum(rate(http_requests_total[28d])))"
+  },
+  {
+    "instruction": "Predict disk exhaustion with linear regression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `predict_linear` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `predict_linear` — predict_linear command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npredict_linear(node_filesystem_avail_bytes[2w], 86400 * 7) < 0"
+  },
+  {
+    "instruction": "Use PromQL annotations for multi-dimensional alerting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for sum\n   2. Build the command chain with error handling\n   3. Execute: sum by (cluster, namespace) (rate(container_cpu_usage_seconds_total[5m]))\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `sum` — sum command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsum by (cluster, namespace) (rate(container_cpu_usage_seconds_total[5m]))"
+  },
+  {
+    "instruction": "Enable remote write with exactly-once delivery",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: prometheus --config.file prometheus.yml --enable-feature exactly-once-delivery\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `prometheus status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --enable-feature exactly-once-delivery"
+  },
+  {
+    "instruction": "Track active time series count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus_tsdb_head_series` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus_tsdb_head_series` — prometheus_tsdb_head_series command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus_tsdb_head_series"
+  },
+  {
+    "instruction": "Track scrape failures rate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rate` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rate` — rate command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrate(prometheus_target_scrapes_exceeded_sample_limit_total[5m])"
+  },
+  {
+    "instruction": "Monitor Prometheus itself with self-scrape",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'scrape_configs: - job_name: prometheus static_configs: - targets: - localh\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'scrape_configs: - job_name: prometheus static_configs: - targets: - localhost:9090' >> prometheus.yml"
+  },
+  {
+    "instruction": "Create a Prometheus blackbox probe alert",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'groups: - name: blackbox rules: alert: EndpointDown expr: probe_success ==\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'groups: - name: blackbox rules: alert: EndpointDown expr: probe_success == 0 for: 1m labels: severity: critical annotations: summary: \"{{ $labels.target }} is unreachable\"' >> rules.yml"
+  },
+  {
+    "instruction": "Alert on node filesystem read-only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'groups: - name: system rules: alert: FilesystemReadOnly expr: node_filesys\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'groups: - name: system rules: alert: FilesystemReadOnly expr: node_filesystem_readonly == 1 for: 1m labels: severity: critical' >> rules.yml"
+  },
+  {
+    "instruction": "Alert on high network errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'groups: - name: network rules: alert: HighNetworkErrors expr: rate(node_ne\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'groups: - name: network rules: alert: HighNetworkErrors expr: rate(node_network_receive_errors_total[5m]) / rate(node_network_receive_packets_total[5m]) > 0.01 for: 10m labels: severity: warning' >> rules.yml"
+  }
+]

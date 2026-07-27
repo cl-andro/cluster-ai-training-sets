@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Start rsync in daemon mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsync` with the correct flags and arguments\n   2. Key flags: --daemon, --config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync --daemon --config=/etc/rsyncd.conf"
+  },
+  {
+    "instruction": "Create Borg backup to a remote repository via SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for borg\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: borg create user@192.168.1.100:/backup/borg::home-{now:%Y-%m-%d} /home/user\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `borg` — deduplicating backup tool\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nborg create user@192.168.1.100:/backup/borg::home-{now:%Y-%m-%d} /home/user"
+  },
+  {
+    "instruction": "List Borg archives in a remote repo",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `borg` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `borg` — deduplicating backup tool\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nborg list user@192.168.1.100:/backup/borg"
+  },
+  {
+    "instruction": "Initialize Restic with rclone remote backend",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `restic` with the correct flags and arguments\n   2. Key flags: -r, -repo\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `restic` — encrypted backup solution\n   Supporting tool: `rclone` — cloud storage synchronization\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrestic -r rclone:remote:backup-repo init"
+  },
+  {
+    "instruction": "Calculate rdiff-backup statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for rdiff-backup\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: rdiff-backup --calculate-average /backup/etc\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `rdiff-backup` — rdiff-backup command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrdiff-backup --calculate-average /backup/etc"
+  },
+  {
+    "instruction": "List duplicity backup files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity list-current-files file:///backup/duplicity\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity list-current-files file:///backup/duplicity"
+  },
+  {
+    "instruction": "Slice DAR archive into 100MB volumes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dar` with the correct flags and arguments\n   2. Key flags: -c, -dar, -s, -R\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dar` — dar command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndar -c /backup/home-dar -s 100M -R /home/user"
+  },
+  {
+    "instruction": "Restore a Mondo archive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for mondorestore\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: mondorestore\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `mondorestore` — mondorestore command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmondorestore"
+  },
+  {
+    "instruction": "Restore a filesystem with fsarchiver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for fsarchiver\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: fsarchiver restfs /backup/sda1.fsa id=0,dest=/dev/sda1\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `fsarchiver` — fsarchiver command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfsarchiver restfs /backup/sda1.fsa id=0,dest=/dev/sda1"
+  },
+  {
+    "instruction": "Restore a partition with partimage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for partimage\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: partimage restore /dev/sda1 /backup/sda1.img\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `partimage` — partimage command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npartimage restore /dev/sda1 /backup/sda1.img"
+  },
+  {
+    "instruction": "Restore a partition with partclone",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for partclone.ext4\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: partclone.ext4 -r -s /backup/sda1.pcl -o /dev/sda1\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `partclone.ext4` — partclone.ext4 command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npartclone.ext4 -r -s /backup/sda1.pcl -o /dev/sda1"
+  },
+  {
+    "instruction": "Create incremental dump level 1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dump` with the correct flags and arguments\n   2. Key flags: -1uf, -level1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dump` — dump command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndump -1uf /backup/sda1-level1.dump /dev/sda1"
+  },
+  {
+    "instruction": "Restore interactively from a dump file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for restore\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: restore -if /backup/sda1.dump\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `restore` — restore command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrestore -if /backup/sda1.dump"
+  },
+  {
+    "instruction": "Clone disk with dd using conv options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dd` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dd` — dd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\ndd if=/dev/sda of=/dev/sdb bs=4M conv=noerror,sync status=progress"
+  },
+  {
+    "instruction": "Rescue disk with ddrescue direct disk access",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ddrescue` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ddrescue` — ddrescue command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nddrescue -d /dev/sda /backup/sda.img /backup/sda.log"
+  },
+  {
+    "instruction": "Restore from GNU tar incremental backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for tar\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: tar --listed-incremental=/backup/snapshot.snar -xzvf /backup/home-inc.tar.gz\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar --listed-incremental=/backup/snapshot.snar -xzvf /backup/home-inc.tar.gz"
+  },
+  {
+    "instruction": "Create cpio archive with gzip compression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -depth, -print, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind /home/user -depth -print | cpio -o | gzip > /backup/home.cpio.gz"
+  },
+  {
+    "instruction": "Create pax archive with extended headers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pax` with the correct flags and arguments\n   2. Key flags: -w, -x, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pax` — pax command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npax -w -x pax -f /backup/www.pax /var/www"
+  },
+  {
+    "instruction": "Bidirectional sync with rclone bisync",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rclone` with the correct flags and arguments\n   2. Key flags: -home, --resync\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rclone` — cloud storage synchronization\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrclone bisync /home/user remote:backup-home --resync"
+  },
+  {
+    "instruction": "List objects in S3 bucket with s3cmd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `s3cmd` with the correct flags and arguments\n   2. Key flags: -backup, -bucket\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `s3cmd` — s3cmd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ns3cmd ls s3://my-backup-bucket/"
+  },
+  {
+    "instruction": "Delete old S3 objects with s3cmd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `s3cmd` with the correct flags and arguments\n   2. Key flags: -backup, -bucket, -backup\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `s3cmd` — s3cmd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ns3cmd del s3://my-backup-bucket/old-backup.tar.gz"
+  },
+  {
+    "instruction": "Custom format PostgreSQL dump with compression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_dump` with the correct flags and arguments\n   2. Key flags: -Fc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_dump` — PostgreSQL backup\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_dump -Fc mydb > /backup/mydb.dump"
+  },
+  {
+    "instruction": "Restore PostgreSQL custom format dump",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for pg_restore\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: pg_restore -d mydb /backup/mydb.dump\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_restore` — pg_restore command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_restore -d mydb /backup/mydb.dump"
+  },
+  {
+    "instruction": "Dump specific MySQL databases",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysqldump` with the correct flags and arguments\n   2. Key flags: --databases\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysqldump` — MySQL backup\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysqldump --databases db1 db2 > /backup/dbs.sql"
+  },
+  {
+    "instruction": "Extract specific paths from Borg archive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `borg` with the correct flags and arguments\n   2. Key flags: -2026, -07, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `borg` — deduplicating backup tool\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nborg extract /backup/borg::home-2026-07-20 home/user/Documents"
+  }
+]

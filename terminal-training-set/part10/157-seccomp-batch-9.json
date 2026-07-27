@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "View the default Docker seccomp profile with less",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `less` with the correct flags and arguments\n   2. Key flags: -seccomp\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `less` — less command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nless /usr/share/docker/default-seccomp.json"
+  },
+  {
+    "instruction": "Check kernel seccomp support",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `zgrep` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `zgrep` — zgrep command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nzgrep SECCOMP /proc/config.gz"
+  },
+  {
+    "instruction": "Install golang-seccomp library",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: go get github.com/seccomp/libseccomp-golang\n   2. Apply the configuration and verify with `go status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `go` — Go language toolchain\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngo get github.com/seccomp/libseccomp-golang"
+  },
+  {
+    "instruction": "Build libseccomp from source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit clone https://github.com/seccomp/libseccomp.git && cd libseccomp && ./autogen.sh && ./configure && make && sudo make install"
+  },
+  {
+    "instruction": "Show seccomp actions_avail",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/kernel/seccomp/actions_avail"
+  },
+  {
+    "instruction": "List all Docker seccomp profiles available",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nls /usr/share/docker/ | grep seccomp"
+  },
+  {
+    "instruction": "Filter Docker seccomp for allowed syscalls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -seccomp\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\njq '.syscalls[] | select(.action == \"SCMP_ACT_ALLOW\") | .names[]' /usr/share/docker/default-seccomp.json"
+  },
+  {
+    "instruction": "Run strace with IPC syscalls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=ipc ./myapp"
+  },
+  {
+    "instruction": "Run strace with time syscalls only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=time ./myapp"
+  },
+  {
+    "instruction": "Generate seccomp profile from strace log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -f, -e, -o, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -f -e trace=all -o /tmp/trace.log ./myapp && cat /tmp/trace.log | awk '{print $2}' | sed 's/(.*//' | sort -u"
+  },
+  {
+    "instruction": "Use scmp_bpf_dispatcher to inspect BPF",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `scmp_bpf_dispatcher` with the correct flags and arguments\n   2. Key flags: -p, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `scmp_bpf_dispatcher` — scmp_bpf_dispatcher command execution and management\n   Flag `-p`: create parent directories\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nscmp_bpf_dispatcher -p $(pgrep -f myapp)"
+  },
+  {
+    "instruction": "Trace process creation with strace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -f, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -f -e trace=clone,execve ./myapp"
+  },
+  {
+    "instruction": "Trace syscalls with summary grouped by name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -c, -f, -S\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -c -f -S name ./myapp 2>&1"
+  },
+  {
+    "instruction": "List all syscalls in Docker default profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -seccomp, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\njq '.syscalls[].names[]' /usr/share/docker/default-seccomp.json | sort -u"
+  },
+  {
+    "instruction": "Check if seccomp is enabled in the kernel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cat /proc/sys/kernel/seccomp/actions_avail\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/kernel/seccomp/actions_avail"
+  },
+  {
+    "instruction": "Run strace with only network syscalls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=network -f ./myapp"
+  },
+  {
+    "instruction": "List available Docker profiles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nls -la /usr/share/docker/"
+  },
+  {
+    "instruction": "Trace all syscalls of a program",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -f, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -f -o /tmp/all.log ./myapp"
+  },
+  {
+    "instruction": "Build strace from source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -j\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Supporting tool: `strace` — trace system calls\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit clone https://github.com/strace/strace.git && cd strace && ./bootstrap && ./configure && make -j$(nproc)"
+  },
+  {
+    "instruction": "Dump seccomp for nginx",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seccomp-tools` with the correct flags and arguments\n   2. Key flags: -tools, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seccomp-tools` — seccomp-tools command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseccomp-tools dump $(pgrep -f nginx)"
+  },
+  {
+    "instruction": "Find seccomp profile path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -name, -seccomp\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind / -name 'default-seccomp.json' 2>/dev/null"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Configure Prometheus remote write endpoint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'remote_write: - url: https://thanos.example.com/api/v1/receive basic_auth:\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'remote_write: - url: https://thanos.example.com/api/v1/receive basic_auth: username: prom password_file: /etc/prometheus/pass' >> prometheus.yml"
+  },
+  {
+    "instruction": "Configure Prometheus remote read endpoint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'remote_read: - url: https://thanos.example.com/api/v1/read read_recent: tr\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'remote_read: - url: https://thanos.example.com/api/v1/read read_recent: true' >> prometheus.yml"
+  },
+  {
+    "instruction": "Add queue config for remote write",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'remote_write: - url: http://remote:8080/write queue_config: capacity: 5000 max_shards: 200 min_shards: 10' >> prometheus.yml"
+  },
+  {
+    "instruction": "Add retry config for remote write",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'remote_write: - url: http://remote:8080/write queue_config: max_retries: 5 min_backoff: 100ms max_backoff: 5s' >> prometheus.yml"
+  },
+  {
+    "instruction": "Enable WAL compression for remote write",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'remote_write: - url: http://remote:8081/write write_relabel_configs: - sou\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'remote_write: - url: http://remote:8081/write write_relabel_configs: - source_labels: [__name__] regex: \"expensive.*\" action: drop' >> prometheus.yml"
+  },
+  {
+    "instruction": "Add alerting config with Alertmanager",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'alerting: alertmanagers: - static_configs: - targets: - localhost:9093' >>\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'alerting: alertmanagers: - static_configs: - targets: - localhost:9093' >> prometheus.yml"
+  },
+  {
+    "instruction": "Add multiple Alertmanagers with relabel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'alerting: alertmanagers: - scheme: https tls_config: ca_file: ca.crt stati\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'alerting: alertmanagers: - scheme: https tls_config: ca_file: ca.crt static_configs: - targets: - alert1:9093 - alert2:9093' >> prometheus.yml"
+  },
+  {
+    "instruction": "Set alertmanager scrape interval",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'alerting: alertmanagers: - static_configs: - targets: - alertmanager:9093 \n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'alerting: alertmanagers: - static_configs: - targets: - alertmanager:9093 scrape_interval: 30s' >> prometheus.yml"
+  },
+  {
+    "instruction": "Start prometheus with web console templates",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --web\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --web.console.templates /etc/prometheus/consoles"
+  },
+  {
+    "instruction": "Start prometheus with web external URL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --web, -url\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --web.external-url https://prom.example.com/"
+  },
+  {
+    "instruction": "Enable admin API in Prometheus",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: prometheus --config.file prometheus.yml --web.enable-admin-api\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `prometheus status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --web.enable-admin-api"
+  },
+  {
+    "instruction": "Enable lifecycle API for reload",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: prometheus --config.file prometheus.yml --web.enable-lifecycle\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `prometheus status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --web.enable-lifecycle"
+  },
+  {
+    "instruction": "Reload prometheus config via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://localhost:9090/-/reload"
+  },
+  {
+    "instruction": "Query Prometheus via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/query?query=up'"
+  },
+  {
+    "instruction": "Query range via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -07, -25T00, -07, -26T00\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/query_range?query=rate(http_requests_total[5m])&start=2026-07-25T00:00:00Z&end=2026-07-26T00:00:00Z&step=60s'"
+  },
+  {
+    "instruction": "Query series via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/series?match[]=up&match[]=node_cpu_seconds_total'"
+  },
+  {
+    "instruction": "Get label names via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/labels'"
+  },
+  {
+    "instruction": "Get label values via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/label/job/values'"
+  },
+  {
+    "instruction": "Get metric metadata via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/metadata'"
+  },
+  {
+    "instruction": "Check Prometheus targets via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/targets'"
+  },
+  {
+    "instruction": "Check Prometheus rules via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/rules'"
+  },
+  {
+    "instruction": "Check alertmanagers via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl 'http://localhost:9090/api/v1/alertmanagers'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/alertmanagers'"
+  },
+  {
+    "instruction": "Get TSDB stats via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/status/tsdb'"
+  },
+  {
+    "instruction": "Get build info via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/status/buildinfo'"
+  },
+  {
+    "instruction": "Get runtime info via HTTP API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl 'http://localhost:9090/api/v1/status/runtimeinfo'"
+  }
+]

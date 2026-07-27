@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Check if GPG keys are available for apt sources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /usr/share/keyrings/"
+  },
+  {
+    "instruction": "Encrypt a file with GPG",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg -c file.txt"
+  },
+  {
+    "instruction": "Decrypt a GPG encrypted file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg -d file.txt.gpg"
+  },
+  {
+    "instruction": "Encrypt a file for a specific recipient",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: -e, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg -e -r recipient@example.com document.pdf"
+  },
+  {
+    "instruction": "Sign a file with GPG",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --sign\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --sign file.txt"
+  },
+  {
+    "instruction": "Verify a GPG signature",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --verify\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --verify file.txt.gpg"
+  },
+  {
+    "instruction": "Export a GPG public key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --export, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Supporting tool: `john` — john command execution and management\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --export -a john@example.com > public.key"
+  },
+  {
+    "instruction": "Import a GPG public key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --import\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --import public.key"
+  },
+  {
+    "instruction": "List GPG keys",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --list-keys\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --list-keys"
+  },
+  {
+    "instruction": "Delete a GPG key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --delete-key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --delete-key john@example.com"
+  },
+  {
+    "instruction": "Scan a system for rootkits with rkhunter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y, --check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y rkhunter && rkhunter --check"
+  },
+  {
+    "instruction": "Scan with chkrootkit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y chkrootkit && chkrootkit"
+  },
+  {
+    "instruction": "Run lynis security audit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y lynis && lynis audit system"
+  },
+  {
+    "instruction": "Scan for malware with ClamAV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Flag `-r`: recursive operation\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y clamav && freshclam && clamscan -r /home/"
+  },
+  {
+    "instruction": "Start and enable the ClamAV daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `systemctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl enable --now clamav-daemon"
+  },
+  {
+    "instruction": "Install Tripwire (file integrity checker)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y tripwire && tripwire --init"
+  },
+  {
+    "instruction": "Check Tripwire integrity database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tripwire` with the correct flags and arguments\n   2. Key flags: --check, -40\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tripwire` — tripwire command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntripwire --check | head -40"
+  },
+  {
+    "instruction": "Install AIDE (file integrity checker)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y aide && aideinit && mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db"
+  },
+  {
+    "instruction": "Check AIDE integrity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aide` with the correct flags and arguments\n   2. Key flags: --check, -40\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aide` — aide command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naide --check | head -40"
+  },
+  {
+    "instruction": "Check listening TCP ports for unexpected services",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ss` with the correct flags and arguments\n   2. Key flags: -tlnp, -v, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ss` — socket statistics and connection monitoring\n   Flag `-v`: verbose output for debugging\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nss -tlnp | awk '{print $4}' | grep -v 127.0.0.1 | sort -u"
+  },
+  {
+    "instruction": "Check if any process is listening on all interfaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ss` with the correct flags and arguments\n   2. Key flags: -tlnp\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ss` — socket statistics and connection monitoring\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nss -tlnp | grep '0.0.0.0:'"
+  },
+  {
+    "instruction": "Check the difference between open files and listening ports",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `diff` with the correct flags and arguments\n   2. Key flags: -iTCP, -sTCP, -P, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `diff` — diff command execution and management\n   Supporting tool: `lsof` — lsof command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndiff <(lsof -iTCP -sTCP:LISTEN -P -n | awk '{print $9}') <(ss -tlnp | awk '{print $4}')"
+  },
+  {
+    "instruction": "Find deleted files still held open by processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lsof` with the correct flags and arguments\n   2. Key flags: -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lsof` — lsof command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlsof | grep '(deleted)' | head -10"
+  },
+  {
+    "instruction": "Check if the system has any core dumps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nls /var/crash/ 2>/dev/null || echo no core dumps"
+  },
+  {
+    "instruction": "Limit core dump size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '* hard core 0' >> /etc/security/limits.conf && echo 'fs.suid_dumpable=0' >> /etc/sysctl.conf && sysctl -p"
+  }
+]

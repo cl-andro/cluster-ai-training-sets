@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "PT: Quick MySQL summary",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pt-mysql-summary` with the correct flags and arguments\n   2. Key flags: -mysql, -summary, --user, --password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pt-mysql-summary` — pt-mysql-summary command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npt-mysql-summary --user=root --password"
+  },
+  {
+    "instruction": "PT: Variable advisor for config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pt-variable-advisor` with the correct flags and arguments\n   2. Key flags: -variable, -advisor, --user, --password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pt-variable-advisor` — pt-variable-advisor command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npt-variable-advisor --user=root --password h=localhost"
+  },
+  {
+    "instruction": "PT: Find unused indexes from slow log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pt-index-usage` with the correct flags and arguments\n   2. Key flags: -index, -usage, --user, --password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pt-index-usage` — pt-index-usage command execution and management\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npt-index-usage --user=root --password h=localhost /var/log/mysql/mysql-slow.log"
+  },
+  {
+    "instruction": "Export query to CSV from mysql cli",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -B, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -B -e \"SELECT * FROM users\" mydb | sed 's/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g' > users.csv"
+  },
+  {
+    "instruction": "Import CSV file into a table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -e \"LOAD DATA INFILE '/tmp/data.csv' INTO TABLE mytable FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\\n' IGNORE 1 ROWS\" mydb"
+  },
+  {
+    "instruction": "Show database size by table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -e \"SELECT table_name AS 'Table', ROUND(((data_length + index_length) / 1024 / 1024), 2) AS 'Size MB' FROM information_schema.TABLES WHERE table_schema = 'mydb' ORDER BY (data_length + index_length) DESC\""
+  },
+  {
+    "instruction": "Switch to mysqlsh with SQL mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysqlsh` with the correct flags and arguments\n   2. Key flags: --sql, -u, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysqlsh` — mysqlsh command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmysqlsh --sql -u root -p"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 96",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -96\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-96'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 97",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -97\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-97'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 98",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -98\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-98'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 99",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -99\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-99'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 100",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -100\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-100'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 101",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -101\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-101'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 102",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -102\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-102'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 103",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -103\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-103'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 104",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -104\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-104'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 105",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -105\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-105'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 106",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -106\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-106'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 107",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -107\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-107'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 108",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -108\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-108'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 109",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -109\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-109'"
+  },
+  {
+    "instruction": "Additional 123-mysql-deep command 110",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mysql, -deep, -110\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '123-mysql-deep-110'"
+  }
+]

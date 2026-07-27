@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "How to run an AppImage with a custom WebKit data path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `WEBKIT_DATA_DIR` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `WEBKIT_DATA_DIR` — WEBKIT_DATA_DIR command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nWEBKIT_DATA_DIR=/tmp/webkit ./application.AppImage"
+  },
+  {
+    "instruction": "How to see the last appimaged scan status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: --user, -u, --since, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl --user -u appimaged --since '1 hour ago' | grep -i scan"
+  },
+  {
+    "instruction": "How to check the number of CPUs recommended by an AppImage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strings` with the correct flags and arguments\n   2. Key flags: -i, -d, -f2\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strings` — strings command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrings ./application.AppImage | grep -i '^MIN_CPU' | cut -d= -f2"
+  },
+  {
+    "instruction": "How to run an AppImage in a nodistro Docker container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --rm, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-v`: verbose output for debugging\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run --rm -v $(pwd):/app alpine /app/application.AppImage"
+  },
+  {
+    "instruction": "How to patch an AppImage to use a different entry point",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: --appimage-extract, -i, -entry, -entry\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Flag `-i`: interactive mode or case-insensitive\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n./application.AppImage --appimage-extract && sed -i 's/old-entry/new-entry/' squashfs-root/AppRun && appimagetool squashfs-root patched.AppImage"
+  },
+  {
+    "instruction": "How to run an AppImage with a custom ALSA configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ALSA_CONFIG_PATH` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ALSA_CONFIG_PATH` — ALSA_CONFIG_PATH command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nALSA_CONFIG_PATH=/custom/asound.conf ./application.AppImage"
+  },
+  {
+    "instruction": "How to check the endianness of an AppImage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `readelf` with the correct flags and arguments\n   2. Key flags: -h\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `readelf` — readelf command execution and management\n   Flag `-h`: human-readable format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nreadelf -h ./application.AppImage | grep 'Data'"
+  },
+  {
+    "instruction": "How to run an AppImage in a systemd user service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-run` with the correct flags and arguments\n   2. Key flags: -run, --user, --scope, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-run` — systemd-run command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-run --user --scope -p MemoryMax=1G ./application.AppImage"
+  },
+  {
+    "instruction": "How to see the number of inodes inside an AppImage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: --appimage-extract, -i, -root\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Flag `-i`: interactive mode or case-insensitive\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n./application.AppImage --appimage-extract && df -i squashfs-root"
+  },
+  {
+    "instruction": "How to run an AppImage and capture its return code",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n./application.AppImage; echo 'Exit code: $?'"
+  },
+  {
+    "instruction": "How to create a sha256sum file for AppImage verification",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsha256sum output.AppImage > output.AppImage.sha256"
+  },
+  {
+    "instruction": "How to run an AppImage with a custom GIO module path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `GIO_EXTRA_MODULES` with the correct flags and arguments\n   2. Key flags: -modules\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `GIO_EXTRA_MODULES` — GIO_EXTRA_MODULES command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nGIO_EXTRA_MODULES=/custom/gio-modules ./application.AppImage"
+  },
+  {
+    "instruction": "How to check the AppImage's runtime capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: --appimage-offset\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n./application.AppImage --appimage-offset && echo 'FUSE supported: yes'"
+  },
+  {
+    "instruction": "How to run an AppImage in a minimal namespace (PID isolation)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --pid, --fork\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --pid --fork ./application.AppImage"
+  },
+  {
+    "instruction": "How to see if an AppImage has a read-only filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Flag `-v`: verbose output for debugging\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount | grep /tmp/.mount | grep -v 'rw'"
+  },
+  {
+    "instruction": "How to run an AppImage on a headless server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `xvfb-run` with the correct flags and arguments\n   2. Key flags: -run\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `xvfb-run` — xvfb-run command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nxvfb-run ./application.AppImage"
+  },
+  {
+    "instruction": "How to batch-create several AppImages using a script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfor dir in AppDir-*; do appimagetool \"$dir\" \"${dir#AppDir-}.AppImage\"; done"
+  },
+  {
+    "instruction": "How to run an AppImage and forward X11 over SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -X user@remote './application.AppImage'"
+  },
+  {
+    "instruction": "How to check the AppImage's RPM size limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stat` with the correct flags and arguments\n   2. Key flags: --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stat` — stat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstat --format='%s' ./application.AppImage"
+  },
+  {
+    "instruction": "How to run an AppImage with a custom tmpfs mount for extraction",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -t, -o, -extract, -extract\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Flag `-t`: sort by time\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -t tmpfs -o size=1G tmpfs /tmp-extract && TMPDIR=/tmp-extract ./application.AppImage"
+  }
+]

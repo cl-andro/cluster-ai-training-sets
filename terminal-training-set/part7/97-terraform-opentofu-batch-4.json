@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Initialize and apply in one command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -auto, -approve\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform init && terraform apply -auto-approve"
+  },
+  {
+    "instruction": "Use backend type s3 with dynamodb locking",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -backend, -config, -tf, -state\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform init -backend-config='bucket=my-tf-state' -backend-config='key=prod/terraform.tfstate' -backend-config='region=us-east-1' -backend-config='dynamodb_table=tf-locks'"
+  },
+  {
+    "instruction": "Migrate state from local to remote",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -migrate, -state\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform init -migrate-state"
+  },
+  {
+    "instruction": "Reconfigure backend without migration prompt",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: terraform init -reconfigure\n   2. Apply the configuration and verify with `terraform status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform init -reconfigure"
+  },
+  {
+    "instruction": "Lock state manually",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -lock, -lock, -timeout\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform plan -lock=true -lock-timeout=5m"
+  },
+  {
+    "instruction": "Override an input variable from environment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `TF_VAR_region` with the correct flags and arguments\n   2. Key flags: -west, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `TF_VAR_region` — TF_VAR_region command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nTF_VAR_region=eu-west-1 terraform plan"
+  },
+  {
+    "instruction": "Use sensitive variable in output without showing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -json, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform output -json | jq -r '.db_password.value'"
+  },
+  {
+    "instruction": "Mark an output as sensitive in configuration check",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep 'sensitive = true' outputs.tf"
+  },
+  {
+    "instruction": "Create a data source dependency test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -refresh, -only, -target\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform plan -refresh-only -target=data.aws_ami.ubuntu"
+  },
+  {
+    "instruction": "Use terraform_data resource to force a timestamp dependency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'resource \"terraform_data\" \"replacement\" { input = timestamp() }' > trigger.tf"
+  },
+  {
+    "instruction": "Use for_each with a map to create multiple resources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'resource \"aws_s3_bucket\" \"this\" { for_each = var.buckets bucket = each.value }' > s3.tf"
+  },
+  {
+    "instruction": "Use count to create conditional resources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'resource \"aws_instance\" \"bastion\" { count = var.create_bastion ? 1 : 0 }' > bastion.tf"
+  },
+  {
+    "instruction": "Use try function to handle missing attributes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'output \"ip\" { value = try(aws_instance.web.public_ip, \"\") }' > outputs.tf"
+  },
+  {
+    "instruction": "Use one function for module version selection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'module \"vpc\" { source = one([for m in data.terraform_remote_state.modules : m.outputs.vpc_module]) }'"
+  },
+  {
+    "instruction": "Create a local value for shorthand",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'locals { name_prefix = \"${var.environment}-${var.project}\" }' > locals.tf"
+  },
+  {
+    "instruction": "Use templatefile function for user data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'user_data = templatefile(\"${path.module}/init.sh.tpl\", { hostname = \"web01\" })' > ec2.tf"
+  },
+  {
+    "instruction": "Use jsonencode in Terraform for IAM policies",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -10, -17\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'policy = jsonencode({ Version = \"2012-10-17\", Statement = [{ Effect = \"Allow\", Action = \"s3:*\", Resource = \"*\" }] })' > iam.tf"
+  },
+  {
+    "instruction": "Use yamlencode for Kubernetes manifests",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'manifest = yamlencode({ apiVersion = \"v1\", kind = \"Pod\", metadata = { name = \"nginx\" } })' > k8s.tf"
+  },
+  {
+    "instruction": "Create a null_resource with a provisioner",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -exec\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'resource \"null_resource\" \"provision\" { provisioner \"local-exec\" { command = \"echo hello\" } }' > provision.tf"
+  },
+  {
+    "instruction": "Use depends_on for implicit ordering",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'resource \"aws_instance\" \"app\" { depends_on = [aws_security_group.this] }' > app.tf"
+  },
+  {
+    "instruction": "Use lifecycle prevent_destroy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'resource \"aws_instance\" \"db\" { lifecycle { prevent_destroy = true } }' > db.tf"
+  },
+  {
+    "instruction": "Use lifecycle create_before_destroy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'resource \"aws_instance\" \"web\" { lifecycle { create_before_destroy = true } }' > web.tf"
+  },
+  {
+    "instruction": "Use lifecycle ignore_changes for auto-scaling",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'resource \"aws_instance\" \"web\" { lifecycle { ignore_changes = [ami] } }' > web.tf"
+  },
+  {
+    "instruction": "Plan with -no-color for machine parsing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -no, -color\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform plan -no-color"
+  },
+  {
+    "instruction": "Apply with detailed exit code for CI checks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -auto, -approve, -detailed, -exitcode\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform apply -auto-approve -detailed-exitcode"
+  }
+]

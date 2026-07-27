@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to encrypt a file with armor output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --armor, --encrypt, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --armor --encrypt -r user@example.com file.txt"
+  },
+  {
+    "instruction": "How to encrypt a file and sign with armor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --armor, --encrypt, --sign, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --armor --encrypt --sign -r user@example.com file.txt"
+  },
+  {
+    "instruction": "How to decrypt an armored file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --decrypt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --decrypt file.txt.asc"
+  },
+  {
+    "instruction": "How to encrypt a directory (tar pipe)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: --encrypt, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Supporting tool: `gpg` — file encryption and signing\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ntar czf - dir/ | gpg --encrypt -r user@example.com > dir.tar.gz.gpg"
+  },
+  {
+    "instruction": "How to decrypt a directory archive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --decrypt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --decrypt dir.tar.gz.gpg | tar xzf -"
+  },
+  {
+    "instruction": "How to sign a file with armor output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --armor, --sign\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --armor --sign file.txt"
+  },
+  {
+    "instruction": "How to sign a file using a specific key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --local-user, --sign\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --local-user KEYID --sign file.txt"
+  },
+  {
+    "instruction": "How to verify a file with a specific keyring",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --keyring, -keyring, --verify\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --keyring ./custom-keyring.pub --verify file.txt.sig file.txt"
+  },
+  {
+    "instruction": "How to verify a signature with no output on success",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --quiet, --verify\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Flag `--quiet`: suppress non-essential output\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --quiet --verify file.txt.sig file.txt"
+  },
+  {
+    "instruction": "How to add a UID to an existing key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --quick-add-uid\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --quick-add-uid KEYID 'New User <new@example.com>'"
+  },
+  {
+    "instruction": "How to revoke a UID on a key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --quick-revoke-uid\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --quick-revoke-uid KEYID 'user@example.com'"
+  },
+  {
+    "instruction": "How to generate a revocation certificate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --gen-revoke\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --gen-revoke user@example.com > revoke.asc"
+  },
+  {
+    "instruction": "How to import a revocation certificate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --import\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --import revoke.asc"
+  },
+  {
+    "instruction": "How to edit a key to add a photo",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --edit-key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --edit-key user@example.com addphoto quit"
+  },
+  {
+    "instruction": "How to set a key to expire in 1 year",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --quick-set-expire\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --quick-set-expire KEYID 1y"
+  },
+  {
+    "instruction": "How to change the key expiration to never",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --quick-set-expire\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --quick-set-expire KEYID 0"
+  },
+  {
+    "instruction": "How to set the passphrase for symmetric encryption",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --symmetric, --passphrase\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --symmetric --passphrase 'mypass' file.txt"
+  },
+  {
+    "instruction": "How to encrypt with a specific cipher algorithm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --cipher-algo, --symmetric\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --cipher-algo CAMELLIA256 --symmetric file.txt"
+  },
+  {
+    "instruction": "How to show encryption algorithm used in a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --list-packets\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --list-packets file.txt.gpg"
+  },
+  {
+    "instruction": "How to decrypt with a specific key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --decrypt, --recipient\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --decrypt --recipient KEYID file.txt.gpg"
+  },
+  {
+    "instruction": "How to export only the public key in SSH format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --export-ssh-key\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --export-ssh-key user@example.com"
+  },
+  {
+    "instruction": "How to add a key to an SSH agent",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpgconf` with the correct flags and arguments\n   2. Key flags: --launch, -agent, -add, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpgconf` — gpgconf command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngpgconf --launch gpg-agent && ssh-add -l"
+  },
+  {
+    "instruction": "How to change the GPG agent cache TTL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -cache, -ttl, -agent\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'default-cache-ttl 3600' >> ~/.gnupg/gpg-agent.conf"
+  },
+  {
+    "instruction": "How to reload the GPG agent configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg-connect-agent` with the correct flags and arguments\n   2. Key flags: -connect, -agent\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg-connect-agent` — gpg-connect-agent command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngpg-connect-agent reloadagent /bye"
+  },
+  {
+    "instruction": "How to kill the GPG agent",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpgconf` with the correct flags and arguments\n   2. Key flags: --kill, -agent\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpgconf` — gpgconf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngpgconf --kill gpg-agent"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Use Podman with Quadlet (run .container files)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: --user, -reload, --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `nginx` — web server and reverse proxy\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho '[Container] Image=nginx:latest Port=8080:80' > ~/.config/containers/systemd/webserver.container && systemctl --user daemon-reload && systemctl --user start webserver"
+  },
+  {
+    "instruction": "Create a Quadlet network file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: --user, -reload\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho '[Network] Subnet=10.90.0.0/24' > ~/.config/containers/systemd/mynet.network && systemctl --user daemon-reload"
+  },
+  {
+    "instruction": "Create a Quadlet volume file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[Volume]' > ~/.config/containers/systemd/myvol.volume"
+  },
+  {
+    "instruction": "List active Quadlet units",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --user, -units\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl --user list-units '*.container' '*.volume' '*.network'"
+  },
+  {
+    "instruction": "Start a Quadlet container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl --user start webserver"
+  },
+  {
+    "instruction": "Stop a Quadlet container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl --user stop webserver"
+  },
+  {
+    "instruction": "View Quadlet container logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: --user, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl --user -u webserver"
+  },
+  {
+    "instruction": "Use Podman with containernetworking plugins",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --network, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --network macvlan -d nginx"
+  },
+  {
+    "instruction": "Use Podman with ipvlan network",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --driver\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman network create --driver ipvlan myipvlan"
+  },
+  {
+    "instruction": "Use Podman with macvlan network",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --driver, --subnet\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman network create --driver macvlan --subnet 10.20.0.0/24 mymacvlan"
+  },
+  {
+    "instruction": "Use Podman with a custom DNS server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --dns, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --dns 8.8.8.8 -d nginx"
+  },
+  {
+    "instruction": "Use Podman with dns_search domain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --dns-search, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --dns-search example.com -d nginx"
+  },
+  {
+    "instruction": "Use Podman with hostname from container name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --hostname, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --hostname webserver -d nginx"
+  },
+  {
+    "instruction": "Use Podman with add_host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --add-host, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --add-host myservice:10.0.0.5 -d nginx"
+  },
+  {
+    "instruction": "Use Podman with exposed ports",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --expose, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --expose 443 -d nginx"
+  },
+  {
+    "instruction": "Use Podman with publish all exposed ports",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: -P, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run -P -d nginx"
+  },
+  {
+    "instruction": "Create a Podman machine with custom disk size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --disk-size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman machine init --disk-size 100"
+  },
+  {
+    "instruction": "Upgrade Podman machine OS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: -y\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman machine ssh sudo dnf upgrade -y"
+  },
+  {
+    "instruction": "Export Podman machine to an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `host` — host command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman machine ssh -- podman image save localhost/myapp:latest -o /tmp/myapp.tar && podman machine scp /tmp/myapp.tar host:/tmp/"
+  },
+  {
+    "instruction": "Use Podman with FIPS mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --security-opt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --security-opt fips=true nginx"
+  },
+  {
+    "instruction": "Use Podman with seccomp default",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --security-opt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --security-opt seccomp=default nginx"
+  },
+  {
+    "instruction": "Use Podman with no-new-keyring",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --security-opt, -new, -keyring\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --security-opt no-new-keyring nginx"
+  },
+  {
+    "instruction": "Use Podman with unmask paths",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --security-opt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --security-opt unmask=/proc:/sys nginx"
+  },
+  {
+    "instruction": "Use Podman with mask paths",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --security-opt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --security-opt mask=/proc/acpi nginx"
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Show current NFSv4 delegation type",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/module/nfs/parameters/delegation"
+  },
+  {
+    "instruction": "Enable NFSv4 read delegations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 1 > /sys/module/nfsd/parameters/lease_time\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1 > /sys/module/nfsd/parameters/lease_time"
+  },
+  {
+    "instruction": "Check delegation timeouts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nfs4_delegation` with the correct flags and arguments\n   2. Key flags: --check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nfs4_delegation` — nfs4_delegation command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnfs4_delegation --check"
+  },
+  {
+    "instruction": "Show all NFSv4 delegations on server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/fs/nfsd/delegations"
+  },
+  {
+    "instruction": "Force recall of all delegations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `exportfs` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `exportfs` — exportfs command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexportfs -f"
+  },
+  {
+    "instruction": "Start sm-notify (NFS reboot notification)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sm-notify` with the correct flags and arguments\n   2. Key flags: -notify\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sm-notify` — sm-notify command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsm-notify"
+  },
+  {
+    "instruction": "Start sm-notify with debug",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using sm-notify\n   2. Apply corrective actions: sm-notify -d\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `sm-notify` — sm-notify command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsm-notify -d"
+  },
+  {
+    "instruction": "Start sm-notify as background daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sm-notify` with the correct flags and arguments\n   2. Key flags: -notify, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sm-notify` — sm-notify command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsm-notify -b"
+  },
+  {
+    "instruction": "Start NFS statd (status monitor)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for statd\n   2. Build the command chain with error handling\n   3. Execute: statd\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `statd` — statd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstatd"
+  },
+  {
+    "instruction": "Start statd with verbose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `statd` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `statd` — statd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstatd -d"
+  },
+  {
+    "instruction": "Statd with specific port",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `statd` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `statd` — statd command execution and management\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstatd -p 5000"
+  },
+  {
+    "instruction": "Statd with specific state directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `statd` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `statd` — statd command execution and management\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstatd -n /var/lib/nfs/sm"
+  },
+  {
+    "instruction": "Check if statd is running",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpcinfo` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpcinfo` — rpcinfo command execution and management\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpcinfo -p localhost | grep status"
+  },
+  {
+    "instruction": "Query statd state from remote",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpcinfo` with the correct flags and arguments\n   2. Key flags: -t, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpcinfo` — rpcinfo command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpcinfo -t remote-server statd"
+  },
+  {
+    "instruction": "Start statd in foreground",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `statd` with the correct flags and arguments\n   2. Key flags: -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `statd` — statd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstatd -F"
+  },
+  {
+    "instruction": "List statd known clients",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /var/lib/nfs/sm/"
+  },
+  {
+    "instruction": "Remove stale statd entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nrm -f /var/lib/nfs/sm/*"
+  },
+  {
+    "instruction": "Check NFSv4 lease time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/fs/nfsd/nfsv4leasetime"
+  },
+  {
+    "instruction": "Set NFSv4 lease time to 90 seconds",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 90 > /proc/fs/nfsd/nfsv4leasetime"
+  },
+  {
+    "instruction": "Restart NFS server services sequentially",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -server, -kernel, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart nfs-server && systemctl restart nfs-kernel-server"
+  },
+  {
+    "instruction": "Check if NFS notifications are working",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpcinfo` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpcinfo` — rpcinfo command execution and management\n   Flag `-t`: sort by time\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nrpcinfo -t localhost nfs 4 2>/dev/null && echo NFSv4 OK"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Show all NFS mount stats with version 4",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mountstats` with the correct flags and arguments\n   2. Key flags: -4\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mountstats` — mountstats command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmountstats -4 /mnt/nfs"
+  },
+  {
+    "instruction": "Compare performance across NFS mounts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mountstats` with the correct flags and arguments\n   2. Key flags: --list, -I, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mountstats` — mountstats command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmountstats --list | awk '{print $1}' | xargs -I{} sh -c 'echo {}; mountstats {} | grep read:'"
+  },
+  {
+    "instruction": "Show NFS mount bytes read/written",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mountstats` with the correct flags and arguments\n   2. Key flags: --nfs\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mountstats` — mountstats command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmountstats --nfs /mnt/nfs | grep bytes:"
+  },
+  {
+    "instruction": "Check nfsd thread pool size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nfsconf` with the correct flags and arguments\n   2. Key flags: --get\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nfsconf` — nfsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnfsconf --get nfsd threads"
+  },
+  {
+    "instruction": "Set NFSD debug level",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using nfsconf\n   2. Apply corrective actions: nfsconf --set nfsd debug 1\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `nfsconf` — nfsconf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnfsconf --set nfsd debug 1"
+  },
+  {
+    "instruction": "Get NFSD grace period",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nfsconf` with the correct flags and arguments\n   2. Key flags: --get, -time\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nfsconf` — nfsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnfsconf --get nfsd grace-time"
+  },
+  {
+    "instruction": "Enable NFSD lease",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: nfsconf --set nfsd lease-time 90\n   2. Apply the configuration and verify with `nfsconf status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `nfsconf` — nfsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnfsconf --set nfsd lease-time 90"
+  },
+  {
+    "instruction": "List NFS exports",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `showmount` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `showmount` — showmount command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nshowmount -e localhost"
+  },
+  {
+    "instruction": "Kill stuck NFS mount",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `umount` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `umount` — umount command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\numount -f /mnt/nfs"
+  },
+  {
+    "instruction": "Lazy unmount NFS share",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `umount` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `umount` — umount command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\numount -l /mnt/nfs"
+  },
+  {
+    "instruction": "Remount NFS share",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -o remount /mnt/nfs"
+  },
+  {
+    "instruction": "Force NFS version 3 on mount",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -t, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -t nfs -o nfsvers=3 server:/export /mnt/nfs"
+  },
+  {
+    "instruction": "Mount NFS with Kerberos security",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -t, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -t nfs -o sec=krb5 server:/export /mnt/nfs"
+  },
+  {
+    "instruction": "Mount NFS with larger read/write buffers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -t, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -t nfs -o rsize=1048576,wsize=1048576 server:/export /mnt/nfs"
+  },
+  {
+    "instruction": "Check NFS server status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status nfs-server"
+  },
+  {
+    "instruction": "Restart NFS server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart nfs-server"
+  },
+  {
+    "instruction": "Check NFS connectivity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpcinfo` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpcinfo` — rpcinfo command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpcinfo -p server"
+  },
+  {
+    "instruction": "Check if portmap is listening",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpcinfo` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpcinfo` — rpcinfo command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpcinfo -p"
+  },
+  {
+    "instruction": "Query NFS v4 capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rpcinfo` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rpcinfo` — rpcinfo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrpcinfo -s server nfs"
+  },
+  {
+    "instruction": "Check NFS server mounts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/fs/nfsd/pool_stats"
+  },
+  {
+    "instruction": "Check kernel NFS client state",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/mountstats | grep nfs"
+  },
+  {
+    "instruction": "Watch NFS operations in real time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for nfsiostat\n   2. Build the command chain with error handling\n   3. Execute: nfsiostat 1\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `nfsiostat` — nfsiostat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnfsiostat 1"
+  },
+  {
+    "instruction": "Repair NFS file permissions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: nfs4_setfacl -s owner@:rwx::allow,group@:rx::allow /mnt/nfs/file\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `nfs4_setfacl` — nfs4_setfacl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnfs4_setfacl -s owner@:rwx::allow,group@:rx::allow /mnt/nfs/file"
+  },
+  {
+    "instruction": "Get NFS ACL for a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nfs4_getfacl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nfs4_getfacl` — nfs4_getfacl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnfs4_getfacl /mnt/nfs/file"
+  },
+  {
+    "instruction": "Trace NFS calls with ftrace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `trace-cmd` with the correct flags and arguments\n   2. Key flags: -cmd, -e, -e, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `trace-cmd` — trace-cmd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrace-cmd record -e nfs -e nfs4 -p function_graph"
+  }
+]

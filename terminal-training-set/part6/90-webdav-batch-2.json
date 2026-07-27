@@ -1,0 +1,94 @@
+[
+  {
+    "instruction": "Move/rename a file on WebDAV via cadaver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e 'open http://localhost/webdav\nmv oldname.pdf newname.pdf\nquit' | cadaver"
+  },
+  {
+    "instruction": "Change permissions on a WebDAV file with cadaver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: echo -e 'open http://localhost/webdav\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e 'open http://localhost/webdav\nchmod 755 script.sh\nquit' | cadaver"
+  },
+  {
+    "instruction": "Edit a remote file with cadaver using local editor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e 'open http://localhost/webdav\nedit notes.txt\nquit' | cadaver"
+  },
+  {
+    "instruction": "Batch download multiple files from WebDAV with cadaver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e 'open http://localhost/webdav\nmget *.pdf\nquit' | cadaver"
+  },
+  {
+    "instruction": "Batch upload multiple files to WebDAV with cadaver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e 'open http://localhost/webdav\nmput *.jpg\nquit' | cadaver"
+  },
+  {
+    "instruction": "Install davfs2 WebDAV filesystem support",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nsudo apt install davfs2"
+  },
+  {
+    "instruction": "Mount a WebDAV share using davfs2",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo mount.davfs http://localhost/webdav /mnt/webdav"
+  },
+  {
+    "instruction": "Configure davfs2 secrets file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'http://localhost/webdav alice secretpass' | sudo tee -a /etc/davfs2/secret\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-a`: include hidden/all entries\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho 'http://localhost/webdav alice secretpass' | sudo tee -a /etc/davfs2/secrets && sudo chmod 600 /etc/davfs2/secrets"
+  },
+  {
+    "instruction": "Edit davfs2 configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo nano /etc/davfs2/davfs2.conf"
+  },
+  {
+    "instruction": "Unmount a davfs2 WebDAV mount",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo umount /mnt/webdav"
+  },
+  {
+    "instruction": "Create a WebDAV collection with curl MKCOL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X MKCOL http://localhost/webdav/newfolder --user alice:secretpass"
+  },
+  {
+    "instruction": "Upload file to WebDAV with curl PUT",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --data-binary, --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PUT http://localhost/webdav/file.txt --data-binary @/home/user/file.txt --user alice:secretpass"
+  },
+  {
+    "instruction": "List WebDAV directory with curl PROPFIND",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --user, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PROPFIND http://localhost/webdav/ --user alice:secretpass -H 'Depth: 1'"
+  },
+  {
+    "instruction": "Move a WebDAV resource with curl MOVE",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --header, --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X MOVE http://localhost/webdav/old.txt --header 'Destination: http://localhost/webdav/new.txt' --user alice:secretpass"
+  },
+  {
+    "instruction": "Copy a WebDAV resource with curl COPY",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --header, --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X COPY http://localhost/webdav/source.txt --header 'Destination: http://localhost/webdav/dest.txt' --user alice:secretpass"
+  },
+  {
+    "instruction": "Delete a WebDAV resource with curl DELETE",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X DELETE http://localhost/webdav/unwanted.txt --user alice:secretpass"
+  },
+  {
+    "instruction": "Set properties on a WebDAV resource with curl PROPPATCH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --user, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PROPPATCH http://localhost/webdav/file.txt --user alice:secretpass -H 'Content-Type: text/xml' -d '<D:propertyupdate xmlns:D=\"DAV:\"><D:set><D:prop><D:displayname>My File</D:displayname></D:prop></D:set></D:propertyupdate>'"
+  },
+  {
+    "instruction": "Lock a WebDAV resource with curl LOCK",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --user, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X LOCK http://localhost/webdav/file.txt --user alice:secretpass -H 'Content-Type: text/xml' -d '<D:lockinfo xmlns:D=\"DAV:\"><D:lockscope><D:exclusive/></D:lockscope><D:locktype><D:write/></D:locktype></D:lockinfo>'"
+  },
+  {
+    "instruction": "Unlock a WebDAV resource with curl UNLOCK",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --user, -H, -Token\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X UNLOCK http://localhost/webdav/file.txt --user alice:secretpass -H 'Lock-Token: <urn:uuid:locktoken>'"
+  },
+  {
+    "instruction": "Configure rclone WebDAV remote",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the rclone configuration with the required parameters\n   2. Apply the configuration and verify with `rclone status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `rclone` — cloud storage synchronization\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrclone config create mywebdav webdav url=http://localhost/webdav vendor=other user=alice pass=secretpass"
+  },
+  {
+    "instruction": "List files using rclone WebDAV remote",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rclone` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rclone` — cloud storage synchronization\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrclone ls mywebdav:"
+  },
+  {
+    "instruction": "Sync local directory to WebDAV with rclone",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rclone` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rclone` — cloud storage synchronization\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrclone sync /home/user/docs mywebdav:docs"
+  },
+  {
+    "instruction": "Install and start wsgiDAV WebDAV server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the host configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `host` — host command execution and management\n   Supporting tool: `apt` — apt command execution and management\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nsudo apt install wsgi-dav-admin && wsgidav --host=0.0.0.0 --port=8080 --root=/srv/webdav --auth=anonymous"
+  }
+]

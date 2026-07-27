@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Reload promtail configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `promtail` — log shipping to Loki\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl reload promtail"
+  },
+  {
+    "instruction": "Check promtail service status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `promtail` — log shipping to Loki\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status promtail"
+  },
+  {
+    "instruction": "Query logs from Loki with logcli",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}'"
+  },
+  {
+    "instruction": "List available labels in Loki",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli labels"
+  },
+  {
+    "instruction": "Query logs from last hour",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --since\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{app=\"web\"}' --since=1h"
+  },
+  {
+    "instruction": "Start promtail with config file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtail` with the correct flags and arguments\n   2. Key flags: -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtail` — log shipping to Loki\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtail -config.file=/etc/promtail/config.yml"
+  },
+  {
+    "instruction": "Validate promtail config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtail` with the correct flags and arguments\n   2. Key flags: -config, -check, -syntax\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtail` — log shipping to Loki\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtail -config.file=/etc/promtail/config.yml -check-syntax"
+  },
+  {
+    "instruction": "Tail logs via promtail to stdout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtail` with the correct flags and arguments\n   2. Key flags: -config, -stdout\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtail` — log shipping to Loki\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtail -config.file=/etc/promtail/config.yml -stdout"
+  },
+  {
+    "instruction": "View promtail version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtail` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtail` — log shipping to Loki\n   Flag `--version`: show tool version\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtail --version"
+  },
+  {
+    "instruction": "Add scrape config for nginx logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Supporting tool: `promtail` — log shipping to Loki\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/promtail/config.yml << 'EOF'\nscrape_configs:\n- job_name: nginx\n  static_configs:\n  - targets: [localhost]\n    labels:\n      job: nginx\n      __path__: /var/log/nginx/access.log\nEOF"
+  },
+  {
+    "instruction": "Add pipeline stage for regex parsing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `promtail` — log shipping to Loki\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/promtail/config.yml << 'EOF'\npipeline_stages:\n- regex:\n    expression: '^(?P<ip>\\S+) (?P<ident>\\S+) (?P<auth>\\S+) \\[(?P<timestamp>[^\\]]+)\\] \"(?P<method>\\S+) (?P<path>\\S+) (?P<protocol>[^\"]+)\" (?P<status>\\d+) (?P<size>\\d+)'\nEOF"
+  },
+  {
+    "instruction": "Add json pipeline stage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `promtail` — log shipping to Loki\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/promtail/config.yml << 'EOF'\npipeline_stages:\n- json:\n    expressions:\n      level: level\n      message: message\n      timestamp: timestamp\nEOF"
+  },
+  {
+    "instruction": "Add timestamp label from log line",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `promtail` — log shipping to Loki\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/promtail/config.yml << 'EOF'\npipeline_stages:\n- regex:\n    expression: '^(?P<timestamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2})'\n- timestamp:\n    source: timestamp\n    format: RFC3339Nano\nEOF"
+  },
+  {
+    "instruction": "Add static label in pipeline",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `promtail` — log shipping to Loki\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/promtail/config.yml << 'EOF'\npipeline_stages:\n- labels:\n    app: myapp\n    env: production\nEOF"
+  },
+  {
+    "instruction": "Drop log lines matching pattern",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `promtail` — log shipping to Loki\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/promtail/config.yml << 'EOF'\npipeline_stages:\n- drop:\n    expression: 'healthcheck|heartbeat'\nEOF"
+  },
+  {
+    "instruction": "Add multiline stage for stack traces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `promtail` — log shipping to Loki\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/promtail/config.yml << 'EOF'\npipeline_stages:\n- multiline:\n    firstline: '^\\[\\d{4}-\\d{2}-\\d{2}'\nEOF"
+  },
+  {
+    "instruction": "Query Loki for error logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"} |= \"error\"'"
+  },
+  {
+    "instruction": "Query Loki with label matchers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{app=\"web\", env=\"production\"}'"
+  },
+  {
+    "instruction": "Get label values for a specific label",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli labels job"
+  },
+  {
+    "instruction": "Query Loki from specific time range",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --from, -01, -01T00, --to\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"syslog\"}' --from=2025-01-01T00:00:00Z --to=2025-01-02T00:00:00Z"
+  },
+  {
+    "instruction": "Output log query results as JSON",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}' -o json"
+  },
+  {
+    "instruction": "Query logs with raw logql filter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query 'rate({job=\"nginx\"}[5m])'"
+  }
+]

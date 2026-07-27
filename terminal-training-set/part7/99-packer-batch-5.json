@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Enable Packer debug logging with environment variable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using PACKER_LOG\n   2. Apply corrective actions: PACKER_LOG=1 packer build template.pkr.hcl\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `PACKER_LOG` — PACKER_LOG command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nPACKER_LOG=1 packer build template.pkr.hcl"
+  },
+  {
+    "instruction": "Set the Packer log path to a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `PACKER_LOG_PATH` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `PACKER_LOG_PATH` — PACKER_LOG_PATH command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nPACKER_LOG_PATH=packer.log packer build template.pkr.hcl"
+  },
+  {
+    "instruction": "Set Packer cache directory for ISO images",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `PACKER_CACHE_DIR` with the correct flags and arguments\n   2. Key flags: -cache\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `PACKER_CACHE_DIR` — PACKER_CACHE_DIR command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nPACKER_CACHE_DIR=/opt/packer-cache packer build template.pkr.hcl"
+  },
+  {
+    "instruction": "Create the Packer plugin directory manually",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir -p ~/.config/packer/plugins/github.com/hashicorp/amazon"
+  },
+  {
+    "instruction": "Install a specific version of a Packer plugin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: packer plugins install github.com/hashicorp/amazon v1.3.0\n   2. Apply the configuration and verify with `packer status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `packer` — packer command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npacker plugins install github.com/hashicorp/amazon v1.3.0"
+  },
+  {
+    "instruction": "List all installed Packer plugins",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: packer plugins installed\n   2. Apply the configuration and verify with `packer status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `packer` — packer command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npacker plugins installed"
+  },
+  {
+    "instruction": "Remove a Packer plugin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `packer` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `packer` — packer command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npacker plugins remove github.com/hashicorp/docker"
+  },
+  {
+    "instruction": "Initialize only specific required plugins",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `packer` with the correct flags and arguments\n   2. Key flags: -plugin, -dir, -plugins\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `packer` — packer command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npacker init -plugin-dir=/opt/packer-plugins ."
+  },
+  {
+    "instruction": "Use the shell-local provisioner for local commands",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -local, -provisioner\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'provisioner \"shell-local\" { inline = [\"echo Build initiated at $(date)\"] }' > local-provisioner.pkr.hcl"
+  },
+  {
+    "instruction": "Run a local script that prepares build artifacts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -local, -assets, -script\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'provisioner \"shell-local\" { script = \"prepare-assets.sh\" environment_vars = [\"VERSION=${var.version}\"] }' > local-script.pkr.hcl"
+  },
+  {
+    "instruction": "Use the 'none' communicator for testing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -source\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'source \"null\" \"basic\" { communicator = \"none\" }' > null-source.pkr.hcl"
+  },
+  {
+    "instruction": "Use the tr function for string transformations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'locals { clean_name = tr(var.image_name, \"/ \", \"-\") }' > locals.pkr.hcl"
+  },
+  {
+    "instruction": "Use the replace function in Packer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'locals { safe_name = replace(var.image_name, \"/ \", \"-\") }' > locals.pkr.hcl"
+  },
+  {
+    "instruction": "Use the split and join functions in Packer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'locals { parts = split(\".\", var.version); dotted = join(\".\", [local.parts[0], local.parts[1]]) }' > locals.pkr.hcl"
+  },
+  {
+    "instruction": "Use the lower and upper functions in Packer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'locals { upper_name = upper(var.image_name) }' > locals.pkr.hcl"
+  },
+  {
+    "instruction": "Use the trimspace function in Packer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'locals { clean = trimspace(var.tag_value) }' > locals.pkr.hcl"
+  },
+  {
+    "instruction": "Use the formatdate function for timestamps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -MM, -DD\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'locals { date = formatdate(\"YYYY-MM-DD\", timestamp()) }' > locals.pkr.hcl"
+  },
+  {
+    "instruction": "Build and export to Vagrant box in one template",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -iso, -iso, -processor, -22\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'source \"virtualbox-iso\" \"ubuntu\" {} build { sources = [\"source.virtualbox-iso.ubuntu\"] post-processor \"vagrant\" { output = \"builds/ubuntu-22.04.box\" } }' > vagrant.pkr.hcl"
+  },
+  {
+    "instruction": "Create a Vagrant box with custom metadata",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -processor, -advanced\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'post-processor \"vagrant\" { output = \"builds/ubuntu.box\" vagrantfile_template = \"Vagrantfile.tpl\" }' > vagrant-advanced.pkr.hcl"
+  },
+  {
+    "instruction": "Add the Vagrant post-processor with compression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -processor\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'post-processor \"vagrant\" { compression_level = 9 }' > vagrant.pkr.hcl"
+  },
+  {
+    "instruction": "Use the shell provisioner with execute_command override",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -custom\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'provisioner \"shell\" { execute_command = \"chmod +x {{ .Path }} && sudo {{ .Path }}\" script = \"scripts/install.sh\" }' > shell-custom.pkr.hcl"
+  },
+  {
+    "instruction": "Use the shell provisioner with expect_disconnect",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -provisioner\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'provisioner \"shell\" { expect_disconnect = true inline = [\"sudo reboot\"] }' > reboot-provisioner.pkr.hcl"
+  },
+  {
+    "instruction": "Pause before a provisioner runs for manual checks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'provisioner \"breakpoint\" { disable = false note = \"Check system state\" }' > breakpoint.pkr.hcl"
+  },
+  {
+    "instruction": "Create a source with spot_instance for cost savings",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ebs\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'source \"amazon-ebs\" \"ubuntu\" { spot_instance_types = [\"t3.micro\", \"t3.small\"] }' > spot.pkr.hcl"
+  },
+  {
+    "instruction": "Set spot instance bid percentage in Packer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ebs, -price\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'source \"amazon-ebs\" \"ubuntu\" { spot_price = \"0.01\" }' > spot-price.pkr.hcl"
+  }
+]

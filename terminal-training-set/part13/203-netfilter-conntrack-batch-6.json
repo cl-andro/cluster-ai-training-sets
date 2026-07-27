@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to list conntrack via /proc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/net/nf_conntrack | head"
+  },
+  {
+    "instruction": "How to watch conntrack table changes continuously",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for conntrack\n   2. Build the command chain with error handling\n   3. Execute: conntrack -E -o extended\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -E -o extended"
+  },
+  {
+    "instruction": "How to count conntrack entries per protocol",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -C, -p, -C, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -C -p tcp && conntrack -C -p udp && conntrack -C -p icmp"
+  },
+  {
+    "instruction": "How to check conntrack total count quickly",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wc` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wc` — wc command execution and management\n   Flag `-l`: long listing format\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwc -l /proc/net/nf_conntrack"
+  },
+  {
+    "instruction": "How to monitor conntrack max limit approaching",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for watch\n   2. Build the command chain with error handling\n   3. Execute: watch -n 2 'echo \"$(cat /proc/sys/net/netfilter/nf_conntrack_count) / $(cat /pro\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `watch` — watch command execution and management\n   Flag `-n`: dry-run mode\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwatch -n 2 'echo \"$(cat /proc/sys/net/netfilter/nf_conntrack_count) / $(cat /proc/sys/net/netfilter/nf_conntrack_max)\" | bc -l'"
+  },
+  {
+    "instruction": "How to analyze conntrack table content",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -L, -o, -analyze, -analyze\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nconntrack -L -o extended > /tmp/conntrack-analyze && awk '{print $3}' /tmp/conntrack-analyze | sort | uniq -c | sort -rn"
+  },
+  {
+    "instruction": "How to find top talkers in conntrack",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `awk` with the correct flags and arguments\n   2. Key flags: -c, -rn, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `awk` — awk command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nawk '{print $5}' /proc/net/nf_conntrack | sort | uniq -c | sort -rn | head -10"
+  },
+  {
+    "instruction": "How to find conntrack entries for a specific protocol",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep 'tcp' /proc/net/nf_conntrack | head -10"
+  },
+  {
+    "instruction": "How to check conntrack entries for a subnet",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep '10\\.0\\.0\\..*src=10\\.' /proc/net/nf_conntrack | head"
+  },
+  {
+    "instruction": "How to set conntrack logging with iptables",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -m, --ctstate, -j\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A FORWARD -m conntrack --ctstate NEW -j LOG --log-prefix 'CT_NEW: '"
+  },
+  {
+    "instruction": "How to monitor new conntrack entries in real time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for conntrack\n   2. Build the command chain with error handling\n   3. Execute: conntrack -E -e NEW -o timestamp\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -E -e NEW -o timestamp"
+  },
+  {
+    "instruction": "How to track conntrack state changes per IP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -E, --src\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -E --src 10.0.0.1"
+  },
+  {
+    "instruction": "How to track conntrack events for a specific port",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -E, -p, --dport\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -E -p tcp --dport 80"
+  },
+  {
+    "instruction": "How to dump all conntrack without truncation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -L, -o, -50\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nconntrack -L -o extended 2>&1 | head -50"
+  },
+  {
+    "instruction": "How to check conntrack for load balancing persists",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -L, -p, --orig-src, -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -L -p tcp --orig-src 10.0.0.1 | grep -q dport=80 && conntrack -L -p tcp --orig-src 10.0.0.1 --orig-dst 192.168.1.1"
+  },
+  {
+    "instruction": "How to find orphaned conntrack entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -L, -o, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -L -o extended | grep -i 'UNREPLIED'"
+  },
+  {
+    "instruction": "How to search conntrack for dead connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -L, -o, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -L -o extended | grep -E 'CLOSE|TIME_WAIT'"
+  },
+  {
+    "instruction": "How to delete conntrack for aged connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -D, -o, -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -D -o extended | grep CLOSE | awk '{print $2}' | xargs conntrack -D"
+  },
+  {
+    "instruction": "How to watch UDP conntrack entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for conntrack\n   2. Build the command chain with error handling\n   3. Execute: conntrack -E -p udp\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -E -p udp"
+  },
+  {
+    "instruction": "How to watch ICMP conntrack entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for conntrack\n   2. Build the command chain with error handling\n   3. Execute: conntrack -E -p icmp\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -E -p icmp"
+  },
+  {
+    "instruction": "How to set conntrack time wait timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.netfilter.nf_conntrack_tcp_timeout_time_wait=30"
+  },
+  {
+    "instruction": "How to set conntrack fin wait timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.netfilter.nf_conntrack_tcp_timeout_fin_wait=30"
+  },
+  {
+    "instruction": "How to set conntrack close timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.netfilter.nf_conntrack_tcp_timeout_close=10"
+  },
+  {
+    "instruction": "How to set conntrack syn sent timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.netfilter.nf_conntrack_tcp_timeout_syn_sent=30"
+  },
+  {
+    "instruction": "How to set conntrack syn recv timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.netfilter.nf_conntrack_tcp_timeout_syn_recv=30"
+  }
+]

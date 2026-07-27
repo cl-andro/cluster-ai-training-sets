@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Set up a TLS certificate in 389 DS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: --name, --file, -localhost, --primary-cert\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost security certificate add --name serverCert --file /etc/dirsrv/slapd-localhost/server.crt --primary-cert"
+  },
+  {
+    "instruction": "Set 389 DS TLS to require client certificates",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: --require-client-cert\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost security set --require-client-cert on"
+  },
+  {
+    "instruction": "Check 389 DS replication status for all agreements",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: -agmt, --suffix\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost repl-agmt list --suffix dc=example,dc=com"
+  },
+  {
+    "instruction": "Set 389 DS replication bind credentials",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: -agmt, --bind-passwd\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost repl-agmt set 'cn=myAgmt,cn=replica,cn=dc=example\\2Cdc=com,cn=mapping tree,cn=config' --bind-passwd newpass"
+  },
+  {
+    "instruction": "Delete a 389 DS replication agreement",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: -agmt, --suffix, --agmt-name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost repl-agmt delete --suffix dc=example,dc=com --agmt-name myAgmt"
+  },
+  {
+    "instruction": "Set up 389 DS winsync (AD sync) agreement",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: --suffix, --ad-host, --ad-port, --ad-bind-dn\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost winsync add --suffix dc=example,dc=com --ad-host ad.example.com --ad-port 389 --ad-bind-dn cn=sync,cn=users,dc=ad,dc=example,dc=com --ad-bind-passwd secret --sync-direction multi"
+  },
+  {
+    "instruction": "Show 389 DS winsync status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost winsync status"
+  },
+  {
+    "instruction": "Create a 389 DS certificate database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsctl` with the correct flags and arguments\n   2. Key flags: -server, -cert, -ca\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsctl` — dsctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsctl localhost tls generate-server-cert-ca"
+  },
+  {
+    "instruction": "Set 389 DS password storage scheme",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: -rootpwstoragescheme\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost config replace nsslapd-rootpwstoragescheme=SSHA512"
+  },
+  {
+    "instruction": "Set 389 DS minimum password length",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: --minlen, --history-count, --lockout-duration, --maxfailure\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost pwpolicy set --minlen 12 --history-count 10 --lockout-duration 3600 --maxfailure 5"
+  },
+  {
+    "instruction": "Check 389 DS disk space monitoring",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for dsconf\n   2. Build the command chain with error handling\n   3. Execute: dsconf localhost monitor disk\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost monitor disk"
+  },
+  {
+    "instruction": "List all 389 DS logged errors currently",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsctl` with the correct flags and arguments\n   2. Key flags: -errors, -log\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsctl` — dsctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsctl localhost get-errors-log"
+  },
+  {
+    "instruction": "Enable 389 DS access log buffering",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: dsconf localhost config replace nsslapd-accesslog-buffering=on\n   2. Apply the configuration and verify with `dsconf status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost config replace nsslapd-accesslog-buffering=on"
+  },
+  {
+    "instruction": "Set 389 DS maximum log size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dsconf` with the correct flags and arguments\n   2. Key flags: -errorlog, -maxlogs, -per, -dir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dsconf` — dsconf command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndsconf localhost config replace nsslapd-errorlog-maxlogs-per-dir=10 nsslapd-errorlog-maxlogsize=100"
+  },
+  {
+    "instruction": "Verify an LDIF file syntax before importing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `slaptest` with the correct flags and arguments\n   2. Key flags: -u, -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `slaptest` — slaptest command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nslaptest -u -F /etc/ldap/slapd.d"
+  },
+  {
+    "instruction": "Add a new LDAP index from config file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapmodify` with the correct flags and arguments\n   2. Key flags: -Y, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\nchangetype: modify\nadd: olcDbIndex\nolcDbIndex: member eq,sub'"
+  },
+  {
+    "instruction": "Remove an LDAP index",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapmodify` with the correct flags and arguments\n   2. Key flags: -Y, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\nchangetype: modify\ndelete: olcDbIndex\nolcDbIndex: uidNumber eq'"
+  },
+  {
+    "instruction": "Set LDAP index with approximate matching",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapmodify` with the correct flags and arguments\n   2. Key flags: -Y, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\nchangetype: modify\nadd: olcDbIndex\nolcDbIndex: cn pres,eq,approx,sub'"
+  },
+  {
+    "instruction": "Create a sub-DN in LDAP for a department",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapadd` with the correct flags and arguments\n   2. Key flags: -x, -D, -W\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapadd` — ldapadd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapadd -x -D cn=admin,dc=example,dc=com -W <<< 'dn: ou=engineering,dc=example,dc=com\nobjectClass: organizationalUnit\nou: engineering'"
+  },
+  {
+    "instruction": "Rename an LDAP entry from old OU to new OU",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapmodrdn` with the correct flags and arguments\n   2. Key flags: -x, -D, -W\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodrdn` — ldapmodrdn command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodrdn -x -D cn=admin,dc=example,dc=com -W 'uid=jdoe,ou=engineering,dc=example,dc=com' 'uid=jdoe,ou=marketing,dc=example,dc=com'"
+  },
+  {
+    "instruction": "Perform an LDAP extended operation for password modify",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldappasswd` with the correct flags and arguments\n   2. Key flags: -x, -H, -D, -W\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldappasswd` — ldappasswd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldappasswd -x -H ldap://localhost -D cn=admin,dc=example,dc=com -W -S"
+  },
+  {
+    "instruction": "Compare a DN's attribute in LDAP to verify a value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapcompare` with the correct flags and arguments\n   2. Key flags: -x, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapcompare` — ldapcompare command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapcompare -x -H ldap://localhost 'uid=jdoe,dc=example,dc=com' 'uid:jdoe'"
+  },
+  {
+    "instruction": "Search LDAP with attribute subentry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapsearch` with the correct flags and arguments\n   2. Key flags: -x, -b, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapsearch` — ldapsearch command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapsearch -x -b dc=example,dc=com -E subentries '(objectClass=*)'"
+  },
+  {
+    "instruction": "Search LDAP for operational attributes (creatorsName, createTimestamp)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapsearch` with the correct flags and arguments\n   2. Key flags: -x, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapsearch` — ldapsearch command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapsearch -x -b dc=example,dc=com '(uid=jdoe)' '+'"
+  },
+  {
+    "instruction": "Search LDAP with all user and operational attributes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapsearch` with the correct flags and arguments\n   2. Key flags: -x, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapsearch` — ldapsearch command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapsearch -x -b dc=example,dc=com '(uid=jdoe)' '*' '+'"
+  }
+]

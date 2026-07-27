@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Set ionice for a process group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ionice` with the correct flags and arguments\n   2. Key flags: -c, -p, -c, -P\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ionice` — ionice command execution and management\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nionice -c 1 -p 1234 && ionice -c 1 -P 1234"
+  },
+  {
+    "instruction": "Check ionice class for a PID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ionice` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ionice` — ionice command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nionice -p 1234"
+  },
+  {
+    "instruction": "Use cpulimit on a background process by PID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cpulimit` with the correct flags and arguments\n   2. Key flags: -z, -l, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cpulimit` — cpulimit command execution and management\n   Flag `-l`: long listing format\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncpulimit -z -l 30 -p 1234"
+  },
+  {
+    "instruction": "Use cpulimit on a command and wait for exit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cpulimit` with the correct flags and arguments\n   2. Key flags: -f, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cpulimit` — cpulimit command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncpulimit -f -l 50 make"
+  },
+  {
+    "instruction": "Kill cpulimit process when done",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cpulimit` with the correct flags and arguments\n   2. Key flags: -l, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cpulimit` — cpulimit command execution and management\n   Flag `-l`: long listing format\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncpulimit -l 50 -p 1234; pkill cpulimit"
+  },
+  {
+    "instruction": "Run cpulimit with SIGSTOP/SIGCONT on over-limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cpulimit` with the correct flags and arguments\n   2. Key flags: -l, -b, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cpulimit` — cpulimit command execution and management\n   Flag `-l`: long listing format\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncpulimit -l 20 -b -p 1234"
+  },
+  {
+    "instruction": "Use chrt to set deadline scheduling on existing PID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chrt` with the correct flags and arguments\n   2. Key flags: -d, -p, --sched-runtime, --sched-period\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chrt` — chrt command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchrt -d -p --sched-runtime 5000000 --sched-period 20000000 --sched-deadline 10000000 0 1234"
+  },
+  {
+    "instruction": "Display system cgroup controller list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /sys/fs/cgroup/"
+  },
+  {
+    "instruction": "Check if cgroup v2 is enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: grep cgroup /proc/filesystems\n   2. Apply the configuration and verify with `grep status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep cgroup /proc/filesystems"
+  },
+  {
+    "instruction": "Check cgroup version mounted",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount | grep cgroup"
+  },
+  {
+    "instruction": "Set a systemd-run with full isolation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-run` with the correct flags and arguments\n   2. Key flags: -run, -p, -p, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-run` — systemd-run command execution and management\n   Flag `-p`: create parent directories\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-run -p CPUWeight=200 -p MemoryMax=1G -p TasksMax=50 -p IOWeight=100 -t /usr/bin/myapp"
+  },
+  {
+    "instruction": "Run systemd-run with AllowedCPUs mask",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-run` with the correct flags and arguments\n   2. Key flags: -run, -p, -2, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-run` — systemd-run command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-run -p AllowedCPUs=0-2 -t make -j3"
+  },
+  {
+    "instruction": "Run systemd-run private network namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-run` with the correct flags and arguments\n   2. Key flags: -run, -p, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-run` — systemd-run command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nsystemd-run -p PrivateNetwork=yes -t curl example.com"
+  },
+  {
+    "instruction": "Combine systemd-run with slice assignment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-run` with the correct flags and arguments\n   2. Key flags: -run, --slice, -p, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-run` — systemd-run command execution and management\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-run --slice=highcpu -p CPUWeight=500 -t make"
+  },
+  {
+    "instruction": "Create a systemd slice for resource control",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e '[Slice]\nCPUWeight=200\nMemoryMax=1G' > /etc/systemd/system/highcpu.slice"
+  },
+  {
+    "instruction": "Assign a running PID to a systemd slice",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -property, --runtime, -1234\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl set-property --runtime user-1234.slice CPUWeight=300"
+  },
+  {
+    "instruction": "Use cgcreate with nested cgroup path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cgcreate` with the correct flags and arguments\n   2. Key flags: -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cgcreate` — cgcreate command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncgcreate -g cpu,memory:/parent/child"
+  },
+  {
+    "instruction": "Set multiple cgroup parameters in one command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cgset` with the correct flags and arguments\n   2. Key flags: -r, -r, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cgset` — cgset command execution and management\n   Flag `-r`: recursive operation\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncgset -r cpu.weight=300 -r memory.max=512M -r pids.max=150 parent/child"
+  },
+  {
+    "instruction": "Copy cgroup parameters from one to another",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cgget` with the correct flags and arguments\n   2. Key flags: -g, --copy-from\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cgget` — cgget command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncgget -g cpu,memory:parent/child > /tmp/cgparams && cgset --copy-from /tmp/cgparams parent/child2"
+  },
+  {
+    "instruction": "Use cgdelete with recursive flag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cgdelete` with the correct flags and arguments\n   2. Key flags: -r, -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cgdelete` — cgdelete command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncgdelete -r -g cpu,memory:/parent"
+  },
+  {
+    "instruction": "List all kernel parameters for cgroup memory control",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /sys/fs/cgroup/mygroup/memory.*"
+  },
+  {
+    "instruction": "Check memory.numa_stat for per-node usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/fs/cgroup/mygroup/memory.numa_stat"
+  },
+  {
+    "instruction": "Set memory.zswap.max for zswap limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 10M > /sys/fs/cgroup/mygroup/memory.zswap.max"
+  },
+  {
+    "instruction": "Set memory.reclaim to trigger memory reclaim",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '1M' > /sys/fs/cgroup/mygroup/memory.reclaim"
+  },
+  {
+    "instruction": "Use hugeadm to defrag pool pages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hugeadm` with the correct flags and arguments\n   2. Key flags: --defrag\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hugeadm` — hugeadm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhugeadm --defrag 50"
+  },
+  {
+    "instruction": "Use tuned-adm to get profile description",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via tuned-adm profile_info latency-performance\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `tuned-adm` — tuned-adm command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntuned-adm profile_info latency-performance"
+  }
+]

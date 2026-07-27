@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Create a Btrfs subvolume @data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs subvolume create /mnt/btrfs/@data"
+  },
+  {
+    "instruction": "List all Btrfs subvolumes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs subvolume list /mnt/btrfs"
+  },
+  {
+    "instruction": "Show subvolume details of @data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs subvolume show /mnt/btrfs/@data"
+  },
+  {
+    "instruction": "Delete subvolume @olddata",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs subvolume delete /mnt/btrfs/@olddata"
+  },
+  {
+    "instruction": "Snapshot @data to @snap-20240725",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for btrfs\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: btrfs subvolume snapshot /mnt/btrfs/@data /mnt/btrfs/@snap-20240725\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs subvolume snapshot /mnt/btrfs/@data /mnt/btrfs/@snap-20240725"
+  },
+  {
+    "instruction": "Create read-only snapshot of @data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for btrfs\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: btrfs subvolume snapshot -r /mnt/btrfs/@data /mnt/btrfs/@snap-ro\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs subvolume snapshot -r /mnt/btrfs/@data /mnt/btrfs/@snap-ro"
+  },
+  {
+    "instruction": "Send a snapshot to a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for btrfs\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: btrfs send /mnt/btrfs/@snap-ro > /backup/snap.btrfs\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbtrfs send /mnt/btrfs/@snap-ro > /backup/snap.btrfs"
+  },
+  {
+    "instruction": "Send snapshot incrementally (parent -> child)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for btrfs\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: btrfs send -p /mnt/btrfs/@snap-01 /mnt/btrfs/@snap-02 > /backup/incr.btrfs\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbtrfs send -p /mnt/btrfs/@snap-01 /mnt/btrfs/@snap-02 > /backup/incr.btrfs"
+  },
+  {
+    "instruction": "Receive a Btrfs stream into /mnt/restore",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for btrfs\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: btrfs receive /mnt/restore < /backup/snap.btrfs\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs receive /mnt/restore < /backup/snap.btrfs"
+  },
+  {
+    "instruction": "Start a Btrfs balance on /mnt/btrfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs balance start /mnt/btrfs"
+  },
+  {
+    "instruction": "Balance only metadata chunks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs balance start -m /mnt/btrfs"
+  },
+  {
+    "instruction": "Balance with usage filter (0-99%)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: -dusage\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs balance start -dusage=50 /mnt/btrfs"
+  },
+  {
+    "instruction": "Cancel running balance operation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs balance cancel /mnt/btrfs"
+  },
+  {
+    "instruction": "Pause Btrfs balance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs balance pause /mnt/btrfs"
+  },
+  {
+    "instruction": "Resume Btrfs balance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs balance resume /mnt/btrfs"
+  },
+  {
+    "instruction": "Start a Btrfs scrub on /mnt/btrfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs scrub start /mnt/btrfs"
+  },
+  {
+    "instruction": "Show scrub status on /mnt/btrfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs scrub status /mnt/btrfs"
+  },
+  {
+    "instruction": "Cancel Btrfs scrub",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs scrub cancel /mnt/btrfs"
+  },
+  {
+    "instruction": "Add device /dev/sdf1 to Btrfs filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs device add /dev/sdf1 /mnt/btrfs"
+  },
+  {
+    "instruction": "Remove device /dev/sdf1 from Btrfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs device remove /dev/sdf1 /mnt/btrfs"
+  },
+  {
+    "instruction": "Show Btrfs device stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs device stats /mnt/btrfs"
+  },
+  {
+    "instruction": "Show Btrfs filesystem usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs filesystem usage /mnt/btrfs"
+  },
+  {
+    "instruction": "Show Btrfs df-like space info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs filesystem df /mnt/btrfs"
+  },
+  {
+    "instruction": "Resize Btrfs filesystem to 50GiB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs filesystem resize 50G /mnt/btrfs"
+  },
+  {
+    "instruction": "Defragment a Btrfs directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `btrfs` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs filesystem defragment -r /mnt/btrfs/@data"
+  },
+  {
+    "instruction": "Enable compression globally on Btrfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the btrfs configuration with the required parameters\n   2. Apply the configuration and verify with `btrfs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `btrfs` — Btrfs filesystem management\n   Flag `-r`: recursive operation\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbtrfs filesystem defragment -r -v -czstd /mnt/btrfs/@data"
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Configure PAM to use SHA512 password hashing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sed -i 's/pam_unix.so.*/pam_unix.so sha512 shadow/' /etc/pam.d/common-password\n   2. Apply the configuration and verify with `sed status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsed -i 's/pam_unix.so.*/pam_unix.so sha512 shadow/' /etc/pam.d/common-password"
+  },
+  {
+    "instruction": "Configure PAM to remember last 5 passwords",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'password required pam_pwhistory.so remember=5' >> /etc/pam.d/common-passwo\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'password required pam_pwhistory.so remember=5' >> /etc/pam.d/common-password"
+  },
+  {
+    "instruction": "Set PAM password minimum length to 14 characters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'password requisite pam_pwquality.so retry=3 minlen=14' >> /etc/pam.d/common-password"
+  },
+  {
+    "instruction": "Configure PAM to lock account after 3 failed SSH logins",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo -e 'auth required pam_tally2.so deny=3 unlock_time=600 onerr=succeed\\naccou\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'auth required pam_tally2.so deny=3 unlock_time=600 onerr=succeed\\naccount required pam_tally2.so' >> /etc/pam.d/sshd"
+  },
+  {
+    "instruction": "Configure the nsswitch.conf to check systemd for hosts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'hosts: files mymachines resolve myhostname' > /etc/nsswitch.conf\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'hosts: files mymachines resolve myhostname' > /etc/nsswitch.conf"
+  },
+  {
+    "instruction": "Set nsswitch to use LDAP for user/group lookups",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'passwd: files ldap\\ngroup: files ldap\\nshadow: files ldap' > /etc/nsswitch.conf"
+  },
+  {
+    "instruction": "Set system-wide PATH variable in /etc/environment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'PATH=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\"' > /etc/environment"
+  },
+  {
+    "instruction": "Set system-wide proxy variables in /etc/environment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'http_proxy=\"http://proxy.example.com:8080\"\\nhttps_proxy=\"http://proxy.example.com:8080\"' > /etc/environment"
+  },
+  {
+    "instruction": "Set default umask for all users via profile.d",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'umask 027' > /etc/profile.d/umask.sh && chmod +x /etc/profile.d/umask.sh"
+  },
+  {
+    "instruction": "Set TMOUT for automatic logout of idle users",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'export TMOUT=900' > /etc/profile.d/timeout.sh && chmod +x /etc/profile.d/timeout.sh"
+  },
+  {
+    "instruction": "Set system-wide history settings in bash.bashrc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'HISTTIMEFORMAT=\"%F %T \"\\nHISTSIZE=10000\\nHISTFILESIZE=20000' >> /etc/bash.bashrc"
+  },
+  {
+    "instruction": "Populate /etc/skel with default config files for new users",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e, -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'alias ll=\"ls -la\"\\nexport EDITOR=vim\\numask 022' > /etc/skel/.bashrc"
+  },
+  {
+    "instruction": "Set hard and soft limits for a user in limits.conf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `john` — john command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'john soft nofile 4096\\njohn hard nofile 16384\\njohn soft nproc 1024\\njohn hard nproc 2048' >> /etc/security/limits.conf"
+  },
+  {
+    "instruction": "Set limits for a group in limits.d directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e '@developers soft nofile 8192\\n@developers hard nofile 32768' > /etc/security/limits.d/developers.conf"
+  },
+  {
+    "instruction": "Set core dump limits for all users",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e, -disable\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e '* soft core 0\\n* hard core 0' > /etc/security/limits.d/core-disable.conf"
+  },
+  {
+    "instruction": "Check current ulimit values running process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -u, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat /proc/$(pgrep -u root | head -1)/limits 2>/dev/null || echo 'Process not found'"
+  },
+  {
+    "instruction": "Set ulimit for the current shell session",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ulimit` with the correct flags and arguments\n   2. Key flags: -n, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ulimit` — ulimit command execution and management\n   Flag `-n`: dry-run mode\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nulimit -n 65536 && ulimit -u 4096"
+  },
+  {
+    "instruction": "Create /etc/nologin to prevent non-root logins",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'System is down for maintenance. Please try again later.' > /etc/nologin"
+  },
+  {
+    "instruction": "Set the pre-login message in /etc/issue",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'Debian GNU/Linux 12 \\\\n \\\\l\\n\\nAuthorized use only.' > /etc/issue"
+  },
+  {
+    "instruction": "Set the SSH banner message in /etc/issue.net",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'Authorized access only. All activity is monitored.' > /etc/issue.net"
+  },
+  {
+    "instruction": "Set the post-login message of the day",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'Welcome to $(hostname -f). All commands are logged.' > /etc/motd"
+  }
+]

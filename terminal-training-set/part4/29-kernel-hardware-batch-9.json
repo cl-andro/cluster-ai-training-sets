@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Update initramfs for current kernel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `update-initramfs` with the correct flags and arguments\n   2. Key flags: -initramfs, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `update-initramfs` — update-initramfs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-initramfs -u"
+  },
+  {
+    "instruction": "Update initramfs for all kernels",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `update-initramfs` with the correct flags and arguments\n   2. Key flags: -initramfs, -u, -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `update-initramfs` — update-initramfs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-initramfs -u -k all"
+  },
+  {
+    "instruction": "Create initramfs for kernel 6.1.0-17-amd64",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `update-initramfs` with the correct flags and arguments\n   2. Key flags: -initramfs, -c, -k, -17\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `update-initramfs` — update-initramfs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-initramfs -c -k 6.1.0-17-amd64"
+  },
+  {
+    "instruction": "Delete initramfs for a kernel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `update-initramfs` with the correct flags and arguments\n   2. Key flags: -initramfs, -d, -k, -17\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `update-initramfs` — update-initramfs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-initramfs -d -k 6.1.0-17-amd64"
+  },
+  {
+    "instruction": "Backup then update initramfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for update-initramfs\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: update-initramfs -b -u -k 6.1.0-17-amd64\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `update-initramfs` — update-initramfs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nupdate-initramfs -b -u -k 6.1.0-17-amd64"
+  },
+  {
+    "instruction": "Create initramfs with mkinitramfs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkinitramfs` with the correct flags and arguments\n   2. Key flags: -o, -6, -17, -amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkinitramfs` — mkinitramfs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkinitramfs -o /boot/initrd.img-6.1.0-17-amd64 6.1.0-17-amd64"
+  },
+  {
+    "instruction": "Create compressed initramfs with lz4",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkinitramfs` with the correct flags and arguments\n   2. Key flags: -c, -o, -custom, -17\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkinitramfs` — mkinitramfs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkinitramfs -c lz4 -o /boot/initrd.img-custom 6.1.0-17-amd64"
+  },
+  {
+    "instruction": "Set up a zram device of 2GiB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `modprobe` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `modprobe` — modprobe command execution and management\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmodprobe zram && echo 2G > /sys/block/zram0/disksize && mkswap /dev/zram0 && swapon -p 100 /dev/zram0"
+  },
+  {
+    "instruction": "Configure zram with lz4 compression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo lz4 > /sys/block/zram0/comp_algorithm\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho lz4 > /sys/block/zram0/comp_algorithm"
+  },
+  {
+    "instruction": "Reset zram device to free memory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swapoff` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swapoff` — swapoff command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nswapoff /dev/zram0 && echo 1 > /sys/block/zram0/reset"
+  },
+  {
+    "instruction": "Show zram stats and compression ratios",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/block/zram0/mm_stat"
+  },
+  {
+    "instruction": "Enable zswap (compressed swap cache)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo lz4 > /sys/module/zswap/parameters/compressor && echo 20 > /sys/module/zswa\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho lz4 > /sys/module/zswap/parameters/compressor && echo 20 > /sys/module/zswap/parameters/max_pool_percent"
+  },
+  {
+    "instruction": "Check zswap current usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Flag `-r`: recursive operation\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngrep -r . /sys/kernel/debug/zswap/ 2>/dev/null || cat /sys/kernel/debug/zswap/stored_pages"
+  },
+  {
+    "instruction": "Enable Kernel Same-page Merging (KSM)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 1 > /sys/kernel/mm/ksm/run\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1 > /sys/kernel/mm/ksm/run"
+  },
+  {
+    "instruction": "Set KSM sleep time (milliseconds)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 100 > /sys/kernel/mm/ksm/sleep_millisecs"
+  },
+  {
+    "instruction": "Set KSM merge across nodes to 1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1 > /sys/kernel/mm/ksm/merge_across_nodes"
+  },
+  {
+    "instruction": "Show KSM statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/mm/ksm/pages_shared"
+  },
+  {
+    "instruction": "Allocate 512 hugepages dynamically",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -2048kB\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 512 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages"
+  },
+  {
+    "instruction": "Allocate 1GiB huge pages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -1048576kB\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 4 > /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages"
+  },
+  {
+    "instruction": "Show hugepage allocation info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/meminfo | grep -i huge"
+  },
+  {
+    "instruction": "Make zram device persistent via /etc/initramfs-tools",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -tools\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'zram' >> /etc/initramfs-tools/modules"
+  },
+  {
+    "instruction": "Configure zram with multiple devices",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: modprobe zram num_devices=4\n   2. Apply the configuration and verify with `modprobe status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `modprobe` — modprobe command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmodprobe zram num_devices=4"
+  },
+  {
+    "instruction": "Check zswap compressor parameter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/module/zswap/parameters/compressor"
+  },
+  {
+    "instruction": "Check KSM full scans count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/mm/ksm/full_scans"
+  },
+  {
+    "instruction": "Set max hugepages at boot via sysctl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -hugepages\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'vm.nr_hugepages=1024' > /etc/sysctl.d/99-hugepages.conf"
+  }
+]

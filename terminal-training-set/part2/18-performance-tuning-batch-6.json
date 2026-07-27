@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Use trace-cmd to trace kernel scheduling events",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `trace-cmd` with the correct flags and arguments\n   2. Key flags: -cmd, -e, -e, -cmd\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `trace-cmd` — trace-cmd command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrace-cmd record -e sched_switch -e sched_wakeup sleep 10 && trace-cmd report | head -30"
+  },
+  {
+    "instruction": "Use kernelshark to visualize trace data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y kernelshark && kernelshark trace.dat"
+  },
+  {
+    "instruction": "Use ftrace directly to trace function calls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -100\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho function > /sys/kernel/tracing/current_tracer && echo 1 > /sys/kernel/tracing/tracing_on && sleep 1 && head -100 /sys/kernel/tracing/trace"
+  },
+  {
+    "instruction": "Trace kernel function graph with ftrace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -50\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho function_graph > /sys/kernel/tracing/current_tracer && echo do_sys_open > /sys/kernel/tracing/set_ftrace_filter && echo 1 > /sys/kernel/tracing/tracing_on && sleep 1 && head -50 /sys/kernel/tracing/trace"
+  },
+  {
+    "instruction": "Use eBPF/bcc tools to trace opensnoop",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y, -tools, -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y bpfcc-tools && opensnoop-bpfcc"
+  },
+  {
+    "instruction": "Trace file read latency with filetop",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `filetop-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc, -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `filetop-bpfcc` — filetop-bpfcc command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfiletop-bpfcc -C"
+  },
+  {
+    "instruction": "Trace writeback dirty pages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drsnoop-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drsnoop-bpfcc` — drsnoop-bpfcc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrsnoop-bpfcc"
+  },
+  {
+    "instruction": "Check TCP retransmit rate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tcpretrans-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tcpretrans-bpfcc` — tcpretrans-bpfcc command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntcpretrans-bpfcc"
+  },
+  {
+    "instruction": "Check TCP connection rate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tcpconnect-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tcpconnect-bpfcc` — tcpconnect-bpfcc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntcpconnect-bpfcc"
+  },
+  {
+    "instruction": "Check TCP connection accept backlog",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tcpsynbl-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tcpsynbl-bpfcc` — tcpsynbl-bpfcc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntcpsynbl-bpfcc"
+  },
+  {
+    "instruction": "Check run queue latency (scheduler)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `runqlat-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `runqlat-bpfcc` — runqlat-bpfcc command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrunqlat-bpfcc"
+  },
+  {
+    "instruction": "Check CPU usage per task",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cpudist-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cpudist-bpfcc` — cpudist-bpfcc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncpudist-bpfcc"
+  },
+  {
+    "instruction": "Profile sleep/wakeup chains",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wakeuptime-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wakeuptime-bpfcc` — wakeuptime-bpfcc command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwakeuptime-bpfcc"
+  },
+  {
+    "instruction": "Monitor block device I/O with biolatency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for biolatency-bpfcc\n   2. Build the command chain with error handling\n   3. Execute: biolatency-bpfcc\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `biolatency-bpfcc` — biolatency-bpfcc command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbiolatency-bpfcc"
+  },
+  {
+    "instruction": "Monitor block device I/O size distribution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for biosnoop-bpfcc\n   2. Build the command chain with error handling\n   3. Execute: biosnoop-bpfcc\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `biosnoop-bpfcc` — biosnoop-bpfcc command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbiosnoop-bpfcc"
+  },
+  {
+    "instruction": "Check page cache hit rate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cachestat-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cachestat-bpfcc` — cachestat-bpfcc command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncachestat-bpfcc"
+  },
+  {
+    "instruction": "Check top kernel functions by CPU usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `funccount-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `funccount-bpfcc` — funccount-bpfcc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfunccount-bpfcc 'vfs_*'"
+  },
+  {
+    "instruction": "Profile which files are being opened",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `filelife-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `filelife-bpfcc` — filelife-bpfcc command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfilelife-bpfcc"
+  },
+  {
+    "instruction": "Monitor memory page faults",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for trace-bpfcc\n   2. Build the command chain with error handling\n   3. Execute: trace-bpfcc 'mm_page_alloc'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `trace-bpfcc` — trace-bpfcc command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrace-bpfcc 'mm_page_alloc'"
+  },
+  {
+    "instruction": "Check swap activity with eBPF",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swapin-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swapin-bpfcc` — swapin-bpfcc command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswapin-bpfcc"
+  },
+  {
+    "instruction": "Check signals being sent",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sigmon-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sigmon-bpfcc` — sigmon-bpfcc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsigmon-bpfcc"
+  },
+  {
+    "instruction": "Use perf to trace scheduler wakeups",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perf` with the correct flags and arguments\n   2. Key flags: -e, -a, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perf` — performance monitoring and profiling\n   Flag `-a`: include hidden/all entries\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nperf record -e sched:sched_wakeup -a sleep 5 && perf script | head -20"
+  },
+  {
+    "instruction": "Use perf to trace block I/O",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perf` with the correct flags and arguments\n   2. Key flags: -e, -a, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perf` — performance monitoring and profiling\n   Flag `-a`: include hidden/all entries\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nperf record -e block:block_rq_complete -a sleep 5 && perf script | head -20"
+  },
+  {
+    "instruction": "Use perf to trace syscalls for a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perf` with the correct flags and arguments\n   2. Key flags: -e, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perf` — performance monitoring and profiling\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nperf record -e syscalls:sys_enter_openat -p 1234 sleep 10 && perf script"
+  },
+  {
+    "instruction": "Use perf top for real-time kernel profiling",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perf` with the correct flags and arguments\n   2. Key flags: -K\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perf` — performance monitoring and profiling\n   Supporting tool: `top` — top command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nperf top -K"
+  }
+]

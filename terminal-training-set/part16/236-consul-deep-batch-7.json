@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to create a Consul ServiceSplitter on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -f, -v1, -v2\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f - <<< 'apiVersion: consul.hashicorp.com/v1alpha1\nkind: ServiceSplitter\nmetadata:\n  name: web\nspec:\n  splits:\n  - service: web-v1\n    weight: 90\n  - service: web-v2\n    weight: 10'"
+  },
+  {
+    "instruction": "How to create a Consul ServiceResolver on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -f, -v1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f - <<< 'apiVersion: consul.hashicorp.com/v1alpha1\nkind: ServiceResolver\nmetadata:\n  name: web\nspec:\n  redirect:\n    service: web-v1\n    datacenter: dc2'"
+  },
+  {
+    "instruction": "How to list all Consul CRDs on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get crds -l app.kubernetes.io/name=consul"
+  },
+  {
+    "instruction": "How to check the Consul server status on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl exec -n consul statefulset/consul-server -- consul members"
+  },
+  {
+    "instruction": "How to exec into a Consul server pod on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -it, -server, -0\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl exec -n consul -it consul-server-0 -- /bin/sh"
+  },
+  {
+    "instruction": "How to run Consul CLI from a Kubernetes pod",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -server, -0\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl exec -n consul consul-server-0 -- consul catalog services"
+  },
+  {
+    "instruction": "How to port-forward Consul UI on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -forward, -n, -ui\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl port-forward -n consul service/consul-ui 8500:80"
+  },
+  {
+    "instruction": "How to get the Consul UI URL on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -ui, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get service -n consul consul-ui -o jsonpath='{.status.loadBalancer.ingress[0].ip}'"
+  },
+  {
+    "instruction": "How to upgrade Consul on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: --set\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm upgrade consul hashicorp/consul --set global.image=hashicorp/consul:1.17.0"
+  },
+  {
+    "instruction": "How to uninstall Consul from Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm uninstall consul -n consul"
+  },
+  {
+    "instruction": "How to backup Consul data on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for kubectl\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: kubectl exec consul-server-0 -n consul -- consul snapshot save /tmp/backup.snap \n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl exec consul-server-0 -n consul -- consul snapshot save /tmp/backup.snap && kubectl cp consul/consul-server-0:/tmp/backup.snap ./backup.snap"
+  },
+  {
+    "instruction": "How to restore Consul data on Kubernetes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for kubectl\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: kubectl cp ./backup.snap consul/consul-server-0:/tmp/backup.snap && kubectl exec\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl cp ./backup.snap consul/consul-server-0:/tmp/backup.snap && kubectl exec consul-server-0 -n consul -- consul snapshot restore /tmp/backup.snap"
+  },
+  {
+    "instruction": "How to check the Consul service mesh statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -server, -0\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl exec -n consul consul-server-0 -- consul intention list"
+  },
+  {
+    "instruction": "How to list all Consul services in the mesh",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -server, -0, -tags\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl exec -n consul consul-server-0 -- consul catalog services -tags"
+  },
+  {
+    "instruction": "How to view Consul service mesh traffic flow",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -l, -injector, --tail\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl logs -n consul -l component=connect-injector --tail=50"
+  },
+  {
+    "instruction": "How to use Consul Envoy sidecar with custom configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `consul` with the correct flags and arguments\n   2. Key flags: -sidecar, -for, -admin, -bind\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `consul` — consul command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconsul connect envoy -sidecar-for=web -admin-bind=127.0.0.1:19001 -envoy-binary=/usr/local/bin/envoy"
+  },
+  {
+    "instruction": "How to check the Envoy configuration for a Consul sidecar",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `consul` with the correct flags and arguments\n   2. Key flags: -sidecar, -for, -admin, -bind\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `consul` — consul command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconsul connect envoy -sidecar-for=web -admin-bind=127.0.0.1:19000 -dry-run"
+  },
+  {
+    "instruction": "How to read the Envoy admin endpoint for a Consul sidecar",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://127.0.0.1:19000/config_dump"
+  },
+  {
+    "instruction": "How to check Consul Envoy sidecar stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://127.0.0.1:19000/stats"
+  },
+  {
+    "instruction": "How to check Consul Envoy sidecar clusters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://127.0.0.1:19000/clusters"
+  },
+  {
+    "instruction": "How to check Consul Envoy sidecar listeners",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://127.0.0.1:19000/listeners"
+  },
+  {
+    "instruction": "How to configure Consul Envoy sidecar concurrency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: consul connect envoy -sidecar-for=web -- -l debug --concurrency 2\n   2. Apply the configuration and verify with `consul status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `consul` — consul command execution and management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconsul connect envoy -sidecar-for=web -- -l debug --concurrency 2"
+  },
+  {
+    "instruction": "How to check Consul's internal service mesh CA info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `consul` with the correct flags and arguments\n   2. Key flags: -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `consul` — consul command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconsul connect ca get-config"
+  },
+  {
+    "instruction": "How to configure Consul Connect CA provider",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: consul connect ca set-config -config='{\"provider\":\"aws-pca\",\"config\":{\"region\":\"\n   2. Apply the configuration and verify with `consul status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `consul` — consul command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconsul connect ca set-config -config='{\"provider\":\"aws-pca\",\"config\":{\"region\":\"us-east-1\"}}'"
+  },
+  {
+    "instruction": "How to list the Consul Connect CA roots",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `consul` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `consul` — consul command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconsul connect ca roots"
+  }
+]

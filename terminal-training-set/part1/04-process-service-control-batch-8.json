@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Trace kernel-level events with bpftrace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_open { printf(\"%s %s\\n\", comm, str(args->filename)); }'"
+  },
+  {
+    "instruction": "Show new processes in real-time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_execve { printf(\"%s -> %s\\n\", comm, str(args->filename)); }'"
+  },
+  {
+    "instruction": "Track file opens system-wide",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `opensnoop-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `opensnoop-bpfcc` — opensnoop-bpfcc command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nopensnoop-bpfcc"
+  },
+  {
+    "instruction": "Monitor TCP connections with bpftrace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for bpftrace\n   2. Build the command chain with error handling\n   3. Execute: bpftrace -e 'kprobe:tcp_connect { printf(\"%s -> %s:%d\\n\", comm, ntop2(args->sk->\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'kprobe:tcp_connect { printf(\"%s -> %s:%d\\n\", comm, ntop2(args->sk->__sk_common.skc_daddr), args->sk->__sk_common.skc_dport); }' 2>/dev/null || tcpconnect-bpfcc"
+  },
+  {
+    "instruction": "Show disk I/O latency distribution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `biolatency-bpfcc` with the correct flags and arguments\n   2. Key flags: -bpfcc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `biolatency-bpfcc` — biolatency-bpfcc command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbiolatency-bpfcc"
+  },
+  {
+    "instruction": "Monitor slow file operations (slower than 10ms)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for biosnoop-bpfcc\n   2. Build the command chain with error handling\n   3. Execute: biosnoop-bpfcc\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `biosnoop-bpfcc` — biosnoop-bpfcc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbiosnoop-bpfcc"
+  },
+  {
+    "instruction": "Show CPU sampling flame graph data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perf` with the correct flags and arguments\n   2. Key flags: -F, -a, -g, -perf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perf` — performance monitoring and profiling\n   Flag `-a`: include hidden/all entries\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nperf record -F 99 -a -g -- sleep 30 && perf script | stackcollapse-perf.pl | flamegraph.pl > flame.svg"
+  },
+  {
+    "instruction": "Trace memory allocations with ltrace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ltrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ltrace` — ltrace command execution and management\n   Supporting tool: `free` — free command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nltrace -e malloc+free ./myapp"
+  },
+  {
+    "instruction": "Trace library calls of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ltrace` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ltrace` — ltrace command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nltrace -p 1234"
+  },
+  {
+    "instruction": "Trace system calls and show timestamps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -t, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-t`: sort by time\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -t -p 1234"
+  },
+  {
+    "instruction": "Profile CPU usage with gprof (needs -pg compiled)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gprof` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gprof` — gprof command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngprof ./myapp gmon.out"
+  },
+  {
+    "instruction": "Track process scheduling latency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cyclictest` with the correct flags and arguments\n   2. Key flags: -m, -n, -p, -h\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cyclictest` — cyclictest command execution and management\n   Flag `-n`: dry-run mode\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncyclictest -m -n -p 99 -h 100 -q -l 100000"
+  },
+  {
+    "instruction": "Dump process stack trace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `stack` — stack command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/stack"
+  },
+  {
+    "instruction": "Show kernel message buffer for hardware errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: -iE, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg | grep -iE 'error|fail|warn' | tail -20"
+  },
+  {
+    "instruction": "Follow kernel messages in real time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg -w"
+  },
+  {
+    "instruction": "Show kernel ring buffer with human-readable timestamps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: -T, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg -T | tail -30"
+  },
+  {
+    "instruction": "Clear kernel ring buffer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg -c"
+  },
+  {
+    "instruction": "Show kernel message for USB events",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: -i, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg | grep -i usb | tail -10"
+  },
+  {
+    "instruction": "Show kernel OOM killer messages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg | grep -i oom"
+  },
+  {
+    "instruction": "Check if kdump crash kernel is configured",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cat /proc/cmdline | grep crashkernel\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/cmdline | grep crashkernel"
+  },
+  {
+    "instruction": "Show available kernel crash dumps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nls /var/crash/ 2>/dev/null || echo no crash dumps"
+  },
+  {
+    "instruction": "Show kernel module parameters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systool` with the correct flags and arguments\n   2. Key flags: -vm, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systool` — systool command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystool -vm nvidia | head -20"
+  },
+  {
+    "instruction": "List all loaded kernel modules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lsmod` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lsmod` — lsmod command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlsmod"
+  },
+  {
+    "instruction": "Show module information for a kernel module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `modinfo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `modinfo` — modinfo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmodinfo nvidia"
+  },
+  {
+    "instruction": "Unload a kernel module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `modprobe` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `modprobe` — modprobe command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmodprobe -r nvidia"
+  }
+]

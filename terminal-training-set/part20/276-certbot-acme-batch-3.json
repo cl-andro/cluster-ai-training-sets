@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to obtain a cert with nginx plugin and non-interactive mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --nginx, -d, --non-interactive, --agree-tos\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot --nginx -d example.com --non-interactive --agree-tos --email admin@example.com"
+  },
+  {
+    "instruction": "How to obtain a cert with apache plugin and non-interactive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --apache, -d, --non-interactive, --agree-tos\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot --apache -d example.com --non-interactive --agree-tos --email admin@example.com"
+  },
+  {
+    "instruction": "How to force renewal of a cert before expiry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --force-renewal, --cert-name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot renew --force-renewal --cert-name example.com"
+  },
+  {
+    "instruction": "How to renew all certs and keep the same key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --keep-until-expiring\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot renew --keep-until-expiring"
+  },
+  {
+    "instruction": "How to renew with a specific hook for Docker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --deploy-hook, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Supporting tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot renew --deploy-hook 'docker exec nginx nginx -s reload'"
+  },
+  {
+    "instruction": "How to renew and restart services in a specific order",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --deploy-hook\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot renew --deploy-hook 'systemctl reload nginx && systemctl reload postfix'"
+  },
+  {
+    "instruction": "How to check if renewal is due soon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --dry-run, --quiet\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Flag `--dry-run`: simulate without making changes\n   Flag `--quiet`: suppress non-essential output\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot renew --dry-run --quiet"
+  },
+  {
+    "instruction": "How to revoke a cert by its key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --cert-path, --reason\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot revoke --cert-path /etc/letsencrypt/live/example.com/cert.pem --reason keycompromise"
+  },
+  {
+    "instruction": "How to revoke a cert by reason",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --cert-name, --reason\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot revoke --cert-name example.com --reason cessationofoperation"
+  },
+  {
+    "instruction": "How to revoke a cert without deleting its files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --cert-name, --no-delete-after-revoke\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot revoke --cert-name example.com --no-delete-after-revoke"
+  },
+  {
+    "instruction": "How to revoke a cert and then delete it",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --cert-name, --delete-after-revoke\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot revoke --cert-name example.com --delete-after-revoke"
+  },
+  {
+    "instruction": "How to configure certbot with a custom config directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the certbot configuration with the required parameters\n   2. Apply the configuration and verify with `certbot status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot certonly --standalone -d example.com --config-dir /etc/letsencrypt"
+  },
+  {
+    "instruction": "How to configure certbot with a custom work directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the certbot configuration with the required parameters\n   2. Apply the configuration and verify with `certbot status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot certonly --standalone -d example.com --work-dir /var/lib/letsencrypt"
+  },
+  {
+    "instruction": "How to configure certbot with a custom logs directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the certbot configuration with the required parameters\n   2. Apply the configuration and verify with `certbot status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot certonly --standalone -d example.com --logs-dir /var/log/letsencrypt"
+  },
+  {
+    "instruction": "How to change the certbot configuration directories",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --standalone, -d, --config-dir, --work-dir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot certonly --standalone -d example.com --config-dir /data/letsencrypt --work-dir /data/letsencrypt/work --logs-dir /data/letsencrypt/logs"
+  },
+  {
+    "instruction": "How to check the size of the pending renewal",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --dry-run, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Flag `--dry-run`: simulate without making changes\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot renew --dry-run | grep -c 'Cert not yet due'"
+  },
+  {
+    "instruction": "How to list all certificates with their expiration dates",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot certificates | grep 'Expiry Date'"
+  },
+  {
+    "instruction": "How to check the remaining days before expiration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -enddate, -noout, -in\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl x509 -enddate -noout -in /etc/letsencrypt/live/example.com/cert.pem"
+  },
+  {
+    "instruction": "How to get the full certificate chain path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /etc/letsencrypt/live/example.com/"
+  },
+  {
+    "instruction": "How to view the full certificate chain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/letsencrypt/live/example.com/fullchain.pem"
+  },
+  {
+    "instruction": "How to view the private key path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /etc/letsencrypt/live/example.com/privkey.pem"
+  },
+  {
+    "instruction": "How to backup a certbot certificate and key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for tar\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: tar czf example.com-le-backup.tar.gz /etc/letsencrypt/live/example.com/ /etc/let\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar czf example.com-le-backup.tar.gz /etc/letsencrypt/live/example.com/ /etc/letsencrypt/archive/example.com/"
+  },
+  {
+    "instruction": "How to restore a certbot backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for tar\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: tar xzf example.com-le-backup.tar.gz -C /\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar xzf example.com-le-backup.tar.gz -C /"
+  },
+  {
+    "instruction": "How to transfer a certificate to another server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsync` with the correct flags and arguments\n   2. Key flags: -avz\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync -avz /etc/letsencrypt/live/example.com/ user@other:/etc/letsencrypt/live/example.com/"
+  },
+  {
+    "instruction": "How to manually trigger certbot renewal",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `certbot` with the correct flags and arguments\n   2. Key flags: --quiet\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `certbot` — Let's Encrypt certificate management\n   Flag `--quiet`: suppress non-essential output\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ncertbot renew --quiet"
+  }
+]

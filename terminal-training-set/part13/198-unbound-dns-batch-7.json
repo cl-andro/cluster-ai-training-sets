@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to set up Unbound for Pi-hole integration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -not, -query, -localhost\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  do-not-query-localhost: no\n  interface: 127.0.0.1\n  port: 5335' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to enable extended DNS errors in Unbound",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the unbound configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  extended-statistics: yes' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to log all queries to a separate file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -queries\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'logfile: \"/var/log/unbound/queries.log\"\n  log-queries: yes' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to configure Unbound to use system root certificates",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the unbound configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  tls-cert-bundle: \"/etc/ssl/certs/ca-certificates.crt\"' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to check DNSSEC key cache size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unbound-control` with the correct flags and arguments\n   2. Key flags: -control\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unbound-control` — unbound-control command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunbound-control stats | grep key.cache"
+  },
+  {
+    "instruction": "How to set up Unbound in container environment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  chroot: \"\"\n  username: \"\"' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to set the DNSSEC trust anchor for a domain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unbound-control` with the correct flags and arguments\n   2. Key flags: -control\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unbound-control` — unbound-control command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunbound-control insecure_add example.com"
+  },
+  {
+    "instruction": "How to mark a domain as insecure in Unbound",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: echo '  domain-insecure: \"example.com\"' >> /etc/unbound/unbound.conf\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  domain-insecure: \"example.com\"' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to test Unbound's DNSSEC with known break",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dig` with the correct flags and arguments\n   2. Key flags: -failed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dig` — dig command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndig @127.0.0.1 www.dnssec-failed.org"
+  },
+  {
+    "instruction": "How to set up DNSSEC on a LAN-only Unbound",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -permissive, -mode\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  val-permissive-mode: yes' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to enable val-permissive-mode in Unbound",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the unbound configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  val-permissive-mode: yes' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to use unbound-control to reconnect to upstream",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unbound-control` with the correct flags and arguments\n   2. Key flags: -control\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unbound-control` — unbound-control command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunbound-control forward_add . 8.8.8.8"
+  },
+  {
+    "instruction": "How to remove a forward zone in runtime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unbound-control` with the correct flags and arguments\n   2. Key flags: -control\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unbound-control` — unbound-control command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunbound-control forward_remove ."
+  },
+  {
+    "instruction": "How to add a forwarding rule at runtime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unbound-control` with the correct flags and arguments\n   2. Key flags: -control\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unbound-control` — unbound-control command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunbound-control forward_add +i example.com 192.168.1.1"
+  },
+  {
+    "instruction": "How to remove a stub zone at runtime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unbound-control` with the correct flags and arguments\n   2. Key flags: -control\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unbound-control` — unbound-control command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunbound-control stub_remove example.com"
+  },
+  {
+    "instruction": "How to add a stub zone at runtime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unbound-control` with the correct flags and arguments\n   2. Key flags: -control\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unbound-control` — unbound-control command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunbound-control stub_add example.com 192.168.1.1"
+  },
+  {
+    "instruction": "How to change Unbound verbosity at runtime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unbound-control` with the correct flags and arguments\n   2. Key flags: -control\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unbound-control` — unbound-control command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunbound-control verbosity 3"
+  },
+  {
+    "instruction": "How to enable stats logging periodically",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the unbound configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  statistics-interval: 3600' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to set statistics-cumulative in Unbound",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -cumulative\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  statistics-cumulative: yes' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to check total bytes served by Unbound",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unbound-control` with the correct flags and arguments\n   2. Key flags: -control\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unbound-control` — unbound-control command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunbound-control stats | grep total.bytes"
+  },
+  {
+    "instruction": "How to configure Unbound for dynamic IP detection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the unbound configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  interface-automatic: yes' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to configure Unbound to log memory usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the unbound configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  val-log-level: 2' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to configure unbound to use TCP only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the unbound configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '  do-udp: no\n  tcp-upstream: yes' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to set up DNSTAP in Unbound for query analysis",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -resolver, -query, -messages, -forwarder\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `unbound` — DNS resolver\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'dnstap:\n  log-resolver-query-messages: yes\n  log-forwarder-query-messages: yes' >> /etc/unbound/unbound.conf"
+  },
+  {
+    "instruction": "How to generate a self-signed certificate for Unbound",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -x509, -nodes, -newkey, -keyout\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Supporting tool: `unbound` — DNS resolver\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/unbound/unbound_server.key -out /etc/unbound/unbound_server.pem -days 3650 -subj '/CN=unbound'"
+  }
+]

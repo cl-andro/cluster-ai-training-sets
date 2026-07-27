@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Check NUMA node memory allocation for a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numastat` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numastat` — numastat command execution and management\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumastat -p 1234"
+  },
+  {
+    "instruction": "Check memory usage of a process (RSS/HWM)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: -o, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps -o pid,rss,vsz,%mem,cmd -p 1234"
+  },
+  {
+    "instruction": "Check top memory consumers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: --sort, -15\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nps aux --sort=-%mem | awk 'NR>1{print $4 \"% \" $11}' | head -15"
+  },
+  {
+    "instruction": "Check virtual memory statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vmstat` with the correct flags and arguments\n   2. Key flags: -5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vmstat` — vmstat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvmstat 1 5 | tail -5"
+  },
+  {
+    "instruction": "Check page faults per process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: -o, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps -o min_flt,maj_flt,cmd -p 1234"
+  },
+  {
+    "instruction": "Check TLB (Translation Lookaside Buffer) stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/status | grep -E 'VmPin|VmRSS|VmPTE'"
+  },
+  {
+    "instruction": "Check memory fragmentation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/buddyinfo | head -5"
+  },
+  {
+    "instruction": "Check slab cache usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/slabinfo | head -20"
+  },
+  {
+    "instruction": "Check zoneinfo for memory allocation details",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -A\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/zoneinfo | grep -A 5 'Node 0, zone'"
+  },
+  {
+    "instruction": "Show memory mapping of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pmap` with the correct flags and arguments\n   2. Key flags: -x, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pmap` — pmap command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npmap -x 1234 | head -20"
+  },
+  {
+    "instruction": "Check the largest memory mappings of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pmap` with the correct flags and arguments\n   2. Key flags: -x, -n, -k3, -rh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pmap` — pmap command execution and management\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npmap -x 1234 | tail -n +3 | sort -k3 -rh | head -10"
+  },
+  {
+    "instruction": "Check memory reclaim behavior",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `vmstat` — vmstat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/vmstat | grep -E 'pgsteal|pgscan'"
+  },
+  {
+    "instruction": "Check kernel same-page merging (KSM) usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/mm/ksm/pages_shared"
+  },
+  {
+    "instruction": "Enable KSM for memory deduplication",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 1 > /sys/kernel/mm/ksm/run && echo 100 > /sys/kernel/mm/ksm/sleep_millisecs\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1 > /sys/kernel/mm/ksm/run && echo 100 > /sys/kernel/mm/ksm/sleep_millisecs"
+  },
+  {
+    "instruction": "Check kernel SLUB allocator debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using cat\n   2. Apply corrective actions: cat /proc/sys/vm/slab_debug\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/vm/slab_debug"
+  },
+  {
+    "instruction": "Tune dirty page ratios for write-heavy workloads",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via sysctl -w vm.dirty_ratio=40 && sysctl -w vm.dirty_background_ratio=10\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w vm.dirty_ratio=40 && sysctl -w vm.dirty_background_ratio=10"
+  },
+  {
+    "instruction": "Tune dirty page expiration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via sysctl -w vm.dirty_expire_centisecs=3000 && sysctl -w vm.dirty_writeback_centise\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w vm.dirty_expire_centisecs=3000 && sysctl -w vm.dirty_writeback_centisecs=500"
+  },
+  {
+    "instruction": "Set overcommit memory policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w, -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w vm.overcommit_memory=1 && sysctl -w vm.overcommit_ratio=80"
+  },
+  {
+    "instruction": "Disable OOM killer for a critical process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -17\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -17 > /proc/1234/oom_adj"
+  },
+  {
+    "instruction": "Check OOM killer score for a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/oom_score"
+  },
+  {
+    "instruction": "Check network socket memory usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/net/sockstat"
+  },
+  {
+    "instruction": "Check network buffer usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl net.ipv4.tcp_mem"
+  },
+  {
+    "instruction": "Tune network buffer size for high bandwidth",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via sysctl -w net.core.rmem_max=16777216 && sysctl -w net.core.wmem_max=16777216 && \n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.core.rmem_max=16777216 && sysctl -w net.core.wmem_max=16777216 && sysctl -w net.ipv4.tcp_rmem='4096 87380 16777216' && sysctl -w net.ipv4.tcp_wmem='4096 65536 16777216'"
+  },
+  {
+    "instruction": "Enable TCP window scaling",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl -w net.ipv4.tcp_window_scaling=1\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.ipv4.tcp_window_scaling=1"
+  },
+  {
+    "instruction": "Enable TCP selective ACK",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl -w net.ipv4.tcp_sack=1\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.ipv4.tcp_sack=1"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Upload a file via transfer.sh with curl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: --upload-file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl --upload-file myfile.zip https://transfer.sh/myfile.zip"
+  },
+  {
+    "instruction": "Download a file from transfer.sh",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl https://transfer.sh/abc123/myfile.zip -o myfile.zip"
+  },
+  {
+    "instruction": "Upload with transfer.sh and get direct link",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, --upload-file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s --upload-file backup.tar https://transfer.sh/backup.tar | tee /dev/null"
+  },
+  {
+    "instruction": "Upload multiple files to transfer.sh at once",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: --upload-file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ntar czf - dir/ | curl --upload-file - https://transfer.sh/dir.tar.gz"
+  },
+  {
+    "instruction": "Upload file using wetransfer CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wet` with the correct flags and arguments\n   2. Key flags: -f, -n, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wet` — wet command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwet -f document.pdf -n 'recipient@example.com' -m 'Here is the document'"
+  },
+  {
+    "instruction": "Download from wetransfer using CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wet` with the correct flags and arguments\n   2. Key flags: -d, -abc123\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wet` — wet command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwet -d https://we.tl/t-abc123"
+  },
+  {
+    "instruction": "WeTransfer upload with custom message and password",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wet` with the correct flags and arguments\n   2. Key flags: -f, -n, -m, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wet` — wet command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwet -f archive.zip -n 'user@example.com' -m 'Files attached' -p 'secret123'"
+  },
+  {
+    "instruction": "WeTransfer upload to multiple recipients",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wet` with the correct flags and arguments\n   2. Key flags: -f, -n, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wet` — wet command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwet -f report.pdf -n 'alice@example.com' -n 'bob@example.com'"
+  },
+  {
+    "instruction": "Send a file via Firefox Send using ffsend",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend upload myfile.zip"
+  },
+  {
+    "instruction": "Ffsend upload with password protection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: --password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend upload --password 'mypass' secret.tar.gz"
+  },
+  {
+    "instruction": "Ffsend upload with download limit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: --downloads\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend upload --downloads 5 myfile.pdf"
+  },
+  {
+    "instruction": "Ffsend upload with expiry time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: --expiry-time, -note\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend upload --expiry-time 1h temp-note.txt"
+  },
+  {
+    "instruction": "Ffsend download file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend download https://send.firefox.com/download/abc123"
+  },
+  {
+    "instruction": "Ffsend upload with history option",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: --history, -history\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend upload --history share-history.txt file.iso"
+  },
+  {
+    "instruction": "Ffsend upload without archiving directories",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: --no-archive\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend upload --no-archive myfolder/"
+  },
+  {
+    "instruction": "Ffsend upload with debug logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using ffsend\n   2. Apply corrective actions: ffsend upload --debug largefile.mp4\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend upload --debug largefile.mp4"
+  },
+  {
+    "instruction": "Ffsend upload with custom server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: --host\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Supporting tool: `host` — host command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend upload --host https://mysend.example.com file.txt"
+  },
+  {
+    "instruction": "Ffsend list uploaded files from history",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend history"
+  },
+  {
+    "instruction": "Ffsend delete an uploaded file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend delete https://send.firefox.com/download/abc123"
+  },
+  {
+    "instruction": "Ffsend exists check if download is still available",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend exists https://send.firefox.com/download/abc123"
+  },
+  {
+    "instruction": "Upload to transfer.sh with custom filename",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -H, -Downloads, -H, -Days\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -H 'Max-Downloads: 3' -H 'Max-Days: 7' --upload-file data.csv https://transfer.sh/export.csv"
+  },
+  {
+    "instruction": "Transfer.sh upload with curl silent and shortened URL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, --upload-file, -selection\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s --upload-file image.png https://transfer.sh/image.png | xclip -selection clipboard"
+  },
+  {
+    "instruction": "WeTransfer upload with verbose output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wet` with the correct flags and arguments\n   2. Key flags: -f, -v, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wet` — wet command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwet -f package.tar.gz -v -n 'user@example.com'"
+  },
+  {
+    "instruction": "Transfer.sh download with resume support",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -C, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -C - -o arch.zip https://transfer.sh/xyz123/arch.zip"
+  },
+  {
+    "instruction": "Ffsend version information",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ffsend` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ffsend` — ffsend command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nffsend version"
+  }
+]

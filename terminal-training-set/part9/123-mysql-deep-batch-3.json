@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "PT: Checksum tables for replication consistency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pt-table-checksum` with the correct flags and arguments\n   2. Key flags: -table, -checksum, --databases, --replicate\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pt-table-checksum` — pt-table-checksum command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npt-table-checksum --databases=mydb --replicate=percona.checksums"
+  },
+  {
+    "instruction": "PT: Sync table data between master and replica",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pt-table-sync` with the correct flags and arguments\n   2. Key flags: -table, -sync, --execute, --sync-to-master\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pt-table-sync` — pt-table-sync command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npt-table-sync --execute --sync-to-master h=replica.example.com,D=mydb"
+  },
+  {
+    "instruction": "PT: Analyze slow query log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pt-query-digest` with the correct flags and arguments\n   2. Key flags: -query, -digest, -slow\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pt-query-digest` — pt-query-digest command execution and management\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npt-query-digest /var/log/mysql/mysql-slow.log"
+  },
+  {
+    "instruction": "PT: Analyze process list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pt-query-digest` with the correct flags and arguments\n   2. Key flags: -query, -digest, --processlist\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pt-query-digest` — pt-query-digest command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npt-query-digest --processlist h=localhost"
+  },
+  {
+    "instruction": "Xtrabackup: Full backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for xtrabackup\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: xtrabackup --backup --target-dir=/backup/mysql/full\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `xtrabackup` — xtrabackup command execution and management\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nxtrabackup --backup --target-dir=/backup/mysql/full"
+  },
+  {
+    "instruction": "Xtrabackup: Prepare for restore",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for xtrabackup\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: xtrabackup --prepare --target-dir=/backup/mysql/full\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `xtrabackup` — xtrabackup command execution and management\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nxtrabackup --prepare --target-dir=/backup/mysql/full"
+  },
+  {
+    "instruction": "Xtrabackup: Restore from backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for xtrabackup\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: xtrabackup --copy-back --target-dir=/backup/mysql/full\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `xtrabackup` — xtrabackup command execution and management\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nxtrabackup --copy-back --target-dir=/backup/mysql/full"
+  },
+  {
+    "instruction": "Xtrabackup: Streaming backup with compression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for xtrabackup\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: xtrabackup --backup --stream=xbstream --target-dir=/tmp/backup | gzip > backup.x\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `xtrabackup` — xtrabackup command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nxtrabackup --backup --stream=xbstream --target-dir=/tmp/backup | gzip > backup.xbstream.gz"
+  },
+  {
+    "instruction": "Run mysqlslap benchmark with concurrency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysqlslap` with the correct flags and arguments\n   2. Key flags: --user, --password, --concurrency, --iterations\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysqlslap` — mysqlslap command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmysqlslap --user=root --password --concurrency=10,50 --iterations=5 --number-int-cols=5 --number-char-cols=20 --auto-generate-sql"
+  },
+  {
+    "instruction": "Run mysqlslap with a custom query",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysqlslap` with the correct flags and arguments\n   2. Key flags: --user, --password, --concurrency, --iterations\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysqlslap` — mysqlslap command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmysqlslap --user=root --password --concurrency=10 --iterations=3 --query=\"SELECT * FROM mydb.orders WHERE status='pending'\""
+  },
+  {
+    "instruction": "Run mysqlslap with many queries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysqlslap` with the correct flags and arguments\n   2. Key flags: --user, --password, --concurrency, --number-of-queries\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysqlslap` — mysqlslap command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmysqlslap --user root --password --concurrency=20 --number-of-queries=1000 --auto-generate-sql"
+  },
+  {
+    "instruction": "Check MyISAM table for errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `myisamchk` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `myisamchk` — myisamchk command execution and management\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmyisamchk -e /var/lib/mysql/mydb/mytable.MYI"
+  },
+  {
+    "instruction": "Repair MyISAM table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `myisamchk` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `myisamchk` — myisamchk command execution and management\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmyisamchk -r /var/lib/mysql/mydb/mytable.MYI"
+  },
+  {
+    "instruction": "Show table sizes in a database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -e \"SELECT table_schema, table_name, ROUND((data_length + index_length) / 1024 / 1024, 2) AS size_mb FROM information_schema.tables WHERE table_schema = 'mydb' ORDER BY size_mb DESC\""
+  },
+  {
+    "instruction": "Show top 5 largest tables",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -e \"SELECT table_name, ROUND(((data_length + index_length) / 1024 / 1024), 2) AS size_mb FROM information_schema.tables WHERE table_schema = 'mydb' ORDER BY (data_length + index_length) DESC LIMIT 5\""
+  },
+  {
+    "instruction": "Set global MySQL variable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -e \"SET GLOBAL max_connections = 500\""
+  },
+  {
+    "instruction": "Flush the query cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -e \"RESET QUERY CACHE\""
+  },
+  {
+    "instruction": "Add an index without blocking writes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p mydb -e \"ALTER TABLE orders ADD INDEX idx_status (status), ALGORITHM=INPLACE, LOCK=NONE\""
+  },
+  {
+    "instruction": "Show open tables in use",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -e \"SHOW OPEN TABLES WHERE In_use > 0\""
+  },
+  {
+    "instruction": "Check for table fragmentation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -e \"SELECT table_schema, table_name, ROUND(data_free / 1024 / 1024, 2) AS frag_mb FROM information_schema.tables WHERE data_free > 0 AND table_schema = 'mydb' ORDER BY frag_mb DESC\""
+  },
+  {
+    "instruction": "Run MySQL upgrade check",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysqlcheck` with the correct flags and arguments\n   2. Key flags: -u, -p, --all-databases, --check-upgrade\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysqlcheck` — mysqlcheck command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmysqlcheck -u root -p --all-databases --check-upgrade"
+  },
+  {
+    "instruction": "Set InnoDB buffer pool size globally",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -u, -p, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -u root -p -e \"SET GLOBAL innodb_buffer_pool_size = 4294967296\""
+  }
+]

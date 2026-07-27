@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Use kubectl to show all resources in one command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get all,ingress,cm,secret,pvc"
+  },
+  {
+    "instruction": "Use kubectl to get resources with label filter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get pods,svc,deploy -l app=myapp"
+  },
+  {
+    "instruction": "Create an ephemeral container in a running pod",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: --image, -it\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl alpha debug mypod --image=busybox -it -- sh"
+  },
+  {
+    "instruction": "Create a static pod manifest on a node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -pod, -pod\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '{\"apiVersion\":\"v1\",\"kind\":\"Pod\",\"metadata\":{\"name\":\"static-pod\"},\"spec\":{\"containers\":[{\"name\":\"nginx\",\"image\":\"nginx\"}]}}' > /etc/kubernetes/manifests/static-pod.yaml"
+  },
+  {
+    "instruction": "Check if kubelet uses systemd cgroup driver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /var/lib/kubelet/config.yaml | grep cgroupDriver"
+  },
+  {
+    "instruction": "Set kubelet log level for debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using echo\n   2. Apply corrective actions: echo 'KUBELET_EXTRA_ARGS=\"--v=4\"' > /etc/default/kubelet && systemctl restart ku\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'KUBELET_EXTRA_ARGS=\"--v=4\"' > /etc/default/kubelet && systemctl restart kubelet"
+  },
+  {
+    "instruction": "Enable kubelet profiling endpoint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'KUBELET_EXTRA_ARGS=\"--enable-debugging-handlers=true\"' > /etc/default/kubelet && systemctl restart kubelet"
+  },
+  {
+    "instruction": "Get kubelet metrics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: --raw, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get --raw /api/v1/nodes/node1/proxy/metrics | head -20"
+  },
+  {
+    "instruction": "Get kubelet pprof data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: --raw\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get --raw /api/v1/nodes/node1/proxy/debug/pprof/goroutine?debug=2 > goroutine.txt"
+  },
+  {
+    "instruction": "Use crictl to inspect containers (low-level CRI)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl ps"
+  },
+  {
+    "instruction": "Pull an image with crictl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl pull nginx:latest"
+  },
+  {
+    "instruction": "Run a pod with crictl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `crictl` — crictl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > pod.json << 'EOF' && crictl runp pod.json\n{\"metadata\":{\"name\":\"testpod\",\"namespace\":\"default\"},\"log_directory\":\"/tmp/logs\",\"linux\":{}}\nEOF"
+  },
+  {
+    "instruction": "Use crictl to check container stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl stats"
+  },
+  {
+    "instruction": "Get crictl version info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl info"
+  },
+  {
+    "instruction": "Check containerd config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -40\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/containerd/config.toml | head -40"
+  },
+  {
+    "instruction": "Use nerdctl to build and run containers (containerd native)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nerdctl` with the correct flags and arguments\n   2. Key flags: -d, --name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nerdctl` — nerdctl command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnerdctl run -d --name web nginx"
+  },
+  {
+    "instruction": "List images in containerd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl images"
+  },
+  {
+    "instruction": "List pods in containerd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl pods"
+  },
+  {
+    "instruction": "Exec into a container with crictl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: -it, --name, -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl exec -it $(crictl ps --name nginx -q) sh"
+  },
+  {
+    "instruction": "Get container logs with crictl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: --name, -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl logs $(crictl ps --name nginx -q)"
+  },
+  {
+    "instruction": "Check pod sandbox ID for a container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: --name, -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl inspectp $(crictl pods --name mypod -q) | jq '.info.id'"
+  },
+  {
+    "instruction": "Check node kernel parameters for K8s requirements",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -nf, -call, -iptables\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Supporting tool: `iptables` — Linux firewall rule management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\nsysctl net.bridge.bridge-nf-call-iptables net.ipv4.ip_forward net.ipv4.conf.all.forwarding"
+  },
+  {
+    "instruction": "Install K8s prerequisites (br_netfilter, overlay)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the iptables configuration with the required parameters\n   2. Apply the configuration and verify with `modprobe status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `modprobe` — modprobe command execution and management\n   Supporting tool: `iptables` — Linux firewall rule management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\nmodprobe br_netfilter && modprobe overlay && echo -e 'br_netfilter\\noverlay' > /etc/modules-load.d/k8s.conf && sysctl -w net.bridge.bridge-nf-call-iptables=1 && sysctl -w net.ipv4.ip_forward=1"
+  },
+  {
+    "instruction": "Check open ports for K8s control plane",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ss` with the correct flags and arguments\n   2. Key flags: -tulpn, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ss` — socket statistics and connection monitoring\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nss -tulpn | grep -E '6443|2379|2380|10250|10259|10257'"
+  },
+  {
+    "instruction": "Validate cluster with sonobuoy conformance test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sonobuoy` with the correct flags and arguments\n   2. Key flags: --mode, -conformance\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sonobuoy` — sonobuoy command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsonobuoy run --mode=certified-conformance && sonobuoy status"
+  },
+  {
+    "instruction": "Install kubectx and kubens for easier context switching",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the git configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `git` — version control and repository management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo git clone https://github.com/ahmetb/kubectx /opt/kubectx && sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx && sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens"
+  }
+]

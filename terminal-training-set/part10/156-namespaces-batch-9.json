@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Create persistent namespace with bind mount",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `touch` with the correct flags and arguments\n   2. Key flags: --bind\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `touch` — touch command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntouch /netns/blue && mount --bind /proc/self/ns/net /netns/blue"
+  },
+  {
+    "instruction": "Use unshare to persist net namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --net, -net\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --net=/netns/persistent-net /bin/bash"
+  },
+  {
+    "instruction": "Join persistent namespace with nsenter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nsenter` with the correct flags and arguments\n   2. Key flags: --net, -net\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nsenter` — enter existing namespace\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnsenter --net=/netns/persistent-net /bin/bash"
+  },
+  {
+    "instruction": "List persistent namespace bind mounts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/mounts | grep netns"
+  },
+  {
+    "instruction": "Create persistent PID namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --pid, -pid, --fork, --mount-proc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --pid=/netns/persistent-pid --fork --mount-proc /bin/bash"
+  },
+  {
+    "instruction": "Monitor namespace events with inotify",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for inotifywait\n   2. Build the command chain with error handling\n   3. Execute: inotifywait -m /proc/self/ns/\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `inotifywait` — inotifywait command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ninotifywait -m /proc/self/ns/"
+  },
+  {
+    "instruction": "Use nsenter with path to namespace file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nsenter` with the correct flags and arguments\n   2. Key flags: --net\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nsenter` — enter existing namespace\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnsenter --net=/var/run/netns/ns1 ip addr"
+  },
+  {
+    "instruction": "Clean up namespace bind mount",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `umount` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `umount` — umount command execution and management\n   Flag `-f`: force execution, suppress errors\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\numount /netns/blue && rm -f /netns/blue"
+  },
+  {
+    "instruction": "Kernel namespace configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/user/max_user_namespaces; cat /proc/sys/kernel/ns_last_pid"
+  },
+  {
+    "instruction": "Check max PID in namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/kernel/ns_last_pid"
+  },
+  {
+    "instruction": "Set max PIDs per namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 65535 > /proc/sys/kernel/ns_last_pid"
+  },
+  {
+    "instruction": "Run a full container with busybox and unshare",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --mount, --uts, --ipc, --net\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --mount --uts --ipc --net --pid --fork --mount-proc busybox sh"
+  },
+  {
+    "instruction": "Minimal container using unshare and pivot_root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: --mount, --pid, --fork, --mount-proc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare --mount --pid --fork --mount-proc bash -c 'mkdir -p /newroot && mount -t tmpfs tmpfs /newroot && mkdir -p /newroot/{bin,proc} && cp /bin/busybox /newroot/bin/ && pivot_root /newroot /newroot/oldroot && exec chroot . /bin/busybox sh'"
+  },
+  {
+    "instruction": "Use nsenter to debug pod networking",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using nsenter\n   2. Apply corrective actions: nsenter -n -t $(docker inspect --format '{{.State.Pid}}' web) tcpdump -i eth0\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `nsenter` — enter existing namespace\n   Supporting tool: `docker` — manage containers and images\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nnsenter -n -t $(docker inspect --format '{{.State.Pid}}' web) tcpdump -i eth0"
+  },
+  {
+    "instruction": "Check network namespace of Kubernetes pod",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crictl` with the correct flags and arguments\n   2. Key flags: --name, -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crictl` — crictl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrictl inspect $(crictl pods --name mypod -q) | jq '.info.runtimeSpec.linux.namespaces[] | select(.type == \"network\")'"
+  },
+  {
+    "instruction": "Enter k8s pod network namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nsenter` with the correct flags and arguments\n   2. Key flags: -n, -t, -q, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nsenter` — enter existing namespace\n   Supporting tool: `crictl` — crictl command execution and management\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnsenter -n -t $(crictl inspect $(crictl pods -q | head -1) | jq '.info.pid') ip addr"
+  },
+  {
+    "instruction": "Debug k8s pod with nsenter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using nsenter\n   2. Apply corrective actions: nsenter -t $(crictl inspect $(crictl ps --pod $(crictl pods --name nginx -q) -q)\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `nsenter` — enter existing namespace\n   Supporting tool: `crictl` — crictl command execution and management\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnsenter -t $(crictl inspect $(crictl ps --pod $(crictl pods --name nginx -q) -q) | jq '.info.pid') -a /bin/bash"
+  },
+  {
+    "instruction": "Find process namespaces in systemd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: --property, -d, -f2, -I\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl show --property MainPID sshd | cut -d= -f2 | xargs -I{} ls -la /proc/{}/ns/"
+  },
+  {
+    "instruction": "Run systemd service with private /tmp",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/systemd/system/myservice.service << 'EOF'\n[Service]\nExecStart=/bin/bash -c 'echo running'\nPrivateTmp=true\nEOF"
+  },
+  {
+    "instruction": "Run systemd service with network namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/systemd/system/mynetapp.service << 'EOF'\n[Service]\nExecStart=/usr/bin/myapp\nPrivateNetwork=true\nEOF"
+  },
+  {
+    "instruction": "Enable/disable namespace isolation per service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `systemctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Flag `-p`: create parent directories\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl show myapp.service -p PrivateNetwork -p PrivateTmp -p PrivateDevices"
+  },
+  {
+    "instruction": "Run with all systemd sandboxing options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -app\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/systemd/system/sandboxed.service << 'EOF'\n[Service]\nExecStart=/usr/bin/secure-app\nPrivateTmp=true\nPrivateNetwork=true\nPrivateDevices=true\nProtectSystem=strict\nProtectHome=true\nNoNewPrivileges=true\nEOF"
+  }
+]

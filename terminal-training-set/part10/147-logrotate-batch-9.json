@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "Compress all rotated logs manually",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gzip` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gzip` — gzip command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngzip /var/log/*.log.*"
+  },
+  {
+    "instruction": "Decompress and view rotated log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `zcat` with the correct flags and arguments\n   2. Key flags: -50\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `zcat` — zcat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nzcat /var/log/syslog.1.gz | head -50"
+  },
+  {
+    "instruction": "Search compressed rotated logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `zgrep` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `zgrep` — zgrep command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nzgrep -i error /var/log/*.gz"
+  },
+  {
+    "instruction": "Count lines in compressed rotated logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `zcat` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `zcat` — zcat command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nzcat /var/log/syslog.2.gz | wc -l"
+  },
+  {
+    "instruction": "List all compressed log files by size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -lhS\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -lhS /var/log/*.gz"
+  },
+  {
+    "instruction": "Remove old compressed logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -name, -mtime, -delete\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind /var/log -name '*.gz' -mtime +30 -delete"
+  },
+  {
+    "instruction": "Remove rotated logs older than 60 days",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -name, -mtime, -delete\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind /var/log -name '*.log.*' -mtime +60 -delete"
+  },
+  {
+    "instruction": "Move rotated logs to archive directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mv` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mv` — mv command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmv /var/log/*.gz /var/log/archive/"
+  },
+  {
+    "instruction": "Restore a rotated log from backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for gunzip\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: gunzip -c /var/log/archive/syslog.20250101.gz > /var/log/syslog-restored\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `gunzip` — gunzip command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngunzip -c /var/log/archive/syslog.20250101.gz > /var/log/syslog-restored"
+  },
+  {
+    "instruction": "Compare sizes before and after rotation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `du` with the correct flags and arguments\n   2. Key flags: -sh, -h\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `du` — du command execution and management\n   Flag `-h`: human-readable format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndu -sh /var/log/*.log* | sort -h"
+  },
+  {
+    "instruction": "Check disk space used by rotated logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `du` with the correct flags and arguments\n   2. Key flags: -sh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `du` — du command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndu -sh /var/log/*.gz | awk '{sum+=$1} END {print sum \" total\"}'"
+  },
+  {
+    "instruction": "Find largest rotated log files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -name, -exec, -lh, -k5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind /var/log -name '*.gz' -exec ls -lh {} \\; | sort -k5 -h | tail -10"
+  },
+  {
+    "instruction": "Check how much space rotation will free",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `du` with the correct flags and arguments\n   2. Key flags: -ch, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `du` — du command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndu -ch /var/log/*.gz | tail -1"
+  },
+  {
+    "instruction": "View compressed log without decompressing to disk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `zmore` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `zmore` — zmore command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nzmore /var/log/syslog.1.gz"
+  },
+  {
+    "instruction": "Tail last lines of compressed rotated log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gzcat` with the correct flags and arguments\n   2. Key flags: -50\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gzcat` — gzcat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngzcat /var/log/syslog.1.gz | tail -50"
+  },
+  {
+    "instruction": "View list of files in compressed archive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -tzf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar -tzf /var/log/archive.tar.gz"
+  },
+  {
+    "instruction": "Create tarball of all rotated logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -czf, -archive\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar -czf /var/log/rotated-archive.tar.gz /var/log/*.gz"
+  },
+  {
+    "instruction": "Extract rotated logs from tarball",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -xzf, -archive, -C, -restore\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar -xzf /var/log/rotated-archive.tar.gz -C /tmp/log-restore/"
+  },
+  {
+    "instruction": "Verify compressed log integrity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gzip` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gzip` — gzip command execution and management\n   Flag `-t`: sort by time\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngzip -t /var/log/syslog.1.gz && echo 'Integrity OK'"
+  },
+  {
+    "instruction": "Check compression ratio of rotated logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gzip` with the correct flags and arguments\n   2. Key flags: -lv\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gzip` — gzip command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngzip -lv /var/log/syslog.1.gz"
+  }
+]

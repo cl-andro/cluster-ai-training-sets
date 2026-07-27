@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "How to show Varnish worker thread status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishstat` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishstat` — varnishstat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishstat -1 | grep 'threads'"
+  },
+  {
+    "instruction": "How to set Varnish backend to healthy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishadm` — Varnish cache administration\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishadm backend.set_health backend1 healthy"
+  },
+  {
+    "instruction": "How to clear Varnish panic messages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishadm` — Varnish cache administration\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishadm panic.clear"
+  },
+  {
+    "instruction": "How to filter Varnish log by URL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishlog` with the correct flags and arguments\n   2. Key flags: -g, -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishlog` — varnishlog command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishlog -g request -q 'ReqURL ~ \\.jpg$'"
+  },
+  {
+    "instruction": "How to add cookie stripping in VCL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -cookies\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'sub vcl_recv { if (req.url ~ \"^/static/\") { unset req.http.cookie; } }' > /etc/varnish/strip-cookies.vcl"
+  },
+  {
+    "instruction": "How to view Varnish request log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishlog` with the correct flags and arguments\n   2. Key flags: -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishlog` — varnishlog command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishlog -g request"
+  },
+  {
+    "instruction": "How to test VCL syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishd` with the correct flags and arguments\n   2. Key flags: -C, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishd` — varnishd command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nvarnishd -C -f /etc/varnish/default.vcl > /dev/null 2>&1"
+  },
+  {
+    "instruction": "How to show Varnish storage usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishstat` with the correct flags and arguments\n   2. Key flags: -1, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishstat` — varnishstat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishstat -1 | grep -E 'SMA|SMF'"
+  },
+  {
+    "instruction": "How to watch Varnish live statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for varnishstat\n   2. Build the command chain with error handling\n   3. Execute: varnishstat -w 2\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishstat` — varnishstat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishstat -w 2"
+  },
+  {
+    "instruction": "How to show Varnish version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishd` with the correct flags and arguments\n   2. Key flags: -V\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishd` — varnishd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishd -V"
+  },
+  {
+    "instruction": "How to ban by hostname in Varnish",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishadm` — Varnish cache administration\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishadm ban req.http.host == 'old.example.com'"
+  },
+  {
+    "instruction": "How to add custom header in VCL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -Cache, -header\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'sub vcl_deliver { set resp.http.X-Cache = \"HIT\"; }' > /etc/varnish/custom-header.vcl"
+  },
+  {
+    "instruction": "How to add CORS headers in VCL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -Control, -Allow, -Origin\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'sub vcl_deliver { if (req.http.Origin ~ \"https?://(www\\.)?example\\.com\") { set resp.http.Access-Control-Allow-Origin = req.http.Origin; } }' > /etc/varnish/cors.vcl"
+  },
+  {
+    "instruction": "How to purge by cache tag in Varnish",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishadm` with the correct flags and arguments\n   2. Key flags: -cache, -tag\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishadm` — Varnish cache administration\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishadm ban obj.http.x-cache-tag ~ '^product_1234'"
+  },
+  {
+    "instruction": "How to add a health probe in VCL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'probe health_check { .url = \"/health\"; .interval = 5s; .timeout = 1s; .window = 5; .threshold = 3; } backend server1 { .host = \"10.0.0.1\"; .port = \"80\"; .probe = health_check; }' > /etc/varnish/health.vcl"
+  },
+  {
+    "instruction": "How to set Varnish backend to unhealthy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishadm` — Varnish cache administration\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishadm backend.set_health backend1 sick"
+  },
+  {
+    "instruction": "How to ban all objects from a backend in Varnish",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishadm` — Varnish cache administration\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishadm ban req.http.host ~ '.*' && varnishadm ban req.url ~ '.*'"
+  },
+  {
+    "instruction": "How to start Varnish with a custom VCL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishd` with the correct flags and arguments\n   2. Key flags: -a, -f, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishd` — varnishd command execution and management\n   Flag `-a`: include hidden/all entries\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishd -a :80 -f /etc/varnish/custom.vcl -s file,/var/lib/varnish/varnish_storage.bin,1G"
+  },
+  {
+    "instruction": "How to show Varnish backend health",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishadm` — Varnish cache administration\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishadm backend.health"
+  },
+  {
+    "instruction": "How to show Varnish hit/miss ratio",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `varnishstat` with the correct flags and arguments\n   2. Key flags: -1, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `varnishstat` — varnishstat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvarnishstat -1 | grep -E 'MAIN\\.(cache|hit|miss)'"
+  },
+  {
+    "instruction": "How to add grace mode in VCL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'sub vcl_hit { if (obj.ttl >= 0s) { return (deliver); } if (obj.ttl + obj.grace > 0s && std.healthy(req.backend_hint)) { return (deliver); } return (fetch); } sub vcl_backend_response { set beresp.grace = 24h; }' > /etc/varnish/grace.vcl"
+  }
+]

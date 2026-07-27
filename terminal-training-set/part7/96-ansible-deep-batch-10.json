@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Generate ansible config with all defaults explicitly set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-config` with the correct flags and arguments\n   2. Key flags: -config, --disabled\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-config` — ansible-config command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nansible-config init --disabled > ansible.cfg"
+  },
+  {
+    "instruction": "Dump all ansible configuration as JSON",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-config` with the correct flags and arguments\n   2. Key flags: -config, --only-changed, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-config` — ansible-config command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-config dump --only-changed --format json"
+  },
+  {
+    "instruction": "Check the default python interpreter for a host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m shell -a 'which python3'"
+  },
+  {
+    "instruction": "Override the python interpreter for a host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -e, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `ping` — ping command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -e 'ansible_python_interpreter=/usr/bin/python3' -m ping"
+  },
+  {
+    "instruction": "Set ansible_ssh_common_args to use a jump host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -e, -J, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `ping` — ping command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -e 'ansible_ssh_common_args=\"-J jump.example.com\"' -m ping"
+  },
+  {
+    "instruction": "Run a playbook with custom ansible_managed string",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-playbook` with the correct flags and arguments\n   2. Key flags: -playbook, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-playbook` — ansible-playbook command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-playbook site.yml -e 'ansible_managed=\"Managed by Ansible - {{ ansible_date_time.date }}\"'"
+  },
+  {
+    "instruction": "Check if a specific package version is installed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ansible all -m package_facts -a 'manager=auto' -e 'ansible_package_facts=True'\n   2. Apply the configuration and verify with `ansible status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m package_facts -a 'manager=auto' -e 'ansible_package_facts=True'"
+  },
+  {
+    "instruction": "Get the list of available facts about services",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m service_facts -a ''"
+  },
+  {
+    "instruction": "Use the datadog_monitor module (community.datadog)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for ansible\n   2. Build the command chain with error handling\n   3. Execute: ansible localhost -m community.datadog.datadog_monitor -a 'name=\"CPU load\" type=\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m community.datadog.datadog_monitor -a 'name=\"CPU load\" type=\"metric alert\" query=\"avg(last_5m):avg:system.cpu.user{*} > 90\"'"
+  },
+  {
+    "instruction": "Check for pending reboots with ansible",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -f, -required\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m shell -a '[ -f /var/run/reboot-required ] && echo reboot_needed=true || echo reboot_needed=false'"
+  },
+  {
+    "instruction": "List all ansible internal variables on a host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m debug -a 'var=hostvars[\"localhost\"]'"
+  },
+  {
+    "instruction": "Use the postgresql_db module to create a database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m postgresql_db -a 'name=myapp state=present' -b -u postgres"
+  },
+  {
+    "instruction": "Create a Postgres user via ansible",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m postgresql_user -a 'db=myapp name=appuser password=secret priv=ALL state=present' -b -u postgres"
+  },
+  {
+    "instruction": "Use the mysql_db module to create a database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m mysql_db -a 'name=myapp state=present' -b"
+  },
+  {
+    "instruction": "Use the mysql_user module to set up privileges",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `host` — host command execution and management\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m mysql_user -a 'name=appuser password=secret priv=myapp.*:ALL host=% state=present' -b"
+  },
+  {
+    "instruction": "Use the docker_container module to run a container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m docker_container -a 'name=nginx image=nginx:latest state=started ports=80:80' -b"
+  },
+  {
+    "instruction": "Pull a Docker image with community.docker.docker_image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m docker_image -a 'name=nginx:alpine source=pull' -b"
+  },
+  {
+    "instruction": "Manage a Docker network",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m docker_network -a 'name=backend state=present' -b"
+  },
+  {
+    "instruction": "Create a Docker volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m docker_volume -a 'name=app_data state=present' -b"
+  },
+  {
+    "instruction": "Use the k8s module with kubectl from ansible",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m kubernetes.core.k8s -a 'api_version=v1 kind=Namespace name=myapp state=present'"
+  },
+  {
+    "instruction": "Debug a complex variable structure with pretty-print",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using ansible\n   2. Apply corrective actions: ansible localhost -m debug -a 'msg=\"{{ hostvars | to_nice_json }}\"'\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m debug -a 'msg=\"{{ hostvars | to_nice_json }}\"'"
+  },
+  {
+    "instruction": "Run a Python script inline via ansible",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m script -a '/tmp/health_check.py'"
+  },
+  {
+    "instruction": "Use the raw module to run an unclean SSH command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -release\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m raw -a 'cat /etc/os-release'"
+  },
+  {
+    "instruction": "Use the wait_for_connection module to wait for hosts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m wait_for_connection -a 'delay=10 timeout=300'"
+  },
+  {
+    "instruction": "Use the expect module to answer an interactive prompt",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -keygen, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m expect -a 'command=ssh-keygen -t rsa -f ~/.ssh/id_rsa -N \"\" responses={\"Overwrite\": \"y\"}'"
+  }
+]

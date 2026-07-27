@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Initialize a physical volume on /dev/sdb1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pvcreate` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pvcreate` — LVM physical volume initialization\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npvcreate /dev/sdb1"
+  },
+  {
+    "instruction": "Create a physical volume on /dev/sdc1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pvcreate` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pvcreate` — LVM physical volume initialization\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npvcreate /dev/sdc1"
+  },
+  {
+    "instruction": "Initialize multiple disks as PVs at once",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pvcreate` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pvcreate` — LVM physical volume initialization\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npvcreate /dev/sdd1 /dev/sde1 /dev/sdf1"
+  },
+  {
+    "instruction": "Create a volume group named vg_data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vgcreate` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vgcreate` — vgcreate command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvgcreate vg_data /dev/sdb1 /dev/sdc1"
+  },
+  {
+    "instruction": "Create VG with 4MiB extent size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vgcreate` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vgcreate` — vgcreate command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvgcreate -s 4M vg_data /dev/sdb1"
+  },
+  {
+    "instruction": "Create a 10GiB logical volume from vg_data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -L, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -L 10G -n lv_data vg_data"
+  },
+  {
+    "instruction": "Create a logical volume using all free space",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -l, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-l`: long listing format\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -l 100%FREE -n lv_full vg_data"
+  },
+  {
+    "instruction": "Create a thin pool of 100GiB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -L, -T\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -L 100G -T vg_data/thinpool"
+  },
+  {
+    "instruction": "Create a thin volume from pool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -V, -T, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -V 50G -T vg_data/thinpool -n lv_thin"
+  },
+  {
+    "instruction": "Extend lv_data to 20GiB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvextend` with the correct flags and arguments\n   2. Key flags: -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvextend` — lvextend command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvextend -L 20G /dev/vg_data/lv_data"
+  },
+  {
+    "instruction": "Extend LV by 5GiB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvextend` with the correct flags and arguments\n   2. Key flags: -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvextend` — lvextend command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvextend -L +5G /dev/vg_data/lv_data"
+  },
+  {
+    "instruction": "Extend LV to use all remaining free space",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvextend` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvextend` — lvextend command execution and management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvextend -l +100%FREE /dev/vg_data/lv_data"
+  },
+  {
+    "instruction": "Reduce lv_data to 8GiB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via lvreduce -L 8G /dev/vg_data/lv_data\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `lvreduce` — lvreduce command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvreduce -L 8G /dev/vg_data/lv_data"
+  },
+  {
+    "instruction": "Reduce LV by 2GiB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via lvreduce -L -2G /dev/vg_data/lv_data\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `lvreduce` — lvreduce command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvreduce -L -2G /dev/vg_data/lv_data"
+  },
+  {
+    "instruction": "Resize LV to 15GiB (grow or shrink)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvresize` with the correct flags and arguments\n   2. Key flags: -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvresize` — lvresize command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvresize -L 15G /dev/vg_data/lv_data"
+  },
+  {
+    "instruction": "Resize LV and filesystem in one step",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvresize` with the correct flags and arguments\n   2. Key flags: -L, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvresize` — lvresize command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvresize -L +5G -r /dev/vg_data/lv_data"
+  },
+  {
+    "instruction": "Display PV attributes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pvdisplay` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pvdisplay` — pvdisplay command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npvdisplay /dev/sdb1"
+  },
+  {
+    "instruction": "Display all physical volumes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pvdisplay` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pvdisplay` — pvdisplay command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npvdisplay"
+  },
+  {
+    "instruction": "Display VG details",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vgdisplay` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vgdisplay` — vgdisplay command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvgdisplay vg_data"
+  },
+  {
+    "instruction": "Display all volume groups",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vgdisplay` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vgdisplay` — vgdisplay command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvgdisplay"
+  },
+  {
+    "instruction": "Display LV details",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvdisplay` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvdisplay` — lvdisplay command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvdisplay /dev/vg_data/lv_data"
+  },
+  {
+    "instruction": "Display all logical volumes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvdisplay` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvdisplay` — lvdisplay command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvdisplay"
+  },
+  {
+    "instruction": "Move physical extents from /dev/sdb1 to /dev/sdf1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pvmove` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pvmove` — pvmove command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npvmove /dev/sdb1 /dev/sdf1"
+  },
+  {
+    "instruction": "Move all PEs off a failing disk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pvmove` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pvmove` — pvmove command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npvmove -i 5 /dev/sdb1"
+  },
+  {
+    "instruction": "Extend VG by adding a PV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vgextend` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vgextend` — vgextend command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvgextend vg_data /dev/sdg1"
+  },
+  {
+    "instruction": "Remove PV /dev/sdg1 from VG",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vgreduce` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vgreduce` — vgreduce command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvgreduce vg_data /dev/sdg1"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "View logrotate help page",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logrotate` with the correct flags and arguments\n   2. Key flags: --help\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logrotate` — logrotate command execution and management\n   Flag `--help`: display usage information\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogrotate --help"
+  },
+  {
+    "instruction": "Create a basic logrotate config for custom logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/custom << 'EOF'\n/var/log/custom/*.log {\n    daily\n    rotate 14\n    compress\n    missingok\n    notifempty\n}\nEOF"
+  },
+  {
+    "instruction": "Add logrotate config for systemd journal",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -journal\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/systemd-journal << 'EOF'\n/var/log/journal/*.journal {\n    daily\n    rotate 7\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Create logrotate config with size-based rotation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -based\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/size-based << 'EOF'\n/var/log/app/app.log {\n    size 100M\n    rotate 5\n    compress\n    delaycompress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Create logrotate config for json logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -logs\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/json-logs << 'EOF'\n/var/log/app/*.json {\n    daily\n    rotate 10\n    compress\n    dateext\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Create logrotate config with sharedscripts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat > /etc/logrotate.d/shared << 'EOF'\n/var/log/app1/*.log /var/log/app2/*.log {\n    daily\n    rotate 7\n    sharedscripts\n    postrotate\n        systemctl reload app\n    endscript\n}\nEOF"
+  },
+  {
+    "instruction": "Add weekly rotation for auth.log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -weekly\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/auth-weekly << 'EOF'\n/var/log/auth.log {\n    weekly\n    rotate 4\n    compress\n    delaycompress\n    missingok\n    notifempty\n}\nEOF"
+  },
+  {
+    "instruction": "Create config that rotates every hour",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -custom\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/hourly-custom << 'EOF'\n/var/log/quick/*.log {\n    hourly\n    rotate 24\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Add monthly rotation for old logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -archive\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/monthly-archive << 'EOF'\n/var/log/archive/*.log {\n    monthly\n    rotate 12\n    compress\n    dateext\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Create config with both size and age",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -age\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/size-age << 'EOF'\n/var/log/mixed/*.log {\n    size 50M\n    maxage 30\n    rotate 10\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Add olddir directory for rotated files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -example\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/olddir-example << 'EOF'\n/var/log/app/*.log {\n    daily\n    rotate 5\n    olddir /var/log/app/old\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Create config with firstaction/lastaction",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -last\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/first-last << 'EOF'\n/var/log/batch/*.log {\n    daily\n    rotate 7\n    firstaction\n        echo 'Starting rotation batch'\n    endscript\n    lastaction\n        echo 'Finished rotation batch'\n    endscript\n}\nEOF"
+  },
+  {
+    "instruction": "Set create mode with specific ownership",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -owned, -data, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/create-owned << 'EOF'\n/var/log/app/*.log {\n    daily\n    rotate 7\n    create 0640 www-data www-data\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Create logrotate config for multiple paths",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -path\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/multi-path << 'EOF'\n/var/log/service/*.log /var/log/service/*.err {\n    weekly\n    rotate 4\n    compress\n    missingok\n    notifempty\n}\nEOF"
+  },
+  {
+    "instruction": "Use full path spec with no wildcard",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -path\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/exact-path << 'EOF'\n/var/log/specific/app.log {\n    daily\n    rotate 3\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Add tabooext to exclude certain extensions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -ext\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/taboo-ext << 'EOF'\n/var/log/mixed/*.log {\n    daily\n    rotate 7\n    tabooext + .tmp .swp\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Create logrotate config with dateformat",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/date-format << 'EOF'\n/var/log/app/*.log {\n    daily\n    rotate 30\n    dateext\n    dateformat -%Y%m%d-%s\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Set su directive to drop privileges",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -directive, -data, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/su-directive << 'EOF'\n/var/log/restricted/*.log {\n    daily\n    rotate 7\n    su www-data www-data\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Create logrotate config for docker containers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -logs\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ncat > /etc/logrotate.d/docker-logs << 'EOF'\n/var/lib/docker/containers/*/*.log {\n    rotate 3\n    size 10M\n    copytruncate\n    compress\n    missingok\n}\nEOF"
+  },
+  {
+    "instruction": "Add postrotate to restart service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -post\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat > /etc/logrotate.d/restart-post << 'EOF'\n/var/log/service/*.log {\n    daily\n    rotate 7\n    postrotate\n        systemctl restart service\n    endscript\n}\nEOF"
+  }
+]

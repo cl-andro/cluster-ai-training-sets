@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Use column to format a file into aligned columns",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `column` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `column` — column command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncolumn -t data.txt > formatted.txt"
+  },
+  {
+    "instruction": "Format a CSV file as a table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `column` with the correct flags and arguments\n   2. Key flags: -t, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `column` — column command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncolumn -t -s',' data.csv"
+  },
+  {
+    "instruction": "Show file content with tab characters visible as ^I",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -T\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat -T file.txt"
+  },
+  {
+    "instruction": "Show file content with line endings visible",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat -E file.txt"
+  },
+  {
+    "instruction": "Show all non-printing characters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -A\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat -A file.txt"
+  },
+  {
+    "instruction": "Use cut to extract multiple fields from a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cut` with the correct flags and arguments\n   2. Key flags: -d, -f1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cut` — cut command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncut -d',' -f1,3,5 data.csv"
+  },
+  {
+    "instruction": "Cut characters by position (first 10 chars each line)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cut` with the correct flags and arguments\n   2. Key flags: -c1, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cut` — cut command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncut -c1-10 file.txt"
+  },
+  {
+    "instruction": "Remove the last 5 characters of each line",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rev` with the correct flags and arguments\n   2. Key flags: -c6\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rev` — rev command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrev file.txt | cut -c6- | rev"
+  },
+  {
+    "instruction": "Extract the first 100 bytes of a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `head` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `head` — head command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhead -c 100 file.bin > first100.bin"
+  },
+  {
+    "instruction": "Get the last 1KB of a large file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tail` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ntail -c 1024 large.log > last_kb.log"
+  },
+  {
+    "instruction": "Monitor a file and output new lines as they are written",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for tail\n   2. Build the command chain with error handling\n   3. Execute: tail -f -n0 /var/log/syslog\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntail -f -n0 /var/log/syslog"
+  },
+  {
+    "instruction": "Monitor multiple log files simultaneously",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for tail\n   2. Build the command chain with error handling\n   3. Execute: tail -f /var/log/nginx/access.log /var/log/nginx/error.log\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntail -f /var/log/nginx/access.log /var/log/nginx/error.log"
+  },
+  {
+    "instruction": "Use multitail to monitor multiple files with splitting",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for multitail\n   2. Build the command chain with error handling\n   3. Execute: multitail /var/log/syslog /var/log/auth.log\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `multitail` — multitail command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmultitail /var/log/syslog /var/log/auth.log"
+  },
+  {
+    "instruction": "Use less to open a file and search immediately",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `less` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `less` — less command execution and management\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nless -p 'error' /var/log/syslog"
+  },
+  {
+    "instruction": "Use less with line numbers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `less` with the correct flags and arguments\n   2. Key flags: -N\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `less` — less command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nless -N file.txt"
+  },
+  {
+    "instruction": "Use less and follow file (like tail -f)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `less` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `less` — less command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nless +F /var/log/syslog"
+  },
+  {
+    "instruction": "Jump to the last 10% of a file in less",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `less` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `less` — less command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nless +G file.txt"
+  },
+  {
+    "instruction": "Count occurrences of a pattern per file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -c, -F, -rh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep -c 'pattern' *.log | awk -F: '{print $2, $1}' | sort -rh"
+  },
+  {
+    "instruction": "Show total grep matches across all files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -o, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep -o 'pattern' *.log | wc -l"
+  },
+  {
+    "instruction": "Grep for lines with 5 or more digits in a row",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -E, -9\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep -E '[0-9]{5,}' file.txt"
+  },
+  {
+    "instruction": "Grep for lines containing both 'foo' and 'bar'",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep 'foo' file.txt | grep 'bar'"
+  },
+  {
+    "instruction": "Grep for lines containing 'foo' but not 'bar'",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Flag `-v`: verbose output for debugging\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep 'foo' file.txt | grep -v 'bar'"
+  },
+  {
+    "instruction": "Extract matched group from a regex pattern",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -oP, -9\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep -oP 'ID: \\K[0-9]+' file.txt"
+  },
+  {
+    "instruction": "Extract text between HTML tags",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -oP\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngrep -oP '(?<=<title>).*(?=</title>)' page.html"
+  },
+  {
+    "instruction": "Search compressed logs without decompressing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `zgrep` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `zgrep` — zgrep command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nzgrep 'error' /var/log/syslog.*.gz"
+  }
+]

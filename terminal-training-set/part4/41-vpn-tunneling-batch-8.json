@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Create a SOCKS5 SSH tunnel listening on localhost port 1080",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -D, -N, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -D 1080 -N -f user@remote.example.com"
+  },
+  {
+    "instruction": "Create a local port forward from local 8080 to remote internal service :80",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -L, -web, -N, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -L 8080:internal-web:80 -N -f user@bastion.example.com"
+  },
+  {
+    "instruction": "Create a remote port forward exposing local :3000 on remote's port 9000",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -R, -N, -f, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Flag `-R`: recursive operation\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -R 9000:localhost:3000 -N -f user@public-server.example.com"
+  },
+  {
+    "instruction": "Start an FRP server (frps) with a config file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo frps -c /etc/frp/frps.toml"
+  },
+  {
+    "instruction": "Start an FRP client (frpc) with a config file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo frpc -c /etc/frp/frpc.toml"
+  },
+  {
+    "instruction": "FRP server config: listen on port 7000 and dashboard on 7500",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -token\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/frp/frps.toml << 'EOF'\nbindPort = 7000\nwebServer.port = 7500\nwebServer.addr = \"0.0.0.0\"\nauth.token = \"my-token\"\nEOF"
+  },
+  {
+    "instruction": "FRP client config: expose local SSH via TCP on remote port 6000",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -token, -tunnel\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/frp/frpc.toml << 'EOF'\nserverAddr = \"203.0.113.5\"\nserverPort = 7000\nauth.token = \"my-token\"\n[[proxies]]\nname = \"ssh-tunnel\"\ntype = \"tcp\"\nlocalIP = \"127.0.0.1\"\nlocalPort = 22\nremotePort = 6000\nEOF"
+  },
+  {
+    "instruction": "Start ngrok HTTP tunnel on port 8080",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ngrok` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ngrok` — ngrok command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nngrok http 8080"
+  },
+  {
+    "instruction": "Start ngrok TCP tunnel on port 22",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ngrok` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ngrok` — ngrok command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nngrok tcp 22"
+  },
+  {
+    "instruction": "Start ngrok with a custom subdomain and config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ngrok` with the correct flags and arguments\n   2. Key flags: --domain, -free\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ngrok` — ngrok command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nngrok http --domain=myapp.ngrok-free.app 3000"
+  },
+  {
+    "instruction": "List all active ngrok tunnels",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ngrok` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ngrok` — ngrok command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nngrok tunnel list"
+  },
+  {
+    "instruction": "Show the ngrok version installed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ngrok version\n   2. Apply the configuration and verify with `ngrok status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ngrok` — ngrok command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nngrok version"
+  },
+  {
+    "instruction": "Validate the ngrok configuration file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ngrok` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ngrok` — ngrok command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nngrok config check"
+  },
+  {
+    "instruction": "Display ngrok help for all commands",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ngrok` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ngrok` — ngrok command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nngrok help"
+  },
+  {
+    "instruction": "Create an SSH tunnel with a jump host (bastion)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -J, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -J user@bastion.example.com user@internal-server.example.com"
+  },
+  {
+    "instruction": "Create a multi-hop local port forward through two SSH hops",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -L, -J\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -L 8080:localhost:8080 -J user@hop1.example.com user@hop2.example.com"
+  },
+  {
+    "instruction": "SSH tunnel with dynamic forwarding and compression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -C, -D, -N, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -C -D 1080 -N -f user@remote.example.com"
+  },
+  {
+    "instruction": "SSH tunnel keeping the connection alive with ServerAliveInterval",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -o, -L, -N, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -o ServerAliveInterval=30 -L 5900:localhost:5900 -N -f user@remote.example.com"
+  },
+  {
+    "instruction": "Run frpc in the background as a systemd service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl start frpc && sudo systemctl enable frpc"
+  },
+  {
+    "instruction": "Run ngrok as a systemd service for persistent tunneling",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: --domain, -free\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ncat > /etc/systemd/system/ngrok.service << 'EOF'\n[Unit]\nDescription=ngrok\nAfter=network.target\n[Service]\nExecStart=/usr/bin/ngrok http --domain=myapp.ngrok-free.app 3000\nRestart=always\n[Install]\nWantedBy=multi-user.target\nEOF && sudo systemctl daemon-reload && sudo systemctl enable --now ngrok"
+  },
+  {
+    "instruction": "Set up an SSH SOCKS proxy with background persistence",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -f, -N, -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -f -N -D 1080 user@remote.example.com"
+  },
+  {
+    "instruction": "Config file for persistent SSH tunnel via ~/.ssh/config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'Host tunnel\n  HostName remote.example.com\n  User user\n  DynamicForward 1080\n  ServerAliveInterval 60\n  ExitOnForwardFailure yes\n  SessionType background' >> ~/.ssh/config && ssh tunnel"
+  },
+  {
+    "instruction": "Start a local forward tunnel with exit-on-failure",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -o, -L, -N, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -o ExitOnForwardFailure=yes -L 8888:localhost:8888 -N -f user@remote.example.com"
+  },
+  {
+    "instruction": "Test SSH tunnel by sending HTTP request through the SOCKS proxy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -x socks5h://127.0.0.1:1080 https://ifconfig.me"
+  }
+]

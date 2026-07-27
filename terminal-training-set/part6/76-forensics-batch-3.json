@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Create a timeline of file activity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mactime` with the correct flags and arguments\n   2. Key flags: -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mactime` — mactime command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmactime -b bodyfile.txt > timeline.csv"
+  },
+  {
+    "instruction": "Create timeline with day granularity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mactime` with the correct flags and arguments\n   2. Key flags: -d, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mactime` — mactime command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmactime -d -b bodyfile.txt > timeline_daily.csv"
+  },
+  {
+    "instruction": "Create timeline with hour granularity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mactime` with the correct flags and arguments\n   2. Key flags: -h, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mactime` — mactime command execution and management\n   Flag `-h`: human-readable format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmactime -h -b bodyfile.txt > timeline_hourly.csv"
+  },
+  {
+    "instruction": "Search for a specific signature/pattern",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sigfind` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sigfind` — sigfind command execution and management\n   Flag `-l`: long listing format\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsigfind -l 512 0x55AA image.dd"
+  },
+  {
+    "instruction": "Search for a hex string in the image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sigfind` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sigfind` — sigfind command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsigfind -l 512 0xEB5890 image.dd"
+  },
+  {
+    "instruction": "Search at a specific offset",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sigfind` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sigfind` — sigfind command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsigfind -o 1048576 0x55AA image.dd"
+  },
+  {
+    "instruction": "Run sorter to categorize files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sorter` with the correct flags and arguments\n   2. Key flags: -o, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sorter` — sorter command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsorter -o 2048 -s /path/to/sort.tbl image.dd"
+  },
+  {
+    "instruction": "Run sorter with hash database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sorter` with the correct flags and arguments\n   2. Key flags: -o, -h, -md5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sorter` — sorter command execution and management\n   Supporting tool: `sleuthkit` — sleuthkit command execution and management\n   Flag `-h`: human-readable format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsorter -o 2048 -h /usr/share/sleuthkit/hashdb/nsrl-md5.db image.dd"
+  },
+  {
+    "instruction": "Run sorter to a specific output dir",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sorter` with the correct flags and arguments\n   2. Key flags: -o, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sorter` — sorter command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsorter -o 2048 -d /output/sorter_result image.dd"
+  },
+  {
+    "instruction": "Search for ASCII strings in the image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `srch_strings` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `srch_strings` — srch_strings command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsrch_strings -o 2048 image.dd > strings.txt"
+  },
+  {
+    "instruction": "Search for strings with minimum length",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `srch_strings` with the correct flags and arguments\n   2. Key flags: -n, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `srch_strings` — srch_strings command execution and management\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsrch_strings -n 10 -o 2048 image.dd > long_strings.txt"
+  },
+  {
+    "instruction": "Search for both ASCII and Unicode strings",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `srch_strings` with the correct flags and arguments\n   2. Key flags: -e, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `srch_strings` — srch_strings command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsrch_strings -e l -o 2048 image.dd > unicode_strings.txt"
+  },
+  {
+    "instruction": "Search for strings with offset output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `srch_strings` with the correct flags and arguments\n   2. Key flags: -t, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `srch_strings` — srch_strings command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsrch_strings -t -o 2048 image.dd > strings_with_offsets.txt"
+  },
+  {
+    "instruction": "Search strings within a offset range",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `srch_strings` with the correct flags and arguments\n   2. Key flags: -o, -b, -1048576\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `srch_strings` — srch_strings command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsrch_strings -o 2048 image.dd -b 0-1048576"
+  },
+  {
+    "instruction": "Run mactime with body file from fls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fls` with the correct flags and arguments\n   2. Key flags: -m, -o, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fls` — fls command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfls -m / -o 2048 image.dd > body.txt && mactime -b body.txt > timeline.csv"
+  },
+  {
+    "instruction": "Search for JPEG headers with sigfind",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sigfind` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sigfind` — sigfind command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsigfind 0xFFD8FFE0 image.dd"
+  },
+  {
+    "instruction": "Search for ZIP local file header",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sigfind` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sigfind` — sigfind command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsigfind 0x504B0304 image.dd"
+  },
+  {
+    "instruction": "Run sorter to alert on bad extensions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for sorter\n   2. Build the command chain with error handling\n   3. Execute: sorter -o 2048 -d /output/sorter -a image.dd\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `sorter` — sorter command execution and management\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsorter -o 2048 -d /output/sorter -a image.dd"
+  },
+  {
+    "instruction": "All strings with encoding detection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `srch_strings` with the correct flags and arguments\n   2. Key flags: -e, -e, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `srch_strings` — srch_strings command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsrch_strings -e l -e b -o 2048 image.dd > all_strings.txt"
+  },
+  {
+    "instruction": "Find strings near a specific offset",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `srch_strings` with the correct flags and arguments\n   2. Key flags: -o, --offset, --length\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `srch_strings` — srch_strings command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsrch_strings -o 2048 --offset=500000 --length=100000 image.dd"
+  },
+  {
+    "instruction": "Count total strings found",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `srch_strings` with the correct flags and arguments\n   2. Key flags: -o, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `srch_strings` — srch_strings command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsrch_strings -o 2048 image.dd | wc -l"
+  }
+]

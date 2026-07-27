@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Use capsh to test specific capability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `capsh` with the correct flags and arguments\n   2. Key flags: --has-cap, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `capsh` — capsh command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncapsh --has-cap=cap_net_raw -- -c 'echo cap_net_raw is supported'"
+  },
+  {
+    "instruction": "List all available capability values",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `capsh` with the correct flags and arguments\n   2. Key flags: --help, -oP, -z_, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `capsh` — capsh command execution and management\n   Flag `--help`: display usage information\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncapsh --help 2>&1 | grep -oP 'cap_[a-z_]+' | sort -u"
+  },
+  {
+    "instruction": "Decode capability bitmask manually",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npython3 -c \"mask=0x0000000000000400; bits=[i for i in range(64) if mask>>i & 1]; print('Capabilities:', [f'cap_{i}' for i in bits])\""
+  },
+  {
+    "instruction": "Convert capability name to numeric",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c \"import ctypes; print(ctypes.CDLL('libcap.so.2').cap_from_name(b'cap_net_raw'))\""
+  },
+  {
+    "instruction": "ASCII art showing capability sets",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npython3 -c \"\ndata = open('/proc/self/status').read().split('\\n')\ncaps = {}\nfor l in data:\n    if 'Cap' in l and ':' in l:\n        parts = l.split()\n        if len(parts) >= 2:\n            name = parts[0].rstrip(':')\n            mask = int(parts[1], 16)\n            caps[name] = mask\n            bits = [i for i in range(64) if mask>>i & 1]\n            print(f'{name:8} = {mask:016x}: {bits}')\n\""
+  },
+  {
+    "instruction": "Check if dotnet has capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Supporting tool: `dotnet` — .NET SDK CLI\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /usr/share/dotnet/dotnet 2>/dev/null || echo 'no caps'"
+  },
+  {
+    "instruction": "View capabilities of installed browsers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the getcap configuration with the required parameters\n   2. Apply the configuration and verify with `getcap status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /usr/bin/firefox /usr/bin/chromium /usr/bin/brave 2>/dev/null"
+  },
+  {
+    "instruction": "Find packages that use capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg` with the correct flags and arguments\n   2. Key flags: -L, -bin, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg` — dpkg command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ndpkg -L libcap2-bin | head -20"
+  },
+  {
+    "instruction": "Show all man pages for cap_* functions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `man` with the correct flags and arguments\n   2. Key flags: -k, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `man` — man command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nman -k cap_ | grep -i 'capability'"
+  },
+  {
+    "instruction": "View capabilities related to mount",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `man` with the correct flags and arguments\n   2. Key flags: -i, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `man` — man command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nman 7 capabilities | grep -i 'mount' | head -10"
+  },
+  {
+    "instruction": "Check Vim capability CAP_NET_RAW",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /usr/bin/vim.basic 2>/dev/null || echo 'no vim caps'"
+  },
+  {
+    "instruction": "List capabilities for disk tools",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Supporting tool: `parted` — disk partitioning\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\ngetcap /sbin/fdisk /sbin/parted /sbin/mkfs.ext4 2>/dev/null"
+  },
+  {
+    "instruction": "Check if traceroute6 has raw capability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /usr/bin/traceroute6 2>/dev/null || echo 'no separate cap'"
+  },
+  {
+    "instruction": "Find binaries with CAP_SYS_PTRACE",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap -r / 2>/dev/null | grep cap_sys_ptrace"
+  },
+  {
+    "instruction": "Check all cap functionaly for nmap",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Supporting tool: `nmap` — network scanning and discovery\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /usr/bin/nmap 2>/dev/null || echo 'nmap no caps'"
+  },
+  {
+    "instruction": "View CAP_FOWNER for chown tools",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /bin/chown /usr/bin/chown 2>/dev/null"
+  },
+  {
+    "instruction": "Check if journalctl has capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Supporting tool: `journalctl` — query systemd journal logs\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /usr/bin/journalctl 2>/dev/null"
+  },
+  {
+    "instruction": "See what capabilities logrotate runs with",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getpcaps` with the correct flags and arguments\n   2. Key flags: -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getpcaps` — getpcaps command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetpcaps $(pgrep -x logrotate) 2>/dev/null || echo 'not running'"
+  },
+  {
+    "instruction": "Check cron daemon capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getpcaps` with the correct flags and arguments\n   2. Key flags: -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getpcaps` — getpcaps command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetpcaps $(pgrep -x cron) 2>/dev/null"
+  },
+  {
+    "instruction": "View cups daemon capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getpcaps` with the correct flags and arguments\n   2. Key flags: -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getpcaps` — getpcaps command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetpcaps $(pgrep -x cupsd) 2>/dev/null"
+  },
+  {
+    "instruction": "Check dhcp client capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getpcaps` with the correct flags and arguments\n   2. Key flags: -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getpcaps` — getpcaps command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetpcaps $(pgrep -x dhclient) 2>/dev/null"
+  }
+]

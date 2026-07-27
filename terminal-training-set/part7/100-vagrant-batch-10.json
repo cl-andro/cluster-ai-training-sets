@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Use a Vagrant environment variable for box URL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `BOX_URL` with the correct flags and arguments\n   2. Key flags: --box-version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `BOX_URL` — BOX_URL command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nBOX_URL=http://mirror.example.com/box.box vagrant init my/box --box-version 1.0"
+  },
+  {
+    "instruction": "Use Vagrant with an HTTP proxy configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport http_proxy=http://proxy:8080 && vagrant up"
+  },
+  {
+    "instruction": "Use Vagrant with no proxy for a specific domain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport no_proxy=localhost,192.168.56.* && vagrant up"
+  },
+  {
+    "instruction": "Create a Vagrantfile with YAML provisioning data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.provision \"shell\" do |s| s.inline = File.read(\"data/setup.yaml\") end' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrantfile with ERB templating",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '<%= \"config.vm.box = \\\"ubuntu/jammy64\\\"\" %>' > Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with Terraform via the Terraform provisioner",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -auto, -approve\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.provision \"shell\", inline: \"cd /vagrant && terraform apply -auto-approve\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Resolve networking conflict in Vagrant multiple VMs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.define \"node1\" do |n| n.vm.network \"private_network\", ip: \"192.168.56.11\" end config.vm.define \"node2\" do |n| n.vm.network \"private_network\", ip: \"192.168.56.12\" end' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with Consul service discovery",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -dev, -client\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.provision \"shell\", inline: \"consul agent -dev -client=0.0.0.0\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Configure Vagrant with Vault agent sidecar",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the vault configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `vault` — secrets management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\necho 'config.vm.provision \"shell\", inline: \"vault agent -config=/vagrant/vault-agent.hcl\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with Nomad cluster setup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the nomad configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `nomad` — HashiCorp Nomad scheduler\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.define \"server\" do |s| s.vm.provision \"shell\", inline: \"nomad agent -server\" end config.vm.define \"client\" do |c| c.vm.provision \"shell\", inline: \"nomad agent -client\" end' >> Vagrantfile"
+  },
+  {
+    "instruction": "Create a cluster with K3s and Vagrant",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -sfL\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\necho 'Vagrant.configure(\"2\") do |config| (1..3).each do |i| config.vm.define \"node#{i}\" do |n| n.vm.box = \"ubuntu/jammy64\" n.vm.provision \"shell\", inline: \"curl -sfL https://get.k3s.io | sh -\" end end end' > Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with Kubernetes (kubeadm) multi-node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -plane\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'Vagrant.configure(\"2\") do |config| config.vm.define \"control\" do |c| c.vm.box = \"ubuntu/jammy64\" c.vm.provision \"shell\", path: \"scripts/control-plane.sh\" end config.vm.define \"worker\" do |w| w.vm.box = \"ubuntu/jammy64\" w.vm.provision \"shell\", path: \"scripts/worker.sh\" end end' > Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with Docker Compose inside the VM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -compose, -f, -compose, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.provision \"shell\", inline: \"docker-compose -f /vagrant/docker-compose.yml up -d\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Deploy a LAMP stack with Vagrant shell provisioning",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `php` — php command execution and management\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\necho 'config.vm.provision \"shell\", inline: <<-SHELL apt update apt install -y apache2 mysql-server php libapache2-mod-php systemctl enable apache2 SHELL' >> Vagrantfile"
+  },
+  {
+    "instruction": "Deploy a MEAN stack with Vagrant provisioning",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\necho 'config.vm.provision \"shell\", inline: <<-SHELL curl -fsSL https://deb.nodesource.com/setup_20.x | bash - apt install -y nodejs mongodb-org npm SHELL' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with a custom bridge interface name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.network \"public_network\", bridge: \"br0\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with a Guest Additions update disabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vbguest.auto_update = false' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with NFS v3 instead of v4",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.synced_folder \".\", \"/vagrant\", type: \"nfs\", nfs_version: 3' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with rsync-auto to watch file changes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for vagrant\n   2. Build the command chain with error handling\n   3. Execute: vagrant rsync-auto\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `vagrant` — vagrant command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvagrant rsync-auto"
+  },
+  {
+    "instruction": "Use Vagrant with rsync-chmod flag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `rsync` — efficient file synchronization\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\necho 'config.vm.synced_folder \".\", \"/vagrant\", type: \"rsync\", rsync__chmod: \"ugo=rwX\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with a bhyve provider (FreeBSD)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.provider \"bhyve\" do |bh| bh.memory = 2048 end' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with a custom box metadata URL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.box_url = \"https://vagrantcloud.com/ubuntu/jammy64/version/20240401.0.0/providers/virtualbox.box\" config.vm.box_download_checksum = \"sha256:...\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Monitor Vagrant VM performance with collectd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'config.vm.provision \"shell\", inline: \"apt install -y collectd && systemctl\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `apt` — apt command execution and management\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\necho 'config.vm.provision \"shell\", inline: \"apt install -y collectd && systemctl enable collectd\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant in a fully automated build pipeline",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for vagrant\n   2. Build the command chain with error handling\n   3. Execute: vagrant destroy -f && vagrant up --provider libvirt && vagrant package --output \n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `vagrant` — vagrant command execution and management\n   Flag `-f`: force execution, suppress errors\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvagrant destroy -f && vagrant up --provider libvirt && vagrant package --output build.box && vagrant cloud publish myorg/build-box 1.0 libvirt build.box"
+  }
+]

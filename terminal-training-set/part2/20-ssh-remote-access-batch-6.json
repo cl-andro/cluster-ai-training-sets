@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "SSH with a jump host and key forwarding",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -o, -W, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -o ProxyCommand='ssh -W %h:%p bastion' -i ~/.ssh/target_key user@target"
+  },
+  {
+    "instruction": "Create an SSH tunnel for MySQL remote access",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -L, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -L 3306:localhost:3306 user@db-server"
+  },
+  {
+    "instruction": "Create an SSH tunnel for remote debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using ssh\n   2. Apply corrective actions: ssh -L 9229:localhost:9229 user@remote -N\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -L 9229:localhost:9229 user@remote -N"
+  },
+  {
+    "instruction": "Create an SSH tunnel for multiple ports",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -L, -L, -N\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -L 8080:localhost:80 -L 3000:localhost:3000 user@host -N"
+  },
+  {
+    "instruction": "Use SSH as a SOCKS5 proxy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -D, -N, -C, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -D 1080 -N -C user@proxy-server"
+  },
+  {
+    "instruction": "Mount remote filesystem with SSHFS with reconnect",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sshfs` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sshfs` — sshfs command execution and management\n   Supporting tool: `host` — host command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsshfs -o reconnect,ServerAliveInterval=15,compression=yes user@host:/remote /mnt/remote"
+  },
+  {
+    "instruction": "Copy a directory from remote using tar over SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh user@host 'tar czf - /remote/dir' | tar xzf - -C /local/dir"
+  },
+  {
+    "instruction": "Copy directories from local to remote via tar",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tar` with the correct flags and arguments\n   2. Key flags: -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Supporting tool: `host` — host command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar czf - /local/dir | ssh user@host 'tar xzf - -C /remote/dir'"
+  },
+  {
+    "instruction": "Use rsync to sync a remote directory efficiently",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsync` with the correct flags and arguments\n   2. Key flags: -avz, --progress, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Supporting tool: `host` — host command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync -avz --progress -e ssh user@host:/source/dir /dest/dir"
+  },
+  {
+    "instruction": "Use rsync over SSH with partial transfer for large files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsync` with the correct flags and arguments\n   2. Key flags: -avz, --partial, --progress, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Supporting tool: `host` — host command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync -avz --partial --progress -e ssh user@host:largefile.iso ."
+  },
+  {
+    "instruction": "Do a remote backup with rsync and hard links",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for rsync\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: rsync -avz --link-dest=/backup/previous --delete -e ssh /source user@host:/backu\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Supporting tool: `host` — host command execution and management\n   Flag `--delete`: remove extraneous files from destination\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync -avz --link-dest=/backup/previous --delete -e ssh /source user@host:/backup/current"
+  },
+  {
+    "instruction": "Use rdiff-backup for incremental remote backups",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for apt\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: apt install -y rdiff-backup && rdiff-backup --print-statistics /source user@host\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `host` — host command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y rdiff-backup && rdiff-backup --print-statistics /source user@host::/backup"
+  },
+  {
+    "instruction": "Use duplicity for encrypted backups over SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for apt\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: apt install -y duplicity && duplicity /source scp://user@host/backup\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `duplicity` — duplicity command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y duplicity && duplicity /source scp://user@host/backup"
+  },
+  {
+    "instruction": "Restore from duplicity backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity restore scp://user@host/backup /restore-dir\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity restore scp://user@host/backup /restore-dir"
+  },
+  {
+    "instruction": "Use borgbackup for deduplicated remote backups",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for apt\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: apt install -y borgbackup && borg init --encryption=repokey user@host:/backup\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `host` — host command execution and management\n   Supporting tool: `borg` — deduplicating backup tool\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y borgbackup && borg init --encryption=repokey user@host:/backup"
+  },
+  {
+    "instruction": "Create a Borg backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for borg\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: borg create --stats --progress user@host:/backup::{hostname}-{now} /source\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `borg` — deduplicating backup tool\n   Supporting tool: `host` — host command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nborg create --stats --progress user@host:/backup::{hostname}-{now} /source"
+  },
+  {
+    "instruction": "List Borg backup archives",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for borg\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: borg list user@host:/backup\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `borg` — deduplicating backup tool\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nborg list user@host:/backup"
+  },
+  {
+    "instruction": "Restore a Borg backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for borg\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: borg extract user@host:/backup::archive-name\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `borg` — deduplicating backup tool\n   Supporting tool: `host` — host command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nborg extract user@host:/backup::archive-name"
+  },
+  {
+    "instruction": "Use restic for encrypted backups",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for apt\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: apt install -y restic && restic init --repo sftp:user@host:/backup\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `host` — host command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y restic && restic init --repo sftp:user@host:/backup"
+  },
+  {
+    "instruction": "Create a restic backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for restic\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: restic -r sftp:user@host:/backup backup /source\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `restic` — encrypted backup solution\n   Supporting tool: `host` — host command execution and management\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrestic -r sftp:user@host:/backup backup /source"
+  },
+  {
+    "instruction": "List restic snapshots",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for restic\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: restic -r sftp:user@host:/backup snapshots\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `restic` — encrypted backup solution\n   Supporting tool: `host` — host command execution and management\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrestic -r sftp:user@host:/backup snapshots"
+  },
+  {
+    "instruction": "Restore a restic backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for restic\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: restic -r sftp:user@host:/backup restore latest --target /restore\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `restic` — encrypted backup solution\n   Supporting tool: `host` — host command execution and management\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrestic -r sftp:user@host:/backup restore latest --target /restore"
+  },
+  {
+    "instruction": "Use rsync to mirror a remote website",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsync` with the correct flags and arguments\n   2. Key flags: -avz, --delete, --links, --safe-links\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Supporting tool: `host` — host command execution and management\n   Flag `--delete`: remove extraneous files from destination\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync -avz --delete --links --safe-links --ignore-errors --timeout=60 -e ssh user@host:/var/www/ /var/www/"
+  },
+  {
+    "instruction": "Use rsync with include/exclude lists",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsync` with the correct flags and arguments\n   2. Key flags: -avz, --include-from, --exclude-from, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync -avz --include-from=include.txt --exclude-from=exclude.txt -e ssh user@host:/source /dest"
+  },
+  {
+    "instruction": "Use rsync to copy only new/changed files (not existing)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsync` with the correct flags and arguments\n   2. Key flags: -avz, --ignore-existing, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Supporting tool: `host` — host command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync -avz --ignore-existing -e ssh user@host:/source /dest"
+  }
+]

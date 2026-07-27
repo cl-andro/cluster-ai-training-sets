@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Use gh API with jq to filter output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: --jq\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api /repos/owner/repo/issues --jq '.[] | {title: .title, state: .state}'"
+  },
+  {
+    "instruction": "Use gh API with pagination",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: --paginate\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api /repos/owner/repo/issues --paginate"
+  },
+  {
+    "instruction": "Use gh API with a custom header",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api /repos/owner/repo -H \"Accept: application/vnd.github+json\""
+  },
+  {
+    "instruction": "Use gh API preview header",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -H, -preview\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api /repos/owner/repo -H \"Accept: application/vnd.github.dorian-preview+json\""
+  },
+  {
+    "instruction": "List repository branches",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: --jq\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/branches --jq '.[].name'"
+  },
+  {
+    "instruction": "Create a branch via GitHub API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -f, -branch, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Supporting tool: `git` — version control and repository management\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/git/refs -f ref=\"refs/heads/new-branch\" -f sha=\"abc123\""
+  },
+  {
+    "instruction": "Protect a branch",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -f, -f, --method\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Flag `-f`: force execution, suppress errors\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/branches/main/protection -f required_status_checks[strict]=true -f enforce_admins=true --method PUT"
+  },
+  {
+    "instruction": "List deploy keys",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: gh api repos/owner/repo/keys --jq '.[].title'\n   2. Apply the configuration and verify with `gh status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/keys --jq '.[].title'"
+  },
+  {
+    "instruction": "Add a deploy key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: gh api repos/owner/repo/keys -f title=\"Deploy Key\" -f key=\"$(cat ~/.ssh/id_rsa.p\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `gh status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Flag `-f`: force execution, suppress errors\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/keys -f title=\"Deploy Key\" -f key=\"$(cat ~/.ssh/id_rsa.pub)\" -f read_only=true"
+  },
+  {
+    "instruction": "Remove a deploy key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: gh api repos/owner/repo/keys/12345 --method DELETE\n   2. Apply the configuration and verify with `gh status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/keys/12345 --method DELETE"
+  },
+  {
+    "instruction": "List repository webhooks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: --jq\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/hooks --jq '.[].config.url'"
+  },
+  {
+    "instruction": "Create a webhook",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -f, -f, -f, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Flag `-f`: force execution, suppress errors\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/hooks -f name=web -f config[url]=https://example.com/hook -f config[content_type]=json -f events[]=push"
+  },
+  {
+    "instruction": "Delete a webhook",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: --method\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/hooks/123456 --method DELETE"
+  },
+  {
+    "instruction": "List organization repos",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, --limit\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh repo list my-org --limit 100"
+  },
+  {
+    "instruction": "Create a repo in an organization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, -repo, --private\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh repo create my-org/my-repo --private"
+  },
+  {
+    "instruction": "Transfer a repo to an organization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -f, -org, --method\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api repos/owner/repo/transfer -f new_owner=my-org --method POST"
+  },
+  {
+    "instruction": "List organization members",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, --jq\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api orgs/my-org/members --jq '.[].login'"
+  },
+  {
+    "instruction": "List organization teams",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, --jq\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api orgs/my-org/teams --jq '.[].name'"
+  },
+  {
+    "instruction": "Create a team",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, -f, -team, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api orgs/my-org/teams -f name=dev-team -f description=\"Development team\" -f privacy=closed"
+  },
+  {
+    "instruction": "Add a member to a team",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, -team, -f, --method\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api orgs/my-org/teams/dev-team/memberships/username -f role=member --method PUT"
+  },
+  {
+    "instruction": "Remove a member from a team",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, -team, --method\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api orgs/my-org/teams/dev-team/memberships/username --method DELETE"
+  },
+  {
+    "instruction": "List team repositories",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, -team, --jq\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api orgs/my-org/teams/dev-team/repos --jq '.[].name'"
+  },
+  {
+    "instruction": "Add repository to a team",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, -team, -org, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api orgs/my-org/teams/dev-team/repos/my-org/repo -f permission=push --method PUT"
+  },
+  {
+    "instruction": "Remove repository from a team",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: -org, -team, -org, --method\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh api orgs/my-org/teams/dev-team/repos/my-org/repo --method DELETE"
+  },
+  {
+    "instruction": "Set GH CLI to use a specific host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gh` with the correct flags and arguments\n   2. Key flags: --host\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gh` — GitHub CLI for repository management\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngh config set git_protocol ssh --host github.com"
+  }
+]

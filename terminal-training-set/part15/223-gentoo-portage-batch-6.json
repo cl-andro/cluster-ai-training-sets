@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "How to see the direct dependencies of a package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `equery` with the correct flags and arguments\n   2. Key flags: --depth, -servers\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `equery` — equery command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nequery depgraph --depth=1 www-servers/nginx"
+  },
+  {
+    "instruction": "How to use dispatch-conf to manage configuration files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dispatch-conf` with the correct flags and arguments\n   2. Key flags: -conf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dispatch-conf` — dispatch-conf command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndispatch-conf"
+  },
+  {
+    "instruction": "How to use etc-update to update config files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `etc-update` with the correct flags and arguments\n   2. Key flags: -update\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `etc-update` — etc-update command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\netc-update"
+  },
+  {
+    "instruction": "How to see the environment of a specific package at build time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -servers, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /var/tmp/portage/www-servers/nginx-1.24.0/temp/environment"
+  },
+  {
+    "instruction": "How to check if a package needs rebuilding due to soname bumps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `emerge` with the correct flags and arguments\n   2. Key flags: --ask, --depclean, --with-bdeps, -rebuild\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `emerge` — Gentoo Portage package manager\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nemerge --ask --depclean --with-bdeps=y @preserved-rebuild"
+  },
+  {
+    "instruction": "How to list packages with known security vulnerabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `glsa-check` with the correct flags and arguments\n   2. Key flags: -check, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `glsa-check` — glsa-check command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nglsa-check -l affected"
+  },
+  {
+    "instruction": "How to view Gentoo's known security alerts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for cat\n   2. Build the command chain with error handling\n   3. Execute: cat /usr/share/glsa/glsa-*.xml\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /usr/share/glsa/glsa-*.xml"
+  },
+  {
+    "instruction": "How to see the binhost configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/portage/make.conf | grep PORTAGE_BINHOST"
+  },
+  {
+    "instruction": "How to install a binary package from a binhost",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the emerge configuration with the required parameters\n   2. Apply the configuration and verify with `emerge status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `emerge` — Gentoo Portage package manager\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nemerge --ask --getbinpkg www-servers/nginx"
+  },
+  {
+    "instruction": "How to rebuild all packages with new compiler flags",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `emerge` with the correct flags and arguments\n   2. Key flags: --ask, --oneshot, --usepkg\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `emerge` — Gentoo Portage package manager\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nemerge --ask --oneshot --usepkg=n @world"
+  },
+  {
+    "instruction": "How to define custom-features in portage for a package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -servers\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'www-servers/nginx features test' >> /etc/portage/package.env"
+  },
+  {
+    "instruction": "How to use gcc-config to switch gcc version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcc-config` with the correct flags and arguments\n   2. Key flags: -config, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcc-config` — gcc-config command execution and management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcc-config -l"
+  },
+  {
+    "instruction": "How to set the active gcc version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcc-config` with the correct flags and arguments\n   2. Key flags: -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcc-config` — gcc-config command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngcc-config 2"
+  },
+  {
+    "instruction": "How to see the Gentoo repository commit count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -C, --oneline, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit -C /var/db/repos/gentoo log --oneline | wc -l"
+  },
+  {
+    "instruction": "How to list all files in the portage tree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `equery` with the correct flags and arguments\n   2. Key flags: --tree, -servers\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `equery` — equery command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nequery files --tree www-servers/nginx"
+  },
+  {
+    "instruction": "How to create a binhost package index",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `emaint` with the correct flags and arguments\n   2. Key flags: --fix\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `emaint` — emaint command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nemaint binhost --fix"
+  },
+  {
+    "instruction": "How to see the build finish time of a package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -servers\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep 'www-servers/nginx' /var/log/emerge.log | grep '::: completed'"
+  },
+  {
+    "instruction": "How to list packages with USE flag changes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `emerge` with the correct flags and arguments\n   2. Key flags: --ask, --update, --changed-use, --deep\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `emerge` — Gentoo Portage package manager\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nemerge --ask --update --changed-use --deep @world"
+  },
+  {
+    "instruction": "How to check the emerge info for a package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `emerge` with the correct flags and arguments\n   2. Key flags: -pv, --info, -servers\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `emerge` — Gentoo Portage package manager\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nemerge -pv --info www-servers/nginx"
+  },
+  {
+    "instruction": "How to see the portage EAPI version for a package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `equery` with the correct flags and arguments\n   2. Key flags: --eapi, -servers\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `equery` — equery command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nequery meta --eapi www-servers/nginx"
+  }
+]

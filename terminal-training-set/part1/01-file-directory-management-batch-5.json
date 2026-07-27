@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Watch a directory and list new files as they appear",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for watch\n   2. Build the command chain with error handling\n   3. Execute: watch -n 1 ls -la\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `watch` — watch command execution and management\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwatch -n 1 ls -la"
+  },
+  {
+    "instruction": "Show file descriptor usage for a running process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la, -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /proc/$(pgrep -x nginx)/fd/"
+  },
+  {
+    "instruction": "Show the size of each subdirectory in the current dir",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `du` with the correct flags and arguments\n   2. Key flags: -h, --max-depth, -rh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `du` — du command execution and management\n   Flag `-h`: human-readable format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndu -h --max-depth=1 | sort -rh"
+  },
+  {
+    "instruction": "Find and list files with multiple extensions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -name, -o, -name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -name \"*.tar.gz\" -o -name \"*.tar.xz\""
+  },
+  {
+    "instruction": "Move all .tmp files older than 7 days to trash",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -name, -mtime, -exec\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -name \"*.tmp\" -mtime +7 -exec mv {} ~/.local/share/Trash/files/ \\;"
+  },
+  {
+    "instruction": "Copy only files that have changed (rsync dry-run)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsync` with the correct flags and arguments\n   2. Key flags: -av, --dry-run\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Flag `--dry-run`: simulate without making changes\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync -av --dry-run src/ dest/"
+  },
+  {
+    "instruction": "Sync two directories efficiently with progress",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsync` with the correct flags and arguments\n   2. Key flags: -avh, --progress\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsync` — efficient file synchronization\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nrsync -avh --progress src/ dest/"
+  },
+  {
+    "instruction": "Delete files matching a pattern except the newest 3",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -t, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Flag `-t`: sort by time\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -t *.log | tail -n +4 | xargs rm"
+  },
+  {
+    "instruction": "Flush file system buffers (sync all pending writes)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sync` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sync` — sync command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsync"
+  },
+  {
+    "instruction": "Check whether a file or directory exists",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `test` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `test` — test command execution and management\n   Flag `-f`: force execution, suppress errors\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntest -f file.txt && echo exists"
+  },
+  {
+    "instruction": "Test if a path is a directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `test` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `test` — test command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntest -d /tmp && echo is_dir"
+  },
+  {
+    "instruction": "Create multiple directories from a list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir -p {a,b,c}/{x,y,z}"
+  },
+  {
+    "instruction": "Generate numbered files for testing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `touch` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `touch` — touch command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntouch file{01..20}.txt"
+  },
+  {
+    "instruction": "Generate nested directory structure for testing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir -p test/{alpha,beta,gamma}/{1,2,3}"
+  },
+  {
+    "instruction": "Find files by exact size (e.g., exactly 1024 bytes)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -type f -size 1024c"
+  },
+  {
+    "instruction": "Find files between size range",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -size, -size, -1M\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -type f -size +10k -size -1M"
+  },
+  {
+    "instruction": "List the inode usage across filesystems",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `df` with the correct flags and arguments\n   2. Key flags: -h, --total\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `df` — df command execution and management\n   Flag `-h`: human-readable format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndf -h --total"
+  },
+  {
+    "instruction": "Find which process is using a specific file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fuser` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fuser` — fuser command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfuser file.txt"
+  },
+  {
+    "instruction": "Kill any process accessing a specific file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fuser` with the correct flags and arguments\n   2. Key flags: -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fuser` — fuser command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfuser -k /path/to/file"
+  },
+  {
+    "instruction": "Watch file changes with auditd rule",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for auditctl\n   2. Build the command chain with error handling\n   3. Execute: auditctl -w /etc/passwd -p wa -k passwd_watch\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `auditctl` — Linux audit framework control\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauditctl -w /etc/passwd -p wa -k passwd_watch"
+  },
+  {
+    "instruction": "Remove all files except one",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Flag `-v`: verbose output for debugging\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nrm -v !(\"keep.txt\")"
+  },
+  {
+    "instruction": "Copy a file and preserve all attributes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cp` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cp` — cp command execution and management\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncp -p source.txt dest.txt"
+  },
+  {
+    "instruction": "Move only hidden files to another directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mv` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mv` — mv command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmv .* ~/backup/"
+  },
+  {
+    "instruction": "Show total size of all files matching a pattern",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `du` with the correct flags and arguments\n   2. Key flags: -ch, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `du` — du command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndu -ch *.log | tail -1"
+  },
+  {
+    "instruction": "Count total files recursively in a directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -type f | wc -l"
+  }
+]

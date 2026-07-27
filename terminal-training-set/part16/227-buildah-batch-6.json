@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to build with a specific manifest arch",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --arch\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `docker` — manage containers and images\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nbuildah manifest create mymanifest && buildah manifest add mymanifest --arch amd64 docker://myimage:amd64"
+  },
+  {
+    "instruction": "How to build multi-arch with buildah and push to registry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --platform, --manifest, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --platform linux/amd64,linux/arm64 --manifest mymanifest -t myimage:latest ."
+  },
+  {
+    "instruction": "How to push a multi-arch manifest",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nbuildah manifest push mymanifest docker://registry.example.com/myimage:latest"
+  },
+  {
+    "instruction": "How to remove an entry from a manifest list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nbuildah manifest remove mymanifest docker://registry.example.com/myimage:amd64"
+  },
+  {
+    "instruction": "How to annotate a manifest list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --os, --arch\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nbuildah manifest annotate --os linux --arch arm64 mymanifest docker://registry.example.com/myimage:arm64"
+  },
+  {
+    "instruction": "How to build without extracting layers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --layers, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --layers=false -t myimage:latest ."
+  },
+  {
+    "instruction": "How to use a custom storage driver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --storage-driver, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah --storage-driver overlay bud -t myimage:latest ."
+  },
+  {
+    "instruction": "How to set storage root for buildah",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --root, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah --root /var/lib/containers/storage bud -t myimage:latest ."
+  },
+  {
+    "instruction": "How to set storage runroot for buildah",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --runroot, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah --runroot /run/containers/storage bud -t myimage:latest ."
+  },
+  {
+    "instruction": "How to list available storage drivers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah info | grep storage"
+  },
+  {
+    "instruction": "How to show buildah system information",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah info"
+  },
+  {
+    "instruction": "How to authenticate to OCI registry for push",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --username, --password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah login --username myuser --password mypass registry.example.com"
+  },
+  {
+    "instruction": "How to authenticate using authfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --authfile\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah --authfile /tmp/auth.json pull docker.io/library/alpine:latest"
+  },
+  {
+    "instruction": "How to build with a custom registries configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --registries-conf, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah --registries-conf /etc/containers/registries.conf bud -t myimage:latest ."
+  },
+  {
+    "instruction": "How to override the default policy file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --policy\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah --policy /etc/containers/policy.json pull docker.io/library/alpine:latest"
+  },
+  {
+    "instruction": "How to run a command with TTY allocation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --tty\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah run --tty mycontainer -- /bin/bash"
+  },
+  {
+    "instruction": "How to run a command with stdin open",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --interactive\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah run --interactive mycontainer -- cat"
+  },
+  {
+    "instruction": "How to build with a specific layer cache directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --cache-ttl, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --cache-ttl 24h -t myimage:latest ."
+  },
+  {
+    "instruction": "How to omit timestamps in the build for reproducibility",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --timestamp, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --timestamp 0 -t myimage:latest ."
+  },
+  {
+    "instruction": "How to build ignoring specific files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '*.log\nnode_modules' > .dockerignore && buildah bud -t myimage:latest ."
+  },
+  {
+    "instruction": "How to build with a custom .dockerignore location",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --ignorefile, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --ignorefile /path/to/.dockerignore -t myimage:latest ."
+  },
+  {
+    "instruction": "How to remove intermediate containers after build",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --rm, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --rm -t myimage:latest ."
+  },
+  {
+    "instruction": "How to force pull base images during build",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --pull-always, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --pull-always -t myimage:latest ."
+  },
+  {
+    "instruction": "How to build without pulling base images",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --pull-never, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbuildah bud --pull-never -t myimage:latest ."
+  },
+  {
+    "instruction": "How to set the build output format to OCI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `buildah` with the correct flags and arguments\n   2. Key flags: --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `buildah` — OCI container image builder\n   Supporting tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nbuildah push mycontainer docker://registry.example.com/myimage:latest --format oci"
+  }
+]

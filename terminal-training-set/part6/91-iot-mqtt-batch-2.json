@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Hash a password interactively with mosquitto_passwd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_passwd` with the correct flags and arguments\n   2. Key flags: -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_passwd` — mosquitto_passwd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_passwd -H /etc/mosquitto/passwd alice"
+  },
+  {
+    "instruction": "Publish with null (zero-length) message",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_pub` with the correct flags and arguments\n   2. Key flags: --topic, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_pub` — mosquitto_pub command execution and management\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_pub --topic 'test/null' -n"
+  },
+  {
+    "instruction": "Publish as retained message",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_pub` with the correct flags and arguments\n   2. Key flags: --topic, --message, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_pub` — mosquitto_pub command execution and management\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_pub --topic 'status/last' --message 'online' -r"
+  },
+  {
+    "instruction": "Subscribe without receiving retained messages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_sub` with the correct flags and arguments\n   2. Key flags: --topic\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_sub` — mosquitto_sub command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_sub --topic 'status/"
+  },
+  {
+    "instruction": "Subscribe with no message output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_sub` with the correct flags and arguments\n   2. Key flags: --topic, -N\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_sub` — mosquitto_sub command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_sub --topic 'test/#' -N"
+  },
+  {
+    "instruction": "Subscribe with uppercase topic filtering",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_sub` with the correct flags and arguments\n   2. Key flags: --topic\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_sub` — mosquitto_sub command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_sub --topic 'SENSOR/"
+  },
+  {
+    "instruction": "Subscribe with timeout 30 seconds",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_sub` with the correct flags and arguments\n   2. Key flags: --topic\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_sub` — mosquitto_sub command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_sub --topic 'test/"
+  },
+  {
+    "instruction": "Install MQTT CLI (Eclipse Paho)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nsudo apt install mqtt-cli"
+  },
+  {
+    "instruction": "Publish with MQTT CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mqtt` with the correct flags and arguments\n   2. Key flags: -t, -m, -h, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mqtt` — mqtt command execution and management\n   Flag `-t`: sort by time\n   Flag `-h`: human-readable format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmqtt pub -t 'sensor/temp' -m '23.5' -h localhost -p 1883"
+  },
+  {
+    "instruction": "Subscribe with MQTT CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mqtt` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mqtt` — mqtt command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmqtt sub -t 'sensor/"
+  },
+  {
+    "instruction": "MQTT CLI with TLS connection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mqtt` with the correct flags and arguments\n   2. Key flags: -t, -m, --cafile, --cert\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mqtt` — mqtt command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmqtt pub -t 'secure/topic' -m 'data' --cafile ca.crt --cert client.crt --key client.key"
+  },
+  {
+    "instruction": "Install Node-RED on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the npm configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `npm` — Node.js package manager\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo npm install -g --unsafe-perm node-red"
+  },
+  {
+    "instruction": "Start Node-RED as a service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl enable nodered.service && sudo systemctl start nodered"
+  },
+  {
+    "instruction": "Initialize Node-RED admin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node-red` with the correct flags and arguments\n   2. Key flags: -red\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node-red` — node-red command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode-red admin init"
+  },
+  {
+    "instruction": "Disable a Node-RED flow via CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node-red` with the correct flags and arguments\n   2. Key flags: -red\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node-red` — node-red command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode-red admin disable /path/to/flow.json"
+  },
+  {
+    "instruction": "Enable a Node-RED flow via CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: node-red admin enable /path/to/flow.json\n   2. Apply the configuration and verify with `node-red status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `node-red` — node-red command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode-red admin enable /path/to/flow.json"
+  },
+  {
+    "instruction": "Install Node-RED palette module via CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: node-red admin install node-red-contrib-mqtt-broker\n   2. Apply the configuration and verify with `node-red status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `node-red` — node-red command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode-red admin install node-red-contrib-mqtt-broker"
+  },
+  {
+    "instruction": "Uninstall Node-RED palette module via CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: node-red admin uninstall node-red-contrib-mqtt-broker\n   2. Apply the configuration and verify with `node-red status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `node-red` — node-red command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode-red admin uninstall node-red-contrib-mqtt-broker"
+  },
+  {
+    "instruction": "List Node-RED installed modules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: node-red admin list\n   2. Apply the configuration and verify with `node-red status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `node-red` — node-red command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode-red admin list"
+  },
+  {
+    "instruction": "Install Eclipse Kanto CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -fsSL https://raw.githubusercontent.com/eclipse-kanto/kanto/main/install.sh | sudo bash"
+  },
+  {
+    "instruction": "Check Eclipse Kanto version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kanto` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kanto` — kanto command execution and management\n   Flag `--version`: show tool version\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nkanto --version"
+  },
+  {
+    "instruction": "Start Eclipse Kanto container management",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl start kanto-cm"
+  },
+  {
+    "instruction": "List Eclipse Kanto containers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo kanto-cm list"
+  },
+  {
+    "instruction": "Pull container with Eclipse Kanto",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cm, -mosquitto\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo kanto-cm pull eclipse-mosquitto:latest"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Export collection to CSV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongoexport` with the correct flags and arguments\n   2. Key flags: --uri, --collection, --type, --fields\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongoexport` — mongoexport command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongoexport --uri mongodb://localhost:27017/mydb --collection users --type=csv --fields=name,email,status --out users.csv"
+  },
+  {
+    "instruction": "Import JSON file into collection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongoimport` with the correct flags and arguments\n   2. Key flags: --uri, --collection, --file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongoimport` — mongoimport command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongoimport --uri mongodb://localhost:27017/mydb --collection orders --file orders.json"
+  },
+  {
+    "instruction": "Import CSV with headerline",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongoimport` with the correct flags and arguments\n   2. Key flags: --uri, --collection, --type, --headerline\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongoimport` — mongoimport command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongoimport --uri mongodb://localhost:27017/mydb --collection users --type=csv --headerline --file users.csv"
+  },
+  {
+    "instruction": "Monitor server stats with mongostat",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for mongostat\n   2. Build the command chain with error handling\n   3. Execute: mongostat --uri mongodb://localhost:27017 --rowcount=10\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `mongostat` — mongostat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongostat --uri mongodb://localhost:27017 --rowcount=10"
+  },
+  {
+    "instruction": "Monitor operation times with mongotop",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for mongotop\n   2. Build the command chain with error handling\n   3. Execute: mongotop --uri mongodb://localhost:27017 --rowcount=10\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `mongotop` — mongotop command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongotop --uri mongodb://localhost:27017 --rowcount=10"
+  },
+  {
+    "instruction": "Explain query execution stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.orders.find({userId: ObjectId('...')}).explain('executionStats')\""
+  },
+  {
+    "instruction": "Set database profiler level",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.setProfilingLevel(1, {slowms: 100})\""
+  },
+  {
+    "instruction": "Show profiler data for slow queries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.system.profile.find({millis: {\\$gt: 100}}).pretty()\""
+  },
+  {
+    "instruction": "Use multi-document transactions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"const session = db.getMongo().startSession(); session.startTransaction(); const orders = session.getDatabase('mydb').orders; orders.insertOne({item: 'test', qty: 1}); session.commitTransaction(); session.endSession()\""
+  },
+  {
+    "instruction": "Watch for changes with changeStream",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for mongosh\n   2. Build the command chain with error handling\n   3. Execute: mongosh --eval \"const changeStream = db.orders.watch(); changeStream.next()\"\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"const changeStream = db.orders.watch(); changeStream.next()\""
+  },
+  {
+    "instruction": "Use mapReduce for data aggregation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via mongosh --quiet --eval \"db.orders.mapReduce(function() { emit(this.userId, this.\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Flag `--quiet`: suppress non-essential output\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --quiet --eval \"db.orders.mapReduce(function() { emit(this.userId, this.amount); }, function(key, values) { return Array.sum(values); }, {out: 'order_totals'})\""
+  },
+  {
+    "instruction": "Show server status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.serverStatus()\""
+  },
+  {
+    "instruction": "Get build information",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.adminCommand('buildInfo')\""
+  },
+  {
+    "instruction": "Validate collection for corruption",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.orders.validate({full: true})\""
+  },
+  {
+    "instruction": "Compact a collection to reclaim space",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.runCommand({compact: 'orders'})\""
+  },
+  {
+    "instruction": "Create a view from existing collection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.createView('activeUsers', 'users', [{\\$match: {status: 'active'}}, {\\$project: {name: 1, email: 1}}])\""
+  },
+  {
+    "instruction": "Run a geoNear aggregation query",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --quiet, --eval, -73\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Flag `--quiet`: suppress non-essential output\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --quiet --eval \"db.places.aggregate([{\\$geoNear: {near: {type: 'Point', coordinates: [-73.97, 40.77]}, spherical: true, distanceField: 'dist'}}]).toArray()\""
+  },
+  {
+    "instruction": "Use bulkWrite for mixed batch operations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.orders.bulkWrite([{insertOne: {document: {item: 'test', qty: 1}}}, {updateMany: {filter: {status: 'pending'}, update: {\\$set: {priority: 'low'}}}}])\""
+  },
+  {
+    "instruction": "Show oplog entries from local db",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.getSiblingDB('local').oplog.rs.find().limit(5).toArray()\""
+  },
+  {
+    "instruction": "Get the current oplog size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.getSiblingDB('local').oplog.rs.stats().maxSize\""
+  },
+  {
+    "instruction": "Use collation in a query",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.users.find().collation({locale: 'en', strength: 2})\""
+  },
+  {
+    "instruction": "Create a background index",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mongosh` with the correct flags and arguments\n   2. Key flags: --eval\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mongosh` — MongoDB shell\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmongosh --eval \"db.users.createIndex({name: 1}, {background: true})\""
+  }
+]

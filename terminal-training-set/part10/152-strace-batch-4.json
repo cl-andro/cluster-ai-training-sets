@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Track TCP connections via /proc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -an\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `netstat` — netstat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=connect,accept,bind netstat -an"
+  },
+  {
+    "instruction": "Monitor DNS resolution traffic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=network host google.com 2>&1 | grep -E 'connect|sendto|recvfrom'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `host` — host command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=network host google.com 2>&1 | grep -E 'connect|sendto|recvfrom'"
+  },
+  {
+    "instruction": "Trace HTTP request via curl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nstrace -e trace=network,sendto,recvfrom curl http://example.com"
+  },
+  {
+    "instruction": "Monitor socket creation in python script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=socket python3 -c 'import socket; s=socket.socket(); s.connect((\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=socket python3 -c 'import socket; s=socket.socket(); s.connect((\"example.com\",80))'"
+  },
+  {
+    "instruction": "Trace all file modifications in a command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=write,pwrite,rename,mkdir,unlink touch /tmp/test.txt"
+  },
+  {
+    "instruction": "Watch all stat calls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=stat,lstat,fstat ls -l\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=stat,lstat,fstat ls -l"
+  },
+  {
+    "instruction": "Monitor file permission changes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=chmod,fchmod,chown chmod 644 /tmp/test.txt\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=chmod,fchmod,chown chmod 644 /tmp/test.txt"
+  },
+  {
+    "instruction": "Track directory changes with chdir",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=chdir,fchdir cd /tmp"
+  },
+  {
+    "instruction": "Monitor process priority changes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=nice,setpriority renice 10 -p 1\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=nice,setpriority renice 10 -p 1"
+  },
+  {
+    "instruction": "Watch mount and unmount operations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=mount,umount mount /dev/sda1 /mnt\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=mount,umount mount /dev/sda1 /mnt"
+  },
+  {
+    "instruction": "Trace swap on/off calls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=swapon,swapoff swapon /swapfile"
+  },
+  {
+    "instruction": "Monitor sync and fsync calls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=fsync,sync,fdatasync dd if=/dev/zero of=/tmp/test bs=1M count=10\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=fsync,sync,fdatasync dd if=/dev/zero of=/tmp/test bs=1M count=10"
+  },
+  {
+    "instruction": "Track ioctl operations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -l, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `fdisk` — disk partition table management\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nstrace -e trace=ioctl fdisk -l 2>&1 | head -30"
+  },
+  {
+    "instruction": "Monitor ptrace calls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=ptrace strace ls\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=ptrace strace ls"
+  },
+  {
+    "instruction": "Watch prctl calls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=prctl ls\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=prctl ls"
+  },
+  {
+    "instruction": "Monitor capget/capset",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=capget,capset getcap /bin/ping\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `ping` — ping command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=capget,capset getcap /bin/ping"
+  },
+  {
+    "instruction": "Trace getcpu calls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=getcpu ls 2>&1 | head -10"
+  },
+  {
+    "instruction": "Watch sched_get/setattr",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=sched_getattr,sched_setattr chrt -r 1 sleep 1\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-r`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=sched_getattr,sched_setattr chrt -r 1 sleep 1"
+  },
+  {
+    "instruction": "Monitor time related syscalls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=time,gettimeofday,clock_gettime date\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=time,gettimeofday,clock_gettime date"
+  },
+  {
+    "instruction": "Watch getpid/getppid calls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=getpid,getppid ps\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=getpid,getppid ps"
+  },
+  {
+    "instruction": "Monitor uname syscalls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=uname uname -a\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=uname uname -a"
+  },
+  {
+    "instruction": "Trace syslog syscalls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=syslog dmesg 2>&1 | head -10"
+  }
+]

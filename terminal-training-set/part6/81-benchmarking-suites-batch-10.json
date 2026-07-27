@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Run Phoronix with custom test options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `phoronix-test-suite` with the correct flags and arguments\n   2. Key flags: -test, -suite, --test-option\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `phoronix-test-suite` — phoronix-test-suite command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nphoronix-test-suite run pts/disk --test-option=IOPS"
+  },
+  {
+    "instruction": "Run Phoronix to save a baseline result and compare",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `phoronix-test-suite` with the correct flags and arguments\n   2. Key flags: -test, -suite, -run, --save-baseline\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `phoronix-test-suite` — phoronix-test-suite command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nphoronix-test-suite batch-run pts/cpu --save-baseline=baseline-name"
+  },
+  {
+    "instruction": "Run Phoronix to compare results interactively",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `phoronix-test-suite` with the correct flags and arguments\n   2. Key flags: -test, -suite, -results\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `phoronix-test-suite` — phoronix-test-suite command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nphoronix-test-suite compare-results result1 result2"
+  },
+  {
+    "instruction": "Run sysbench with memory NUMA specific node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysbench` with the correct flags and arguments\n   2. Key flags: --memory-block-size, --memory-total-size, --numa-nodes\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysbench` — sysbench command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysbench memory --memory-block-size=1M --memory-total-size=10G --numa-nodes=0 run"
+  },
+  {
+    "instruction": "Run sysbench with threads and cpu yield lock",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysbench` with the correct flags and arguments\n   2. Key flags: --thread-yields, --thread-locks\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysbench` — sysbench command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysbench threads --thread-yields=200 --thread-locks=4 run"
+  },
+  {
+    "instruction": "Run stress-ng with a specific time and verbose",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stress-ng` with the correct flags and arguments\n   2. Key flags: -ng, --cpu, -t, --verbose\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stress-ng` — stress-ng command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstress-ng --cpu 4 -t 60s --verbose"
+  },
+  {
+    "instruction": "Run stress-ng with unshare stressors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stress-ng` with the correct flags and arguments\n   2. Key flags: -ng, --unshare, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stress-ng` — stress-ng command execution and management\n   Supporting tool: `unshare` — run program in new namespace\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstress-ng --unshare 4 -t 30s"
+  },
+  {
+    "instruction": "Run stress-ng with seal stressors (memfd sealing)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stress-ng` with the correct flags and arguments\n   2. Key flags: -ng, --seal, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stress-ng` — stress-ng command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstress-ng --seal 4 -t 30s"
+  },
+  {
+    "instruction": "Run fio with aio vs sync ioengine comparison",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fio` with the correct flags and arguments\n   2. Key flags: --name, --ioengine, --rw, --bs\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fio` — fio command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfio --name=aiotest --ioengine=libaio --rw=randread --bs=4k --size=1G --runtime=30 && fio --name=synctest --ioengine=sync --rw=randread --bs=4k --size=1G --runtime=30"
+  },
+  {
+    "instruction": "Run fio with per-job log output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fio` with the correct flags and arguments\n   2. Key flags: --name, --rw, --bs, --size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fio` — fio command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfio --name=j1 --rw=randread --bs=4k --size=1G --write_bw_log=bw.log --write_lat_log=lat.log --write_iops_log=iops.log"
+  },
+  {
+    "instruction": "Run iperf3 with both TCP and UDP at once",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iperf3` with the correct flags and arguments\n   2. Key flags: -c, -t, -p, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iperf3` — iperf3 command execution and management\n   Flag `-t`: sort by time\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\niperf3 -c 192.168.1.100 -t 30 -p 5201 && iperf3 -c 192.168.1.100 -u -b 1G -t 30 -p 5202"
+  },
+  {
+    "instruction": "Run iperf3 with 4 parallel streams",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iperf3` with the correct flags and arguments\n   2. Key flags: -c, -P, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iperf3` — iperf3 command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\niperf3 -c 192.168.1.100 -P 4 -t 30"
+  },
+  {
+    "instruction": "Run netperf with histogram output to file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `netperf` with the correct flags and arguments\n   2. Key flags: -H, -l, -t, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `netperf` — netperf command execution and management\n   Flag `-l`: long listing format\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetperf -H 192.168.1.100 -l 30 -t TCP_RR -- -o P50_LATENCY,P90_LATENCY,P99_LATENCY | tee netperf-hist.txt"
+  },
+  {
+    "instruction": "Run netperf with remote VM test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `netserver` with the correct flags and arguments\n   2. Key flags: -p, -H, -p, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `netserver` — netserver command execution and management\n   Flag `-p`: create parent directories\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetserver -p 12865 && netperf -H 192.168.1.100 -p 12865 -l 30"
+  },
+  {
+    "instruction": "Run y-cruncher with custom thread count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `y-cruncher` with the correct flags and arguments\n   2. Key flags: -cruncher, -T\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `y-cruncher` — y-cruncher command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ny-cruncher bench 1b -T 8"
+  },
+  {
+    "instruction": "Run mprime with manual configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mprime` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mprime` — mprime command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmprime -c"
+  },
+  {
+    "instruction": "Run tinymembench with bandwidth measurement",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tinymembench` with the correct flags and arguments\n   2. Key flags: --bandwidth\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tinymembench` — tinymembench command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntinymembench --bandwidth"
+  },
+  {
+    "instruction": "Run cachebench with latency test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cachebench` with the correct flags and arguments\n   2. Key flags: -b, -d, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cachebench` — cachebench command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncachebench -b latency -d 60 -m 256"
+  },
+  {
+    "instruction": "Run glmark2 with off-screen output resolution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `glmark2` with the correct flags and arguments\n   2. Key flags: --off-screen, --size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `glmark2` — glmark2 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nglmark2 --off-screen --size 1024x600"
+  },
+  {
+    "instruction": "Run Openssl speed with DH operation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl speed dh2048 dh4096"
+  },
+  {
+    "instruction": "Run SPEC CPU 2017 with iterative tuning",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `runcpu` with the correct flags and arguments\n   2. Key flags: --config, --tune, --iterations\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `runcpu` — runcpu command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nruncpu --config=debian12.cfg --tune=peak --iterations=3 intspeed"
+  },
+  {
+    "instruction": "Run Phoronix test suite to compare two results",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `phoronix-test-suite` with the correct flags and arguments\n   2. Key flags: -test, -suite, -results, -to\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `phoronix-test-suite` — phoronix-test-suite command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nphoronix-test-suite compare-results-to-baseline my-result baseline-name"
+  },
+  {
+    "instruction": "Run stress-ng with all stressors in order and log to file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stress-ng` with the correct flags and arguments\n   2. Key flags: -ng, --sequential, -t, --log-file\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stress-ng` — stress-ng command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstress-ng --sequential 4 -t 30s --log-file /tmp/stress-ng.log"
+  },
+  {
+    "instruction": "Run UnixBench with all available CPU cores and logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: -c, -d, -results, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Use standard shell utilities chained with pipes for efficiency\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\n./Run -c $(nproc) -d /tmp/ubench-results -v"
+  }
+]

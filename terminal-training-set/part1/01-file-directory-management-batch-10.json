@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a GPG encrypted file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg -c secret.txt"
+  },
+  {
+    "instruction": "Decrypt a GPG encrypted file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg -d secret.txt.gpg"
+  },
+  {
+    "instruction": "Encrypt a file for a specific recipient",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: -e, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg -e -r alice@example.com document.pdf"
+  },
+  {
+    "instruction": "Compute the SHA-1 hash of a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha1sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha1sum` — sha1sum command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha1sum file.txt"
+  },
+  {
+    "instruction": "Compute the BLAKE2 hash of a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `b2sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `b2sum` — b2sum command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nb2sum file.txt"
+  },
+  {
+    "instruction": "Create a PGP signed checksum file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --clearsign\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --clearsign checksums.sha256"
+  },
+  {
+    "instruction": "Verify a GPG signature on a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gpg` with the correct flags and arguments\n   2. Key flags: --verify\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gpg` — file encryption and signing\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\ngpg --verify file.sig file"
+  },
+  {
+    "instruction": "Recursively change all directory permissions to 755",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: chmod 755 $(find . -type d)\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod 755 $(find . -type d)"
+  },
+  {
+    "instruction": "Add execute permission only for the owner on a script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: chmod u+x script.py\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod u+x script.py"
+  },
+  {
+    "instruction": "Remove write permission from group and others",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: chmod go-w file.txt\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod go-w file.txt"
+  },
+  {
+    "instruction": "Set exact permissions 750 on a directory recursively",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: chmod -R 750 mydir/\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Flag `-R`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod -R 750 mydir/"
+  },
+  {
+    "instruction": "Show files with SUID/SGID set system-wide",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -perm, -type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind / -perm /6000 -type f 2>/dev/null"
+  },
+  {
+    "instruction": "Find world-writable files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -perm, -o, -type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind / -perm -o+w -type f 2>/dev/null"
+  },
+  {
+    "instruction": "Remove write permission from all files for others",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: find . -type f -exec chmod o-w {} \\;\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -type f -exec chmod o-w {} \\;"
+  },
+  {
+    "instruction": "List files owned by a specific user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -user john"
+  },
+  {
+    "instruction": "Change owner to root for file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo chown root file.txt"
+  },
+  {
+    "instruction": "Change group to www-data for a web directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chgrp` with the correct flags and arguments\n   2. Key flags: -R, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chgrp` — chgrp command execution and management\n   Flag `-R`: recursive operation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchgrp -R www-data /var/www/"
+  },
+  {
+    "instruction": "Give user and group full access, others none",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chmod` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod 770 shared_directory/"
+  },
+  {
+    "instruction": "Allow only owner to read/write, group can read",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chmod` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod 640 config.yml"
+  },
+  {
+    "instruction": "Give all users read and execute access",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chmod` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod 755 public_script.sh"
+  },
+  {
+    "instruction": "Allow owner full access, others read only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chmod` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod 744 index.html"
+  },
+  {
+    "instruction": "Strip executable bit from all files in a folder",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chmod` with the correct flags and arguments\n   2. Key flags: -R, -x, -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Flag `-R`: recursive operation\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod -R a-x *.sh 2>/dev/null || chmod a-x *.sh"
+  },
+  {
+    "instruction": "Make a shared directory where group can write",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chmod` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod 2775 shared/"
+  },
+  {
+    "instruction": "Set recursive permissions where files get 644, dirs get 755",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: chmod 644 **/*(.) ; chmod 755 **/*(/) 2>/dev/null; find . \\( -type f -exec chmod\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod 644 **/*(.) ; chmod 755 **/*(/) 2>/dev/null; find . \\( -type f -exec chmod 644 {} + \\) -o \\( -type d -exec chmod 755 {} +\\)"
+  },
+  {
+    "instruction": "Show numeric permissions (octal) for a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: stat -c '%a %n' file.txt\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `stat` — stat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstat -c '%a %n' file.txt"
+  }
+]

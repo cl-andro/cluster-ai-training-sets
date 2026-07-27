@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a Terraform Cloud API token for CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'credentials \"app.terraform.io\" { token = \"xxxxx\" }' > ~/.terraformrc"
+  },
+  {
+    "instruction": "Login to Terraform Cloud from CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform login"
+  },
+  {
+    "instruction": "Set Terraform Cloud workspace name in config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -org, -infra\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'terraform { cloud { organization = \"my-org\" workspaces { name = \"prod-infra\" } } }' > cloud.tf"
+  },
+  {
+    "instruction": "Run init with Terraform Cloud remote execution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform init"
+  },
+  {
+    "instruction": "Run plan on Terraform Cloud remotely",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform plan"
+  },
+  {
+    "instruction": "Trigger a Terraform Cloud run via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, --header, --header, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s --header \"Authorization: Bearer $TOKEN\" --header \"Content-Type: application/vnd.api+json\" -X POST https://app.terraform.io/api/v2/runs -d '{\"data\":{\"type\":\"runs\",\"relationships\":{\"workspace\":{\"data\":{\"type\":\"workspaces\",\"id\":\"ws-xxxxx\"}}}}}'"
+  },
+  {
+    "instruction": "List Terraform Cloud workspaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform workspace list"
+  },
+  {
+    "instruction": "Set Terraform Cloud variables via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, --header, --header, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s --header \"Authorization: Bearer $TOKEN\" --header \"Content-Type: application/vnd.api+json\" -X POST https://app.terraform.io/api/v2/vars -d '{\"data\":{\"type\":\"vars\",\"attributes\":{\"key\":\"region\",\"value\":\"us-east-1\",\"category\":\"terraform\"}}}'"
+  },
+  {
+    "instruction": "Check Terraform Cloud run status via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, --header, -xxxxx, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s --header \"Authorization: Bearer $TOKEN\" https://app.terraform.io/api/v2/runs/run-xxxxx | jq -r '.data.attributes.status'"
+  },
+  {
+    "instruction": "Create a Terraform Cloud team API token",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, --header, -X, -xxxxx\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s --header \"Authorization: Bearer $TOKEN\" -X POST https://app.terraform.io/api/v2/teams/team-xxxxx/authentication-token | jq -r '.data.attributes.token'"
+  },
+  {
+    "instruction": "Use Terraform Cloud policy sets via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, --header, -sets\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s --header \"Authorization: Bearer $TOKEN\" https://app.terraform.io/api/v2/policy-sets"
+  },
+  {
+    "instruction": "Set up remote state data source from another workspace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -org, -infra\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'data \"terraform_remote_state\" \"shared\" { backend = \"remote\" config = { organization = \"my-org\" workspaces = { name = \"shared-infra\" } } }' > remote.tf"
+  },
+  {
+    "instruction": "Use local state data source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'data \"terraform_remote_state\" \"local\" { backend = \"local\" config = { path = \"../shared/terraform.tfstate\" } }' > remote.tf"
+  },
+  {
+    "instruction": "Use S3 remote state data source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -state, -east, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'data \"terraform_remote_state\" \"network\" { backend = \"s3\" config = { bucket = \"tf-state\" key = \"network/terraform.tfstate\" region = \"us-east-1\" } }' > remote.tf"
+  },
+  {
+    "instruction": "Use consul remote state data source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'data \"terraform_remote_state\" \"db\" { backend = \"consul\" config = { path = \"tf/state/db\" } }' > remote.tf"
+  },
+  {
+    "instruction": "Use etcd remote state data source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'data \"terraform_remote_state\" \"config\" { backend = \"etcdv3\" config = { endpoints = [\"http://etcd:2379\"] path = \"/tf/kv/state\" } }' > remote.tf"
+  },
+  {
+    "instruction": "Check if a local Terraform state is locked",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nls -la .terraform/terraform.tfstate.lock.info 2>/dev/null && echo 'locked' || echo 'unlocked'"
+  },
+  {
+    "instruction": "Remove a stale local lock file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nrm -f .terraform/terraform.tfstate.lock.info"
+  },
+  {
+    "instruction": "Regenerate the .terraform.lock.hcl file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nrm .terraform.lock.hcl && terraform init"
+  },
+  {
+    "instruction": "Show the dependency lock file contents",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat .terraform.lock.hcl"
+  },
+  {
+    "instruction": "Update the lock file for new provider hashes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -platform, -platform\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform providers lock -platform=linux_amd64 -platform=darwin_amd64"
+  },
+  {
+    "instruction": "Check provider hash mismatch error",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: -platform\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform providers lock -platform=linux_amd64"
+  },
+  {
+    "instruction": "Use sentinel with Terraform Cloud",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat .terraform.lock.hcl | grep -c 'hash'"
+  },
+  {
+    "instruction": "Cache providers locally for offline use",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `terraform` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `terraform` — infrastructure as code provisioning\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nterraform providers mirror /opt/terraform/providers"
+  },
+  {
+    "instruction": "Use a custom plugin cache directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: -cache\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport TF_PLUGIN_CACHE_DIR=/opt/terraform/plugin-cache && terraform init"
+  }
+]

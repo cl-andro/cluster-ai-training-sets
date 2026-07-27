@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Send an email through an authenticated SMTP server using msmtp",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: --account, --from, --to\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"Test message body\" | msmtp --account=default --from=sender@example.com --to=recipient@example.com"
+  },
+  {
+    "instruction": "Configure msmtp interactively for a Gmail SMTP relay",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: msmtp --configure gmail\n   2. Apply the configuration and verify with `msmtp status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `msmtp` — msmtp command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmsmtp --configure gmail"
+  },
+  {
+    "instruction": "Show the msmtp configuration that will be used",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `msmtp` with the correct flags and arguments\n   2. Key flags: --show\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `msmtp` — msmtp command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmsmtp --show"
+  },
+  {
+    "instruction": "Test SMTP connection and authentication with msmtp",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `msmtp` with the correct flags and arguments\n   2. Key flags: --serverinfo, --host, --port, --tls\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `msmtp` — msmtp command execution and management\n   Supporting tool: `host` — host command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmsmtp --serverinfo --host=smtp.example.com --port=587 --tls=on"
+  },
+  {
+    "instruction": "Send a comprehensive SMTP test email using swaks in EHLO/STARTTLS mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swaks` with the correct flags and arguments\n   2. Key flags: --to, --from, --server, --port\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swaks` — swaks command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswaks --to recipient@example.com --from sender@example.com --server smtp.example.com --port 587 --tls --auth LOGIN --auth-user sender@ex.com --auth-password secret"
+  },
+  {
+    "instruction": "Send a test email via SMTP on port 25 using swaks with detailed output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swaks` with the correct flags and arguments\n   2. Key flags: -t, -f, -s, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swaks` — swaks command execution and management\n   Flag `-t`: sort by time\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswaks -t recipient@example.com -f sender@example.com -s mail.example.com -p 25 --verbose"
+  },
+  {
+    "instruction": "Send a multipart MIME test email with swaks including a custom header",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swaks` with the correct flags and arguments\n   2. Key flags: -t, -f, --header, -Custom\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swaks` — swaks command execution and management\n   Flag `-t`: sort by time\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswaks -t user@example.com -f admin@example.com --header \"X-Custom-Hdr: test\" --body /tmp/body.html"
+  },
+  {
+    "instruction": "Connect to an SMTP server manually using telnet to test banner and EHLO",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `telnet` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `telnet` — telnet command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntelnet mail.example.com 25"
+  },
+  {
+    "instruction": "Send an email manually via telnet SMTP session with EHLO, MAIL FROM, RCPT TO, DATA",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nprintf \"EHLO client.example.com\\nMAIL FROM:<sender@example.com>\\nRCPT TO:<recipient@example.com>\\nDATA\\nSubject: Test\\n\\nHello\\n.\\nQUIT\\n\" | telnet mail.example.com 25"
+  },
+  {
+    "instruction": "Test an SMTPS connection using openssl s_client with SMTP protocol",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -connect, -crlf, -quiet\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl s_client -connect smtp.example.com:465 -crlf -quiet"
+  },
+  {
+    "instruction": "Connect to an SMTP server with STARTTLS using openssl s_client",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -starttls, -connect, -crlf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl s_client -starttls smtp -connect smtp.example.com:587 -crlf"
+  },
+  {
+    "instruction": "Send an email through an SMTPS connection using openssl s_client interactively",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -connect, -crlf, -quiet\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl s_client -connect smtp.example.com:465 -crlf -quiet << EOF\nEHLO client.example.com\nAUTH LOGIN\nBASE64USER\nBASE64PASS\nMAIL FROM:<sender@example.com>\nRCPT TO:<recipient@example.com>\nDATA\nSubject: SSL Test\n\nMessage body\n.\nQUIT\nEOF"
+  },
+  {
+    "instruction": "List msmtp available accounts from configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `msmtp` with the correct flags and arguments\n   2. Key flags: --list\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `msmtp` — msmtp command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmsmtp --list"
+  },
+  {
+    "instruction": "Use swaks to test SMTP with SSL/TLS and show the full conversation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swaks` with the correct flags and arguments\n   2. Key flags: -t, -s, -p, --tlsc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swaks` — swaks command execution and management\n   Flag `-t`: sort by time\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswaks -t user@example.com -s smtp.example.com -p 465 --tlsc --verbose"
+  },
+  {
+    "instruction": "Send an email via swaks using a SOCKS proxy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swaks` with the correct flags and arguments\n   2. Key flags: --proxy, -t, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swaks` — swaks command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswaks --proxy socks5://proxy.example.com:1080 -t user@example.com -s smtp.example.com"
+  },
+  {
+    "instruction": "Send a DSN (Delivery Status Notification) request with swaks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swaks` with the correct flags and arguments\n   2. Key flags: -t, --notify\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swaks` — swaks command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswaks -t user@example.com --notify never"
+  },
+  {
+    "instruction": "Connect to submission port with STARTTLS and send a quick test email via swaks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swaks` with the correct flags and arguments\n   2. Key flags: --to, --from, --server, --port\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swaks` — swaks command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswaks --to user@example.com --from test@example.com --server localhost --port 587 --tls"
+  },
+  {
+    "instruction": "Test msmtp with verbose debug output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using msmtp\n   2. Apply corrective actions: msmtp --debug --read-envelope-from --read-recipients < /tmp/email.txt\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `msmtp` — msmtp command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmsmtp --debug --read-envelope-from --read-recipients < /tmp/email.txt"
+  },
+  {
+    "instruction": "Verify SMTP server capabilities using swaks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swaks` with the correct flags and arguments\n   2. Key flags: --server, --port, --quit-after\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swaks` — swaks command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswaks --server smtp.example.com --port 25 --quit-after EHLO"
+  },
+  {
+    "instruction": "Send a raw email via openssl s_client to an SMTPS server with a custom HELO",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -connect, -crlf, -quiet\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl s_client -connect smtp.example.com:465 -crlf -quiet < /tmp/raw_email.txt"
+  },
+  {
+    "instruction": "Use msmtp with a specific configuration file for a cron job",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -C, --from\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"Cron job completed\" | msmtp -C /home/user/.msmtprc --from=cron@example.com admin@example.com"
+  }
+]

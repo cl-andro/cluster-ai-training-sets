@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Create full promtail config from scratch",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `promtail` — log shipping to Loki\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/promtail/config.yml << 'EOF'\nserver:\n  http_listen_port: 9080\n  grpc_listen_port: 0\npositions:\n  filename: /var/lib/promtail/positions.yml\nclients:\n  - url: http://localhost:3100/loki/api/v1/push\nscrape_configs:\n- job_name: system\n  static_configs:\n  - targets: [localhost]\n    labels:\n      job: varlogs\n      __path__: /var/log/*log\nEOF"
+  },
+  {
+    "instruction": "Debug promtail file discovery",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using promtail\n   2. Apply corrective actions: promtail -config.file=/etc/promtail/config.yml -dry-run 2>&1 | grep -iE 'found|r\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `promtail` — log shipping to Loki\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npromtail -config.file=/etc/promtail/config.yml -dry-run 2>&1 | grep -iE 'found|reading|position'"
+  },
+  {
+    "instruction": "Check which files promtail is tailing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://localhost:9080/targets | python3 -c 'import sys,json; data=json.load(sys.stdin); [print(t[\"labels\"][\"__path__\"]) for t in data if \"__path__\" in t.get(\"labels\",{})]'"
+  },
+  {
+    "instruction": "View number of active promtail streams",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://localhost:9080/metrics | grep 'promtail_read_bytes_total' | head -5"
+  },
+  {
+    "instruction": "Check promtail request latency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://localhost:9080/metrics | grep 'promtail_request_duration_seconds'"
+  },
+  {
+    "instruction": "Check promtail sent bytes to Loki",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://localhost:9080/metrics | grep 'promtail_sent_bytes_total'"
+  },
+  {
+    "instruction": "Test promtail pipeline on a log line",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -03, -15T10, -config, -dry\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `promtail` — log shipping to Loki\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '2025-03-15T10:30:00Z INFO This is a test log message' | promtail -config.file=/etc/promtail/config.yml -dry-run -stdin 2>&1"
+  },
+  {
+    "instruction": "Check pipeline stage processing per file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtail` with the correct flags and arguments\n   2. Key flags: -config, -dry, -run, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtail` — log shipping to Loki\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npromtail -config.file=/etc/promtail/config.yml -dry-run 2>&1 | grep -i pipeline"
+  },
+  {
+    "instruction": "Verify promtail sends to correct Loki URL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtail` with the correct flags and arguments\n   2. Key flags: -config, -dry, -run, -iE\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtail` — log shipping to Loki\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npromtail -config.file=/etc/promtail/config.yml -dry-run 2>&1 | grep -iE 'client|url|loki'"
+  },
+  {
+    "instruction": "List all promtail commands",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtail` with the correct flags and arguments\n   2. Key flags: --help\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtail` — log shipping to Loki\n   Flag `--help`: display usage information\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npromtail --help 2>&1"
+  },
+  {
+    "instruction": "Check promtail systemd service file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /lib/systemd/system/promtail.service"
+  },
+  {
+    "instruction": "Edit promtail systemd override",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `promtail` — log shipping to Loki\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl edit promtail"
+  },
+  {
+    "instruction": "View promtail service environment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `promtail` — log shipping to Loki\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl show promtail -p Environment"
+  },
+  {
+    "instruction": "Restart promtail with new config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `promtail` — log shipping to Loki\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart promtail"
+  },
+  {
+    "instruction": "Stop promtail",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `promtail` — log shipping to Loki\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl stop promtail"
+  },
+  {
+    "instruction": "Start promtail manually with debug output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using promtail\n   2. Apply corrective actions: promtail -config.file=/etc/promtail/config.yml -log.level=debug\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `promtail` — log shipping to Loki\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtail -config.file=/etc/promtail/config.yml -log.level=debug"
+  },
+  {
+    "instruction": "Create promtail config test script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -check, -config, -check, -syntax\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Supporting tool: `promtail` — log shipping to Loki\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncat > /usr/local/bin/promtail-check.sh << 'EOF'\n#!/bin/bash\necho \"Checking promtail config...\"\npromtail -config.file=/etc/promtail/config.yml -check-syntax && echo \"Syntax OK\"\necho \"Checking targets...\"\ncurl -s http://localhost:9080/targets | python3 -m json.tool\necho \"Checking Loki connection...\"\ncurl -s http://localhost:3100/ready\necho \"Done\"\nEOF\nchmod +x /usr/local/bin/promtail-check.sh"
+  },
+  {
+    "instruction": "Performance test Loki query",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `time` with the correct flags and arguments\n   2. Key flags: --from, -01, -01T00, --limit\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `time` — time command execution and management\n   Supporting tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ntime logcli query '{job=\"nginx\"}' --from=2025-01-01T00:00:00Z --limit=1000 2>&1"
+  },
+  {
+    "instruction": "Check Loki memory usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ps` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ps` — ps command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nps aux | grep loki | awk '{print $6/1024 \" MB\"}'"
+  },
+  {
+    "instruction": "Check Loki disk usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `du` with the correct flags and arguments\n   2. Key flags: -sh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `du` — du command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndu -sh /var/lib/loki/"
+  },
+  {
+    "instruction": "Purge Loki data to free disk space",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -rf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl stop loki && rm -rf /var/lib/loki/* && systemctl start loki"
+  }
+]

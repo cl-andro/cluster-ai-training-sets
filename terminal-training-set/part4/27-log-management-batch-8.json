@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Extract and count top IPs from Apache log with awk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `awk` with the correct flags and arguments\n   2. Key flags: -c, -rn, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `awk` — awk command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nawk '{print $1}' /var/log/apache2/access.log | sort | uniq -c | sort -rn | head -10"
+  },
+  {
+    "instruction": "Find the most requested URLs from nginx log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `awk` with the correct flags and arguments\n   2. Key flags: -c, -rn, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `awk` — awk command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nawk '{print $7}' /var/log/nginx/access.log | sort | uniq -c | sort -rn | head -20"
+  },
+  {
+    "instruction": "Find user agents causing 500 errors in nginx",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `awk` with the correct flags and arguments\n   2. Key flags: -c, -rn\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `awk` — awk command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nawk '$9 == 500 {print $12}' /var/log/nginx/access.log | sort | uniq -c | sort -rn"
+  },
+  {
+    "instruction": "Sed to anonymize IPs in log files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sed` with the correct flags and arguments\n   2. Key flags: -E, -9, -9, -9\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsed -E 's/[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}/XXX.XXX.XXX.XXX/g' access.log > anonymized.log"
+  },
+  {
+    "instruction": "Use cut to extract timestamps from syslog",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cut` with the correct flags and arguments\n   2. Key flags: -d, -f1, -3, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cut` — cut command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncut -d' ' -f1-3 /var/log/syslog | uniq -c"
+  },
+  {
+    "instruction": "Filter logs between specific timestamps with awk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `awk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `awk` — awk command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nawk '/Jun  1 12:00:00/,/Jun  1 13:00:00/' /var/log/syslog"
+  },
+  {
+    "instruction": "Set up centralized syslog with rsyslog as a server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e 'module(load=\"imtcp\")\ninput(type=\"imtcp\" port=\"514\")\n*.* /var/log/remote.log' > /etc/rsyslog.d/server.conf"
+  },
+  {
+    "instruction": "Configure rsyslog client to send to central server with relay",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '*.* @@192.168.1.200:514' > /etc/rsyslog.d/central.conf\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '*.* @@192.168.1.200:514' > /etc/rsyslog.d/central.conf"
+  },
+  {
+    "instruction": "Use elasticdump to export an Elasticsearch index",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `elasticdump` with the correct flags and arguments\n   2. Key flags: --input, -index, --output, -index\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `elasticdump` — elasticdump command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nelasticdump --input=http://localhost:9200/my-index --output=my-index.json"
+  },
+  {
+    "instruction": "Use elasticdump to import data into Elasticsearch",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `elasticdump` with the correct flags and arguments\n   2. Key flags: --input, -index, --output, -index\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `elasticdump` — elasticdump command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nelasticdump --input=my-index.json --output=http://localhost:9200/my-index"
+  },
+  {
+    "instruction": "Use elasticdump to copy an index between clusters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `elasticdump` with the correct flags and arguments\n   2. Key flags: --input, --output\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `elasticdump` — elasticdump command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nelasticdump --input=http://source:9200/index --output=http://dest:9200/index"
+  },
+  {
+    "instruction": "Use curator to delete indices older than 30 days",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curator_cli` with the correct flags and arguments\n   2. Key flags: --filter_list\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curator_cli` — curator_cli command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncurator_cli delete_indices --filter_list '{\"filtertype\":\"age\",\"source\":\"name\",\"direction\":\"older\",\"unit\":\"days\",\"unit_count\":30}'"
+  },
+  {
+    "instruction": "Use curator to close indices older than 60 days",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curator_cli` with the correct flags and arguments\n   2. Key flags: --filter_list\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curator_cli` — curator_cli command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncurator_cli close_indices --filter_list '{\"filtertype\":\"age\",\"source\":\"name\",\"direction\":\"older\",\"unit\":\"days\",\"unit_count\":60}'"
+  },
+  {
+    "instruction": "Use curator to snapshot indices to a repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for curator_cli\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: curator_cli snapshot --repository my_backup --filter_list '{\"filtertype\":\"patter\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `curator_cli` — curator_cli command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncurator_cli snapshot --repository my_backup --filter_list '{\"filtertype\":\"pattern\",\"value\":\"logstash-*\"}'"
+  },
+  {
+    "instruction": "Show curator version and available commands",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curator` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curator` — curator command execution and management\n   Flag `--version`: show tool version\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncurator --version"
+  },
+  {
+    "instruction": "Run Vector to tail a log file and send to console",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vector` with the correct flags and arguments\n   2. Key flags: --config-yaml\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vector` — vector command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvector --config-yaml 'sources: {in: {type: file, include: [\"/var/log/syslog\"]}}, sinks: {out: {type: console, inputs: [in]}}'"
+  },
+  {
+    "instruction": "Run Vector with a TOML configuration file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vector` with the correct flags and arguments\n   2. Key flags: --config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vector` — vector command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvector --config /etc/vector/vector.toml"
+  },
+  {
+    "instruction": "Validate a Vector configuration file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vector` with the correct flags and arguments\n   2. Key flags: --config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vector` — vector command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvector validate --config /etc/vector/vector.toml"
+  },
+  {
+    "instruction": "Run fluent-bit to tail a log file and output to stdout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fluent-bit` with the correct flags and arguments\n   2. Key flags: -bit, -i, -p, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fluent-bit` — fluent-bit command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfluent-bit -i tail -p path=/var/log/syslog -o stdout"
+  },
+  {
+    "instruction": "Run fluentd with a configuration file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fluentd` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fluentd` — fluentd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfluentd -c /etc/fluentd/fluent.conf"
+  },
+  {
+    "instruction": "Install a fluentd plugin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: fluent-gem install fluent-plugin-elasticsearch\n   2. Apply the configuration and verify with `fluent-gem status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `fluent-gem` — fluent-gem command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfluent-gem install fluent-plugin-elasticsearch"
+  },
+  {
+    "instruction": "Test fluentd configuration for syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fluentd` with the correct flags and arguments\n   2. Key flags: --dry-run, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fluentd` — fluentd command execution and management\n   Flag `--dry-run`: simulate without making changes\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfluentd --dry-run -c /etc/fluentd/fluent.conf"
+  }
+]

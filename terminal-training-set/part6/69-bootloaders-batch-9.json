@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Enroll custom Secure Boot keys with sbctl and sign",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: sbctl create-keys && sbctl enroll-keys --microsoft && sbctl sign -s /boot/vmlinu\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `sbctl` — sbctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsbctl create-keys && sbctl enroll-keys --microsoft && sbctl sign -s /boot/vmlinuz && sbctl sign -s /boot/efi/EFI/GRUB/grubx64.efi"
+  },
+  {
+    "instruction": "sbctl: check if the boot chain is fully signed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sbctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sbctl` — sbctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsbctl verify"
+  },
+  {
+    "instruction": "sbctl: generate a new secure boot key pair",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: sbctl create-keys\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `sbctl` — sbctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsbctl create-keys"
+  },
+  {
+    "instruction": "Sign a kernel with pesign using a custom token",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pesign` with the correct flags and arguments\n   2. Key flags: -n, -t, -c, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pesign` — pesign command execution and management\n   Flag `-n`: dry-run mode\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npesign -n /etc/pki/pesign -t 'My Token' -c 'My Cert' -i /boot/vmlinuz -o /boot/vmlinuz.signed -s"
+  },
+  {
+    "instruction": "Verify a signed EFI binary with pesign",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pesign` with the correct flags and arguments\n   2. Key flags: -i, -S\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pesign` — pesign command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npesign -i /boot/efi/EFI/GRUB/grubx64.efi -S"
+  },
+  {
+    "instruction": "Import a PKCS#12 cert into pesign NSS db",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pkcs12` with the correct flags and arguments\n   2. Key flags: -in, -out, -nodes, -A\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pkcs12` — pkcs12 command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npkcs12 -in cert.p12 -out cert.pem -nodes && certutil -A -d /etc/pki/pesign -n 'My Cert' -t 'u,u,u' -i cert.pem"
+  },
+  {
+    "instruction": "Create a MOK request for a custom kernel module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mokutil` with the correct flags and arguments\n   2. Key flags: --import\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mokutil` — mokutil command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmokutil --import /path/to/module.der && reboot"
+  },
+  {
+    "instruction": "Check the pending MOK enrollment status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mokutil` with the correct flags and arguments\n   2. Key flags: --list-new\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mokutil` — mokutil command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmokutil --list-new"
+  },
+  {
+    "instruction": "Enroll a MOK from the next boot (user must do it in shim)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mokutil` with the correct flags and arguments\n   2. Key flags: --import\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mokutil` — mokutil command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmokutil --import /path/to/MOK.der"
+  },
+  {
+    "instruction": "Export all enrolled MOK keys to files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mokutil` with the correct flags and arguments\n   2. Key flags: --list-enrolled, --export\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mokutil` — mokutil command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmokutil --list-enrolled | awk '{print \\$NF}' | while read key; do mokutil --export \\$key; done"
+  },
+  {
+    "instruction": "Check Shim bootloader version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `shim` with the correct flags and arguments\n   2. Key flags: -v, -l, -signed, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `shim` — shim command execution and management\n   Supporting tool: `dpkg` — dpkg command execution and management\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nshim -v 2>/dev/null || dpkg -l shim-signed | tail -1 | awk '{print \\$3}'"
+  },
+  {
+    "instruction": "Sign a GRUB binary with sbctl in one command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sbctl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sbctl` — sbctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsbctl sign -s /boot/efi/EFI/GRUB/grubx64.efi"
+  },
+  {
+    "instruction": "Verify systemd-boot binary signature",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sbverify` with the correct flags and arguments\n   2. Key flags: --cert, -bootx64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sbverify` — sbverify command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsbverify --cert /path/to/MOK.crt /boot/efi/EFI/systemd/systemd-bootx64.efi"
+  },
+  {
+    "instruction": "Use mokutil to export the MOK list as DER",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mokutil` with the correct flags and arguments\n   2. Key flags: --export\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mokutil` — mokutil command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmokutil --export /tmp/mok.der"
+  },
+  {
+    "instruction": "Sign a kernel with sbsign using a custom key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sbsign` with the correct flags and arguments\n   2. Key flags: --key, --cert, --output\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sbsign` — sbsign command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsbsign --key /etc/secureboot/db.key --cert /etc/secureboot/db.crt --output /boot/vmlinuz.signed /boot/vmlinuz"
+  },
+  {
+    "instruction": "Attach a detached signature to an unsigned binary",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sbattach` with the correct flags and arguments\n   2. Key flags: --attach\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sbattach` — sbattach command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsbattach --attach /boot/vmlinuz.sig /boot/vmlinuz"
+  },
+  {
+    "instruction": "Check if shim has booted with Secure Boot enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cat /sys/kernel/security/lockdown || dmesg | grep -i 'Lockdown'\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/security/lockdown || dmesg | grep -i 'Lockdown'"
+  },
+  {
+    "instruction": "View the current kernel lockdown level",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/kernel/security/lockdown"
+  },
+  {
+    "instruction": "List all EFI signature databases (db, dbx, KEK, PK)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `efi-readvar` with the correct flags and arguments\n   2. Key flags: -readvar, --list-enrolled\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `efi-readvar` — efi-readvar command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nefi-readvar 2>/dev/null || mokutil --list-enrolled"
+  },
+  {
+    "instruction": "Reset Secure Boot to setup mode from OS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: mokutil --reset && reboot\n   2. Apply the configuration and verify with `mokutil status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `mokutil` — mokutil command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmokutil --reset && reboot"
+  },
+  {
+    "instruction": "Show which EFI variables are related to Secure Boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: ls -la /sys/firmware/efi/efivars | grep -E 'SecureBoot|SetupMode|db_'\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /sys/firmware/efi/efivars | grep -E 'SecureBoot|SetupMode|db_'"
+  }
+]

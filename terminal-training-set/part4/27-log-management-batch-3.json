@@ -1,0 +1,94 @@
+[
+  {
+    "instruction": "Show rsyslog configuration file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/rsyslog.conf"
+  },
+  {
+    "instruction": "Show rsyslog default configuration directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /etc/rsyslog.d/"
+  },
+  {
+    "instruction": "Check rsyslog configuration syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rsyslogd` with the correct flags and arguments\n   2. Key flags: -N\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rsyslogd` — rsyslogd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrsyslogd -N 1"
+  },
+  {
+    "instruction": "Restart rsyslog after configuration changes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart rsyslog"
+  },
+  {
+    "instruction": "Create an rsyslog template for custom log format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '$template CustomFormat,\"%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%\\n\"' > /etc/rsyslog.d/custom.conf"
+  },
+  {
+    "instruction": "Forward logs to a remote syslog server over UDP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '*.* @192.168.1.100:514' >> /etc/rsyslog.d/remote.conf"
+  },
+  {
+    "instruction": "Forward logs to a remote syslog server over TCP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '*.* @@192.168.1.100:514' >> /etc/rsyslog.d/remote.conf"
+  },
+  {
+    "instruction": "Set up rsyslog TLS forwarding to a remote server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -cert\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'global(\n  DefaultNetstreamDriver=\"gtls\"\n  DefaultNetstreamDriverCAFile=\"/etc/ssl/certs/ca.pem\"\n  DefaultNetstreamDriverCertFile=\"/etc/ssl/certs/client-cert.pem\"\n  DefaultNetstreamDriverKeyFile=\"/etc/ssl/private/client-key.pem\"\n)' > /etc/rsyslog.d/tls.conf"
+  },
+  {
+    "instruction": "Create an rsyslog ruleset to filter logs by facility",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -text\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'if $syslogfacility-text == \"mail\" then /var/log/mail.log' > /etc/rsyslog.d/mail.conf"
+  },
+  {
+    "instruction": "Discard specific logs with rsyslog ruleset",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'if $msg contains \"healthcheck\" then stop' > /etc/rsyslog.d/discard.conf"
+  },
+  {
+    "instruction": "Create an rsyslog rule to log specific program messages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho ':programname, isequal, \"cron\" /var/log/cron.log' > /etc/rsyslog.d/cron.conf"
+  },
+  {
+    "instruction": "Show rsyslog queue statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: ---, -USR1, -u, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `journalctl` — query systemd journal logs\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat /proc/sys/net/ipv4/igmp_max_memberships 2>/dev/null; echo '---'; kill -USR1 $(cat /var/run/rsyslogd.pid) && journalctl -u rsyslog -n 20"
+  },
+  {
+    "instruction": "Show syslog-ng configuration file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -ng, -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/syslog-ng/syslog-ng.conf"
+  },
+  {
+    "instruction": "Check syslog-ng configuration syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `syslog-ng` with the correct flags and arguments\n   2. Key flags: -ng, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `syslog-ng` — syslog-ng command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsyslog-ng -s"
+  },
+  {
+    "instruction": "Reload syslog-ng configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl reload syslog-ng"
+  },
+  {
+    "instruction": "Create a syslog-ng source for local logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ng, -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'source s_local { system(); internal(); };' >> /etc/syslog-ng/syslog-ng.conf"
+  },
+  {
+    "instruction": "Create a syslog-ng destination for remote syslog",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ng, -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'destination d_remote { syslog(\"192.168.1.100\" port(514)); };' >> /etc/syslog-ng/syslog-ng.conf"
+  },
+  {
+    "instruction": "Create a syslog-ng log path connecting source to destination",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -ng, -ng\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'log { source(s_local); destination(d_remote); };' >> /etc/syslog-ng/syslog-ng.conf"
+  },
+  {
+    "instruction": "Show syslog-ng version and compilation flags",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `syslog-ng` with the correct flags and arguments\n   2. Key flags: -ng, --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `syslog-ng` — syslog-ng command execution and management\n   Flag `--version`: show tool version\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsyslog-ng --version"
+  },
+  {
+    "instruction": "List syslog-ng modules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `syslog-ng` with the correct flags and arguments\n   2. Key flags: -ng, -M\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `syslog-ng` — syslog-ng command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsyslog-ng -M"
+  },
+  {
+    "instruction": "Generate syslog-ng config with debug info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using syslog-ng\n   2. Apply corrective actions: syslog-ng -F -d\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `syslog-ng` — syslog-ng command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsyslog-ng -F -d"
+  },
+  {
+    "instruction": "View syslog-ng statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `syslog-ng-ctl` with the correct flags and arguments\n   2. Key flags: -ng, -ctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `syslog-ng-ctl` — syslog-ng-ctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsyslog-ng-ctl stats"
+  },
+  {
+    "instruction": "Enable syslog-ng verbose debug mode temporarily",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using syslog-ng-ctl\n   2. Apply corrective actions: syslog-ng-ctl verbose --set=on\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `syslog-ng-ctl` — syslog-ng-ctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsyslog-ng-ctl verbose --set=on"
+  }
+]

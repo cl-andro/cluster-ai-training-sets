@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "Trace a running daemon for debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using strace\n   2. Apply corrective actions: strace -p $(pidof nginx) -f -o /tmp/nginx-strace.log\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -p $(pidof nginx) -f -o /tmp/nginx-strace.log"
+  },
+  {
+    "instruction": "Monitor database query from application",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=network,sendto,recvfrom -p $(pgrep -f 'postgres|mysql|sqlite')\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nstrace -e trace=network,sendto,recvfrom -p $(pgrep -f 'postgres|mysql|sqlite')"
+  },
+  {
+    "instruction": "Debug connection refused errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using strace\n   2. Check logs and error outputs for the specific failure pattern\n   3. Isolate whether it's a config, resource, or permission issue\n   4. Apply corrective actions: strace -e trace=connect -p $(pgrep -f myapp) -o connect.log\n   5. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=connect -p $(pgrep -f myapp) -o connect.log"
+  },
+  {
+    "instruction": "Identify slow file reads in app",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -T, -e, -p, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -T -e trace=read -p $(pgrep -f myapp) 2>&1 | awk -F'[<>]' '{if($2>0.01) print}'"
+  },
+  {
+    "instruction": "Find missing files an app needs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -p, -f, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=openat,stat -p $(pgrep -f myapp) -o missing-files.log 2>&1 & sleep 10; kill %1"
+  },
+  {
+    "instruction": "Debug permission denied errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using strace\n   2. Check logs and error outputs for the specific failure pattern\n   3. Isolate whether it's a config, resource, or permission issue\n   4. Apply corrective actions: strace -e trace=openat -e status=failed -p $(pgrep -f myapp) 2>&1 | grep EACCES\n   5. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=openat -e status=failed -p $(pgrep -f myapp) 2>&1 | grep EACCES"
+  },
+  {
+    "instruction": "Trace config file loading at startup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=openat -f myapp 2>&1 | grep 'config\\|conf'"
+  },
+  {
+    "instruction": "Find library loading issues",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=openat myapp 2>&1 | grep -E '\\.so|No such file'"
+  },
+  {
+    "instruction": "Debug DNS resolution timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using strace\n   2. Apply corrective actions: strace -e trace=connect -T curl -v http://example.com 2>&1 | grep -E 'connect|ti\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nstrace -e trace=connect -T curl -v http://example.com 2>&1 | grep -E 'connect|time'"
+  },
+  {
+    "instruction": "Identify socket leaks in app",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -p, -f, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=socket,close -p $(pgrep -f myapp) -o sockets.log 2>&1 & sleep 30; kill %1; cat sockets.log | awk '{a[$1]++} END{for(k in a) print a[k],k}'"
+  },
+  {
+    "instruction": "Debug slow shutdown sequence",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using strace\n   2. Apply corrective actions: strace -f -T -o /tmp/shutdown.log kill -TERM $(pgrep -f myapp)\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -f -T -o /tmp/shutdown.log kill -TERM $(pgrep -f myapp)"
+  },
+  {
+    "instruction": "Monitor lock file creation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=openat,flock -p $(pgrep -f myapp) 2>&1 | grep -E 'lock|\\.pid|\\.l\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=openat,flock -p $(pgrep -f myapp) 2>&1 | grep -E 'lock|\\.pid|\\.lock'"
+  },
+  {
+    "instruction": "Track unlink (file deletion) operations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -p, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e trace=unlink,unlinkat -p $(pgrep -f myapp) 2>&1"
+  },
+  {
+    "instruction": "Debug cron job execution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using strace\n   2. Apply corrective actions: strace -f -e trace=execve,clone -o /tmp/cron-strace.log cron\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -f -e trace=execve,clone -o /tmp/cron-strace.log cron"
+  },
+  {
+    "instruction": "Monitor log file writes from app",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -e trace=write,writev -p $(pgrep -f myapp) -o /tmp/app-writes.log\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-p`: create parent directories\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=write,writev -p $(pgrep -f myapp) -o /tmp/app-writes.log"
+  },
+  {
+    "instruction": "Debug race condition with timing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using strace\n   2. Apply corrective actions: strace -r -f -o /tmp/race-timing.log myapp\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-r`: recursive operation\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -r -f -o /tmp/race-timing.log myapp"
+  },
+  {
+    "instruction": "Find mmap churn in application",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=mmap,munmap -c myapp"
+  },
+  {
+    "instruction": "Identify file descriptors left open",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -f, -o, -trace\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstrace -e trace=openat,close -f -o /tmp/fd-trace.log myapp; awk '/openat/ {o++} /close/ {c++} END {print \"opens:\",o,\"closes:\",c}' /tmp/fd-trace.log"
+  },
+  {
+    "instruction": "Debug docker container entrypoint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using strace\n   2. Apply corrective actions: strace -f -e trace=execve -o /tmp/docker-strace.log docker run alpine echo hello\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `docker` — manage containers and images\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nstrace -f -e trace=execve -o /tmp/docker-strace.log docker run alpine echo hello"
+  },
+  {
+    "instruction": "Monitor systemd unit startup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for strace\n   2. Build the command chain with error handling\n   3. Execute: strace -f -e trace=execve,openat -o /tmp/unit-trace.log systemctl start myapp.se\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nstrace -f -e trace=execve,openat -o /tmp/unit-trace.log systemctl start myapp.service"
+  }
+]

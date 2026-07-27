@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Install Grafana image renderer plugin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the grafana-cli configuration with the required parameters\n   2. Apply the configuration and verify with `grafana-cli status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `grafana-cli` — Grafana plugin and provisioning management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrafana-cli plugins install grafana-image-renderer"
+  },
+  {
+    "instruction": "Enable Grafana dashboard previews",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '[rendering] server_url = http://renderer:8081/render callback_url = http:/\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '[rendering] server_url = http://renderer:8081/render callback_url = http://grafana:3000/' >> /etc/grafana/grafana.ini"
+  },
+  {
+    "instruction": "Export Grafana dashboard to PNG",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -solo, -dash, -1h\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s 'http://admin:admin@localhost:3000/render/d-solo/my-dash?from=now-1h&to=now&panelId=1&width=1000&height=500' > dashboard.png"
+  },
+  {
+    "instruction": "List Grafana snapshots",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for curl\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: curl -s http://admin:admin@localhost:3000/api/snapshots | jq '.'\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/snapshots | jq '.'"
+  },
+  {
+    "instruction": "Create a Grafana snapshot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for curl\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: curl -X POST http://admin:admin@localhost:3000/api/snapshots -H 'Content-Type: a\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/snapshots -H 'Content-Type: application/json' -d '{\"dashboard\":{\"title\":\"Snapshot\"},\"name\":\"My Snapshot\",\"expires\":3600}'"
+  },
+  {
+    "instruction": "Delete a Grafana snapshot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for curl\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: curl -X DELETE http://admin:admin@localhost:3000/api/snapshots/abc123\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X DELETE http://admin:admin@localhost:3000/api/snapshots/abc123"
+  },
+  {
+    "instruction": "Get Grafana frontend settings via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/frontend/settings | jq '.'"
+  },
+  {
+    "instruction": "Get Grafana license info via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/license/check | jq '.'"
+  },
+  {
+    "instruction": "Get Grafana admin stats via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/admin/stats | jq '.'"
+  },
+  {
+    "instruction": "Get Grafana admin settings via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/admin/settings | jq '.'"
+  },
+  {
+    "instruction": "Set Grafana admin user global access via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PUT http://admin:admin@localhost:3000/api/admin/users/1/permissions -H 'Content-Type: application/json' -d '{\"isGrafanaAdmin\":true}'"
+  },
+  {
+    "instruction": "List Grafana service accounts via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/serviceaccounts | jq '.'"
+  },
+  {
+    "instruction": "Create a Grafana service account via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/serviceaccounts -H 'Content-Type: application/json' -d '{\"name\":\"ci-bot\",\"role\":\"Editor\",\"isDisabled\":false}'"
+  },
+  {
+    "instruction": "Delete a Grafana service account via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X DELETE http://admin:admin@localhost:3000/api/serviceaccounts/1"
+  },
+  {
+    "instruction": "Create a Grafana service account token via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/serviceaccounts/1/tokens -H 'Content-Type: application/json' -d '{\"name\":\"deploy-token\"}'"
+  },
+  {
+    "instruction": "List Grafana service account tokens via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/serviceaccounts/1/tokens | jq '.'"
+  },
+  {
+    "instruction": "Delete a Grafana service account token via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X DELETE http://admin:admin@localhost:3000/api/serviceaccounts/1/tokens/1"
+  },
+  {
+    "instruction": "List Grafana annotations via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s 'http://admin:admin@localhost:3000/api/annotations?limit=10' | jq '.'"
+  },
+  {
+    "instruction": "Create a Grafana annotation via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/annotations -H 'Content-Type: application/json' -d '{\"dashboardUID\":\"abc\",\"panelId\":1,\"text\":\"Deploy v1.2\",\"tags\":[\"deploy\",\"prod\"],\"time\":1721923200000}'"
+  },
+  {
+    "instruction": "Create a Grafana graph annotation via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/annotations/graph -H 'Content-Type: application/json' -d '{\"dashboardId\":1,\"panelId\":2,\"data\":{\"text\":\"Deploy\"}}'"
+  },
+  {
+    "instruction": "Patch a Grafana annotation via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -Type, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PATCH http://admin:admin@localhost:3000/api/annotations/1 -H 'Content-Type: application/json' -d '{\"text\":\"Updated annotation\"}'"
+  },
+  {
+    "instruction": "Delete a Grafana annotation via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X DELETE http://admin:admin@localhost:3000/api/annotations/1"
+  },
+  {
+    "instruction": "Bulk delete Grafana annotations via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -delete, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/annotations/mass-delete -H 'Content-Type: application/json' -d '{\"dashboardUID\":\"abc\",\"panelId\":1}'"
+  },
+  {
+    "instruction": "List Grafana alert notifications via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl -s http://admin:admin@localhost:3000/api/alert-notifications | jq '.'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://admin:admin@localhost:3000/api/alert-notifications | jq '.'"
+  },
+  {
+    "instruction": "Test Grafana alert notification via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl -X POST http://admin:admin@localhost:3000/api/alert-notifications/1/test\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://admin:admin@localhost:3000/api/alert-notifications/1/test"
+  }
+]

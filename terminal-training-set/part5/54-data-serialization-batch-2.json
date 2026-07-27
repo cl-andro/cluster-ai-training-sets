@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Use recurse to find all nested values of a specific key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq '[recurse(..) | select(.email?)]' data.json"
+  },
+  {
+    "instruction": "Gracefully handle errors with try/catch",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq 'try .items[] catch \"error\"' data.json"
+  },
+  {
+    "instruction": "Generate a range of numbers and convert to objects",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq '[range(5)] | map({index: .})' /dev/null"
+  },
+  {
+    "instruction": "Iterate until a condition is met",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\njq -n 'until(. >= 10; . + 1)'"
+  },
+  {
+    "instruction": "Use while loop in jq to generate values",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -n '[while(.<10; .*2)]'"
+  },
+  {
+    "instruction": "Use foreach to accumulate values",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -n '[foreach range(5) as $i (0; .+$i; {index: $i, sum: .})]'"
+  },
+  {
+    "instruction": "Use if/then/else conditional logic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\njq 'if .age >= 18 then \"adult\" else \"minor\" end' user.json"
+  },
+  {
+    "instruction": "Use the alternative operator to provide defaults",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq '.name // \"unknown\"' data.json"
+  },
+  {
+    "instruction": "Pipe multiple filters together",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq '.users | map(select(.active)) | .[] | .name' data.json"
+  },
+  {
+    "instruction": "Use empty to filter out values",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq '.[] | select(.type == \"admin\") | .name, empty' data.json"
+  },
+  {
+    "instruction": "Generate an error for invalid data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq 'if .id == null then error(\"missing id\") else . end' data.json"
+  },
+  {
+    "instruction": "Halt execution after first result",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq '.[] | select(.error) | halt_error' data.json"
+  },
+  {
+    "instruction": "Get the first N elements of an array",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq 'first(.[])' data.json"
+  },
+  {
+    "instruction": "Get the last element of an array",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq 'last(.[])' data.json"
+  },
+  {
+    "instruction": "Get the Nth element of an array",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq '[.[]] | nth(3)' data.json"
+  },
+  {
+    "instruction": "Format output as JSON with @json",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -r '.[] | @json' data.json"
+  },
+  {
+    "instruction": "Format output as CSV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -r '.[] | [.name, .age, .email] | @csv' data.json"
+  },
+  {
+    "instruction": "Format output as TSV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -r '.[] | [.name, .age] | @tsv' data.json"
+  },
+  {
+    "instruction": "Format output as HTML",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\njq -r '.[] | \"<li>\\(.name)</li>\" | @html' data.json"
+  },
+  {
+    "instruction": "URI-encode a string",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -r '.url | @uri' data.json"
+  },
+  {
+    "instruction": "Escape a string for shell with @text",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -r '.command | @text' data.json"
+  },
+  {
+    "instruction": "Base64 encode a value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -r '.secret | @base64' data.json"
+  },
+  {
+    "instruction": "Base64 decode a value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -r '.encoded | @base64d' data.json"
+  },
+  {
+    "instruction": "Use --from-file to load a jq filter from a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -f filter.jq data.json"
+  },
+  {
+    "instruction": "Modify entries with with_entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq 'with_entries(.value |= . * 2)' data.json"
+  },
+  {
+    "instruction": "Use inputs to process multiple JSON inputs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `jq` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `jq` — jq command execution and management\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njq -n 'inputs | .name' data1.json data2.json"
+  }
+]

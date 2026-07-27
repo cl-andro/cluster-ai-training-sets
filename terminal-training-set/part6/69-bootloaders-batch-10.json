@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Create a GRUB rescue disk using an existing system",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grub-mkrescue` with the correct flags and arguments\n   2. Key flags: -mkrescue, -o, -rescue, -as\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grub-mkrescue` — grub-mkrescue command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrub-mkrescue -o grub-rescue.iso && xorriso -as cdrecord -v dev=/dev/sr0 grub-rescue.iso"
+  },
+  {
+    "instruction": "Generate a GRUB configuration from scratch (no update-grub)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grub-mkconfig` with the correct flags and arguments\n   2. Key flags: -mkconfig, -o, -mkconfig, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grub-mkconfig` — grub-mkconfig command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngrub-mkconfig -o /boot/grub/grub.cfg 2>/dev/null || /usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg"
+  },
+  {
+    "instruction": "GRUB: chainload a Windows Boot Manager on UEFI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: --fs-uuid, --no-floppy, --set, -XXXX\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/grub.d/40_custom <<'EOF'\nmenuentry \"Windows UEFI\" {\n  insmod part_gpt\n  insmod fat\n  search --fs-uuid --no-floppy --set=root XXXX-XXXX\n  chainloader /EFI/Microsoft/Boot/bootmgfw.efi\n}\nEOF\nupdate-grub"
+  },
+  {
+    "instruction": "Create a systemd-boot entry for a fallback kernel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -fallback, -fallback, -fallback\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /boot/efi/loader/entries/debian-fallback.conf <<'EOF'\ntitle Debian Fallback\nlinux /vmlinuz-fallback\ninitrd /initramfs-fallback.img\noptions root=UUID=xxx rw\nEOF"
+  },
+  {
+    "instruction": "List available SBAT policy levels for GRUB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat /usr/share/grub/sbat.csv 2>/dev/null | head -20"
+  },
+  {
+    "instruction": "Check if the system boots via GRUB or systemd-boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `efibootmgr` with the correct flags and arguments\n   2. Key flags: -v, -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `efibootmgr` — efibootmgr command execution and management\n   Flag `-v`: verbose output for debugging\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nefibootmgr -v | grep BootCurrent | grep -q GRUB && echo 'GRUB' || echo 'Other'"
+  },
+  {
+    "instruction": "Boot into Windows via GRUB command line (rescue mode)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grub` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grub` — grub command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngrub> insmod ntfs\n insmod chain\n set root=(hd0,1)\n chainloader +1\n boot"
+  },
+  {
+    "instruction": "Use grub-mount to inspect a Linux root filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grub-mount` with the correct flags and arguments\n   2. Key flags: -mount\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grub-mount` — grub-mount command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrub-mount /dev/sda2 /mnt && ls /mnt"
+  },
+  {
+    "instruction": "Install GRUB to an external USB drive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: grub-install --boot-directory=/mnt/usb/boot --efi-directory=/mnt/usb --target=x8\n   2. Apply the configuration and verify with `grub-install status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `grub-install` — grub-install command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrub-install --boot-directory=/mnt/usb/boot --efi-directory=/mnt/usb --target=x86_64-efi --removable /dev/sdb"
+  },
+  {
+    "instruction": "Create a portable GRUB USB with multiple ISOs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grub-install` with the correct flags and arguments\n   2. Key flags: -install, --boot-directory, --removable, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grub-install` — grub-install command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrub-install --boot-directory=/mnt/usb/boot --removable /dev/sdb && mkdir -p /mnt/usb/boot/iso && cp *.iso /mnt/usb/boot/iso/ && grub-mkconfig -o /mnt/usb/boot/grub/grub.cfg"
+  },
+  {
+    "instruction": "Set GRUB to boot with nomodeset kernel parameter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -grub\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'GRUB_CMDLINE_LINUX_DEFAULT=\"quiet nomodeset\"' >> /etc/default/grub && update-grub"
+  },
+  {
+    "instruction": "Remove old kernels from GRUB menu",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg` with the correct flags and arguments\n   2. Key flags: --purge, -image, -OLDVERSION, -grub\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg` — dpkg command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ndpkg --purge linux-image-OLDVERSION && update-grub"
+  },
+  {
+    "instruction": "Check the current GRUB device map",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /boot/grub/device.map"
+  },
+  {
+    "instruction": "Add GRUB_GFXPAYLOAD_LINUX to keep native resolution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -grub\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'GRUB_GFXPAYLOAD_LINUX=keep' >> /etc/default/grub && update-grub"
+  },
+  {
+    "instruction": "Use GRUB to boot a raw disk image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -grub\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/grub.d/40_custom <<'EOF'\nmenuentry 'Boot Disk Image' {\n  set root=(hd0,1)\n  linux16 /memdisk\n  initrd16 /path/to/disk.img\n}\nEOF\nupdate-grub"
+  },
+  {
+    "instruction": "Boot into single-user mode via GRUB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grub-reboot` with the correct flags and arguments\n   2. Key flags: -reboot\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grub-reboot` — grub-reboot command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrub-reboot 0"
+  },
+  {
+    "instruction": "Display details about the current boot process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: -E, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg | grep -E 'Command line|Boot|EFI|BIOS' | head -20"
+  },
+  {
+    "instruction": "Show boot time of the system",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-analyze` with the correct flags and arguments\n   2. Key flags: -analyze\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-analyze` — systemd-analyze command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-analyze"
+  },
+  {
+    "instruction": "Show boot time breakdown by service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-analyze` with the correct flags and arguments\n   2. Key flags: -analyze\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-analyze` — systemd-analyze command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-analyze blame"
+  },
+  {
+    "instruction": "Analyze boot critical chain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-analyze` with the correct flags and arguments\n   2. Key flags: -analyze, -chain\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-analyze` — systemd-analyze command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-analyze critical-chain"
+  },
+  {
+    "instruction": "List all firmware-provided UEFI variables",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /sys/firmware/efi/efivars/ | head -30"
+  },
+  {
+    "instruction": "Check if systemd-boot is the active bootloader",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `efibootmgr` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `efibootmgr` — efibootmgr command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nefibootmgr | grep -i systemd"
+  }
+]

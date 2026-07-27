@@ -1,0 +1,94 @@
+[
+  {
+    "instruction": "Monitor and manage certificates using certmonger (request a new certificate)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for getcert\n   2. Build the command chain with error handling\n   3. Execute: getcert request -c MyCA -d /etc/pki/tls -n server.crt -k server.key -N CN=exampl\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `getcert` — getcert command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetcert request -c MyCA -d /etc/pki/tls -n server.crt -k server.key -N CN=example.com"
+  },
+  {
+    "instruction": "List all certificates tracked by certmonger and their status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcert` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcert` — getcert command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetcert list"
+  },
+  {
+    "instruction": "Resubmit a certificate request in certmonger after fixing network issues",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcert` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcert` — getcert command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetcert resubmit -i 12345"
+  },
+  {
+    "instruction": "Stop tracking a certificate with certmonger",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcert` with the correct flags and arguments\n   2. Key flags: -tracking, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcert` — getcert command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetcert stop-tracking -i 12345"
+  },
+  {
+    "instruction": "Show detailed information about a specific certmonger request",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcert` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcert` — getcert command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetcert list -i 12345"
+  },
+  {
+    "instruction": "Run ssl-cert-check to display certificate expiration information for a remote server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssl-cert-check` with the correct flags and arguments\n   2. Key flags: -cert, -check, -s, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssl-cert-check` — ssl-cert-check command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssl-cert-check -s example.com -p 443"
+  },
+  {
+    "instruction": "Check all certificates in a directory with ssl-cert-check and show days until expiry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssl-cert-check` with the correct flags and arguments\n   2. Key flags: -cert, -check, -c, -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssl-cert-check` — ssl-cert-check command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssl-cert-check -c /etc/ssl/certs/ -w"
+  },
+  {
+    "instruction": "Check an HTTPS server certificate and send an email alert if expiring within 30 days",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for ssl-cert-check\n   2. Build the command chain with error handling\n   3. Execute: ssl-cert-check -s example.com -p 443 -x 30 -e admin@example.com\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `ssl-cert-check` — ssl-cert-check command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssl-cert-check -s example.com -p 443 -x 30 -e admin@example.com"
+  },
+  {
+    "instruction": "Query the Let's Encrypt rate limit status by checking the API directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -I, -v02, -i, -nonce\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -I https://acme-v02.api.letsencrypt.org/directory 2>&1 | grep -i 'replay-nonce\\|rate'"
+  },
+  {
+    "instruction": "Check how many certificates are left before hitting Let's Encrypt rate limits this week",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -v02, -order, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://acme-v02.api.letsencrypt.org/acme/new-order | head -1"
+  },
+  {
+    "instruction": "View the Let's Encrypt certificate issuance rate limit (50 certs per registered domain per week)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -limits\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"Rate limit info: https://letsencrypt.org/docs/rate-limits/\""
+  },
+  {
+    "instruction": "Check certificates per domain (subdomain) rate limit status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -v02, -cert, -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://acme-v02.api.letsencrypt.org/acme/new-cert -X HEAD -v 2>&1 | grep -i 'x-frame-options\\|retry-after'"
+  },
+  {
+    "instruction": "Display the certmonger CA configuration for the local CA helper",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcert` with the correct flags and arguments\n   2. Key flags: -cas\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcert` — getcert command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetcert list-cas"
+  },
+  {
+    "instruction": "Show certmonger version and daemon status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcert` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcert` — getcert command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\ngetcert version && systemctl status certmonger"
+  },
+  {
+    "instruction": "Re-initialize the OpenSSL CA database by resetting index.txt and serial",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nrm /etc/ssl/ca/index.txt /etc/ssl/ca/serial && touch /etc/ssl/ca/index.txt && echo 01 > /etc/ssl/ca/serial"
+  },
+  {
+    "instruction": "Generate an OCSP responder certificate and sign it with the CA",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -new, -newkey, -keyout, -out\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl req -new -newkey rsa:2048 -keyout ocsp.key -out ocsp.csr -subj \"/CN=ocsp.example.com\" && openssl ca -config ca.conf -extensions ocsp -in ocsp.csr -out ocsp.crt -batch"
+  },
+  {
+    "instruction": "Verify that a certificate is an OCSP responder certificate by checking extensions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -text, -noout, -A5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl x509 -in ocsp.crt -text -noout | grep -A5 'Netscape Cert Type\\|Extended Key Usage'"
+  },
+  {
+    "instruction": "Create a PEM-encoded certificate chain file from individual certificates",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat server.crt intermediate.crt root.crt > chain.pem"
+  },
+  {
+    "instruction": "Extract individual certificates from a combined PEM chain file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `csplit` with the correct flags and arguments\n   2. Key flags: -f, -----BEGIN, -----\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `csplit` — csplit command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncsplit -f cert- chain.pem '/-----BEGIN CERTIFICATE-----/' '{*}'"
+  },
+  {
+    "instruction": "Check the OCSP responder certificate expiry and compare with the CA expiry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -noout, -enddate, -in\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl x509 -in ocsp.crt -noout -enddate; openssl x509 -in ca.crt -noout -enddate"
+  },
+  {
+    "instruction": "Display the authority key identifier and subject key identifier of a certificate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -text, -noout, -A2\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl x509 -in cert.pem -text -noout | grep -A2 'X509v3 Authority Key Identifier\\|X509v3 Subject Key Identifier'"
+  },
+  {
+    "instruction": "Generate a certificate with custom X.509 v3 extensions using a config file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -new, -newkey, -nodes, -keyout\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl req -new -newkey rsa:2048 -nodes -keyout custom.key -out custom.csr -subj \"/CN=custom.example.com\" && openssl ca -config custom-ext.cnf -in custom.csr -out custom.crt -batch"
+  },
+  {
+    "instruction": "Verify OCSP responder certificate is trusted by the CA for OCSP signing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -CAfile, -purpose, -issuer, -cert\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl verify -CAfile ca.crt -purpose sslserver ocsp.crt; openssl ocsp -issuer ca.crt -cert ocsp.crt -text -url http://localhost:8888 -respout /dev/null 2>&1"
+  }
+]

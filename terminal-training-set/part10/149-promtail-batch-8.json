@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Install logcli via snap",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the logcli configuration with the required parameters\n   2. Apply the configuration and verify with `snap status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `snap` — Snap package manager\n   Supporting tool: `logcli` — Loki log query CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsnap install logcli"
+  },
+  {
+    "instruction": "Query Loki for log streams count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlogcli series '{job=\"nginx\"}' 2>&1 | wc -l"
+  },
+  {
+    "instruction": "Analyze log labels cardinality",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --analyze-labels\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlogcli series '{job=~\".+\"}' --analyze-labels 2>&1"
+  },
+  {
+    "instruction": "Get all distinct values for a label",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlogcli labels job 2>&1"
+  },
+  {
+    "instruction": "Export Loki metrics to Prometheus format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -metrics\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:3100/metrics > loki-metrics.txt"
+  },
+  {
+    "instruction": "Query top log producers by volume",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query 'topk(10, sum by (job) (bytes_over_time({job=~\".+\"}[1h])))'"
+  },
+  {
+    "instruction": "Check log ingress rate to Loki",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query 'sum(rate({job=~\".+\"}[5m]))'"
+  },
+  {
+    "instruction": "Create alert rule for high error rate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for cat\n   2. Build the command chain with error handling\n   3. Execute: cat > /etc/loki/rules/alert.yaml << 'EOF'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/loki/rules/alert.yaml << 'EOF'\ngroups:\n- name: error-rate-alert\n  rules:\n  - alert: HighErrorRate\n    expr: sum(rate({job=\"nginx\"} |= \"error\" [5m])) / sum(rate({job=\"nginx\"}[5m])) > 0.05\n    for: 5m\n    annotations:\n      summary: High error rate detected on nginx\nEOF"
+  },
+  {
+    "instruction": "Create recording rule for error ratio",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -rules\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/loki/rules/recording.yaml << 'EOF'\ngroups:\n- name: recording-rules\n  rules:\n  - record: job:nginx:error_ratio:5m\n    expr: sum(rate({job=\"nginx\"} |= \"error\" [5m])) / sum(rate({job=\"nginx\"}[5m]))\nEOF"
+  },
+  {
+    "instruction": "Test Loki alert rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl -X POST 'http://localhost:3100/ruler/rule' -H 'Content-Type: application/ya\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST 'http://localhost:3100/ruler/rule' -H 'Content-Type: application/yaml' --data-binary @/etc/loki/rules/alert.yaml"
+  },
+  {
+    "instruction": "List installed ruler rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:3100/ruler/rule"
+  },
+  {
+    "instruction": "Delete a Loki ruler rule",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -rate, -alert\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X DELETE 'http://localhost:3100/ruler/rule/error-rate-alert'"
+  },
+  {
+    "instruction": "Reload Loki configuration without restart",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kill` with the correct flags and arguments\n   2. Key flags: -HUP, -p, -d, -f2\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kill` — kill command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PROCESS: start with `SIGTERM` (default); escalate to `SIGKILL` only if the process doesn't respond after 5 seconds\n</think>\nkill -HUP $(cat /var/run/loki/loki.pid 2>/dev/null || systemctl show -p MainPID loki | cut -d= -f2)"
+  },
+  {
+    "instruction": "Add Loki autoscaling config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/loki/config.yml << 'EOF'\nindex_gateway:\n  mode: simple\n  replicas: 2\nEOF"
+  },
+  {
+    "instruction": "Configure Loki for high availability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cat >> /etc/loki/config.yml << 'EOF'\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/loki/config.yml << 'EOF'\nfrontend_worker:\n  frontend_address: loki-query-frontend:9095\nEOF"
+  },
+  {
+    "instruction": "Add tail proxy for logcli",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/loki/config.yml << 'EOF'\nqueryrange:\n  parallelise_shardable_queries: true\n  cache_results: true\nEOF"
+  },
+  {
+    "instruction": "Check Loki module health",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:3100/health"
+  },
+  {
+    "instruction": "View Loki built-in dashboard",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wget` with the correct flags and arguments\n   2. Key flags: -O\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nwget -O - http://localhost:3100/ 2>/dev/null || echo 'No web UI available'"
+  },
+  {
+    "instruction": "Enable Loki multi-tenancy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cat >> /etc/loki/config.yml << 'EOF'\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat >> /etc/loki/config.yml << 'EOF'\nmulti_tenant_mode: true\nEOF"
+  },
+  {
+    "instruction": "Set tenant ID in logcli query",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --org-id\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli --org-id=tenant1 query '{job=\"nginx\"}'"
+  },
+  {
+    "instruction": "Query across multiple tenants",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --org-id, --org-id\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli --org-id=tenant1 --org-id=tenant2 query '{job=\"nginx\"}'"
+  }
+]

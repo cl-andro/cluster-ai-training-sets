@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Run ethtool to check NIC driver and firmware info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ethtool` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ethtool` — ethtool command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nethtool -i eth0"
+  },
+  {
+    "instruction": "Query NIC ring buffer sizes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ethtool` with the correct flags and arguments\n   2. Key flags: -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ethtool` — ethtool command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nethtool -g eth0"
+  },
+  {
+    "instruction": "Increase NIC ring buffer size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ethtool` with the correct flags and arguments\n   2. Key flags: -G\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ethtool` — ethtool command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nethtool -G eth0 rx 4096 tx 4096"
+  },
+  {
+    "instruction": "Check NIC coalescing settings",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ethtool` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ethtool` — ethtool command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nethtool -c eth0"
+  },
+  {
+    "instruction": "Enable adaptive RX/TX coalescing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ethtool -C eth0 adaptive-rx on adaptive-tx on\n   2. Apply the configuration and verify with `ethtool status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ethtool` — ethtool command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nethtool -C eth0 adaptive-rx on adaptive-tx on"
+  },
+  {
+    "instruction": "Show NIC offload capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ethtool` with the correct flags and arguments\n   2. Key flags: -k, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ethtool` — ethtool command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nethtool -k eth0 | head -20"
+  },
+  {
+    "instruction": "Enable TCP segmentation offload",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ethtool -K eth0 tso on\n   2. Apply the configuration and verify with `ethtool status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ethtool` — ethtool command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nethtool -K eth0 tso on"
+  },
+  {
+    "instruction": "Add a tc qdisc with fq_codel for low-latency networking",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc qdisc replace dev eth0 root fq_codel"
+  },
+  {
+    "instruction": "Show active tc qdiscs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tc` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tc` — traffic control and QoS\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntc -s qdisc show dev eth0"
+  },
+  {
+    "instruction": "Show socket statistics with ss",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ss` with the correct flags and arguments\n   2. Key flags: -tuln\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ss` — socket statistics and connection monitoring\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nss -tuln"
+  },
+  {
+    "instruction": "Show active TCP connections with extended info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ss` with the correct flags and arguments\n   2. Key flags: -tiep\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ss` — socket statistics and connection monitoring\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nss -tiep"
+  },
+  {
+    "instruction": "Show socket buffer usage per process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ss` with the correct flags and arguments\n   2. Key flags: -mep\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ss` — socket statistics and connection monitoring\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nss -mep"
+  },
+  {
+    "instruction": "Run netperf TCP throughput test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `netperf` with the correct flags and arguments\n   2. Key flags: -H, -t, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `netperf` — netperf command execution and management\n   Flag `-t`: sort by time\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetperf -H 192.168.1.100 -t TCP_STREAM -l 30"
+  },
+  {
+    "instruction": "Run netperf TCP request/response latency test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `netperf` with the correct flags and arguments\n   2. Key flags: -H, -t, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `netperf` — netperf command execution and management\n   Flag `-t`: sort by time\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnetperf -H 192.168.1.100 -t TCP_RR -l 30"
+  },
+  {
+    "instruction": "Run iperf3 TCP upload test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iperf3` with the correct flags and arguments\n   2. Key flags: -c, -t, -P\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iperf3` — iperf3 command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\niperf3 -c 192.168.1.100 -t 30 -P 4"
+  },
+  {
+    "instruction": "Run iperf3 UDP bandwidth test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iperf3` with the correct flags and arguments\n   2. Key flags: -c, -u, -b, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iperf3` — iperf3 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\niperf3 -c 192.168.1.100 -u -b 1000M -t 30"
+  },
+  {
+    "instruction": "Run iperf3 bidirectional test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iperf3` with the correct flags and arguments\n   2. Key flags: -c, --bidir, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iperf3` — iperf3 command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\niperf3 -c 192.168.1.100 --bidir -t 30"
+  },
+  {
+    "instruction": "Use bpftrace to trace open syscalls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_open { printf(\"%d %s\\n\", pid, str(args->filename)); }'"
+  },
+  {
+    "instruction": "Use bpftrace to count syscalls per process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_* { @[comm] = count(); }' interval:s:5 { exit(); }"
+  },
+  {
+    "instruction": "Use bpftrace to trace block I/O latency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'kprobe:blk_account_io_done { @[comm] = hist(nsecs / 1000); }'"
+  },
+  {
+    "instruction": "Use bpftrace to trace TCP connect attempts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'kretprobe:tcp_v4_connect { @[comm] = count(); }'"
+  },
+  {
+    "instruction": "Use ftrace to trace all syscalls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -100\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1 > /sys/kernel/tracing/events/syscalls/enable && cat /sys/kernel/tracing/trace_pipe | head -100"
+  },
+  {
+    "instruction": "Use trace-cmd to trace all syscalls for a specific command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `trace-cmd` with the correct flags and arguments\n   2. Key flags: -cmd, -e, -la, -cmd\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `trace-cmd` — trace-cmd command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrace-cmd record -e syscalls ls -la && trace-cmd report | head -20"
+  },
+  {
+    "instruction": "Run stress-ng fork bomb stressor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stress-ng` with the correct flags and arguments\n   2. Key flags: -ng, --fork, --timeout, --metrics\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stress-ng` — stress-ng command execution and management\n   Flag `--timeout`: set maximum execution time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstress-ng --fork 4 --timeout 30s --metrics"
+  },
+  {
+    "instruction": "Run stress-ng context switch stressor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stress-ng` with the correct flags and arguments\n   2. Key flags: -ng, --switch, --timeout, --metrics\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stress-ng` — stress-ng command execution and management\n   Flag `--timeout`: set maximum execution time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstress-ng --switch 4 --timeout 30s --metrics"
+  },
+  {
+    "instruction": "Run stress-ng pipe stressor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `stress-ng` with the correct flags and arguments\n   2. Key flags: -ng, --pipe, --timeout, --metrics\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `stress-ng` — stress-ng command execution and management\n   Flag `--timeout`: set maximum execution time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nstress-ng --pipe 4 --timeout 30s --metrics"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "Create WebDAV user with davfs2 secrets and mount as normal user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'http://localhost/webdav alice secret123' > ~/.davfs2/secrets && chmod 600 ~/.davfs2/secrets && mount.davfs http://localhost/webdav ~/webdav"
+  },
+  {
+    "instruction": "Configure davfs2 to not use locks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'use_locks 0' >> ~/.davfs2/davfs2.conf\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'use_locks 0' >> ~/.davfs2/davfs2.conf"
+  },
+  {
+    "instruction": "Set davfs2 cache size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'cache_size 100' >> ~/.davfs2/davfs2.conf"
+  },
+  {
+    "instruction": "Enable davfs2 debug logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using echo\n   2. Apply corrective actions: echo 'debug 1' >> ~/.davfs2/davfs2.conf\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'debug 1' >> ~/.davfs2/davfs2.conf"
+  },
+  {
+    "instruction": "Set davfs2 table size for large directories",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'table_size 4096' >> ~/.davfs2/davfs2.conf"
+  },
+  {
+    "instruction": "Set davfs2 timeout for slow connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'timeout 300' >> ~/.davfs2/davfs2.conf"
+  },
+  {
+    "instruction": "Disable davfs2 if_match header",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'if_match_bug_workaround 1' >> ~/.davfs2/davfs2.conf"
+  },
+  {
+    "instruction": "List all WebDAV methods supported with curl OPTIONS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, --user, -I, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X OPTIONS http://localhost/webdav/ --user alice:secretpass -I 2>&1 | grep -i '^Allow:' | tr ',' '\\n'"
+  },
+  {
+    "instruction": "Create and lock a file on WebDAV, then unlock in sequence",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -X, --data-binary, --user, -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\necho 'Content' > /tmp/test.txt && curl -X PUT http://localhost/webdav/test.txt --data-binary @/tmp/test.txt --user alice:secretpass && LOCK_TOKEN=$(curl -X LOCK http://localhost/webdav/test.txt --user alice:secretpass -H 'Content-Type: text/xml' -d '<D:lockinfo xmlns:D=\"DAV:\"><D:lockscope><D:exclusive/></D:lockscope><D:locktype><D:write/></D:locktype></D:lockinfo>' -D - 2>/dev/null | grep -i 'Lock-Token' | tr -d '\\r') && curl -X UNLOCK http://localhost/webdav/test.txt --user alice:secretpass -H \"Lock-Token: $LOCK_TOKEN\""
+  },
+  {
+    "instruction": "Set Apache DAVMinProp directive globally",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -available, -minprop, -global, -minprop\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'DAVMinPropTimeOut 120' | sudo tee /etc/apache2/conf-available/dav-minprop-global.conf && sudo a2enconf dav-minprop-global && sudo systemctl reload apache2"
+  },
+  {
+    "instruction": "Run ownCloud occ command to update app from marketplace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ app:install calendar"
+  },
+  {
+    "instruction": "Remove ownCloud app via occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ app:remove calendar"
+  },
+  {
+    "instruction": "Configure ownCloud email via occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the php configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ config:system:set mail_domain --value=example.com && sudo -u www-data php /var/www/owncloud/occ config:system:set mail_from_address --value=noreply"
+  },
+  {
+    "instruction": "Test ownCloud email via occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data, -push\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ notification:test-push alice"
+  },
+  {
+    "instruction": "Enable Nextcloud app with occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo -u www-data nextcloud.occ app:enable files_pdfviewer\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ app:enable files_pdfviewer"
+  },
+  {
+    "instruction": "Disable Nextcloud app with occ",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ app:disable files_pdfviewer"
+  },
+  {
+    "instruction": "List enabled Nextcloud apps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo -u www-data nextcloud.occ app:list --enabled\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ app:list --enabled"
+  },
+  {
+    "instruction": "List disabled Nextcloud apps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data, --disabled\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ app:list --disabled"
+  },
+  {
+    "instruction": "Get occ command help for files:scan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data nextcloud.occ help files:scan"
+  },
+  {
+    "instruction": "Get occ command help for user:add",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -u, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `php` — php command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo -u www-data php /var/www/owncloud/occ help user:add"
+  }
+]

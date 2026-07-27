@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Set a Pacemaker resource meta attribute for target role",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -role\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource meta VirtualIP target-role=Started"
+  },
+  {
+    "instruction": "Set a Pacemaker resource to start after a delay",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: -stickiness\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource meta VirtualIP resource-stickiness=200"
+  },
+  {
+    "instruction": "Configure multiple interfaces for VRRP in Keepalived",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: vrrp_instance VI_1 {\n   2. Apply the configuration and verify with `vrrp_instance status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `vrrp_instance` — vrrp_instance command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvrrp_instance VI_1 {\n  interface eth0\n  virtual_router_id 51\n  priority 100\n  advertise_int 1\n  authentication {\n    auth_type PASS\n    auth_pass 1234\n  }\n  virtual_ipaddress {\n    192.168.1.100/24\n    192.168.1.101/24\n  }\n}"
+  },
+  {
+    "instruction": "Configure VRRP with authentication type AH in Keepalived",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: authentication {\n   2. Apply the configuration and verify with `authentication status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `authentication` — authentication command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthentication {\n  auth_type AH\n  auth_pass 1234\n}"
+  },
+  {
+    "instruction": "Set a VRRP VIP to use a specific MAC in Keepalived",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `use_vmac` with the correct flags and arguments\n   2. Key flags: -vip\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `use_vmac` — use_vmac command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuse_vmac vrrp-vip"
+  },
+  {
+    "instruction": "Lower VRRP advertisement interval for faster failover",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `advert_int` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `advert_int` — advert_int command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nadvert_int 0.2"
+  },
+  {
+    "instruction": "Set higher VRRP advertisement interval for stability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `advert_int` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `advert_int` — advert_int command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nadvert_int 3"
+  },
+  {
+    "instruction": "Define a VRRP track script returning a weight in Keepalived",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vrrp_script` with the correct flags and arguments\n   2. Key flags: -50\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vrrp_script` — vrrp_script command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvrrp_script chk_nginx {\n  script \"/usr/bin/pgrep nginx\"\n  interval 2\n  weight -50\n}"
+  },
+  {
+    "instruction": "Decrement VRRP priority when track script fails",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vrrp_script` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vrrp_script` — vrrp_script command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvrrp_script chk_haproxy {\n  script \"/usr/bin/pgrep haproxy\"\n  interval 2\n  fall 3\n  rise 3\n}"
+  },
+  {
+    "instruction": "Track a process script in Keepalived to lower weight on failure",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `track_script` with the correct flags and arguments\n   2. Key flags: -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `track_script` — track_script command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrack_script {\n  chk_nginx weight -20\n}"
+  },
+  {
+    "instruction": "Configure Keepalived notify_master script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: notify_master \"/usr/local/bin/master.sh\"\n   2. Apply the configuration and verify with `notify_master status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `notify_master` — notify_master command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnotify_master \"/usr/local/bin/master.sh\""
+  },
+  {
+    "instruction": "Configure Keepalived notify_backup script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: notify_backup \"/usr/local/bin/backup.sh\"\n   2. Apply the configuration and verify with `notify_backup status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `notify_backup` — notify_backup command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnotify_backup \"/usr/local/bin/backup.sh\""
+  },
+  {
+    "instruction": "Configure Keepalived notify_fault script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: notify_fault \"/usr/local/bin/fault.sh\"\n   2. Apply the configuration and verify with `notify_fault status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `notify_fault` — notify_fault command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnotify_fault \"/usr/local/bin/fault.sh\""
+  },
+  {
+    "instruction": "Configure Keepalived notify_stop script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: notify_stop \"/usr/local/bin/stop.sh\"\n   2. Apply the configuration and verify with `notify_stop status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `notify_stop` — notify_stop command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnotify_stop \"/usr/local/bin/stop.sh\""
+  },
+  {
+    "instruction": "Run ucarp with a custom password",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ucarp` with the correct flags and arguments\n   2. Key flags: --interface, --srcip, --vip, --pass\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ucarp` — ucarp command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nucarp --interface=eth0 --srcip=192.168.1.10 --vip=192.168.1.100 --pass=password123"
+  },
+  {
+    "instruction": "Run ucarp with a custom VRID (virtual router ID)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ucarp` with the correct flags and arguments\n   2. Key flags: --interface, --srcip, --vip, --pass\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ucarp` — ucarp command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nucarp --interface=eth0 --srcip=192.168.1.10 --vip=192.168.1.100 --pass=secret --vrid=55"
+  },
+  {
+    "instruction": "Run ucarp in preempt mode (default)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ucarp` with the correct flags and arguments\n   2. Key flags: --interface, --srcip, --vip, --pass\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ucarp` — ucarp command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nucarp --interface=eth0 --srcip=192.168.1.10 --vip=192.168.1.100 --pass=secret --preempt"
+  },
+  {
+    "instruction": "Run ucarp with no preempt mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ucarp` with the correct flags and arguments\n   2. Key flags: --interface, --srcip, --vip, --pass\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ucarp` — ucarp command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nucarp --interface=eth0 --srcip=192.168.1.10 --vip=192.168.1.100 --pass=secret --nopreempt"
+  },
+  {
+    "instruction": "Check cluster status with the pacemaker CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm` — crm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm status"
+  },
+  {
+    "instruction": "Check cluster status with crm_mon with one-shot output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm_mon` with the correct flags and arguments\n   2. Key flags: -1, --output-as\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm_mon` — crm_mon command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm_mon -1 --output-as text"
+  },
+  {
+    "instruction": "Force Pacemaker re-election",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crmadmin` with the correct flags and arguments\n   2. Key flags: -E, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crmadmin` — crmadmin command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrmadmin -E -t 5000"
+  },
+  {
+    "instruction": "Put a Pacemaker node in maintenance mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs node maintenance node1"
+  },
+  {
+    "instruction": "Unset a Pacemaker node from maintenance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs node ready node1"
+  },
+  {
+    "instruction": "Check a specific node's attributes in Pacemaker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm_node` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm_node` — crm_node command execution and management\n   Flag `-l`: long listing format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm_node -l"
+  }
+]

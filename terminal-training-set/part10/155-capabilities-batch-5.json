@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Show effective capability mask as hex",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/status | grep CapEff"
+  },
+  {
+    "instruction": "Show inheritable capability mask",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/status | grep CapInh"
+  },
+  {
+    "instruction": "Show permitted capability mask",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/status | grep CapPrm"
+  },
+  {
+    "instruction": "Show bounding capability set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/status | grep CapBnd"
+  },
+  {
+    "instruction": "Show ambient capability set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/status | grep CapAmb"
+  },
+  {
+    "instruction": "Decode all capability masks for PID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: --decode\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor cap in CapEff CapInh CapPrm CapBnd CapAmb; do mask=$(grep $cap /proc/1234/status | awk '{print $2}'); echo \"$cap ($mask) -> $(capsh --decode=$mask)\"; done"
+  },
+  {
+    "instruction": "Write simple script to decode process caps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -caps\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /usr/local/bin/decode-caps.sh << 'EOF'\n#!/bin/bash\nPID=${1:-$$}\nfor cap in CapEff CapInh CapPrm CapBnd CapAmb; do\n    if mask=$(grep $cap /proc/$PID/status 2>/dev/null | awk '{print $2}'); then\n        echo \"$cap ($mask): $(capsh --decode=$mask 2>/dev/null || echo 'unknown')\"\n    fi\ndone\nEOF\nchmod +x /usr/local/bin/decode-caps.sh"
+  },
+  {
+    "instruction": "Run decode-caps on PID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bash` with the correct flags and arguments\n   2. Key flags: -caps\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bash` — bash command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbash /usr/local/bin/decode-caps.sh 1"
+  },
+  {
+    "instruction": "Check if specific cap is in effective set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -I, -c, --has-cap, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngrep CapEff /proc/self/status | awk '{print $2}' | xargs -I{} sh -c 'capsh --has-cap=cap_net_raw -- -c \"echo yes\" 2>/dev/null || echo no'"
+  },
+  {
+    "instruction": "Compare bounding set to permitted set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `capsh` with the correct flags and arguments\n   2. Key flags: --print, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `capsh` — capsh command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncapsh --print 2>&1 | grep -E 'Bounding|Permitted'"
+  },
+  {
+    "instruction": "View capability difference between users",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `su` with the correct flags and arguments\n   2. Key flags: -c, --print, --print\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `su` — su command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsu -c 'capsh --print | grep Current' nobody; capsh --print | grep Current"
+  },
+  {
+    "instruction": "Permissions for running file with capability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: chmod u+s /bin/ping && getcap /bin/ping\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Supporting tool: `getcap` — check file capabilities\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod u+s /bin/ping && getcap /bin/ping"
+  },
+  {
+    "instruction": "Setcap on script file (shebang)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `setcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `setcap` — set file capabilities\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsetcap cap_net_raw+ep /usr/local/bin/myscript.py"
+  },
+  {
+    "instruction": "Remove suid and use capabilities instead",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chmod` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Supporting tool: `setcap` — set file capabilities\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod u-s /bin/ping; setcap cap_net_raw+ep /bin/ping"
+  },
+  {
+    "instruction": "Check cap vs suid precedence",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Supporting tool: `ping` — ping command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetcap /bin/ping; ls -la /bin/ping"
+  },
+  {
+    "instruction": "Compare binary with and without cap set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Supporting tool: `ping` — ping command execution and management\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetcap /bin/ping && echo 'has cap'; cp /bin/ping /tmp/ping.nocap && setcap -r /tmp/ping.nocap && getcap /tmp/ping.nocap"
+  },
+  {
+    "instruction": "Grant cap to binary inside container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --rm, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Supporting tool: `ping` — ping command execution and management\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run --rm -v /bin/ping:/ping ubuntu setcap cap_net_raw+ep /ping"
+  },
+  {
+    "instruction": "Restrict setcap to user namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -Ur\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Supporting tool: `setcap` — set file capabilities\n   Supporting tool: `ping` — ping command execution and management\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -Ur setcap cap_net_raw+ep /bin/ping"
+  },
+  {
+    "instruction": "Test if user namespace has CAP_SETUID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -Ur, --has-cap\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -Ur capsh --has-cap=cap_setuid$$"
+  },
+  {
+    "instruction": "Capabilities inside flatpak sandbox",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `flatpak` with the correct flags and arguments\n   2. Key flags: --command, -c, --print\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `flatpak` — Flatpak application manager\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nflatpak run --command=bash org.gnome.Epiphany -c 'capsh --print'"
+  },
+  {
+    "instruction": "Snap confinement and capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `snap` with the correct flags and arguments\n   2. Key flags: --shell, --print\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `snap` — Snap package manager\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsnap run --shell firefox && capsh --print"
+  }
+]

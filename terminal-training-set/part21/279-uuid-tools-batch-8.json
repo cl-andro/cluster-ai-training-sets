@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "How to generate 100 UUIDs with uuidgen in a batch",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor i in $(seq 1 100); do uuidgen; done > batch_uuids.txt"
+  },
+  {
+    "instruction": "How to generate UUIDs in parallel using xargs and uuidgen",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `seq` with the correct flags and arguments\n   2. Key flags: -P4, -I\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `seq` — seq command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nseq 100 | xargs -P4 -I{} uuidgen"
+  },
+  {
+    "instruction": "How to generate UUIDs and compress them on the fly",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `uuidgen` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `uuidgen` — uuidgen command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nuuidgen | gzip > uuid.gz"
+  },
+  {
+    "instruction": "How to generate a UUID and use it for a temporary directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir /tmp/$(uuidgen)"
+  },
+  {
+    "instruction": "How to generate a UUID and check for duplicates in a list of existing UUIDs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `NEW` with the correct flags and arguments\n   2. Key flags: -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `NEW` — NEW command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nNEW=$(uuidgen) && grep -q \"$NEW\" /tmp/existing_uuids.txt && echo duplicate || echo unique"
+  },
+  {
+    "instruction": "How to generate UUIDs and sort them",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfor i in {1..10}; do uuidgen; done | sort"
+  },
+  {
+    "instruction": "How to generate UUIDs and count unique ones",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -u, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfor i in {1..1000}; do uuidgen; done | sort -u | wc -l"
+  },
+  {
+    "instruction": "How to generate a UUID and assign it to a Kubernetes pod label",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -pod\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl label pod my-pod uuid=$(uuidgen)"
+  },
+  {
+    "instruction": "How to generate a UUID for a new git tag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `git` with the correct flags and arguments\n   2. Key flags: -d, -f1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `git` — version control and repository management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngit tag \"v1.0-$(uuidgen | cut -d'-' -f1)\""
+  },
+  {
+    "instruction": "How to generate a UUID and use it in an Ansible playbook ad-hoc command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m debug -a \"msg={{ lookup('pipe', 'uuidgen') }}\""
+  },
+  {
+    "instruction": "How to generate a UUID and add it to a Redis key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `redis-cli` with the correct flags and arguments\n   2. Key flags: -cli\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `redis-cli` — Redis database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nredis-cli SET \"session:$(uuidgen)\" \"active\""
+  },
+  {
+    "instruction": "How to generate UUIDs in a Makefile target",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `uuidgen` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `uuidgen` — uuidgen command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nuuidgen > build.id"
+  },
+  {
+    "instruction": "How to generate a UUID and insert it into a PostgreSQL database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"INSERT INTO sessions (id) VALUES ('$(uuidgen)');\""
+  },
+  {
+    "instruction": "How to generate a UUID for a new database primary key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"INSERT INTO users (id, name) VALUES ('$(uuidgen)', 'John Doe');\""
+  },
+  {
+    "instruction": "How to generate a UUID and use it as a message queue ID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mqtt` with the correct flags and arguments\n   2. Key flags: -t, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mqtt` — mqtt command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmqtt pub -t \"device/$(uuidgen)/status\" -m \"online\""
+  },
+  {
+    "instruction": "How to generate UUIDs and store them in an array in bash",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `uuids` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `uuids` — uuids command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuuids=(); for i in {1..5}; do uuids+=($(uuidgen)); done; echo ${uuids[*]}"
+  },
+  {
+    "instruction": "How to generate a UUID for a new file in a monitored directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'data' > /var/spool/incoming/$(uuidgen).dat\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'data' > /var/spool/incoming/$(uuidgen).dat"
+  },
+  {
+    "instruction": "How to generate a UUID and use it for an S3 object key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `aws` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `aws` — AWS cloud service management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\naws s3 cp file.txt s3://mybucket/$(uuidgen).txt"
+  },
+  {
+    "instruction": "How to generate a UUID and add it to syslog with a specific tag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logger` with the correct flags and arguments\n   2. Key flags: -t, -GEN\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logger` — logger command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogger -t UUID-GEN \"Generated UUID: $(uuidgen)\""
+  },
+  {
+    "instruction": "How to generate a UUID and use it as a correlation ID for logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `CORRELATION_ID` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `CORRELATION_ID` — CORRELATION_ID command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nCORRELATION_ID=$(uuidgen) && echo \"[$CORRELATION_ID] Starting job\" >> /var/log/app.log"
+  },
+  {
+    "instruction": "How to generate a UUID for a unique filename with date prefix",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -d, -f1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho \"report-$(date +%Y%m%d)-$(uuidgen | cut -d'-' -f1).pdf\""
+  },
+  {
+    "instruction": "How to generate a UUID and use it in a curl request header",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -H, -Request, -ID\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -H \"X-Request-ID: $(uuidgen)\" https://api.example.com/data"
+  },
+  {
+    "instruction": "How to generate a UUID as a MariaDB UUID function alternative",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mysql` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mysql` — MySQL/MariaDB database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\nmysql -e \"SELECT UUID();\""
+  },
+  {
+    "instruction": "How to generate UUIDs and pipe them to create unique files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -d, -c8\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfor i in {1..5}; do touch \"file-$(uuidgen | tr -d '-' | head -c8).txt\"; done"
+  }
+]

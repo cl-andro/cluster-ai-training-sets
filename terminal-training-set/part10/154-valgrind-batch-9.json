@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Run memcheck with leak-check on exit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --leak-check, --show-leak-kinds, --undef-value-errors\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --leak-check=full --show-leak-kinds=all --undef-value-errors=no ./myprogram"
+  },
+  {
+    "instruction": "Run all basic checks combined",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --leak-check, --track-origins, --track-fds\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --leak-check=full --track-origins=yes --track-fds=yes ./myprogram"
+  },
+  {
+    "instruction": "Run valgrind with comprehensive diagnostics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using valgrind\n   2. Apply corrective actions: valgrind -v --leak-check=full --show-leak-kinds=all --track-origins=yes ./myprog\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Flag `-v`: verbose output for debugging\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind -v --leak-check=full --show-leak-kinds=all --track-origins=yes ./myprogram"
+  },
+  {
+    "instruction": "Quick check for errors only (no leak)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --leak-check, --errors-for-leak-kinds\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --leak-check=no --errors-for-leak-kinds=none ./myprogram"
+  },
+  {
+    "instruction": "Run with undefined-value skip",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --leak-check, --undef-value-errors\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --leak-check=full --undef-value-errors=no ./myprogram"
+  },
+  {
+    "instruction": "Use in scripts with exit code on error",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --error-exitcode, --leak-check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nvalgrind --error-exitcode=1 --leak-check=full ./myprogram 2>&1 && echo 'PASS' || echo 'FAIL'"
+  },
+  {
+    "instruction": "Check for syscall param errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --track-fds, --sigprocmask, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nvalgrind --track-fds=yes --sigprocmask=yes ./myprogram 2>&1 | grep -i 'Syscall param'"
+  },
+  {
+    "instruction": "Verify valgrind finding with GDB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vgdb` with the correct flags and arguments\n   2. Key flags: --pid, -f, --command\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vgdb` — vgdb command execution and management\n   Supporting tool: `valgrind` — memory leak detection\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nvgdb --pid=$(pgrep -f valgrind) --command='bt' 2>&1"
+  },
+  {
+    "instruction": "Run memcheck for a specific function",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --toggle-collect\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --toggle-collect=myFunction ./myprogram"
+  },
+  {
+    "instruction": "Find overhead of valgrind tool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `time` with the correct flags and arguments\n   2. Key flags: --tool\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `time` — time command execution and management\n   Supporting tool: `valgrind` — memory leak detection\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntime valgrind --tool=none ./myprogram"
+  },
+  {
+    "instruction": "Run callgrind and see performance counters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --tool, --dump-every-bb\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --tool=callgrind --dump-every-bb=yes ./myprogram"
+  },
+  {
+    "instruction": "Profile multithreaded app with cachegrind",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --tool, --cache-sim\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --tool=cachegrind --cache-sim=yes ./my_threaded_app"
+  },
+  {
+    "instruction": "Attach valgrind to already running process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --smc-check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --smc-check=all -- ./myprogram $(cat /proc/1234/cmdline | tr '\\0' ' ')"
+  },
+  {
+    "instruction": "Use valgrind with other-wrapper",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --wrapper, --args\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Supporting tool: `gdb` — debugging and crash analysis\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --wrapper='gdb --args' ./myprogram"
+  },
+  {
+    "instruction": "Set valgrind to use specific address space",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --aspace-minaddr\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --aspace-minaddr=0x10000000 ./myprogram"
+  },
+  {
+    "instruction": "Run valgrind with simulation of low memory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --aspace-maxaddr\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --aspace-maxaddr=0x70000000 ./myprogram"
+  },
+  {
+    "instruction": "Valgrind with debug option on fail",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using valgrind\n   2. Check logs and error outputs for the specific failure pattern\n   3. Isolate whether it's a config, resource, or permission issue\n   4. Apply corrective actions: valgrind --vgdb-error=1 --vgdb-prefix=./vgdb ./myprogram\n   5. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --vgdb-error=1 --vgdb-prefix=./vgdb ./myprogram"
+  },
+  {
+    "instruction": "Run in quiet mode with only errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: -q, --leak-check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind -q --leak-check=full ./myprogram"
+  },
+  {
+    "instruction": "Show heap summary only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --leak-check, --show-leak-kinds\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --leak-check=summary --show-leak-kinds=all ./myprogram"
+  },
+  {
+    "instruction": "Limit test run to errors only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --error-limit, --max-errors\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvalgrind --error-limit=yes --max-errors=10 ./myprogram"
+  },
+  {
+    "instruction": "Run with extended help options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `valgrind` with the correct flags and arguments\n   2. Key flags: --help-debug, -80\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nvalgrind --help-debug 2>&1 | head -80"
+  },
+  {
+    "instruction": "Check valgrind debug options for tool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using valgrind\n   2. Apply corrective actions: valgrind --tool=memcheck --help 2>&1 | head -50\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `valgrind` — memory leak detection\n   Flag `--help`: display usage information\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nvalgrind --tool=memcheck --help 2>&1 | head -50"
+  }
+]

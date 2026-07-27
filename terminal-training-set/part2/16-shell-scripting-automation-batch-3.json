@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Use expect to automate interactive SSH login",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for apt\n   2. Build the command chain with error handling\n   3. Execute: apt install -y expect && echo -e '\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y expect && echo -e '"
+  },
+  {
+    "instruction": "Use expect to automate sudo password",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo -e '\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e '"
+  },
+  {
+    "instruction": "Install Ansible for automation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y ansible"
+  },
+  {
+    "instruction": "Check Ansible version and module list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: --version, -doc, -l, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `--version`: show tool version\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible --version && ansible-doc -l | head -10"
+  },
+  {
+    "instruction": "Create an Ansible inventory file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e '[webservers]\\nweb1 ansible_host=192.168.1.10 ansible_user=root\\nweb2 ansible_host=192.168.1.11 ansible_user=root' > inventory.ini"
+  },
+  {
+    "instruction": "Ping all hosts with Ansible",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -i, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `ping` — ping command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -i inventory.ini -m ping"
+  },
+  {
+    "instruction": "Run a shell command on remote with Ansible",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -i, -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-i`: interactive mode or case-insensitive\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -i inventory.ini -m shell -a 'uptime'"
+  },
+  {
+    "instruction": "Execute Ansible ad-hoc to install a package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `ansible status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `apt` — apt command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nansible all -i inventory.ini -m apt -a 'name=nginx state=present' --become"
+  },
+  {
+    "instruction": "Create a simple Ansible playbook",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ncat > playbook.yml << 'EOF'\n- hosts: all\n  become: yes\n  tasks:\n  - name: Install nginx\n    apt:\n      name: nginx\n      state: present\n  - name: Start nginx\n    service:\n      name: nginx\n      state: started\n      enabled: yes\nEOF"
+  },
+  {
+    "instruction": "Run an Ansible playbook",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-playbook` with the correct flags and arguments\n   2. Key flags: -playbook, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-playbook` — ansible-playbook command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-playbook -i inventory.ini playbook.yml"
+  },
+  {
+    "instruction": "Check Ansible playbook syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-playbook` with the correct flags and arguments\n   2. Key flags: -playbook, --syntax-check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-playbook` — ansible-playbook command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-playbook --syntax-check playbook.yml"
+  },
+  {
+    "instruction": "Dry-run an Ansible playbook",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-playbook` with the correct flags and arguments\n   2. Key flags: -playbook, -i, --check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-playbook` — ansible-playbook command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-playbook -i inventory.ini playbook.yml --check"
+  },
+  {
+    "instruction": "Use Ansible vault to encrypt a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-vault` with the correct flags and arguments\n   2. Key flags: -vault\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-vault` — ansible-vault command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-vault encrypt secrets.yml"
+  },
+  {
+    "instruction": "Decrypt an Ansible vault file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-vault` with the correct flags and arguments\n   2. Key flags: -vault, --ask-vault-pass\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-vault` — ansible-vault command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-vault decrypt secrets.yml --ask-vault-pass"
+  },
+  {
+    "instruction": "Edit an Ansible vault file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-vault` with the correct flags and arguments\n   2. Key flags: -vault\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-vault` — ansible-vault command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-vault edit secrets.yml"
+  },
+  {
+    "instruction": "Install Ansible Galaxy collection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ansible-galaxy collection install community.docker\n   2. Apply the configuration and verify with `ansible-galaxy status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-galaxy` — ansible-galaxy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-galaxy collection install community.docker"
+  },
+  {
+    "instruction": "Create an Ansible role",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-galaxy` with the correct flags and arguments\n   2. Key flags: -galaxy\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-galaxy` — ansible-galaxy command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-galaxy role init myrole"
+  },
+  {
+    "instruction": "List Ansible roles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-galaxy` with the correct flags and arguments\n   2. Key flags: -galaxy\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-galaxy` — ansible-galaxy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-galaxy role list"
+  },
+  {
+    "instruction": "Use Ansible facts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -30\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m setup | head -30"
+  },
+  {
+    "instruction": "Use Ansible template (Jinja2)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > template.j2 << 'EOF'\nserver {\n  listen {{ nginx_port }};\n  server_name {{ server_name }};\n}\nEOF"
+  },
+  {
+    "instruction": "Install Puppet agent",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y puppet"
+  },
+  {
+    "instruction": "Run Puppet agent manually",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `puppet` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `puppet` — puppet command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npuppet agent -t"
+  },
+  {
+    "instruction": "Check Puppet version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `puppet` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `puppet` — puppet command execution and management\n   Flag `--version`: show tool version\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npuppet --version"
+  },
+  {
+    "instruction": "Install Chef Workstation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -fsSL https://omnitruck.chef.io/install.sh | bash -s -- -P chef-workstation"
+  },
+  {
+    "instruction": "Run Chef client",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chef-client` with the correct flags and arguments\n   2. Key flags: -client, -z, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chef-client` — chef-client command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchef-client -z -o myrecipe"
+  }
+]

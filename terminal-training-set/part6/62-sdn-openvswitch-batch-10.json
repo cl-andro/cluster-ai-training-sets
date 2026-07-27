@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Monitor OVS logs in real time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for tail\n   2. Build the command chain with error handling\n   3. Execute: tail -f /var/log/openvswitch/ovs-vswitchd.log\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntail -f /var/log/openvswitch/ovs-vswitchd.log"
+  },
+  {
+    "instruction": "Check OVS process health",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -switch\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status openvswitch-switch"
+  },
+  {
+    "instruction": "Restart the OVS service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -switch\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart openvswitch-switch"
+  },
+  {
+    "instruction": "Display OVS version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-vsctl` with the correct flags and arguments\n   2. Key flags: -vsctl, --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Flag `--version`: show tool version\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-vsctl --version"
+  },
+  {
+    "instruction": "Trace a packet through the pipeline",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-appctl` with the correct flags and arguments\n   2. Key flags: -appctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-appctl` — ovs-appctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-appctl ofproto/trace br0 'in_port=1,eth_src=00:00:00:00:00:01,eth_dst=00:00:00:00:00:02'"
+  },
+  {
+    "instruction": "Check OVS memory map",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-appctl` with the correct flags and arguments\n   2. Key flags: -appctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-appctl` — ovs-appctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-appctl memory/show"
+  },
+  {
+    "instruction": "List all OVS log files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /var/log/openvswitch/"
+  },
+  {
+    "instruction": "Show interface error counters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-vsctl` with the correct flags and arguments\n   2. Key flags: -vsctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-vsctl get interface eth0 error"
+  },
+  {
+    "instruction": "Dump multicast snooping table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-appctl` with the correct flags and arguments\n   2. Key flags: -appctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-appctl` — ovs-appctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-appctl mdb/show br0"
+  },
+  {
+    "instruction": "Check OVSDB server status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status ovsdb-server"
+  },
+  {
+    "instruction": "Monitor OVS DB transactions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for ovsdb-client\n   2. Build the command chain with error handling\n   3. Execute: ovsdb-client monitor Open_vSwitch\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `ovsdb-client` — ovsdb-client command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novsdb-client monitor Open_vSwitch"
+  },
+  {
+    "instruction": "Dump all ovsdb schema tables",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovsdb-client` with the correct flags and arguments\n   2. Key flags: -client, -tables\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovsdb-client` — ovsdb-client command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novsdb-client list-tables"
+  },
+  {
+    "instruction": "Get all bridge statistics via JSON",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovsdb-client` with the correct flags and arguments\n   2. Key flags: -client, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovsdb-client` — ovsdb-client command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novsdb-client dump Open_vSwitch Bridge --format json"
+  },
+  {
+    "instruction": "Check kernel module version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `modinfo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `modinfo` — modinfo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmodinfo openvswitch"
+  },
+  {
+    "instruction": "List OVS kernel module parameters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systool` with the correct flags and arguments\n   2. Key flags: -vm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systool` — systool command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystool -vm openvswitch"
+  },
+  {
+    "instruction": "Trace packet in table 0 with ct_state",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-appctl` with the correct flags and arguments\n   2. Key flags: -appctl, -trk\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-appctl` — ovs-appctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-appctl ofproto/trace br0 'in_port=1,ct_state=-trk,ip'"
+  },
+  {
+    "instruction": "Monitor flow table changes with ovs-ofctl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for ovs-ofctl\n   2. Build the command chain with error handling\n   3. Execute: ovs-ofctl monitor br0 --detach --pidfile=monitor.pid\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl monitor br0 --detach --pidfile=monitor.pid"
+  },
+  {
+    "instruction": "Count total flows installed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ovs-ofctl dump-flows br0 | wc -l\n   2. Apply the configuration and verify with `ovs-ofctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-ofctl` — ovs-ofctl command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-ofctl dump-flows br0 | wc -l"
+  },
+  {
+    "instruction": "Show OVS datapath cache hit ratio",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-dpctl` with the correct flags and arguments\n   2. Key flags: -dpctl, --statistics, -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-dpctl` — ovs-dpctl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-dpctl show --statistics | grep -E '(hit|missed|lost)'"
+  },
+  {
+    "instruction": "Check if eth0 has OF port number",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-vsctl` with the correct flags and arguments\n   2. Key flags: -vsctl\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-vsctl get interface eth0 ofport"
+  },
+  {
+    "instruction": "List all dpif backends and types",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-appctl` with the correct flags and arguments\n   2. Key flags: -appctl, -dpif\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-appctl` — ovs-appctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-appctl dpif/list-dpif"
+  },
+  {
+    "instruction": "Show the number of active ports",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ovs-vsctl` with the correct flags and arguments\n   2. Key flags: -vsctl, -ports, -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ovs-vsctl` — ovs-vsctl command execution and management\n   Flag `-l`: long listing format\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\novs-vsctl list-ports br0 | wc -l"
+  }
+]

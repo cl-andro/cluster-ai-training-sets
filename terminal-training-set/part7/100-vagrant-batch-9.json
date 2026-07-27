@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Create a Vagrant box from a QEMU qcow2 image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `qemu-img` with the correct flags and arguments\n   2. Key flags: -img, -O, -czf, -box\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `qemu-img` — qemu-img command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nqemu-img convert -O qcow2 ubuntu.qcow2 box.img && echo '{\"provider\":\"libvirt\"}' > metadata.json && tar -czf my-box.box metadata.json box.img && vagrant box add my-box.box --name my/custom-box"
+  },
+  {
+    "instruction": "Use Vagrant with a Windows guest (via WinRM)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.communicator = \"winrm\" config.vm.guest = :windows' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with SSH on a non-standard port",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.ssh.guest_port = 2200' >> Vagrantfile"
+  },
+  {
+    "instruction": "Set a custom SSH timeout in Vagrant",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.ssh.connect_timeout = 30' >> Vagrantfile"
+  },
+  {
+    "instruction": "Disable insertion of a Vagrant insecure keypair",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: echo 'config.ssh.insert_key = false' >> Vagrantfile\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.ssh.insert_key = false' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use a custom SSH shell for Vagrant",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.ssh.shell = \"zsh\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Keep the Vagrant insecure key in the box",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: echo 'config.ssh.insert_key = true' >> Vagrantfile\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.ssh.insert_key = true' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use a provisioning script without inline shell",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vagrant` with the correct flags and arguments\n   2. Key flags: --provision-with\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vagrant` — vagrant command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvagrant provision --provision-with chef_solo"
+  },
+  {
+    "instruction": "Provision only a specific machine in a multi-machine setup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: vagrant provision web\n   2. Apply the configuration and verify with `vagrant status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `vagrant` — vagrant command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvagrant provision web"
+  },
+  {
+    "instruction": "Run provisioners but skip a specific step",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.provision \"shell\", inline: \"echo skip\", run: \"never\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Run a provisioner only on the first up",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.provision \"shell\", inline: \"echo first boot\", run: \"once\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Run a provisioner on every up/reload",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.provision \"shell\", inline: \"echo always\", run: \"always\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant in a CI pipeline (headless)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vagrant` with the correct flags and arguments\n   2. Key flags: --no-tty\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vagrant` — vagrant command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvagrant up --no-tty"
+  },
+  {
+    "instruction": "Run vagrant in a Docker container for CI testing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: -v, -v, -e, --privileged\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Flag `-v`: verbose output for debugging\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run -v $PWD:/vagrant -v $HOME/.vagrant.d:/root/.vagrant.d -e VAGRANT_DEFAULT_PROVIDER=docker --privileged hashicorp/vagrant vagrant up"
+  },
+  {
+    "instruction": "Test an Ansible playbook with Vagrant locally",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vagrant` with the correct flags and arguments\n   2. Key flags: --provider, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vagrant` — vagrant command execution and management\n   Flag `-f`: force execution, suppress errors\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvagrant up --provider libvirt && vagrant provision && vagrant destroy -f"
+  },
+  {
+    "instruction": "CI pipeline step: lint Vagrantfile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ruby` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ruby` — ruby command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nruby -c Vagrantfile"
+  },
+  {
+    "instruction": "Lint a Vagrantfile for syntax errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vagrant` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vagrant` — vagrant command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvagrant validate"
+  },
+  {
+    "instruction": "Update all boxes to latest versions in CI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vagrant` with the correct flags and arguments\n   2. Key flags: --box\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vagrant` — vagrant command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvagrant box update --box '*'"
+  },
+  {
+    "instruction": "Use Vagrant with a custom box format for CI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.box_check_update = false' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use Vagrant with the docker provider in CI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `vagrant` with the correct flags and arguments\n   2. Key flags: --provider\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `vagrant` — vagrant command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nvagrant up --provider=docker"
+  },
+  {
+    "instruction": "Set a custom Vagrant box download checksum",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.box_download_checksum = \"sha256:abcd...\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Set a custom box download checksum type",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.box_download_checksum_type = \"sha256\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Use a local box file with Vagrant",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -box\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.box_url = \"file:///data/boxes/my-box.box\"' >> Vagrantfile"
+  },
+  {
+    "instruction": "Disable Vagrant box update checking",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'config.vm.box_check_update = false' >> Vagrantfile"
+  }
+]

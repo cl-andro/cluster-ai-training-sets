@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Query logs with line format filter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"} | logfmt'"
+  },
+  {
+    "instruction": "Query logs with json format filter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"app\"} | json'"
+  },
+  {
+    "instruction": "Extract json fields in logql query",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"app\"} | json | line_format \"method={{.method}} status={{.status}}\"'"
+  },
+  {
+    "instruction": "Calculate error rate over 5 minutes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query 'sum by (job) (rate({job=\"nginx\"} |= \"error\" [5m]))'"
+  },
+  {
+    "instruction": "Show top 10 error paths",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query 'topk(10, sum by (path) (count_over_time({job=\"nginx\"} |= \"error\" [1h])))'"
+  },
+  {
+    "instruction": "Get log volume per job",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query 'sum by (job) (rate({job=~\".+\"}[5m]))'"
+  },
+  {
+    "instruction": "Query logs for specific request ID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: -abc123\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"app\"} |= \"req-abc123\"'"
+  },
+  {
+    "instruction": "Query logs excluding health checks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"} != \"/healthz\"'"
+  },
+  {
+    "instruction": "Query logs with regex filter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"} |~ \"(error|exception|fatal)\"'"
+  },
+  {
+    "instruction": "Query logs excluding pattern",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"} !~ \"(debug|trace)\"'"
+  },
+  {
+    "instruction": "Query log stream for last 5 minutes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --since\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}' --since=5m"
+  },
+  {
+    "instruction": "Query log stream for last 24 hours",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --since\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}' --since=24h"
+  },
+  {
+    "instruction": "Tail logs from Loki",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --tail\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}' --tail"
+  },
+  {
+    "instruction": "Tail logs with specific filter",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --tail\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"} |= \"error\"' --tail"
+  },
+  {
+    "instruction": "Query logs with batch output format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --batch, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}' --batch=1000 -o jsonl"
+  },
+  {
+    "instruction": "Query logs at a specific point in time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --from, -03, -15T10, --to\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}' --from=2025-03-15T10:00:00Z --to=2025-03-15T10:05:00Z"
+  },
+  {
+    "instruction": "Show log query statistics only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --stats\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}' --stats"
+  },
+  {
+    "instruction": "Query without displaying log lines",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --no-labels\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}' --no-labels"
+  },
+  {
+    "instruction": "Query without coloring output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --no-color\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli query '{job=\"nginx\"}' --no-color"
+  },
+  {
+    "instruction": "Set logcli address explicitly",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --addr\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli --addr=http://localhost:3100 query '{job=\"nginx\"}'"
+  },
+  {
+    "instruction": "Logcli authenticate with bearer token",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --bearer-token, -token\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli --bearer-token=your-token query '{job=\"nginx\"}'"
+  },
+  {
+    "instruction": "Logcli query with TLS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logcli` with the correct flags and arguments\n   2. Key flags: --tls-skip-verify, --addr\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logcli` — Loki log query CLI\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogcli --tls-skip-verify --addr=https://loki.example.com query '{job=\"nginx\"}'"
+  }
+]

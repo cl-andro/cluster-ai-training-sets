@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Initialize an LDAP directory with a base domain entry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -x, -D, -w, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `top` — top command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /tmp/base.ldif << 'EOF'\ndn: dc=example,dc=com\nobjectClass: dcObject\nobjectClass: organization\nobjectClass: top\ndc: example\no: Example Inc.\nEOF\nldapadd -x -D cn=admin,cn=config -w secret -f /tmp/base.ldif"
+  },
+  {
+    "instruction": "Create an organizational unit for users in LDAP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -x, -D, -w, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /tmp/ou.ldif << 'EOF'\ndn: ou=people,dc=example,dc=com\nobjectClass: organizationalUnit\nou: people\nEOF\nldapadd -x -D cn=admin,dc=example,dc=com -w secret -f /tmp/ou.ldif"
+  },
+  {
+    "instruction": "Create a typical LDAP posixAccount and inetOrgPerson entry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `top` — top command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /tmp/user.ldif << 'EOF'\ndn: uid=jdoe,ou=people,dc=example,dc=com\nobjectClass: top\nobjectClass: person\nobjectClass: organizationalPerson\nobjectClass: inetOrgPerson\nobjectClass: posixAccount\ncn: John Doe\nsn: Doe\nuid: jdoe\nuidNumber: 1001\ngidNumber: 1001\nhomeDirectory: /home/jdoe\nloginShell: /bin/bash\nmail: jdoe@example.com\nuserPassword: {SSHA}hash\nEOF\nldapadd -x -D cn=admin,dc=example,dc=com -W -f /tmp/user.ldif"
+  },
+  {
+    "instruction": "Set up an LDAP replica with an updated referral",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapmodify` with the correct flags and arguments\n   2. Key flags: -Y, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\nchangetype: modify\nreplace: olcUpdateref\nolcUpdateref: ldap://master.example.com'"
+  },
+  {
+    "instruction": "Configure OpenLDAP to use LMDB instead of MDB",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\n   2. Apply the configuration and verify with `ldapmodify status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\nchangetype: modify\nreplace: olcDatabase\nolcDatabase: {1}ldif'"
+  },
+  {
+    "instruction": "Change the MDB database environment flags",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapmodify` with the correct flags and arguments\n   2. Key flags: -Y, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\nchangetype: modify\nreplace: olcDbEnvFlags\nolcDbEnvFlags: nometasync'"
+  },
+  {
+    "instruction": "Set the MDB map size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapmodify` with the correct flags and arguments\n   2. Key flags: -Y, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\nchangetype: modify\nreplace: olcDbMaxSize\nolcDbMaxSize: 1073741824'"
+  },
+  {
+    "instruction": "Set MDB database to use 256MB of cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapmodify` with the correct flags and arguments\n   2. Key flags: -Y, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\nchangetype: modify\nreplace: olcDbCacheSize\nolcDbCacheSize: 268435456'"
+  },
+  {
+    "instruction": "Set the number of MDB database reader slots",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ldapmodify` with the correct flags and arguments\n   2. Key flags: -Y, -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: olcDatabase={1}mdb,cn=config\nchangetype: modify\nreplace: olcDbMaxReaders\nolcDbMaxReaders: 256'"
+  },
+  {
+    "instruction": "Check MDB database reader status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mdb_stat` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mdb_stat` — mdb_stat command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmdb_stat -f /var/lib/ldap"
+  },
+  {
+    "instruction": "Dump MDB database statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mdb_stat` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mdb_stat` — mdb_stat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmdb_stat -e /var/lib/ldap"
+  },
+  {
+    "instruction": "Re-index the entire MDB database offline",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `slapindex` with the correct flags and arguments\n   2. Key flags: -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `slapindex` — slapindex command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nslapindex -F /etc/ldap/slapd.d"
+  },
+  {
+    "instruction": "Start slapd with minimal config to test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `slapd` with the correct flags and arguments\n   2. Key flags: -T, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `slapd` — slapd command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nslapd -T test -f /etc/ldap/slapd.conf"
+  },
+  {
+    "instruction": "Check the OpenLDAP slapd default config file path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `slapd` with the correct flags and arguments\n   2. Key flags: -V\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `slapd` — slapd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nslapd -V"
+  },
+  {
+    "instruction": "Run slapd in foreground mode for testing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `slapd` with the correct flags and arguments\n   2. Key flags: -u, -g, -h\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `slapd` — slapd command execution and management\n   Flag `-h`: human-readable format\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nslapd -u openldap -g openldap -h ldap:/// ldapi:///"
+  },
+  {
+    "instruction": "Set LDAP URI via environment variable for tools",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport LDAPURI=ldap://localhost:389"
+  },
+  {
+    "instruction": "Set LDAP base DN via environment variable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport LDAPBASE=dc=example,dc=com"
+  },
+  {
+    "instruction": "Set LDAP bind DN via environment variable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport BINDDN=cn=admin,dc=example,dc=com"
+  },
+  {
+    "instruction": "Set LDAP password via environment variable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport BINDPW=secret"
+  },
+  {
+    "instruction": "Enable LDAP logging for replication debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using ldapmodify\n   2. Apply corrective actions: ldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: cn=config\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: cn=config\nchangetype: modify\nreplace: olcLogLevel\nolcLogLevel: sync'"
+  },
+  {
+    "instruction": "Enable LDAP logging for ACL debugging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using ldapmodify\n   2. Apply corrective actions: ldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: cn=config\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: cn=config\nchangetype: modify\nreplace: olcLogLevel\nolcLogLevel: acl'"
+  },
+  {
+    "instruction": "Enable comprehensive LDAP logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: cn=config\n   2. Apply the configuration and verify with `ldapmodify status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ldapmodify` — ldapmodify command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nldapmodify -Y EXTERNAL -H ldapi:/// <<< 'dn: cn=config\nchangetype: modify\nreplace: olcLogLevel\nolcLogLevel: -1'"
+  },
+  {
+    "instruction": "Tail the LDAP log file in real time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tail` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntail -f /var/log/slapd.log"
+  },
+  {
+    "instruction": "Restart OpenLDAP slapd service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart slapd"
+  },
+  {
+    "instruction": "Check OpenLDAP slapd service status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status slapd"
+  }
+]

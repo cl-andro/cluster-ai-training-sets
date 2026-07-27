@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to enable conntrack in iptables chain policy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the iptables configuration with the required parameters\n   2. Apply the configuration and verify with `iptables status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT"
+  },
+  {
+    "instruction": "How to allow inbound new conntrack state",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -m, --ctstate, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -m conntrack --ctstate NEW -p tcp --dport 80 -j ACCEPT"
+  },
+  {
+    "instruction": "How to block new inbound connections except SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -m, --ctstate, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -m conntrack --ctstate NEW -p tcp --dport ! 22 -j DROP"
+  },
+  {
+    "instruction": "How to check conntrack INVALID drop count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -L, -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Flag `-v`: verbose output for debugging\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -L INPUT -v | grep ctstate"
+  },
+  {
+    "instruction": "How to log new connections via conntrack",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -A, -m, --ctstate, -j\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -m conntrack --ctstate NEW -j LOG --log-prefix 'CT_NEW_CONN: ' --log-level 4"
+  },
+  {
+    "instruction": "How to check conntrack related connection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -L, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -L -o extended | grep RELATED"
+  },
+  {
+    "instruction": "How to set conntrack for LVS (IPVS)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1 > /proc/sys/net/ipv4/vs/conntrack"
+  },
+  {
+    "instruction": "How to check conntrack for IPVS connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -L, -p, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -L -p tcp -d 10.0.0.100"
+  },
+  {
+    "instruction": "How to flush conntrack for IPVS virtual server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -D, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -D -d 10.0.0.100"
+  },
+  {
+    "instruction": "How to use conntrack to debug service problems",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using conntrack\n   2. Apply corrective actions: conntrack -E -p tcp --dport 80\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -E -p tcp --dport 80"
+  },
+  {
+    "instruction": "How to check conntrack NAT port collisions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dmesg` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dmesg` — dmesg command execution and management\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndmesg | grep conntrack"
+  },
+  {
+    "instruction": "How to increase port range for conntrack NAT",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.ipv4.ip_local_port_range='32768 65535'"
+  },
+  {
+    "instruction": "How to track conntrack via auditd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `auditctl` with the correct flags and arguments\n   2. Key flags: -a, -S, -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `auditctl` — Linux audit framework control\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauditctl -a always,exit -S connect -F key=conntrack"
+  },
+  {
+    "instruction": "How to set nf_conntrack helper for SIP in nftables",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nft` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nft` — nftables firewall management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\nnft add rule inet filter forward udp dport 5060 ct helper set sip"
+  },
+  {
+    "instruction": "How to configure ct helper for FTP in nftables",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the nft configuration with the required parameters\n   2. Apply the configuration and verify with `nft status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `nft` — nftables firewall management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\nnft add rule inet filter forward tcp dport 21 ct helper set ftp"
+  },
+  {
+    "instruction": "How to see conntrack source tracking table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Flag `-t`: sort by time\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/net/stat/nf_conntrack | column -t"
+  },
+  {
+    "instruction": "How to flush conntrack for a specific kernel namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nsenter` with the correct flags and arguments\n   2. Key flags: -t, -n, -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nsenter` — enter existing namespace\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnsenter -t 1 -n -- conntrack -F"
+  },
+  {
+    "instruction": "How to check conntrack from init namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nsenter` with the correct flags and arguments\n   2. Key flags: -t, -n, -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nsenter` — enter existing namespace\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnsenter -t 1 -n -- conntrack -C"
+  },
+  {
+    "instruction": "How to enable conntrack for loopback traffic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the iptables configuration with the required parameters\n   2. Apply the configuration and verify with `iptables status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Supporting tool: `conntrack` — netfilter connection tracking\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -A INPUT -i lo -m conntrack --ctstate NEW -j ACCEPT"
+  },
+  {
+    "instruction": "How to disable conntrack for all Docker traffic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iptables` with the correct flags and arguments\n   2. Key flags: -t, -I, -i, -j\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iptables` — Linux firewall rule management\n   Flag `-t`: sort by time\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n</think>\niptables -t raw -I PREROUTING -i docker0 -j NOTRACK"
+  },
+  {
+    "instruction": "How to count conntrack entries per connection state",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `conntrack` with the correct flags and arguments\n   2. Key flags: -L, -o, -c, -rn\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `conntrack` — netfilter connection tracking\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nconntrack -L -o extended | awk '{print $3}' | sort | uniq -c | sort -rn"
+  },
+  {
+    "instruction": "How to check nf_conntrack event logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/net/netfilter/nf_conntrack_events"
+  },
+  {
+    "instruction": "How to enable conntrack events",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl -w net.netfilter.nf_conntrack_events=1\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.netfilter.nf_conntrack_events=1"
+  },
+  {
+    "instruction": "How to disable conntrack events",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.netfilter.nf_conntrack_events=0"
+  },
+  {
+    "instruction": "How to set conntrack default timeout on SYN packets",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w net.netfilter.nf_conntrack_tcp_timeout_syn_sent=45"
+  }
+]

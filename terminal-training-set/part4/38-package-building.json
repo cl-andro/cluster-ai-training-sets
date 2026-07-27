@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Build a Debian package from source in the current directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-buildpackage` with the correct flags and arguments\n   2. Key flags: -buildpackage, -us, -uc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-buildpackage` — dpkg-buildpackage command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-buildpackage -us -uc"
+  },
+  {
+    "instruction": "Build a Debian package with debuild including lintian checks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `debuild` with the correct flags and arguments\n   2. Key flags: -us, -uc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `debuild` — debuild command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndebuild -us -uc"
+  },
+  {
+    "instruction": "Create a Debian packaging skeleton with dh_make",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dh_make` with the correct flags and arguments\n   2. Key flags: --createorig, -p, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dh_make` — dh_make command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndh_make --createorig -p myapp_1.0-1"
+  },
+  {
+    "instruction": "Add an entry to the Debian changelog",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dch` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dch` — dch command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndch -i \"New upstream release\""
+  },
+  {
+    "instruction": "Check for new upstream versions using debian/watch",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for uscan\n   2. Build the command chain with error handling\n   3. Execute: uscan --verbose\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `uscan` — uscan command execution and management\n   Flag `--verbose`: detailed execution log\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuscan --verbose"
+  },
+  {
+    "instruction": "Checkout a Debian package source from the archive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `debcheckout` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `debcheckout` — debcheckout command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndebcheckout hello"
+  },
+  {
+    "instruction": "Download the source package for a Debian package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt-get` with the correct flags and arguments\n   2. Key flags: -get\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt-get` — apt-get command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\napt-get source hello"
+  },
+  {
+    "instruction": "Run lintian on a built .deb package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lintian` with the correct flags and arguments\n   2. Key flags: -1_amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lintian` — lintian command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlintian myapp_1.0-1_amd64.deb"
+  },
+  {
+    "instruction": "Build a package inside a pbuilder chroot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pbuildercowbuilder` with the correct flags and arguments\n   2. Key flags: --bindmounts, -buildpackage, -us, -uc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pbuildercowbuilder` — pbuildercowbuilder command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npbuildercowbuilder execute --bindmounts /tmp/build pushd /tmp/build && dpkg-buildpackage -us -uc && popd"
+  },
+  {
+    "instruction": "Install build dependencies using mk-build-deps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: mk-build-deps --install --remove\n   2. Apply the configuration and verify with `mk-build-deps status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `mk-build-deps` — mk-build-deps command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmk-build-deps --install --remove"
+  },
+  {
+    "instruction": "Extract a Debian source package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-source` with the correct flags and arguments\n   2. Key flags: -source, -x, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-source` — dpkg-source command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-source -x myapp_1.0-1.dsc"
+  },
+  {
+    "instruction": "Generate Debian control file from source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-gencontrol` with the correct flags and arguments\n   2. Key flags: -gencontrol, -v1, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-gencontrol` — dpkg-gencontrol command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-gencontrol -v1.0-1"
+  },
+  {
+    "instruction": "Calculate shared library dependencies for a package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-shlibdeps` with the correct flags and arguments\n   2. Key flags: -shlibdeps, -O\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-shlibdeps` — dpkg-shlibdeps command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-shlibdeps -O debian/myapp/usr/lib/libfoo.so.1"
+  },
+  {
+    "instruction": "Add an additional file to the .deb distribution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-distaddfile` with the correct flags and arguments\n   2. Key flags: -distaddfile\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-distaddfile` — dpkg-distaddfile command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-distaddfile extrafile misc extra 1.0"
+  },
+  {
+    "instruction": "Generate the .changes file for a Debian upload",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-genchanges` with the correct flags and arguments\n   2. Key flags: -genchanges, -1_amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-genchanges` — dpkg-genchanges command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ndpkg-genchanges > ../myapp_1.0-1_amd64.changes"
+  },
+  {
+    "instruction": "Create a Packages.gz index from a directory of .deb files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-scanpackages` with the correct flags and arguments\n   2. Key flags: -scanpackages, -9c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-scanpackages` — dpkg-scanpackages command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ndpkg-scanpackages . /dev/null | gzip -9c > Packages.gz"
+  },
+  {
+    "instruction": "Create a Release file using apt-ftparchive",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt-ftparchive` with the correct flags and arguments\n   2. Key flags: -ftparchive\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt-ftparchive` — apt-ftparchive command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\napt-ftparchive release . > Release"
+  },
+  {
+    "instruction": "Show debconf configuration for a package",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `debconf-show` with the correct flags and arguments\n   2. Key flags: -show, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `debconf-show` — debconf-show command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndebconf-show openssh-server"
+  },
+  {
+    "instruction": "Export debconf configuration selections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `debconf-get-selections` with the correct flags and arguments\n   2. Key flags: -get, -selections\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `debconf-get-selections` — debconf-get-selections command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndebconf-get-selections | grep openssh"
+  },
+  {
+    "instruction": "Check if services need restart after library upgrades",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `needrestart` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `needrestart` — needrestart command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nneedrestart"
+  },
+  {
+    "instruction": "Build a package with checkinstall to create a .deb from source",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: checkinstall -D make install\n   2. Apply the configuration and verify with `checkinstall status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `checkinstall` — checkinstall command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncheckinstall -D make install"
+  },
+  {
+    "instruction": "Convert a .rpm package to .deb format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `alien` with the correct flags and arguments\n   2. Key flags: --to-deb\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `alien` — alien command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nalien --to-deb package.rpm"
+  },
+  {
+    "instruction": "Convert a .deb package to .rpm format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `alien` with the correct flags and arguments\n   2. Key flags: --to-rpm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `alien` — alien command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nalien --to-rpm package.deb"
+  },
+  {
+    "instruction": "Install checkinstall on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo apt-get install checkinstall -y\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo apt-get install checkinstall -y"
+  },
+  {
+    "instruction": "Verify the contents of a .deb file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-deb` with the correct flags and arguments\n   2. Key flags: -deb, --contents, -1_amd64\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-deb` — dpkg-deb command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-deb --contents myapp_1.0-1_amd64.deb"
+  },
+  {
+    "instruction": "Query which package owns a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg-query` with the correct flags and arguments\n   2. Key flags: -query, -S\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-query` — dpkg-query command execution and management\n   Flag `-S`: sort by size\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-query -S /usr/bin/foo"
+  }
+]

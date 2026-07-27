@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "How to backup with duplicity using SSH and a key file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity /etc scp://user@backup-server//backup/etc --ssh-options '-o IdentityFi\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity /etc scp://user@backup-server//backup/etc --ssh-options '-o IdentityFile=/home/user/.ssh/id_ed25519'"
+  },
+  {
+    "instruction": "How to restore a specific incremental backup from duplicity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity restore --time '2024-05-15' s3://my-backup-bucket/home /tmp/restore-in\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity restore --time '2024-05-15' s3://my-backup-bucket/home /tmp/restore-incremental"
+  },
+  {
+    "instruction": "How to see the full path of files in a duplicity backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity list-current-files --include 'etc/**' s3://my-backup-bucket/server\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Flag `--include`: only process matching patterns\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity list-current-files --include 'etc/**' s3://my-backup-bucket/server"
+  },
+  {
+    "instruction": "How to use duplicity with S3 bucket versioning enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the duplicity configuration with the required parameters\n   2. Apply the configuration and verify with `duplicity status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity /home s3://my-backup-bucket/home"
+  },
+  {
+    "instruction": "How to exclude files larger than 100MB from duplicity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `duplicity` with the correct flags and arguments\n   2. Key flags: --exclude-filelist-size, -backup, -bucket\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity --exclude-filelist-size 104857600 /home s3://my-backup-bucket/home"
+  },
+  {
+    "instruction": "How to backup only /home/user with duplicity excluding node_modules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity --exclude '**/node_modules' /home/user s3://my-backup-bucket/user\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Flag `--exclude`: skip matching patterns\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity --exclude '**/node_modules' /home/user s3://my-backup-bucket/user"
+  },
+  {
+    "instruction": "How to see the duplicity help page for all options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `duplicity` with the correct flags and arguments\n   2. Key flags: --help\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Flag `--help`: display usage information\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity --help"
+  },
+  {
+    "instruction": "How to set the duplicity timezone for backup timestamps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for TZ\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: TZ=UTC duplicity /home s3://my-backup-bucket/home\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `TZ` — TZ command execution and management\n   Supporting tool: `duplicity` — duplicity command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nTZ=UTC duplicity /home s3://my-backup-bucket/home"
+  },
+  {
+    "instruction": "How to restore from duplicity with a specific GPG key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity restore --encrypt-key 1234ABCD s3://my-backup-bucket/home /tmp/restore\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity restore --encrypt-key 1234ABCD s3://my-backup-bucket/home /tmp/restore"
+  },
+  {
+    "instruction": "How to backup only the /boot directory with duplicity to SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity /boot scp://user@backup-server//backup/boot\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity /boot scp://user@backup-server//backup/boot"
+  },
+  {
+    "instruction": "How to see the number of full backup sets in duplicity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity collection-status s3://my-backup-bucket/home | grep -c 'full'\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity collection-status s3://my-backup-bucket/home | grep -c 'full'"
+  },
+  {
+    "instruction": "How to use duplicity with S3 bucket and specific prefix path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `duplicity` with the correct flags and arguments\n   2. Key flags: -backup, -bucket\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity /home s3://my-backup-bucket/servers/web01/home"
+  },
+  {
+    "instruction": "How to backup a single file with duplicity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity /home/user/.bashrc s3://my-backup-bucket/dotfiles\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity /home/user/.bashrc s3://my-backup-bucket/dotfiles"
+  },
+  {
+    "instruction": "How to restore a backup set by chain number in duplicity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity restore --restore-chain 1 s3://my-backup-bucket/home /tmp/restore\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity restore --restore-chain 1 s3://my-backup-bucket/home /tmp/restore"
+  },
+  {
+    "instruction": "How to use duplicity with S3 endpoint from an environment variable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `DUPLICITY_S3_ENDPOINT` with the correct flags and arguments\n   2. Key flags: -backup, -bucket\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `DUPLICITY_S3_ENDPOINT` — DUPLICITY_S3_ENDPOINT command execution and management\n   Supporting tool: `duplicity` — duplicity command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nDUPLICITY_S3_ENDPOINT=https://s3.custom.com duplicity /home s3://my-backup-bucket/home"
+  },
+  {
+    "instruction": "How to see the backup summary from duplicity log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity -v 4 /home s3://my-backup-bucket/home 2>&1 | tail -20\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Flag `-v`: verbose output for debugging\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity -v 4 /home s3://my-backup-bucket/home 2>&1 | tail -20"
+  },
+  {
+    "instruction": "How to exclude .git directories from duplicity backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity --exclude '**/.git' /home s3://my-backup-bucket/home\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Supporting tool: `git` — version control and repository management\n   Flag `--exclude`: skip matching patterns\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity --exclude '**/.git' /home s3://my-backup-bucket/home"
+  },
+  {
+    "instruction": "How to backup using duplicity with a custom temp directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity --tempdir /fast-ssd/tmp /home s3://my-backup-bucket/home\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity --tempdir /fast-ssd/tmp /home s3://my-backup-bucket/home"
+  },
+  {
+    "instruction": "How to see the file count in a duplicity backup set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity list-current-files s3://my-backup-bucket/home | wc -l\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity list-current-files s3://my-backup-bucket/home | wc -l"
+  },
+  {
+    "instruction": "How to backup /var/www/html to an S3 bucket using duplicity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for duplicity\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: duplicity /var/www/html s3://my-backup-bucket/websites\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `duplicity` — duplicity command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   BACKUP: always run with `--dry-run` first; verify backup integrity with the tool's check/verify command\n</think>\nduplicity /var/www/html s3://my-backup-bucket/websites"
+  }
+]

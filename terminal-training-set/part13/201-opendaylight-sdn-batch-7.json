@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "How to install OF-CONFIG in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: feature:install odl-of-config\n   2. Apply the configuration and verify with `feature status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `feature` — feature command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfeature:install odl-of-config"
+  },
+  {
+    "instruction": "How to set ODL logging pattern",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `log` with the correct flags and arguments\n   2. Key flags: -pattern, -5p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `log` — log command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlog:set-pattern \"%d{ISO8601} [%t] %-5p %c %m%n\""
+  },
+  {
+    "instruction": "How to enable remote logging in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: log:set syslog udp:localhost:514\n   2. Apply the configuration and verify with `log status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `log` — log command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlog:set syslog udp:localhost:514"
+  },
+  {
+    "instruction": "How to list ODL remote transports",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `log` with the correct flags and arguments\n   2. Key flags: -appenders\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `log` — log command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlog:list-appenders"
+  },
+  {
+    "instruction": "How to add new log appender in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `log` with the correct flags and arguments\n   2. Key flags: -appender, -new\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `log` — log command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlog:add-appender file /var/log/odl/odl-new.log"
+  },
+  {
+    "instruction": "How to configure maven proxy for ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'proxySet=true\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'proxySet=true\nproxyHost=proxy.example.com\nproxyPort=8080' >> ~/.m2/settings.xml"
+  },
+  {
+    "instruction": "How to enable OF over TLS in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: feature:install odl-openflowplugin-flow-services-tls\n   2. Apply the configuration and verify with `feature status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `feature` — feature command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfeature:install odl-openflowplugin-flow-services-tls"
+  },
+  {
+    "instruction": "How to set OpenFlow idle timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `export` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `export` — export command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nexport OPENFLOW_IDLE_TIMEOUT=300 && bin/karaf"
+  },
+  {
+    "instruction": "How to check ODL southbound connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -remote, -connections\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin http://localhost:8181/restconf/operational/sal-remote:remote-connections"
+  },
+  {
+    "instruction": "How to set global flow table in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"global\",\"table-id\":0}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1"
+  },
+  {
+    "instruction": "How to add IPV6 flow in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"ipv6-flow\",\"priority\":100,\"match\":{\"ethernet-match\":{\"ethernet-type\":{\"type\":0x86dd}}}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add MPLS flow in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"mpls-flow\",\"priority\":100,\"match\":{\"protocol-match-fields\":{\"mpls-label\":100}}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add TTL decrement action in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"ttl-flow\",\"instructions\":{\"instruction\":[{\"apply-actions\":{\"action\":[{\"dec-nw-ttl\":{}}]}}]}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add set-field action in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"setvlan-flow\",\"instructions\":{\"instruction\":[{\"apply-actions\":{\"action\":[{\"set-field\":{\"vlan-match\":{\"vlan-id\":{\"vlan-id\":200}}}}]}}]}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add goto-table action in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"goto-flow\",\"instructions\":{\"instruction\":[{\"go-to-table\":{\"table-id\":1}}]}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add push-vlan action in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"pushvlan-flow\",\"instructions\":{\"instruction\":[{\"apply-actions\":{\"action\":[{\"push-vlan-action\":{\"ethernet-type\":0x8100}}]}}]}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add pop-vlan action in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"popvlan-flow\",\"instructions\":{\"instruction\":[{\"apply-actions\":{\"action\":[{\"pop-vlan-action\":{}}]}}]}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add set-queue action in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"queue-flow\",\"instructions\":{\"instruction\":[{\"apply-actions\":{\"action\":[{\"set-queue\":{\"queue-id\":1}}]}}]}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add group action in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"group-flow\",\"instructions\":{\"instruction\":[{\"apply-actions\":{\"action\":[{\"group-action\":{\"group-id\":1}}]}}]}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to view ODL flow table stats",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -inventory\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin http://localhost:8181/restconf/operational/opendaylight-inventory:nodes/node/openflow:1/table:0 | jq '.'"
+  },
+  {
+    "instruction": "How to add a flow that matches on TCP port in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"tcp80-flow\",\"priority\":100,\"match\":{\"ip-match\":{\"tcp-match\":{\"tcp-destination-port\":80}},\"ethernet-match\":{\"ethernet-type\":{\"type\":0x0800}}}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to add a drop-all flow in ODL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -u, -X, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -u admin:admin -X PUT -H 'Content-Type: application/json' -d '{\"flow\":[{\"id\":\"drop-all\",\"priority\":1,\"instructions\":{\"instruction\":[{\"apply-actions\":{\"action\":[{\"drop-action\":{}}]}}]}}]}' http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table:0"
+  },
+  {
+    "instruction": "How to enable ODL flow metrics to Prometheus",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: feature:install odl-metrics-prometheus\n   2. Apply the configuration and verify with `feature status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `feature` — feature command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfeature:install odl-metrics-prometheus"
+  },
+  {
+    "instruction": "How to get ODL Prometheus metrics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:8080/metrics"
+  }
+]

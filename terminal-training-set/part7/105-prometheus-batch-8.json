@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Get Alertmanager alerts via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl http://localhost:9093/api/v2/alerts | jq '.'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:9093/api/v2/alerts | jq '.'"
+  },
+  {
+    "instruction": "Add Alertmanager silence via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl -X POST http://localhost:9093/api/v2/silences -H 'Content-Type: application\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://localhost:9093/api/v2/silences -H 'Content-Type: application/json' -d '{\"matchers\": [{\"name\": \"alertname\", \"value\": \"HighCPU\", \"isRegex\": false}], \"startsAt\": \"2026-07-26T00:00:00Z\", \"endsAt\": \"2026-07-27T00:00:00Z\", \"createdBy\": \"admin\", \"comment\": \"Maintenance\"}'"
+  },
+  {
+    "instruction": "List Alertmanager silences via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl http://localhost:9093/api/v2/silences | jq '.'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:9093/api/v2/silences | jq '.'"
+  },
+  {
+    "instruction": "Delete Alertmanager silence via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl -X DELETE http://localhost:9093/api/v2/silence/silence-uuid\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X DELETE http://localhost:9093/api/v2/silence/silence-uuid"
+  },
+  {
+    "instruction": "Get Alertmanager groups via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl http://localhost:9093/api/v2/alerts/groups | jq '.'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:9093/api/v2/alerts/groups | jq '.'"
+  },
+  {
+    "instruction": "Get Alertmanager receivers via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl http://localhost:9093/api/v2/receivers | jq '.'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:9093/api/v2/receivers | jq '.'"
+  },
+  {
+    "instruction": "Use promtool to lint recording rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtool` with the correct flags and arguments\n   2. Key flags: --lint\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtool` — Prometheus configuration and query validation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtool check rules --lint recording_rules.yml"
+  },
+  {
+    "instruction": "Promtool rules unit test format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'rule_files: - rules.yml evaluation_interval: 1m tests: - interval: 1m input_series: - series: up{instance=\"test\"} values: 1x10 alert_rule_test: - alertname: InstanceDown eval_time: 5m exp_alerts: []' > test.yml"
+  },
+  {
+    "instruction": "Run promtool rules unit tests",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtool` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtool` — Prometheus configuration and query validation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtool test rules test.yml"
+  },
+  {
+    "instruction": "Promtool check metrics format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtool` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtool` — Prometheus configuration and query validation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtool check metrics < metrics.txt"
+  },
+  {
+    "instruction": "Promtool check agent mode config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtool` with the correct flags and arguments\n   2. Key flags: --agent\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtool` — Prometheus configuration and query validation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtool check config --agent prometheus.yml"
+  },
+  {
+    "instruction": "Start Prometheus in agent mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --agent\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --agent"
+  },
+  {
+    "instruction": "Use Prometheus agent mode with remote write only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: --config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'global: scrape_interval: 15s remote_write: - url: http://remote:8080/write scrape_configs: - job_name: node static_configs: - targets: - localhost:9100' > agent.yml && prometheus --config.file agent.yml --agent"
+  },
+  {
+    "instruction": "Start prometheus with feature flags",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --enable-feature, -exemplars\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --enable-feature expanded-exemplars"
+  },
+  {
+    "instruction": "Enable exemplar storage in Prometheus",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: prometheus --config.file prometheus.yml --storage.tsdb.exemplars-retention 72h\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `prometheus status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --storage.tsdb.exemplars-retention 72h"
+  },
+  {
+    "instruction": "Enable memory snapshot for faster startup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: prometheus --config.file prometheus.yml --enable-feature memory-snapshot-on-shut\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `prometheus status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --enable-feature memory-snapshot-on-shutdown"
+  },
+  {
+    "instruction": "Enable auto-gomemlimit in Prometheus",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: prometheus --config.file prometheus.yml --enable-feature auto-gomemlimit\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `prometheus status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --enable-feature auto-gomemlimit"
+  },
+  {
+    "instruction": "Check prometheus OTLP endpoint config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'otlp: receiver: protocols: grpc: endpoint: 0.0.0.0:4317' > otlp.yml"
+  },
+  {
+    "instruction": "Enable OTLP ingestion in Prometheus",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: prometheus --config.file prometheus.yml --enable-feature otlp-write-receiver\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `prometheus status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --enable-feature otlp-write-receiver"
+  },
+  {
+    "instruction": "Use PromQL subquery for aggregation over time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `max_over_time` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `max_over_time` — max_over_time command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmax_over_time(rate(http_requests_total[5m])[1h:1m])"
+  },
+  {
+    "instruction": "Calculate availability percentage with PromQL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `avg_over_time` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `avg_over_time` — avg_over_time command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\navg_over_time(up{job=\"api\"}[30d])"
+  },
+  {
+    "instruction": "Calculate SLO burn rate with PromQL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sum` — sum command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsum(rate(http_requests_total{status!~\"5..\"}[1h])) / sum(rate(http_requests_total[1h]))"
+  },
+  {
+    "instruction": "Query to find empty scrape results",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `count` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `count` — count command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncount(up) by (job) == 0"
+  },
+  {
+    "instruction": "Query to detect metric staleness",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `count` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `count` — count command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncount(last_over_time(up[5m]) == 1) by (job)"
+  }
+]

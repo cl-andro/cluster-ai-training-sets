@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Set ulimit stack size (soft)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ulimit` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ulimit` — ulimit command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nulimit -s 8192"
+  },
+  {
+    "instruction": "Set ulimit virtual memory (soft)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ulimit` with the correct flags and arguments\n   2. Key flags: -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ulimit` — ulimit command execution and management\n   Flag `-v`: verbose output for debugging\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nulimit -v 1048576"
+  },
+  {
+    "instruction": "Set ulimit pending signals (soft)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ulimit` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ulimit` — ulimit command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nulimit -i 1024"
+  },
+  {
+    "instruction": "Configure /etc/security/limits.conf for user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'user soft nofile 4096' >> /etc/security/limits.conf\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'user soft nofile 4096' >> /etc/security/limits.conf"
+  },
+  {
+    "instruction": "Set hard limit in limits.conf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'user hard nofile 8192' >> /etc/security/limits.conf"
+  },
+  {
+    "instruction": "Set nproc limit for a group in limits.conf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '@developers soft nproc 500' >> /etc/security/limits.conf"
+  },
+  {
+    "instruction": "Set stack limit for a domain in limits.conf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `stack` — stack command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '* soft stack 8192' >> /etc/security/limits.conf"
+  },
+  {
+    "instruction": "Enable pam_limits.so in PAM config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'session required pam_limits.so' >> /etc/pam.d/common-session\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'session required pam_limits.so' >> /etc/pam.d/common-session"
+  },
+  {
+    "instruction": "Get resource limits of a running process with prlimit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234"
+  },
+  {
+    "instruction": "Set resource limit with prlimit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p, --nofile\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234 --nofile=4096:8192"
+  },
+  {
+    "instruction": "Set prlimit nice value",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p, --nice\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234 --nice=10"
+  },
+  {
+    "instruction": "Set prlimit rttime (real-time timer)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p, --rttime\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234 --rttime=100000"
+  },
+  {
+    "instruction": "Show /proc limits of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/limits"
+  },
+  {
+    "instruction": "Check max number of processes per user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ulimit` with the correct flags and arguments\n   2. Key flags: -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ulimit` — ulimit command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nulimit -u"
+  },
+  {
+    "instruction": "Show setrlimit system call info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `man` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `man` — man command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nman setrlimit"
+  },
+  {
+    "instruction": "Bind memory to specific NUMA nodes with numactl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --membind\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --membind=0 command"
+  },
+  {
+    "instruction": "Run command on specific physical CPUs with numactl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --physcpu, -3\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --physcpu=0-3 command"
+  },
+  {
+    "instruction": "Allocate memory locally with numactl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --localalloc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --localalloc command"
+  },
+  {
+    "instruction": "Prefer a NUMA node for memory with numactl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --preferred\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --preferred=1 command"
+  },
+  {
+    "instruction": "Interleave memory across NUMA nodes with numactl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: --interleave\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl --interleave=all command"
+  },
+  {
+    "instruction": "Show NUMA architecture with numactl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl -l"
+  },
+  {
+    "instruction": "Show NUMA hardware map with numactl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl -H"
+  },
+  {
+    "instruction": "Show NUMA policy of a process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Flag `-p`: create parent directories\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl -p 1234"
+  },
+  {
+    "instruction": "Show NUMA policy of current process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `numactl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `numactl` — numactl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnumactl -s"
+  },
+  {
+    "instruction": "Show NUMA hardware available nodes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lscpu` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lscpu` — lscpu command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlscpu | grep NUMA"
+  },
+  {
+    "instruction": "Allocate persistent huge pages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 64 > /proc/sys/vm/nr_hugepages"
+  }
+]

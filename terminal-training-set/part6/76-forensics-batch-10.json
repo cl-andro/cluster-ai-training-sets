@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "Convert raw image to EWF (E01)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfacquire` with the correct flags and arguments\n   2. Key flags: -t, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfacquire` — ewfacquire command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfacquire /dev/sdb -t evidence -u"
+  },
+  {
+    "instruction": "Acquire with compression level",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfacquire` with the correct flags and arguments\n   2. Key flags: -t, -c, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfacquire` — ewfacquire command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfacquire /dev/sdb -t evidence -c fast -u"
+  },
+  {
+    "instruction": "Acquire with case number",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfacquire` with the correct flags and arguments\n   2. Key flags: -t, -C, -001, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfacquire` — ewfacquire command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfacquire /dev/sdb -t evidence -C 'CASE-001' -e 'Examiner' -u"
+  },
+  {
+    "instruction": "Acquire with segment size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfacquire` with the correct flags and arguments\n   2. Key flags: -t, -S, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfacquire` — ewfacquire command execution and management\n   Flag `-t`: sort by time\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfacquire /dev/sdb -t evidence -S 2GiB -u"
+  },
+  {
+    "instruction": "Verify EWF image integrity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfverify` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfverify` — ewfverify command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfverify evidence.E01"
+  },
+  {
+    "instruction": "Verify with full integrity check",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfverify` with the correct flags and arguments\n   2. Key flags: -f, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfverify` — ewfverify command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfverify -f encase6 -d sha256 evidence.E01"
+  },
+  {
+    "instruction": "Mount EWF image as raw device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfmount` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfmount` — ewfmount command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfmount evidence.E01 /mnt/ewf"
+  },
+  {
+    "instruction": "Export EWF to raw format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfexport` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfexport` — ewfexport command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfexport evidence.E01 -t image.dd"
+  },
+  {
+    "instruction": "Export first segment only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfexport` with the correct flags and arguments\n   2. Key flags: -t, -S, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfexport` — ewfexport command execution and management\n   Flag `-t`: sort by time\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfexport evidence.E01 -t part1 -S 2GiB -b 64"
+  },
+  {
+    "instruction": "Info about EWF file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfinfo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfinfo` — ewfinfo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfinfo evidence.E01"
+  },
+  {
+    "instruction": "Info with hash values",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfinfo` with the correct flags and arguments\n   2. Key flags: -H\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfinfo` — ewfinfo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfinfo -H evidence.E01"
+  },
+  {
+    "instruction": "Extract specific partition from EWF",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfexport` with the correct flags and arguments\n   2. Key flags: -X, -t, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfexport` — ewfexport command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfexport -X split evidence.E01 -t partition -u"
+  },
+  {
+    "instruction": "Reopen and fix EWF metadata",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfacquirestream` with the correct flags and arguments\n   2. Key flags: -t, -C, -001, -N\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfacquirestream` — ewfacquirestream command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfacquirestream -t evidence -C 'CASE-001' -N 'Revised Notes'"
+  },
+  {
+    "instruction": "Process a directory with fiwalk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fiwalk` with the correct flags and arguments\n   2. Key flags: -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fiwalk` — fiwalk command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfiwalk /evidence/images/ -X /output/report.xml"
+  },
+  {
+    "instruction": "Run fiwalk with JSON output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fiwalk` with the correct flags and arguments\n   2. Key flags: -x, -O\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fiwalk` — fiwalk command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfiwalk -x /evidence/disk.dd -O /output/report.json"
+  },
+  {
+    "instruction": "Recover deleted files from image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for fiwalk\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: fiwalk -d /evidence/disk.dd -o /recovered/\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `fiwalk` — fiwalk command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfiwalk -d /evidence/disk.dd -o /recovered/"
+  },
+  {
+    "instruction": "Generate DFXML report from image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fiwalk` with the correct flags and arguments\n   2. Key flags: -f, -X\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fiwalk` — fiwalk command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfiwalk -f /evidence/disk.dd -X /output/meta.xml"
+  },
+  {
+    "instruction": "Mount EWF and list files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ewfmount` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ewfmount` — ewfmount command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\newfmount evidence.E01 /mnt/e01 && ls /mnt/e01/"
+  },
+  {
+    "instruction": "Compute hash of EWF segments",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfor f in evidence.E01 evidence.E02; do sha256sum $f; done"
+  },
+  {
+    "instruction": "Convert multiple raw to EWF",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfor f in *.raw; do ewfacquire $f -t ${f%.raw}; done"
+  },
+  {
+    "instruction": "List all forensic tools available",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dpkg` with the correct flags and arguments\n   2. Key flags: -l, -E, -extractor\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg` — dpkg command execution and management\n   Supporting tool: `sleuthkit` — sleuthkit command execution and management\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\ndpkg -l | grep -E '(sleuthkit|bulk-extractor|volatility|afflib|ewftools)'"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Check if a portable image is currently attached",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl list | grep myapp"
+  },
+  {
+    "instruction": "Restart the portable daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -portabled\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart systemd-portabled"
+  },
+  {
+    "instruction": "Create a minimal portable image directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir -p /var/lib/portable/myapp/usr/bin /var/lib/portable/myapp/lib/systemd/system"
+  },
+  {
+    "instruction": "Attach portable with specific env variables",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: --property\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl attach --property=Environment=FOO=bar /var/lib/portable/myapp.raw"
+  },
+  {
+    "instruction": "Force detach portable service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: --now\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl detach --now myapp"
+  },
+  {
+    "instruction": "Create portable image with os-release",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p, -build, -build, -release\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Flag `-p`: create parent directories\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmkdir -p /tmp/portable-build/usr/lib && echo 'ID=myapp\nVERSION_ID=1.0' > /tmp/portable-build/usr/lib/os-release && mksquashfs /tmp/portable-build /var/lib/portable/myapp.raw"
+  },
+  {
+    "instruction": "Check status of a portable service unit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -portabled\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status systemd-portabled.service"
+  },
+  {
+    "instruction": "Check status of portable service after attach",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status myapp.service"
+  },
+  {
+    "instruction": "Check portable image size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -lh\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -lh /var/lib/portable/myapp.raw"
+  },
+  {
+    "instruction": "Verify portable image is valid OS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `test` with the correct flags and arguments\n   2. Key flags: -f, -l, -release\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `test` — test command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ntest -f /var/lib/portable/myapp.raw && unsquashfs -l /var/lib/portable/myapp.raw usr/lib/os-release 2>/dev/null && echo 'Valid'"
+  },
+  {
+    "instruction": "Reattach portable to refresh units",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl reattach /var/lib/portable/myapp.raw"
+  },
+  {
+    "instruction": "Check journal for portable service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -u myapp.service"
+  },
+  {
+    "instruction": "Set memory limit on portable service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: -property\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl set-property myapp.service MemoryMax=256M"
+  },
+  {
+    "instruction": "Attach portable with read-only root",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: --property\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl attach --property=ProtectSystem=yes /var/lib/portable/myapp.raw"
+  },
+  {
+    "instruction": "List only detached portable images",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: --detached\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl list --detached"
+  },
+  {
+    "instruction": "Enable and start portable daemon",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `systemctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl enable --now systemd-portabled.service"
+  },
+  {
+    "instruction": "List files in portable image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unsquashfs` with the correct flags and arguments\n   2. Key flags: -ll\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unsquashfs` — unsquashfs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunsquashfs -ll /var/lib/portable/myapp.raw"
+  },
+  {
+    "instruction": "Detach portable image by image path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl detach /var/lib/portable/myapp.raw"
+  },
+  {
+    "instruction": "Attach portable with network namespace bind",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: --property\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl attach --property=PrivateNetwork=yes /var/lib/portable/myapp.raw"
+  },
+  {
+    "instruction": "Attach multiple portable images at once",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl attach /var/lib/portable/app1.raw /var/lib/portable/app2.raw"
+  },
+  {
+    "instruction": "Show portable image OS release info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unsquashfs` with the correct flags and arguments\n   2. Key flags: -l, -release\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unsquashfs` — unsquashfs command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nunsquashfs -l /var/lib/portable/myapp.raw etc/os-release 2>/dev/null; echo 'check inside image'"
+  },
+  {
+    "instruction": "Attach portable image with a specific unit name prefix",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `portablectl` with the correct flags and arguments\n   2. Key flags: --prefix\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `portablectl` — portablectl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nportablectl attach --prefix=/usr/local /var/lib/portable/myapp.raw"
+  }
+]

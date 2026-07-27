@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Create user namespace and check caps inside",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -r, --print\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -r capsh --print"
+  },
+  {
+    "instruction": "Run a command with CAP_NET_RAW in user ns",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Supporting tool: `setcap` — set file capabilities\n   Supporting tool: `ping` — ping command execution and management\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -r setcap cap_net_raw+ep /usr/bin/ping && getcap /usr/bin/ping"
+  },
+  {
+    "instruction": "Check capabilities of root in user namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -r, --has-cap, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -r capsh --has-cap=cap_sys_admin -- -c 'echo has CAP_SYS_ADMIN'"
+  },
+  {
+    "instruction": "Run command with inherited caps inside ns",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -Ur, --inh, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -Ur capsh --inh=cap_net_admin -- -c 'ip addr'"
+  },
+  {
+    "instruction": "Use ambient caps in user namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `unshare` with the correct flags and arguments\n   2. Key flags: -Ur, --keep, --user, --addamb\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `unshare` — run program in new namespace\n   Supporting tool: `ping` — ping command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nunshare -Ur capsh --keep=1 --user=65534 --addamb=cap_net_raw -- -c 'ping -c1 127.0.0.1'"
+  },
+  {
+    "instruction": "Check max user namespaces allowed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/user/max_user_namespaces"
+  },
+  {
+    "instruction": "Set max user namespaces to 1000",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w user.max_user_namespaces=1000"
+  },
+  {
+    "instruction": "Permanently allow user namespaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -userns\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'user.max_user_namespaces=1000' > /etc/sysctl.d/99-userns.conf"
+  },
+  {
+    "instruction": "Check if unprivileged user namespaces are enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl kernel.unprivileged_userns_clone 2>/dev/null || echo 'Not available'\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsysctl kernel.unprivileged_userns_clone 2>/dev/null || echo 'Not available'"
+  },
+  {
+    "instruction": "Enable unprivileged user namespace clone",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl -w kernel.unprivileged_userns_clone=1 2>/dev/null || echo 'Option unavail\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsysctl -w kernel.unprivileged_userns_clone=1 2>/dev/null || echo 'Option unavailable'"
+  },
+  {
+    "instruction": "Disable unprivileged user namespaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsysctl -w kernel.unprivileged_userns_clone=0 2>/dev/null || echo 'Option unavailable'"
+  },
+  {
+    "instruction": "Check user namespace map for current process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/uid_map && cat /proc/self/gid_map"
+  },
+  {
+    "instruction": "Set up uid/gid mapping for user namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `command` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Flag `-f`: force execution, suppress errors\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\n[ -f /proc/self/uid_map ] && echo '0 0 1' > /proc/self/uid_map 2>/dev/null || echo 'Cannot write mappings'"
+  },
+  {
+    "instruction": "Check if newuidmap/newgidmap are installed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: which newuidmap newgidmap\n   2. Apply the configuration and verify with `which status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `which` — which command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwhich newuidmap newgidmap"
+  },
+  {
+    "instruction": "Configure subuid/subgid for user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'user1:100000:65536' >> /etc/subuid && echo 'user1:100000:65536' >> /etc/su\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'user1:100000:65536' >> /etc/subuid && echo 'user1:100000:65536' >> /etc/subgid"
+  },
+  {
+    "instruction": "Verify newuidmap availability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nls -la /usr/bin/newuidmap /usr/bin/newgidmap 2>/dev/null"
+  },
+  {
+    "instruction": "Set cap on file owned by root as user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Supporting tool: `setcap` — set file capabilities\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo setcap cap_net_raw+ep /usr/bin/ping"
+  },
+  {
+    "instruction": "Allow user to setcap on own files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `setcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `setcap` — set file capabilities\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsetcap cap_net_raw+ep ~/myprogram 2>/dev/null || echo 'Cannot set caps as user'"
+  },
+  {
+    "instruction": "Use capabilities with podman (rootless)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --cap-add\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `ping` — ping command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --cap-add=NET_RAW alpine ping 8.8.8.8"
+  },
+  {
+    "instruction": "List caps in rootless podman container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --rm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --rm alpine getpcaps 1"
+  },
+  {
+    "instruction": "Drop all caps in podman container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --cap-drop, --rm, --print\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --cap-drop=ALL --rm alpine capsh --print"
+  },
+  {
+    "instruction": "Run podman with specific cap",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `podman` with the correct flags and arguments\n   2. Key flags: --cap-add, --rm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `podman` — rootless container management\n   Supporting tool: `strace` — trace system calls\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\npodman run --cap-add=SYS_PTRACE --rm alpine strace echo test"
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Add a new printer queue named 'HP_LaserJet' using a socket connection to 192.168.1.100:9100",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -p, -E, -v, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-p`: create parent directories\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo lpadmin -p HP_LaserJet -E -v socket://192.168.1.100:9100 -m everywhere"
+  },
+  {
+    "instruction": "Delete a printer queue named 'OldBrother'",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo lpadmin -x OldBrother"
+  },
+  {
+    "instruction": "Set the default printer to 'HP_LaserJet'",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo lpadmin -d HP_LaserJet"
+  },
+  {
+    "instruction": "List all available printer drivers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpinfo` with the correct flags and arguments\n   2. Key flags: -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpinfo` — lpinfo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpinfo -m"
+  },
+  {
+    "instruction": "List all connected printer devices and URIs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpinfo` with the correct flags and arguments\n   2. Key flags: -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpinfo` — lpinfo command execution and management\n   Flag `-v`: verbose output for debugging\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpinfo -v"
+  },
+  {
+    "instruction": "List available drivers matching 'HP LaserJet' make and model",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpinfo` with the correct flags and arguments\n   2. Key flags: --make-and-model, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpinfo` — lpinfo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpinfo --make-and-model 'HP LaserJet' -m"
+  },
+  {
+    "instruction": "Show detailed information about a specific driver by PPD",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpinfo` with the correct flags and arguments\n   2. Key flags: -l, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpinfo` — lpinfo command execution and management\n   Flag `-l`: long listing format\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpinfo -l -m drv:///sample.drv/generic.ppd"
+  },
+  {
+    "instruction": "Show all printer status information",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -p"
+  },
+  {
+    "instruction": "Show the default printer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -d"
+  },
+  {
+    "instruction": "Show a status summary of all printers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -s"
+  },
+  {
+    "instruction": "Show the CUPS server status and all printers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -t"
+  },
+  {
+    "instruction": "Show long listing of printer configurations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -l, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Flag `-l`: long listing format\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -l -p"
+  },
+  {
+    "instruction": "Show all active print jobs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -o"
+  },
+  {
+    "instruction": "Show all printers accepting jobs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -a"
+  },
+  {
+    "instruction": "Show whether the CUPS scheduler is running",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -r"
+  },
+  {
+    "instruction": "Show completed jobs in addition to pending ones",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lpstat` with the correct flags and arguments\n   2. Key flags: -W\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lpstat` — lpstat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlpstat -W completed"
+  },
+  {
+    "instruction": "Print a file to the default printer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp document.pdf"
+  },
+  {
+    "instruction": "Print two copies of a file to printer 'OfficeJet'",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -d, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -d OfficeJet -n 2 report.pdf"
+  },
+  {
+    "instruction": "Print a file with 'landscape' orientation option",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -o landscape presentation.pdf"
+  },
+  {
+    "instruction": "Print only pages 1-3 of a document",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -o, -ranges, -3\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -o page-ranges=1-3 chapter.pdf"
+  },
+  {
+    "instruction": "Print a file with high quality and duplex",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -o, -quality, -o, -sided\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -o print-quality=5 -o sides=two-sided-long-edge brochure.pdf"
+  },
+  {
+    "instruction": "Submit a print job with priority 50",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -q 50 urgent.pdf"
+  },
+  {
+    "instruction": "Set the job title when printing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Flag `-t`: sort by time\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -t 'Monthly Report' report.pdf"
+  },
+  {
+    "instruction": "Hold a job after submission (do not print until released)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -o, -hold, -until\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -o job-hold-until=indefinite draft.pdf"
+  },
+  {
+    "instruction": "Print a PDF with the 'sides=two-sided-short-edge' option for flip-on-short-edge duplex",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -o, -sided, -short, -edge\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -o sides=two-sided-short-edge manual.pdf"
+  },
+  {
+    "instruction": "Print a file using a specific PPD option for media size A4",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lp` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lp` — lp command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlp -o media=A4 letter.pdf"
+  }
+]

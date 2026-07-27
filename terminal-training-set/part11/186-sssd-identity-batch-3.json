@@ -1,0 +1,86 @@
+[
+  {
+    "instruction": "How to invalidate a netgroup cache entry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sss_cache` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sss_cache` — sss_cache command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsss_cache -n mynetgroup"
+  },
+  {
+    "instruction": "How to clear all SSSD caches and restart the service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sss_cache` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sss_cache` — sss_cache command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `sssd` — sssd command execution and management\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsss_cache -E && systemctl restart sssd"
+  },
+  {
+    "instruction": "How to check SSSD cache statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sss_cache` with the correct flags and arguments\n   2. Key flags: --stats\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sss_cache` — sss_cache command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsss_cache --stats"
+  },
+  {
+    "instruction": "How to flush SSSD database files and restart",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `sssd` — sssd command execution and management\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nrm -f /var/lib/sss/db/* && systemctl restart sssd"
+  },
+  {
+    "instruction": "How to select authselect profile with SSSD",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: -sudo, -mkhomedir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Supporting tool: `sssd` — sssd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect select sssd with-sudo with-mkhomedir"
+  },
+  {
+    "instruction": "How to select the minimal authselect profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect select minimal"
+  },
+  {
+    "instruction": "How to list all available authselect profiles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect list"
+  },
+  {
+    "instruction": "How to check the current authselect profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect current"
+  },
+  {
+    "instruction": "How to force apply an authselect profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: --force\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Supporting tool: `sssd` — sssd command execution and management\n   Flag `--force`: override warnings and proceed\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect select sssd --force"
+  },
+  {
+    "instruction": "How to enable mkhomedir feature in authselect",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: authselect enable-feature with-mkhomedir\n   2. Apply the configuration and verify with `authselect status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect enable-feature with-mkhomedir"
+  },
+  {
+    "instruction": "How to disable mkhomedir feature in authselect",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: -feature, -mkhomedir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect disable-feature with-mkhomedir"
+  },
+  {
+    "instruction": "How to enable sudo support in authselect",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: authselect enable-feature with-sudo\n   2. Apply the configuration and verify with `authselect status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect enable-feature with-sudo"
+  },
+  {
+    "instruction": "How to enable fingerprint auth in authselect",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: authselect enable-feature with-fingerprint\n   2. Apply the configuration and verify with `authselect status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect enable-feature with-fingerprint"
+  },
+  {
+    "instruction": "How to check authselect configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect check"
+  },
+  {
+    "instruction": "How to join a domain with realm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `realm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `realm` — realm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrealm join example.com"
+  },
+  {
+    "instruction": "How to join a domain with an admin user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `realm` with the correct flags and arguments\n   2. Key flags: --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `realm` — realm command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrealm join --user admin example.com"
+  },
+  {
+    "instruction": "How to join an Active Directory domain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `realm` with the correct flags and arguments\n   2. Key flags: --user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `realm` — realm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrealm join --user Administrator ad.example.com"
+  },
+  {
+    "instruction": "How to join a domain with a specific computer OU",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `realm` with the correct flags and arguments\n   2. Key flags: --computer-ou\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `realm` — realm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrealm join --computer-ou 'OU=Computers,DC=ad,DC=example,DC=com' ad.example.com"
+  },
+  {
+    "instruction": "How to join a domain with a one-time password",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `realm` with the correct flags and arguments\n   2. Key flags: --one-time-password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `realm` — realm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrealm join --one-time-password=OTP ad.example.com"
+  },
+  {
+    "instruction": "How to leave a domain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `realm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `realm` — realm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrealm leave example.com"
+  },
+  {
+    "instruction": "How to leave a domain and remove configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `realm` with the correct flags and arguments\n   2. Key flags: --remove\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `realm` — realm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrealm leave --remove example.com"
+  }
+]

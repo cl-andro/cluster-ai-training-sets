@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Check effective capabilities for PID 1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getpcaps` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getpcaps` — getpcaps command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetpcaps 1"
+  },
+  {
+    "instruction": "Show current capabilities for a user process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getpcaps` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getpcaps` — getpcaps command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetpcaps $$"
+  },
+  {
+    "instruction": "Run getpcaps for all processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -E, -9, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor pid in $(ls /proc | grep -E '^[0-9]+$'); do echo -n \"PID $pid: \"; getpcaps $pid 2>/dev/null; done"
+  },
+  {
+    "instruction": "List processes with CAP_NET_ADMIN capability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -E, -9, --decode, -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor pid in $(ls /proc | grep -E '^[0-9]+$'); do cap=$(grep CapEff /proc/$pid/status 2>/dev/null | awk '{print $2}'); if [ \"$cap\" ] && capsh --decode=$cap 2>/dev/null | grep -q cap_net_admin; then echo \"PID $pid: $(cat /proc/$pid/comm 2>/dev/null)\"; fi; done"
+  },
+  {
+    "instruction": "Find processes with CAP_SYS_ADMIN",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -E, -9, --decode, -q\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor pid in $(ls /proc | grep -E '^[0-9]+$'); do cap=$(grep CapEff /proc/$pid/status 2>/dev/null | awk '{print $2}'); [ \"$cap\" ] && capsh --decode=$cap 2>/dev/null | grep -q cap_sys_admin && echo \"PID $pid: $(cat /proc/$pid/comm 2>/dev/null)\"; done"
+  },
+  {
+    "instruction": "Check capabilities for current shell process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getpcalls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getpcalls` — getpcalls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetpcalls $$"
+  },
+  {
+    "instruction": "Compare capabilities of two processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `diff` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `diff` — diff command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndiff <(grep Cap /proc/1/status) <(grep Cap /proc/$$/status)"
+  },
+  {
+    "instruction": "Show capability evolution in process tree",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -p, -oP\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor pid in $(pstree -p $$ | grep -oP '\\d+'); do echo \"PID $pid: $(grep CapEff /proc/$pid/status 2>/dev/null)\"; done"
+  },
+  {
+    "instruction": "Read capabilities from /proc/PID/task/TID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/1234/task/1234/status | grep Cap"
+  },
+  {
+    "instruction": "Show all thread capabilities in process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor tid in /proc/1234/task/*; do echo \"TID $(basename $tid): $(grep CapEff $tid/status 2>/dev/null)\"; done"
+  },
+  {
+    "instruction": "Change capabilities of a running process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `capsh` with the correct flags and arguments\n   2. Key flags: --pid, --drop\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `capsh` — capsh command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncapsh --pid=1234 --drop=cap_sys_admin 2>/dev/null || echo 'Cannot change runtime caps'"
+  },
+  {
+    "instruction": "Obtain capability info via dbus",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `busctl` with the correct flags and arguments\n   2. Key flags: -i, -Bus\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `busctl` — busctl command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbusctl introspect org.freedesktop.DBus /org/freedesktop/DBus 2>/dev/null | grep -i cap || echo 'No D-Bus capability info'"
+  },
+  {
+    "instruction": "Getcap on all shell interpreters",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /bin/bash /bin/sh /bin/dash /bin/zsh 2>/dev/null"
+  },
+  {
+    "instruction": "Set capability on linker for LD_PRELOAD",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `setcap` with the correct flags and arguments\n   2. Key flags: -linux, -gnu, -linux, -x86\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `setcap` — set file capabilities\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsetcap cap_sys_ptrace+ep /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+  },
+  {
+    "instruction": "Grant to a shared library for injection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `setcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `setcap` — set file capabilities\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsetcap cap_sys_ptrace+ep /usr/lib/libinject.so"
+  },
+  {
+    "instruction": "Check capabilities of interpreter scripts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Supporting tool: `ruby` — ruby command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /usr/bin/python3 /usr/bin/perl /usr/bin/ruby 2>/dev/null"
+  },
+  {
+    "instruction": "Deny specific capability system-wide",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1 > /proc/sys/kernel/cap_deny_write"
+  },
+  {
+    "instruction": "Check overall cap policy with sysctl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsysctl kernel.cap_deny_write kernel.cap_last_cap 2>/dev/null"
+  },
+  {
+    "instruction": "Enable file caps check in LSM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sysctl -w kernel.cap_deny_write=1\n   2. Apply the configuration and verify with `sysctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl -w kernel.cap_deny_write=1"
+  },
+  {
+    "instruction": "Show system capability flags",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/kernel/cap_deny_write"
+  },
+  {
+    "instruction": "Set securebits via /proc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: cat /proc/self/status | grep -i 'securebits'\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/status | grep -i 'securebits'"
+  },
+  {
+    "instruction": "View inheritable caps for login session",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/status | grep CapInh"
+  }
+]

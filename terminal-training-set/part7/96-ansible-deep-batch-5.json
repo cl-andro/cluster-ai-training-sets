@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Run a playbook with a limit and check mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-playbook` with the correct flags and arguments\n   2. Key flags: -playbook, --limit, -servers, --check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-playbook` — ansible-playbook command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-playbook site.yml --limit app-servers --check --diff"
+  },
+  {
+    "instruction": "Set the number of retries for a task",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, --retries\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\nansible all -m shell -a 'curl http://api.example.com/health' --retries 5"
+  },
+  {
+    "instruction": "Debug a variable on localhost",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using ansible\n   2. Apply corrective actions: ansible localhost -m debug -a 'var=ansible_distribution'\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m debug -a 'var=ansible_distribution'"
+  },
+  {
+    "instruction": "Use the pause module to wait n seconds",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible localhost -m pause -a 'seconds=10'"
+  },
+  {
+    "instruction": "Write content to a file with copy module inline",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m copy -a 'content=\"hello world\" dest=/tmp/greeting.txt'"
+  },
+  {
+    "instruction": "Blockinfile to manage block of text",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m blockinfile -a 'path=/etc/hosts block=\"10.0.0.1 app.example.com\" marker=\"# {mark} APP\"' -b"
+  },
+  {
+    "instruction": "Use ini_file to manage an ini config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m ini_file -a 'path=/etc/my.cnf section=mysqld option=max_connections value=500' -b"
+  },
+  {
+    "instruction": "Assemble fragments into a single file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `nginx` — web server and reverse proxy\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m assemble -a 'src=/etc/nginx/conf.d/ dest=/etc/nginx/nginx.conf' -b"
+  },
+  {
+    "instruction": "Manage firewalld ports via ansible",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Flag `-a`: include hidden/all entries\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m firewalld -a 'port=8080/tcp permanent=yes state=enabled' -b"
+  },
+  {
+    "instruction": "Manage iptables rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible` with the correct flags and arguments\n   2. Key flags: -m, -a, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible` — configuration management automation\n   Supporting tool: `iptables` — Linux firewall rule management\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   FIREWALL: apply rules incrementally; keep a separate SSH session open as a safety net\n   IaC: run `plan`/`--check` before `apply`; version-lock providers/modules for reproducibility\n</think>\nansible all -m iptables -a 'chain=INPUT protocol=tcp destination_port=80 jump=ACCEPT' -b"
+  },
+  {
+    "instruction": "Run an Ansible playbook from a remote URL",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-pull` with the correct flags and arguments\n   2. Key flags: -pull, -U\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-pull` — ansible-pull command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-pull -U https://github.com/org/infra.git site.yml"
+  },
+  {
+    "instruction": "Run ansible-pull with a specific branch",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-pull` with the correct flags and arguments\n   2. Key flags: -pull, -U, -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-pull` — ansible-pull command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-pull -U https://github.com/org/infra.git -C production site.yml"
+  },
+  {
+    "instruction": "Run ansible-pull with an interval in minutes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-pull` with the correct flags and arguments\n   2. Key flags: -pull, -U, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-pull` — ansible-pull command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-pull -U https://github.com/org/infra.git -i 60 site.yml"
+  },
+  {
+    "instruction": "Run ansible-pull only if changes exist",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-pull` with the correct flags and arguments\n   2. Key flags: -pull, -U, --check\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-pull` — ansible-pull command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-pull -U https://github.com/org/infra.git --check site.yml"
+  },
+  {
+    "instruction": "Clean up local ansible-pull repo after run",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-pull` with the correct flags and arguments\n   2. Key flags: -pull, -U, --purge\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-pull` — ansible-pull command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-pull -U https://github.com/org/infra.git --purge site.yml"
+  },
+  {
+    "instruction": "Use ansible-config to list current config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-config` with the correct flags and arguments\n   2. Key flags: -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-config` — ansible-config command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-config list"
+  },
+  {
+    "instruction": "Dump active ansible configuration as JSON",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-config` with the correct flags and arguments\n   2. Key flags: -config, --only-changed\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-config` — ansible-config command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-config dump --only-changed"
+  },
+  {
+    "instruction": "Show the current ansible.cfg file location",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-config` with the correct flags and arguments\n   2. Key flags: -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-config` — ansible-config command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-config view"
+  },
+  {
+    "instruction": "Initialize a new ansible project structure",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-config` with the correct flags and arguments\n   2. Key flags: -config, --disabled, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-config` — ansible-config command execution and management\n   Flag `-t`: sort by time\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-config init --disabled -t all"
+  },
+  {
+    "instruction": "Ansible doc to show a module's source path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-doc` with the correct flags and arguments\n   2. Key flags: -doc, --snippet\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-doc` — ansible-doc command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nansible-doc --snippet apt"
+  },
+  {
+    "instruction": "List modules filtered by 'cloud'",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-doc` with the correct flags and arguments\n   2. Key flags: -doc, -l, -t, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-doc` — ansible-doc command execution and management\n   Flag `-l`: long listing format\n   Flag `-t`: sort by time\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-doc -l -t module | grep -i cloud"
+  },
+  {
+    "instruction": "Show a module's JSON schema",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-doc` with the correct flags and arguments\n   2. Key flags: -doc, --json, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-doc` — ansible-doc command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-doc --json docker_container | python3 -m json.tool"
+  },
+  {
+    "instruction": "Run the ansible lint check on a playbook",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-lint` with the correct flags and arguments\n   2. Key flags: -lint\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-lint` — ansible-lint command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-lint site.yml"
+  },
+  {
+    "instruction": "Skip specific rules in ansible-lint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-lint` with the correct flags and arguments\n   2. Key flags: -lint, --skip-list, -string, -compare\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-lint` — ansible-lint command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-lint site.yml --skip-list yaml,empty-string-compare"
+  },
+  {
+    "instruction": "Parse the ansible-lint JSON output for CI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ansible-lint` with the correct flags and arguments\n   2. Key flags: -lint, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ansible-lint` — ansible-lint command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nansible-lint site.yml --format json"
+  }
+]

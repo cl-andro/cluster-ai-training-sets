@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Set RLIMIT_LOCKS (file locks) with prlimit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p, --locks\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234 --locks=1024"
+  },
+  {
+    "instruction": "Set RLIMIT_MSGQUEUE (mq msg bytes) with prlimit",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prlimit` with the correct flags and arguments\n   2. Key flags: -p, --msgqueue\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prlimit` — prlimit command execution and management\n   Flag `-p`: create parent directories\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprlimit -p 1234 --msgqueue=819200"
+  },
+  {
+    "instruction": "Configure huge pages via kernel mm hugepages directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 128 > /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 128 > /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages"
+  },
+  {
+    "instruction": "Use hugeadm to set pool huge pages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hugeadm` with the correct flags and arguments\n   2. Key flags: --pool-pages-min\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hugeadm` — hugeadm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhugeadm --pool-pages-min 2MB:256"
+  },
+  {
+    "instruction": "Use hugeadm to set max huge pages",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hugeadm` with the correct flags and arguments\n   2. Key flags: --pool-pages-max\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hugeadm` — hugeadm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhugeadm --pool-pages-max 2MB:512"
+  },
+  {
+    "instruction": "Set persistent huge pages via sysctl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysctl` — sysctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysctl vm.nr_hugepages=128"
+  },
+  {
+    "instruction": "Check current huge pages usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/meminfo | grep HugePages"
+  },
+  {
+    "instruction": "Enable transparent hugepage defrag with madvise",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo madvise > /sys/kernel/mm/transparent_hugepage/defrag\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho madvise > /sys/kernel/mm/transparent_hugepage/defrag"
+  },
+  {
+    "instruction": "Set transparent hugepage khugepaged pages to scan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1000 > /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan"
+  },
+  {
+    "instruction": "Set transparent hugepage scan sleep ms",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 5000 > /sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs"
+  },
+  {
+    "instruction": "Set transparent hugepage alloc sleep ms",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 10000 > /sys/kernel/mm/transparent_hugepage/khugepaged/alloc_sleep_millisecs"
+  },
+  {
+    "instruction": "Use tuned-adm to set virtual-host profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via tuned-adm profile virtual-host\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `tuned-adm` — tuned-adm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntuned-adm profile virtual-host"
+  },
+  {
+    "instruction": "Use tuned-adm to set spindown-disk profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via tuned-adm profile spindown-disk\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `tuned-adm` — tuned-adm command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntuned-adm profile spindown-disk"
+  },
+  {
+    "instruction": "Create a custom tuned profile directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via mkdir /etc/tuned/mycustom\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkdir /etc/tuned/mycustom"
+  },
+  {
+    "instruction": "Create a custom tuned.conf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via echo -e '[main]\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho -e '[main]\nsummary=Custom Profile\n\n[cpu]\ngovernor=performance\n\n[vm]\ntransparent_hugepages=always' > /etc/tuned/mycustom/tuned.conf"
+  },
+  {
+    "instruction": "Activate custom tuned profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Establish baseline before tuning\n   2. Apply tuning parameters via tuned-adm profile mycustom\n   3. Measure the impact and compare against baseline\n   4. Adjust incrementally and document the final values\n\n2. Tool Selection & Logic:\n   Primary tool: `tuned-adm` — tuned-adm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntuned-adm profile mycustom"
+  },
+  {
+    "instruction": "Disable earlyoom temporarily via SIGSTOP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `killall` with the correct flags and arguments\n   2. Key flags: -STOP\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `killall` — killall command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PROCESS: start with `SIGTERM` (default); escalate to `SIGKILL` only if the process doesn't respond after 5 seconds\n</think>\nkillall -STOP earlyoom"
+  },
+  {
+    "instruction": "Resume earlyoom via SIGCONT",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `killall` with the correct flags and arguments\n   2. Key flags: -CONT\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `killall` — killall command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PROCESS: start with `SIGTERM` (default); escalate to `SIGKILL` only if the process doesn't respond after 5 seconds\n</think>\nkillall -CONT earlyoom"
+  },
+  {
+    "instruction": "Run earlyoom with prefer root protection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `earlyoom` with the correct flags and arguments\n   2. Key flags: --prefer\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `earlyoom` — earlyoom command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nearlyoom --prefer '(^|/)root/'"
+  },
+  {
+    "instruction": "Avoid killing specific processes with earlyoom",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `earlyoom` with the correct flags and arguments\n   2. Key flags: --avoid\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `earlyoom` — earlyoom command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nearlyoom --avoid '(X|firefox)'"
+  },
+  {
+    "instruction": "Check earlyoom logs for killed processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -u earlyoom"
+  },
+  {
+    "instruction": "Use nohang to protect a specific process from OOM",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 1234 > /proc/1234/oom_score_adj"
+  },
+  {
+    "instruction": "Check nohang configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/nohang/nohang.conf"
+  },
+  {
+    "instruction": "Set nohang checking interval",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'INTERVAL=10' >> /etc/nohang/nohang.conf"
+  },
+  {
+    "instruction": "Run nohang with dry-run flag",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nohang` with the correct flags and arguments\n   2. Key flags: --dry-run\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nohang` — nohang command execution and management\n   Flag `--dry-run`: simulate without making changes\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnohang --dry-run"
+  },
+  {
+    "instruction": "Use nohang report only mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nohang` with the correct flags and arguments\n   2. Key flags: --report\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nohang` — nohang command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnohang --report"
+  }
+]

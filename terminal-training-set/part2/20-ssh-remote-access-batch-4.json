@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Copy SSH key to remote using ssh-copy-id with custom identity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-copy-id` with the correct flags and arguments\n   2. Key flags: -copy, -id, -i, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-copy-id` — ssh-copy-id command execution and management\n   Supporting tool: `host` — host command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-copy-id -i ~/.ssh/custom.pub -p 2222 user@host"
+  },
+  {
+    "instruction": "Set up passwordless SSH for root (after key copy)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-copy-id` with the correct flags and arguments\n   2. Key flags: -copy, -id\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-copy-id` — ssh-copy-id command execution and management\n   Supporting tool: `host` — host command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-copy-id root@host && ssh root@host 'echo OK'"
+  },
+  {
+    "instruction": "Check if passwordless SSH works",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -o BatchMode=yes user@host 'hostname'"
+  },
+  {
+    "instruction": "Create an SSH key with no passphrase (automation)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -t, -f, -N\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Flag `-t`: sort by time\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -t ed25519 -f ~/.ssh/automation -N ''"
+  },
+  {
+    "instruction": "Generate a CA-signed SSH host certificate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -s, -I, -h\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -s ca_key -I host.example.com -h -n host.example.com /etc/ssh/ssh_host_ed25519_key.pub"
+  },
+  {
+    "instruction": "Install SSH certificate authority for user keys",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'TrustedUserCAKeys /etc/ssh/ca.pub' >> /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Sign a user SSH key with CA",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -s, -I, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -s ca_key -I john -n john user_key.pub"
+  },
+  {
+    "instruction": "Use SSH certificates to authenticate",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh` with the correct flags and arguments\n   2. Key flags: -o, -cert\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh` — secure shell remote access\n   Supporting tool: `host` — host command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh -o CertificateFile=~/.ssh/user_key-cert.pub user@host"
+  },
+  {
+    "instruction": "Force SSH to use key-based authentication only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sed` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsed -i 's/^PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Disable SSH root login with key only (even key is optional)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sed` with the correct flags and arguments\n   2. Key flags: -i, -password\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsed -i 's/^PermitRootLogin.*/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Allow only specific users to SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `john` — john command execution and management\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'AllowUsers john alice' >> /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Allow only a specific group to SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -users\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'AllowGroups ssh-users' >> /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Deny a specific user from SSH",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'DenyUsers baduser' >> /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Change SSH default port",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sed` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsed -i 's/^"
+  },
+  {
+    "instruction": "Limit SSH login attempts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sed` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsed -i 's/^"
+  },
+  {
+    "instruction": "Limit concurrent SSH sessions per user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho 'MaxSessions 2' >> /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Set SSH idle timeout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho -e 'ClientAliveInterval 300\\nClientAliveCountMax 2' >> /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Disable SSH forwarding",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho -e 'AllowTcpForwarding no\\nX11Forwarding no\\nAllowAgentForwarding no' >> /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Enable SSH sftp-only chroot for users",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho -e 'Subsystem sftp internal-sftp\\nMatch Group sftp-only\\n\\tChrootDirectory %h\\n\\tForceCommand internal-sftp\\n\\tX11Forwarding no\\n\\tAllowTcpForwarding no' >> /etc/ssh/sshd_config && systemctl restart sshd"
+  },
+  {
+    "instruction": "Create an SFTP user in a chroot jail",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `useradd` with the correct flags and arguments\n   2. Key flags: -m, -s, -aG, -only\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `useradd` — useradd command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuseradd -m -s /sbin/nologin sftpuser && usermod -aG sftp-only sftpuser && mkdir -p /home/sftpuser/upload && chown root:root /home/sftpuser && chmod 755 /home/sftpuser && chown sftpuser:sftpuser /home/sftpuser/upload"
+  },
+  {
+    "instruction": "Check SSH key type and size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -l, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Flag `-l`: long listing format\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -l -f ~/.ssh/id_ed25519.pub"
+  },
+  {
+    "instruction": "Convert OpenSSH key to PuTTY format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y, -tools, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y putty-tools && puttygen ~/.ssh/id_rsa -o key.ppk"
+  },
+  {
+    "instruction": "Export SSH private key to OpenSSH format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ssh-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -p, -m, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ssh-keygen` — ssh-keygen command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nssh-keygen -p -m RFC4716 -f ~/.ssh/id_rsa"
+  },
+  {
+    "instruction": "Restrict SSH key to specific commands",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -in, -restricted, -mode, -agent\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'command=\"/usr/bin/rsync-in-restricted-mode\",no-agent-forwarding,no-port-forwarding,no-pty,no-user-rc,no-X11-forwarding ssh-ed25519 AAA... key-comment' >> ~/.ssh/authorized_keys"
+  },
+  {
+    "instruction": "Add a trusted CA to authorized_keys for all users",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -authority, -ed25519\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '@cert-authority * ssh-ed25519 AAAAC3...' >> ~/.ssh/known_hosts"
+  }
+]

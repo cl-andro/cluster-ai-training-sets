@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Set up a DRBD dual-primary configuration for GFS2",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: -md, --force\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Flag `--force`: override warnings and proceed\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm create-md r0 && drbdadm up r0 && drbdadm primary --force r0"
+  },
+  {
+    "instruction": "Show DRBD connection state",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/block/drbd0/drbd/connection_state"
+  },
+  {
+    "instruction": "Show DRBD sync progress",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm status r0 | grep synced"
+  },
+  {
+    "instruction": "Force DRBD resource to become primary after split-brain",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm state r0"
+  },
+  {
+    "instruction": "Discard DRBD dirty bitmap and force sync",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: --discard-my-data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm -- --discard-my-data connect r0"
+  },
+  {
+    "instruction": "Resync DRBD after split-brain recovery",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for drbdadm\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: drbdadm disconnect r0 && drbdadm connect r0\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm disconnect r0 && drbdadm connect r0"
+  },
+  {
+    "instruction": "Attach DRBD to a backing device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm attach r0"
+  },
+  {
+    "instruction": "Detach DRBD backing device for maintenance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm detach r0"
+  },
+  {
+    "instruction": "Show DRBD resource configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm dump r0"
+  },
+  {
+    "instruction": "Show DRBD sync speed statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbdadm` with the correct flags and arguments\n   2. Key flags: --statistics\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbdadm` — drbdadm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbdadm status r0 --statistics"
+  },
+  {
+    "instruction": "Configure GFS2 in Pacemaker",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: pcs resource create GFS2 ocf:heartbeat:Filesystem device=/dev/drbd0 directory=/m\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource create GFS2 ocf:heartbeat:Filesystem device=/dev/drbd0 directory=/mnt/gfs2 fstype=gfs2 op monitor interval=10s"
+  },
+  {
+    "instruction": "Add a clustered LVM volume for DRBD",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lvcreate` with the correct flags and arguments\n   2. Key flags: -L, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lvcreate` — LVM logical volume creation\n   Flag `-n`: dry-run mode\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlvcreate -L 10G -n vol1 vg_cluster"
+  },
+  {
+    "instruction": "Prepare a DRBD device with ext4 filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkfs.ext4` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkfs.ext4` — mkfs.ext4 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkfs.ext4 /dev/drbd0"
+  },
+  {
+    "instruction": "Check DRBD role and connection state",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `drbd-overview` with the correct flags and arguments\n   2. Key flags: -overview\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `drbd-overview` — drbd-overview command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndrbd-overview"
+  },
+  {
+    "instruction": "Configure a floating IP with ucarp and script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: ucarp --interface=eth0 --srcip=192.168.1.10 --vip=192.168.1.100 --pass=secret --\n   2. Apply the configuration and verify with `ucarp status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `ucarp` — ucarp command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nucarp --interface=eth0 --srcip=192.168.1.10 --vip=192.168.1.100 --pass=secret --up=/etc/ucarp/vip-up.sh --down=/etc/ucarp/vip-down.sh"
+  },
+  {
+    "instruction": "Configure VRRP preempt mode in Keepalived",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: preempt\n   2. Apply the configuration and verify with `preempt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `preempt` — preempt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npreempt"
+  },
+  {
+    "instruction": "Set VRRP nopreempt in Keepalived",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nopreempt` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nopreempt` — nopreempt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnopreempt"
+  },
+  {
+    "instruction": "Configure VRRP multicast group in Keepalived",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: vrrp_mcast_group4 224.0.0.18\n   2. Apply the configuration and verify with `vrrp_mcast_group4 status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `vrrp_mcast_group4` — vrrp_mcast_group4 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvrrp_mcast_group4 224.0.0.18"
+  },
+  {
+    "instruction": "Configure VRRP VIP with a specific scope in Keepalived",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: virtual_ipaddress_excluded {\n   2. Apply the configuration and verify with `virtual_ipaddress_excluded status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `virtual_ipaddress_excluded` — virtual_ipaddress_excluded command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nvirtual_ipaddress_excluded {\n  192.168.2.100/24 dev eth1\n}"
+  },
+  {
+    "instruction": "Track interfaces in Keepalived VRRP instance",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `track_interface` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `track_interface` — track_interface command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrack_interface {\n  eth0\n  eth1\n}"
+  },
+  {
+    "instruction": "Set Keepalived global notification email settings",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `global_defs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `global_defs` — global_defs command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nglobal_defs {\n  notification_email {\n    admin@example.com\n  }\n  notification_email_from keepalived@example.com\n  smtp_server 127.0.0.1\n}"
+  },
+  {
+    "instruction": "Configure HAProxy as a load balancer with VRRP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the haproxy configuration with the required parameters\n   2. Apply the configuration and verify with `pcs status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Supporting tool: `haproxy` — TCP/HTTP load balancer\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource create LB ocf:heartbeat:haproxy config=/etc/haproxy/haproxy.cfg op monitor interval=10s"
+  },
+  {
+    "instruction": "PCS resource clone for multi-node availability",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pcs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs resource clone VirtualIP"
+  },
+  {
+    "instruction": "Create a Pacemaker alert for email notifications",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for pcs\n   2. Build the command chain with error handling\n   3. Execute: pcs alert create id=email type=snmp\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `pcs` — pcs command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npcs alert create id=email type=snmp"
+  },
+  {
+    "instruction": "Show Pacemaker cluster timeline",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crm_mon` with the correct flags and arguments\n   2. Key flags: --show-timeline\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crm_mon` — crm_mon command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrm_mon --show-timeline"
+  }
+]

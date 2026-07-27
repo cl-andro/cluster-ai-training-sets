@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a YARA rule with a specific string count range",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > count_range.yara << 'EOF'\nrule CountRange {\n  strings:\n    $s = \"suspicious\"\n  condition:\n    #s >= 2 and #s <= 10\n}\nEOF"
+  },
+  {
+    "instruction": "Run YARA with a defined recursion level for directories",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yara` with the correct flags and arguments\n   2. Key flags: -r, --max-depth\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yara` — malware pattern matching\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyara -r --max-depth 3 rule.yara /deep/tree"
+  },
+  {
+    "instruction": "Create a YARA rule with the PE module for Rich Header",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > rich_header.yara << 'EOF'\nimport \"pe\"\nrule RichHeader {\n  condition:\n    pe.rich_signature_offsets\n}\nEOF"
+  },
+  {
+    "instruction": "Use YARA with the scan all files option including hidden",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yara` with the correct flags and arguments\n   2. Key flags: -r, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yara` — malware pattern matching\n   Flag `-r`: recursive operation\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyara -r -a rule.yara /target"
+  },
+  {
+    "instruction": "Create a YARA rule to detect packed executables via entropy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > packed.yara << 'EOF'\nimport \"pe\"\nimport \"math\"\nrule PackedDetect {\n  condition:\n    pe.section_count > 5 and math.entropy(pe.sections[0].raw_data_offset, pe.sections[0].raw_data_size) > 7.5\n}\nEOF"
+  },
+  {
+    "instruction": "Compile a YARA rules directory into a single compiled file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yarac` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yarac` — yarac command execution and management\n   Supporting tool: `yara` — malware pattern matching\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyarac /path/to/rules/*.yara all_rules.yar"
+  },
+  {
+    "instruction": "Create a YARA rule with the CLI module for file type detection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > cli_rule.yara << 'EOF'\nimport \"cli\"\nrule CLIDetect {\n  condition:\n    cli.file_type == \"PNG image\"\n}\nEOF"
+  },
+  {
+    "instruction": "Run YARA with a rule that uses the date module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yara` with the correct flags and arguments\n   2. Key flags: -d, -01, -01\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yara` — malware pattern matching\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyara -d compile_date=\"2026-01-01\" date_rule.yara file.exe"
+  },
+  {
+    "instruction": "Create a YARA rule matching on PE version info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > pe_version.yara << 'EOF'\nimport \"pe\"\nrule PEVersion {\n  condition:\n    pe.version_info[\"ProductName\"] contains \"Malware\"\n}\nEOF"
+  },
+  {
+    "instruction": "Use YARA to scan a process by process name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yara` with the correct flags and arguments\n   2. Key flags: -p, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yara` — malware pattern matching\n   Flag `-p`: create parent directories\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyara -p $(pgrep -n process_name) rule.yara"
+  },
+  {
+    "instruction": "Create a YARA rule with the AND of multiple conditions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > and_condition.yara << 'EOF'\nrule AndCondition {\n  strings:\n    $s1 = \"mal\"\n    $s2 = { 90 90 }\n  condition:\n    $s1 and $s2\n}\nEOF"
+  },
+  {
+    "instruction": "Run YARA with the ignore case option globally",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yara` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yara` — malware pattern matching\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyara -i rule.yara file.exe"
+  },
+  {
+    "instruction": "Create a YARA rule with the PE module for DLL characteristics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > dll_char.yara << 'EOF'\nimport \"pe\"\nrule DLLCheck {\n  condition:\n    pe.dll_characteristics & 0x0040\n}\nEOF"
+  },
+  {
+    "instruction": "Scan with YARA and show all meta fields from matched rules",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yara` with the correct flags and arguments\n   2. Key flags: -s, -m, --all-metadata\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yara` — malware pattern matching\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyara -s -m --all-metadata rule.yara file.exe"
+  },
+  {
+    "instruction": "Create a YARA rule using the Hash module for SHA1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > sha1_rule.yara << 'EOF'\nrule SHA1Match {\n  condition:\n    hash.sha1(0, filesize) == \"aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d\"\n}\nEOF"
+  },
+  {
+    "instruction": "Use YARA with a recursive scan excluding symlinks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yara` with the correct flags and arguments\n   2. Key flags: -r, --no-symlinks\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yara` — malware pattern matching\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyara -r --no-symlinks rule.yara /target"
+  },
+  {
+    "instruction": "Create a YARA rule to detect specific compiler artifacts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > compiler.yara << 'EOF'\nimport \"pe\"\nrule CompilerDetect {\n  condition:\n    pe.compiler == \"Microsoft Visual C++\"\n}\nEOF"
+  },
+  {
+    "instruction": "Run YARA with output format for JSON",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yara` with the correct flags and arguments\n   2. Key flags: -s, -j\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yara` — malware pattern matching\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nyara -s -j rule.yara file.exe > results.json"
+  },
+  {
+    "instruction": "Create a YARA rule with a foreach iteration over sections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > foreach.yara << 'EOF'\nimport \"pe\"\nrule ForEachSection {\n  condition:\n    for any section in pe.sections : ( section.raw_size > 1000000 )\n}\nEOF"
+  },
+  {
+    "instruction": "Use YARA to scan a file from stdin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `yara` — malware pattern matching\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat file.exe | yara -s rule.yara -"
+  },
+  {
+    "instruction": "Create a YARA rule matching if a string appears before another",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > before.yara << 'EOF'\nrule BeforeCheck {\n  strings:\n    $a = \"begin\"\n    $b = \"end\"\n  condition:\n    $a and $b and @a < @b\n}\nEOF"
+  },
+  {
+    "instruction": "Compile YARA rule with verbose compilation output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yarac` with the correct flags and arguments\n   2. Key flags: -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yarac` — yarac command execution and management\n   Flag `-v`: verbose output for debugging\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyarac -v source.yara compiled.yar"
+  },
+  {
+    "instruction": "Create a YARA rule with the TLS module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > tls_rule.yara << 'EOF'\nimport \"pe\"\nrule TLSCheck {\n  condition:\n    pe.tls_callbacks\n}\nEOF"
+  },
+  {
+    "instruction": "Run YARA with a maximum file size to scan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `yara` with the correct flags and arguments\n   2. Key flags: --max-file-size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `yara` — malware pattern matching\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nyara --max-file-size 10M rule.yara /target"
+  },
+  {
+    "instruction": "Create a YARA rule to detect C2 beacon strings",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -9, -9, -9, -9\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > c2_beacon.yara << 'EOF'\nrule C2Beacon {\n  strings:\n    $beacon1 = \"sleep\"\n    $beacon2 = /http[s]?:\\/\\/[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}/\n  condition:\n    all of them\n}\nEOF"
+  }
+]

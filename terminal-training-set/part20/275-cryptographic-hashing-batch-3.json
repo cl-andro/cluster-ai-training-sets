@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to compute SHA-256 hash with a non-standard output format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum file.txt | awk '{print $1}'"
+  },
+  {
+    "instruction": "How to compute SHA-256 hash of a binary file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum binary.bin"
+  },
+  {
+    "instruction": "How to compute the hash of a disk partition",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo sha256sum /dev/sda1"
+  },
+  {
+    "instruction": "How to verify a disk image against a checksum",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sha256sum` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sha256sum` — sha256sum command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsha256sum -c image.sha256"
+  },
+  {
+    "instruction": "How to hash the entire disk for verification",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo dd if=/dev/sda bs=4M status=progress | sha256sum"
+  },
+  {
+    "instruction": "How to recursively compute MD5 hashes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -exec\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfind . -type f -exec md5sum {} \\; > md5sums.txt"
+  },
+  {
+    "instruction": "How to check for duplicate files using hashes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -exec, -w64, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind . -type f -exec sha256sum {} + | sort | uniq -w64 -d"
+  },
+  {
+    "instruction": "How to find duplicate files by content using hashdeep",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -l, -d, -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhashdeep -r -l dir/ | sort | uniq -d -w 64"
+  },
+  {
+    "instruction": "How to generate a hash tree (Merkle tree) of a directory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `find` with the correct flags and arguments\n   2. Key flags: -type, -exec, -k2\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `find` — find command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfind dir/ -type f -exec sha256sum {} \\; | sort -k2 | sha256sum"
+  },
+  {
+    "instruction": "How to verify a file against a known hash from a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrep 'file.txt' checksums.sha256 | sha256sum -c"
+  },
+  {
+    "instruction": "How to check if a large file is corrupted with a partial hash",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dd` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dd` — dd command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\ndd if=largefile.iso bs=1M count=100 2>/dev/null | sha256sum"
+  },
+  {
+    "instruction": "How to compute a hash of a file and display as base64",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -sha256, -binary\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl dgst -sha256 -binary file.txt | base64"
+  },
+  {
+    "instruction": "How to compute a hash of a file as a hex string",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `xxd` with the correct flags and arguments\n   2. Key flags: -p, -c, -sha256, -binary\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `xxd` — xxd command execution and management\n   Supporting tool: `openssl` — cryptographic operations and certificates\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nxxd -p -c 256 <(openssl dgst -sha256 -binary file.txt)"
+  },
+  {
+    "instruction": "How to compute the hash of a string with SHA-512 from openssl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -n, -sha512\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `openssl` — cryptographic operations and certificates\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\necho -n 'hello' | openssl dgst -sha512"
+  },
+  {
+    "instruction": "How to compute the hash of a string with MD5",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -n 'hello' | md5sum"
+  },
+  {
+    "instruction": "How to compute the hash of a string with SHA-1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-n`: dry-run mode\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -n 'hello' | sha1sum"
+  },
+  {
+    "instruction": "How to compute a CRC32 checksum of a file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `crc32` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `crc32` — crc32 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncrc32 file.txt"
+  },
+  {
+    "instruction": "How to compute a CRC32 checksum with openssl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -crc32\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl dgst -crc32 file.txt"
+  },
+  {
+    "instruction": "How to compute a checksum using sum command",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sum` — sum command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsum file.txt"
+  },
+  {
+    "instruction": "How to compute a BSD-style checksum",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cksum` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cksum` — cksum command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncksum file.txt"
+  },
+  {
+    "instruction": "How to use hashdeep to compute a CSV output",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -c, -l, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhashdeep -r -c sha256 -l dir/ | tail -n +3 | cut -d, -f2-"
+  },
+  {
+    "instruction": "How to compute hashdeep status code check",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhashdeep -r -k hashes.txt dir/ > /dev/null 2>&1; echo $?"
+  },
+  {
+    "instruction": "How to generate hashdeep manifest in CSV format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -c, -r, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhashdeep -c sha256 -r -o csv dir/ > manifest.csv"
+  },
+  {
+    "instruction": "How to compare two directories with hashdeep",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -k, -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Flag `-a`: include hidden/all entries\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhashdeep -r -k hashes1.txt -a dir2/"
+  },
+  {
+    "instruction": "How to compute hashdeep with progress display",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `hashdeep` with the correct flags and arguments\n   2. Key flags: -r, -l, -l, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `hashdeep` — hashdeep command execution and management\n   Flag `-r`: recursive operation\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhashdeep -r -l dir/ | pv -l -s $(find dir/ -type f | wc -l) > hashes.txt"
+  }
+]

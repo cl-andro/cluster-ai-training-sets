@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Install Eclipse Kanto from APT repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\necho 'deb https://download.eclipse.org/kanto/releases/latest/debian bookworm main' | sudo tee /etc/apt/sources.list.d/kanto.list && sudo apt update && sudo apt install kanto-cm kanto-mqtt"
+  },
+  {
+    "instruction": "Start Eclipse Kanto MQTT bridge",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -mqtt, -mqtt\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl start kanto-mqtt && sudo systemctl enable kanto-mqtt"
+  },
+  {
+    "instruction": "Configure Eclipse Kanto MQTT bridge",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: sudo nano /etc/kanto/mqtt/config.json\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo nano /etc/kanto/mqtt/config.json"
+  },
+  {
+    "instruction": "Stop Eclipse Kanto container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cm, -container\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo kanto-cm stop my-container"
+  },
+  {
+    "instruction": "Remove Eclipse Kanto container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cm, -container\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo kanto-cm rm my-container"
+  },
+  {
+    "instruction": "View Eclipse Kanto container logs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cm, -container\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo kanto-cm logs my-container"
+  },
+  {
+    "instruction": "Check Kanto MQTT bridge connectivity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mosquitto_pub` with the correct flags and arguments\n   2. Key flags: --topic, --message, --topic, -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mosquitto_pub` — mosquitto_pub command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmosquitto_pub --topic 'kanto/ping' --message 'ping' && mosquitto_sub --topic 'kanto/pong' -C 1"
+  },
+  {
+    "instruction": "Install EdgeX Foundry snap",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the snap configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `snap` — Snap package manager\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo snap install edgexfoundry"
+  },
+  {
+    "instruction": "Check EdgeX services status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `snap` — Snap package manager\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo snap run edgexfoundry.status"
+  },
+  {
+    "instruction": "Restart EdgeX core service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -core, -data\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `snap` — Snap package manager\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo snap restart edgexfoundry.edgex-core-data"
+  },
+  {
+    "instruction": "Get EdgeX metrics via EdgeX CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cli\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo edgex-cli metrics"
+  },
+  {
+    "instruction": "List EdgeX device profiles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cli\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo edgex-cli profile list"
+  },
+  {
+    "instruction": "Delete EdgeX device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cli, --name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo edgex-cli device rm --name MyDevice"
+  },
+  {
+    "instruction": "Add EdgeX provision watcher",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for sudo\n   2. Build the command chain with error handling\n   3. Execute: sudo edgex-cli watcher add --name HTTP-Watcher --profile Random-Device --service\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo edgex-cli watcher add --name HTTP-Watcher --profile Random-Device --service core-device --identifiers '{\"Protocol\":\"HTTP\"}'"
+  },
+  {
+    "instruction": "Get EdgeX event count via CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -cli\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo edgex-cli event count"
+  },
+  {
+    "instruction": "Install balenaEtcher CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `sudo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `apt` — apt command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nsudo apt install balena-etcher-electron"
+  },
+  {
+    "instruction": "Flash OS image to SD card with balenaEtcher CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `balena-etcher` with the correct flags and arguments\n   2. Key flags: -etcher, --drive, --yes\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `balena-etcher` — balena-etcher command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbalena-etcher /path/to/raspios.img --drive /dev/sdX --yes"
+  },
+  {
+    "instruction": "Balena deploy fleet via CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: balena deploy myFleet --source /my/app\n   2. Apply the configuration and verify with `balena status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `balena` — balena command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbalena deploy myFleet --source /my/app"
+  },
+  {
+    "instruction": "Balena list application releases",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `balena` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `balena` — balena command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbalena releases list myApp"
+  },
+  {
+    "instruction": "Balena device logs in realtime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `balena` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `balena` — balena command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbalena logs myDevice"
+  },
+  {
+    "instruction": "ESPHome dashboard start",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `esphome` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `esphome` — esphome command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nesphome dashboard /config/esphome"
+  },
+  {
+    "instruction": "ESPHome clean build cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `esphome` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `esphome` — esphome command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nesphome clean mydevice.yaml"
+  },
+  {
+    "instruction": "ESPHome compile without uploading",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `esphome` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `esphome` — esphome command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nesphome compile mydevice.yaml"
+  },
+  {
+    "instruction": "List ESPHome connected devices via serial",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `esphome` with the correct flags and arguments\n   2. Key flags: --list-devices\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `esphome` — esphome command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nesphome --list-devices"
+  }
+]

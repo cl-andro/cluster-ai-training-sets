@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "List all active database connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT * FROM pg_stat_activity WHERE state = 'active'\""
+  },
+  {
+    "instruction": "Show all databases and their sizes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT datname, pg_size_pretty(pg_database_size(datname)) FROM pg_database ORDER BY pg_database_size(datname) DESC\""
+  },
+  {
+    "instruction": "Find running queries with duration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT pid, now() - pg_stat_activity.query_start AS duration, query, state FROM pg_stat_activity WHERE state != 'idle' ORDER BY duration DESC\""
+  },
+  {
+    "instruction": "Terminate a PostgreSQL connection by PID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT pg_terminate_backend(12345)\""
+  },
+  {
+    "instruction": "Show table sizes with live/dead tuple counts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT relname, n_live_tup, n_dead_tup, pg_size_pretty(pg_total_relation_size(relid)) FROM pg_stat_user_tables ORDER BY n_dead_tup DESC\""
+  },
+  {
+    "instruction": "Show index usage statistics sorted by scan count",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT schemaname, tablename, indexname, idx_scan, idx_tup_read, idx_tup_fetch FROM pg_stat_user_indexes ORDER BY idx_scan\""
+  },
+  {
+    "instruction": "Find unused indexes (never scanned)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT schemaname, tablename, indexname, idx_scan FROM pg_stat_user_indexes WHERE idx_scan = 0\""
+  },
+  {
+    "instruction": "Run VACUUM ANALYZE on a specific table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"VACUUM ANALYZE mytable\""
+  },
+  {
+    "instruction": "Run VACUUM FULL on a database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -d, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -d mydb -c \"VACUUM FULL\""
+  },
+  {
+    "instruction": "Run VACUUM VERBOSE on a table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"VACUUM VERBOSE ANALYZE mytable\""
+  },
+  {
+    "instruction": "Run REINDEX on the entire database",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"REINDEX DATABASE mydb\""
+  },
+  {
+    "instruction": "Run REINDEX CONCURRENTLY on a specific index",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"REINDEX INDEX CONCURRENTLY myindex\""
+  },
+  {
+    "instruction": "Cluster a table on an index",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"CLUSTER mytable USING myindex\""
+  },
+  {
+    "instruction": "Analyze a table for the query planner",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"ANALYZE mytable\""
+  },
+  {
+    "instruction": "Run EXPLAIN ANALYZE on a query",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c, -01, -01\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"EXPLAIN ANALYZE SELECT * FROM orders WHERE created_at > '2024-01-01'\""
+  },
+  {
+    "instruction": "Run EXPLAIN with buffers and timing options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"EXPLAIN (ANALYZE, BUFFERS, TIMING) SELECT * FROM users JOIN orders ON users.id = orders.user_id WHERE users.active = true\""
+  },
+  {
+    "instruction": "Dump database to custom format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_dump` with the correct flags and arguments\n   2. Key flags: -Fc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_dump` — PostgreSQL backup\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_dump -Fc mydb > mydb.dump"
+  },
+  {
+    "instruction": "Dump database with maximum compression",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_dump` with the correct flags and arguments\n   2. Key flags: -Z\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_dump` — PostgreSQL backup\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_dump -Z 9 mydb > mydb.sql.gz"
+  },
+  {
+    "instruction": "Dump only the schema (no data)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_dump` with the correct flags and arguments\n   2. Key flags: --schema-only\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_dump` — PostgreSQL backup\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_dump --schema-only mydb > schema.sql"
+  },
+  {
+    "instruction": "Dump only data from a specific table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_dump` with the correct flags and arguments\n   2. Key flags: --data-only, --table\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_dump` — PostgreSQL backup\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_dump --data-only --table=orders mydb > orders_data.sql"
+  },
+  {
+    "instruction": "Dump excluding a specific table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_dump` with the correct flags and arguments\n   2. Key flags: --exclude-table\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_dump` — PostgreSQL backup\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_dump --exclude-table=logs mydb > mydb.sql"
+  },
+  {
+    "instruction": "Dump all databases with globals",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_dumpall` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_dumpall` — pg_dumpall command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npg_dumpall > full_backup.sql"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "How to create a basic sssd.conf for LDAP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `sssd` — sssd command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/sssd/sssd.conf << 'EOF'\n[sssd]\ndomains = example.com\nconfig_file_version = 2\nservices = nss, pam\n\n[domain/example.com]\nid_provider = ldap\nauth_provider = ldap\nldap_uri = ldap://ldap.example.com\nldap_search_base = dc=example,dc=com\nEOF"
+  },
+  {
+    "instruction": "How to create sssd.conf with LDAP and credential caching",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `sssd` — sssd command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/sssd/sssd.conf << 'EOF'\n[sssd]\ndomains = example.com\nservices = nss, pam\n\n[domain/example.com]\nid_provider = ldap\nauth_provider = ldap\nldap_uri = ldap://ldap.example.com\nldap_search_base = dc=example,dc=com\ncache_credentials = true\nenumerate = false\nEOF"
+  },
+  {
+    "instruction": "How to create sssd.conf with AD provider",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `sssd` — sssd command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/sssd/sssd.conf << 'EOF'\n[sssd]\ndomains = ad.example.com\nservices = nss, pam\n\n[domain/ad.example.com]\nid_provider = ad\nauth_provider = ad\nad_server = dc01.ad.example.com\nad_domain = ad.example.com\nEOF"
+  },
+  {
+    "instruction": "How to set proper permissions on sssd.conf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: chmod 600 /etc/sssd/sssd.conf\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `chmod` — chmod command execution and management\n   Supporting tool: `sssd` — sssd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\nchmod 600 /etc/sssd/sssd.conf"
+  },
+  {
+    "instruction": "How to restart the SSSD service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `sssd` — sssd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart sssd"
+  },
+  {
+    "instruction": "How to start the SSSD service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `sssd` — sssd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl start sssd"
+  },
+  {
+    "instruction": "How to stop the SSSD service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `sssd` — sssd command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl stop sssd"
+  },
+  {
+    "instruction": "How to enable SSSD at boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `systemctl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `sssd` — sssd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl enable sssd"
+  },
+  {
+    "instruction": "How to check SSSD service status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Supporting tool: `sssd` — sssd command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl status sssd"
+  },
+  {
+    "instruction": "How to clear all SSSD cache entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sss_cache` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sss_cache` — sss_cache command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsss_cache -E"
+  },
+  {
+    "instruction": "How to invalidate a specific user's cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sss_cache` with the correct flags and arguments\n   2. Key flags: -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sss_cache` — sss_cache command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsss_cache -u bob"
+  },
+  {
+    "instruction": "How to invalidate a group cache entry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sss_cache` with the correct flags and arguments\n   2. Key flags: -g\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sss_cache` — sss_cache command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsss_cache -g developers"
+  },
+  {
+    "instruction": "How to invalidate a netgroup cache entry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sss_cache` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sss_cache` — sss_cache command execution and management\n   Flag `-n`: dry-run mode\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsss_cache -n mynetgroup"
+  },
+  {
+    "instruction": "How to clear all SSSD caches and restart the service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sss_cache` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sss_cache` — sss_cache command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `sssd` — sssd command execution and management\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsss_cache -E && systemctl restart sssd"
+  },
+  {
+    "instruction": "How to check SSSD cache statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sss_cache` with the correct flags and arguments\n   2. Key flags: --stats\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sss_cache` — sss_cache command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsss_cache --stats"
+  },
+  {
+    "instruction": "How to flush SSSD database files and restart",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Supporting tool: `sssd` — sssd command execution and management\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nrm -f /var/lib/sss/db/* && systemctl restart sssd"
+  },
+  {
+    "instruction": "How to select authselect profile with SSSD",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: -sudo, -mkhomedir\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Supporting tool: `sssd` — sssd command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect select sssd with-sudo with-mkhomedir"
+  },
+  {
+    "instruction": "How to select the minimal authselect profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect select minimal"
+  },
+  {
+    "instruction": "How to list all available authselect profiles",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect list"
+  },
+  {
+    "instruction": "How to check the current authselect profile",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `authselect` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `authselect` — authselect command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthselect current"
+  }
+]

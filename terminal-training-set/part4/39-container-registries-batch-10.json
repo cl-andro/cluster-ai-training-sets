@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Scan a container image with Trivy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `trivy` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `trivy` — trivy command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrivy image myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Scan a container image with Grype",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grype` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grype` — grype command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngrype myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Generate an SBOM for a container image with Syft",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `syft` with the correct flags and arguments\n   2. Key flags: -o, -json\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `syft` — syft command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsyft myregistry.example.com/myapp:1.0 -o spdx-json=sbom.json"
+  },
+  {
+    "instruction": "Scan a container image with Docker Scout",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker scout quickview myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Generate a Docker SBOM for an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker sbom myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "List the Red Hat Quay API endpoints",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://quay.example.com/api/v1/ | jq ."
+  },
+  {
+    "instruction": "List repositories in a Quay organization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s -u user:password https://quay.example.com/api/v1/repository?namespace=myorg | jq .repositories"
+  },
+  {
+    "instruction": "Create a repository in Quay via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -u, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST -u user:password -H \"Content-Type: application/json\" -d '{\"namespace\":\"myorg\",\"repository\":\"myapp\",\"visibility\":\"public\"}' https://quay.example.com/api/v1/repository"
+  },
+  {
+    "instruction": "Change the visibility of a Quay repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -u, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PUT -u user:password -H \"Content-Type: application/json\" -d '{\"visibility\":\"private\"}' https://quay.example.com/api/v1/repository/myorg/myapp"
+  },
+  {
+    "instruction": "List images in a GitLab container registry via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -H, -TOKEN, -xxx\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -H \"PRIVATE-TOKEN: glpat-xxx\" https://gitlab.example.com/api/v4/projects/123/registry/repositories"
+  },
+  {
+    "instruction": "Delete an image from GitLab container registry",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -H, -TOKEN, -xxx\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X DELETE -H \"PRIVATE-TOKEN: glpat-xxx\" https://gitlab.example.com/api/v4/projects/123/registry/repositories/456"
+  },
+  {
+    "instruction": "Configure Renovate to update container images",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the docker configuration with the required parameters\n   2. Apply the configuration and verify with `cat status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ncat > renovate.json << 'EOF'\n{\n  \"$schema\": \"https://docs.renovatebot.com/renovate-schema.json\",\n  \"packageRules\": [\n    {\n      \"matchDatasources\": [\"docker\"],\n      \"labels\": [\"docker-update\"]\n    }\n  ]\n}\nEOF"
+  },
+  {
+    "instruction": "List vulnerabilities in a registry image with Trivy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `trivy` with the correct flags and arguments\n   2. Key flags: --severity\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `trivy` — trivy command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrivy image --severity HIGH,CRITICAL myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Scan a registry with Trivy for misconfigurations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `trivy` with the correct flags and arguments\n   2. Key flags: --severity\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `trivy` — trivy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrivy config --severity HIGH,CRITICAL myregistry.example.com/myapp:1.0"
+  },
+  {
+    "instruction": "Pull all tags from a registry to local with skopeo",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `skopeo` with the correct flags and arguments\n   2. Key flags: --src, --dest\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `skopeo` — container image inspection and transfer\n   Supporting tool: `docker` — manage containers and images\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nskopeo sync --src docker --dest dir myregistry.example.com/myapp /tmp/images"
+  },
+  {
+    "instruction": "List all artifacts in a registry with ORAS",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `oras` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `oras` — oras command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\noras repo ls myregistry.example.com"
+  },
+  {
+    "instruction": "Export the Red Hat Quay security report for an image",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s -u user:password https://quay.example.com/api/v1/repository/myorg/myapp/manifest/sha256:abc/security | jq ."
+  },
+  {
+    "instruction": "Set a Docker Hub repository description via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -X, -u, -H, -Type\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X PATCH -u myuser:password -H \"Content-Type: application/json\" -d '{\"description\":\"My application image\"}' https://hub.docker.com/v2/repositories/myuser/myapp/"
+  },
+  {
+    "instruction": "Get the number of pulls for a Docker Hub repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://hub.docker.com/v2/repositories/myuser/myapp/ | jq .pull_count"
+  },
+  {
+    "instruction": "Install Trivy on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the dpkg configuration with the required parameters\n   2. Apply the configuration and verify with `wget status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `wget` — download files from URLs\n   Supporting tool: `dpkg` — dpkg command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\nwget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_Linux-64bit.deb && sudo dpkg -i trivy_Linux-64bit.deb"
+  },
+  {
+    "instruction": "Install Grype on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin"
+  },
+  {
+    "instruction": "Install Syft on Debian 12",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin"
+  },
+  {
+    "instruction": "List GitLab container registries for a group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -H, -TOKEN, -xxx\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -H \"PRIVATE-TOKEN: glpat-xxx\" https://gitlab.example.com/api/v4/groups/123/registry/repositories"
+  },
+  {
+    "instruction": "Get Quay API status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://quay.example.com/api/v1/ | jq .status"
+  },
+  {
+    "instruction": "Export the raw SBOM with Syft in CycloneDX format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `syft` with the correct flags and arguments\n   2. Key flags: -o, -json\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `syft` — syft command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsyft myregistry.example.com/myapp:1.0 -o cyclonedx-json=sbom.cdx.json"
+  },
+  {
+    "instruction": "Compare two images with Trivy",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `trivy` with the correct flags and arguments\n   2. Key flags: --diff\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `trivy` — trivy command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntrivy image --diff myregistry.example.com/myapp:1.0 myregistry.example.com/myapp:2.0"
+  }
+]

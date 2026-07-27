@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "Check Prometheus targets page",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s http://localhost:9090/api/v1/targets | jq '.data.activeTargets[] | {job, health, scrapeUrl}'"
+  },
+  {
+    "instruction": "Check Prometheus rules via promtool with health",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtool` with the correct flags and arguments\n   2. Key flags: --lint-errors\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtool` — Prometheus configuration and query validation\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtool check rules --lint-errors rules.yml"
+  },
+  {
+    "instruction": "Promtool check web config hashing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtool` with the correct flags and arguments\n   2. Key flags: -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtool` — Prometheus configuration and query validation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtool check web-config web.yml"
+  },
+  {
+    "instruction": "Generate password hash for basic auth",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `promtool` with the correct flags and arguments\n   2. Key flags: -password, -hash\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `promtool` — Prometheus configuration and query validation\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npromtool generate-password-hash mypassword"
+  },
+  {
+    "instruction": "Create a web config for Prometheus basic auth",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'basic_auth_users: prom: <hashed_password>' > web.yml"
+  },
+  {
+    "instruction": "Start Prometheus with web config for auth",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --web\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --web.config.file web.yml"
+  },
+  {
+    "instruction": "Enable TLS for Prometheus web",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'tls_server_config: cert_file: server.crt key_file: server.key' > web.yml\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'tls_server_config: cert_file: server.crt key_file: server.key' > web.yml"
+  },
+  {
+    "instruction": "Use HTTP/2 for Prometheus web server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `prometheus` with the correct flags and arguments\n   2. Key flags: --config, --web\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `prometheus` — prometheus command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprometheus --config.file prometheus.yml --web.config.file web.yml"
+  },
+  {
+    "instruction": "Configure Alertmanager Slack receiver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'receivers: - name: slack slack_configs: - api_url: https://hooks.slack.com\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'receivers: - name: slack slack_configs: - api_url: https://hooks.slack.com/services/T00/B00/xxx channel: \"#alerts\" send_resolved: true' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Configure Alertmanager email receiver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'receivers: - name: email email_configs: - to: admin@example.com from: aler\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'receivers: - name: email email_configs: - to: admin@example.com from: alert@example.com smarthost: smtp.example.com:587 auth_username: user auth_password: pass' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Configure Alertmanager PagerDuty receiver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'receivers: - name: pagerduty pagerduty_configs: - routing_key: abc123' >> \n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'receivers: - name: pagerduty pagerduty_configs: - routing_key: abc123' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Configure Alertmanager OpsGenie receiver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'receivers: - name: opsgenie opsgenie_configs: - api_key: abc123 responders\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'receivers: - name: opsgenie opsgenie_configs: - api_key: abc123 responders: - name: team type: team' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Configure Alertmanager VictorOps receiver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'receivers: - name: victorops victorops_configs: - api_key: abc123 routing_\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'receivers: - name: victorops victorops_configs: - api_key: abc123 routing_key: devops' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Configure Alertmanager Webhook receiver",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'receivers: - name: webhook webhook_configs: - url: https://hooks.example.c\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'receivers: - name: webhook webhook_configs: - url: https://hooks.example.com/alerts send_resolved: true' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Set group_wait in Alertmanager route",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'route: group_by: [alertname] group_wait: 30s group_interval: 5m repeat_int\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'route: group_by: [alertname] group_wait: 30s group_interval: 5m repeat_interval: 4h receiver: default' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Set Alertmanager time-based inhibition",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'inhibit_rules: - source_match: alertname: InstanceDown target_match: alert\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'inhibit_rules: - source_match: alertname: InstanceDown target_match: alertname: InstanceNetworkEqual: [instance]' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Set Alertmanager mute time intervals",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for echo\n   2. Build the command chain with error handling\n   3. Execute: echo 'mute_time_intervals: - name: maintenance time_intervals: - times: - start:\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'mute_time_intervals: - name: maintenance time_intervals: - times: - start: \"02:00\" end: \"04:00\" weekdays: [saturday, sunday]' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Configure Alertmanager with multiple routes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'route: routes: - receiver: team-A match: severity: critical - receiver: te\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'route: routes: - receiver: team-A match: severity: critical - receiver: team-B match: severity: warning' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Configure Alertmanager route by regex",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the mysql configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `mysql` — MySQL/MariaDB database interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\necho 'route: routes: - receiver: db match_re: service: \"(mysql|postgres|redis)\"' >> alertmanager.yml"
+  },
+  {
+    "instruction": "Start Alertmanager with custom storage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for alertmanager\n   2. Build the command chain with error handling\n   3. Execute: alertmanager --config.file alertmanager.yml --storage.path /data/alertmanager\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `alertmanager` — alertmanager command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nalertmanager --config.file alertmanager.yml --storage.path /data/alertmanager"
+  },
+  {
+    "instruction": "Start Alertmanager with cluster peers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for alertmanager\n   2. Build the command chain with error handling\n   3. Execute: alertmanager --config.file alertmanager.yml --cluster.listen-address 0.0.0.0:909\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `alertmanager` — alertmanager command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nalertmanager --config.file alertmanager.yml --cluster.listen-address 0.0.0.0:9094 --cluster.peer alert1:9094,alert2:9094"
+  },
+  {
+    "instruction": "Start Alertmanager without clustering",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for alertmanager\n   2. Build the command chain with error handling\n   3. Execute: alertmanager --config.file alertmanager.yml --cluster.listen-address=\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `alertmanager` — alertmanager command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nalertmanager --config.file alertmanager.yml --cluster.listen-address="
+  },
+  {
+    "instruction": "Reload Alertmanager config via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl -X POST http://localhost:9093/-/reload\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -X POST http://localhost:9093/-/reload"
+  },
+  {
+    "instruction": "Check Alertmanager status via API",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for curl\n   2. Build the command chain with error handling\n   3. Execute: curl http://localhost:9093/api/v2/status\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl http://localhost:9093/api/v2/status"
+  }
+]

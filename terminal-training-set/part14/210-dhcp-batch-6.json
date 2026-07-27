@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to set default DHCP lease time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `default-lease-time` with the correct flags and arguments\n   2. Key flags: -lease, -time, -lease, -time\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `default-lease-time` — default-lease-time command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndefault-lease-time 3600;\nmax-lease-time 7200;"
+  },
+  {
+    "instruction": "How to define DHCP subnet and pool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `subnet` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `subnet` — subnet command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsubnet 192.168.1.0 netmask 255.255.255.0 { range 192.168.1.10 192.168.1.200; }"
+  },
+  {
+    "instruction": "How to configure DHCP options (router, DNS)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: option routers 192.168.1.1;\n   2. Apply the configuration and verify with `option status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `option` — option command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\noption routers 192.168.1.1;\noption domain-name-servers 8.8.8.8, 8.8.4.4;"
+  },
+  {
+    "instruction": "How to enable DHCP logging",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: log-facility local7;\n   2. Apply the configuration and verify with `log-facility status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `log-facility` — log-facility command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlog-facility local7;"
+  },
+  {
+    "instruction": "How to check DHCP server configuration syntax",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dhcpd` with the correct flags and arguments\n   2. Key flags: -t, -cf\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dhcpd` — dhcpd command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndhcpd -t -cf /etc/dhcp/dhcpd.conf"
+  },
+  {
+    "instruction": "How to start dnsmasq DHCP service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl start dnsmasq"
+  },
+  {
+    "instruction": "How to stop dnsmasq DHCP service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl stop dnsmasq"
+  },
+  {
+    "instruction": "How to set DHCP range with dnsmasq",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dhcp-range` with the correct flags and arguments\n   2. Key flags: -range\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dhcp-range` — dhcp-range command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndhcp-range=192.168.1.10,192.168.1.200,12h"
+  },
+  {
+    "instruction": "How to assign static lease in dnsmasq",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dhcp-host` with the correct flags and arguments\n   2. Key flags: -host\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dhcp-host` — dhcp-host command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndhcp-host=aa:bb:cc:dd:ee:ff,printer,192.168.1.100"
+  },
+  {
+    "instruction": "How to enable DHCPv6 in dnsmasq",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: enable-ra\n   2. Apply the configuration and verify with `enable-ra status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `enable-ra` — enable-ra command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nenable-ra"
+  },
+  {
+    "instruction": "How to set DHCP domain name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dhcp-option` with the correct flags and arguments\n   2. Key flags: -option, -name\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dhcp-option` — dhcp-option command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndhcp-option=option:domain-name,example.com"
+  },
+  {
+    "instruction": "How to view DHCP client list in dnsmasq",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /var/lib/misc/dnsmasq.leases"
+  },
+  {
+    "instruction": "How to configure DHCP failover",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: failover peer \"dhcp-failover\" { primary; address 10.0.0.1; port 519; peer addres\n   2. Apply the configuration and verify with `failover status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `failover` — failover command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfailover peer \"dhcp-failover\" { primary; address 10.0.0.1; port 519; peer address 10.0.0.2; peer port 519; }"
+  },
+  {
+    "instruction": "How to set DHCP NTP server option",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `option` with the correct flags and arguments\n   2. Key flags: -servers\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `option` — option command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\noption ntp-servers 192.168.1.5;"
+  },
+  {
+    "instruction": "How to define DHCP class for vendor options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `class` with the correct flags and arguments\n   2. Key flags: -class, -class, -identifier\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `class` — class command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nclass \"vendor-class\" { match option vendor-class-identifier; }"
+  },
+  {
+    "instruction": "How to add DHCP host reservation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `host` with the correct flags and arguments\n   2. Key flags: -address\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `host` — host command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhost webcam { hardware ethernet 11:22:33:44:55:66; fixed-address 192.168.1.50; }"
+  },
+  {
+    "instruction": "How to view DHCP server statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dhcpd` with the correct flags and arguments\n   2. Key flags: -p, -f, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dhcpd` — dhcpd command execution and management\n   Flag `-p`: create parent directories\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndhcpd -p 67 -f -d"
+  },
+  {
+    "instruction": "How to configure DHCP relay agent",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: dhcrelay -i eth0 10.0.0.1\n   2. Apply the configuration and verify with `dhcrelay status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `dhcrelay` — dhcrelay command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndhcrelay -i eth0 10.0.0.1"
+  },
+  {
+    "instruction": "How to set DHCP default gateway",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `option` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `option` — option command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\noption routers 192.168.1.254;"
+  },
+  {
+    "instruction": "How to configure DHCP TFTP server option",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: option tftp-server-name \"192.168.1.10\";\n   2. Apply the configuration and verify with `option status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `option` — option command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\noption tftp-server-name \"192.168.1.10\";\noption bootfile-name \"pxelinux.0\";"
+  },
+  {
+    "instruction": "How to restart dnsmasq",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl restart dnsmasq"
+  },
+  {
+    "instruction": "How to check dnsmasq DHCP leases file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /var/lib/dnsmasq/dnsmasq.leases"
+  },
+  {
+    "instruction": "How to set DHCP netmask option",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `option` with the correct flags and arguments\n   2. Key flags: -mask\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `option` — option command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\noption subnet-mask 255.255.255.0;"
+  },
+  {
+    "instruction": "How to enable DHCP authoritative mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: authoritative;\n   2. Apply the configuration and verify with `authoritative status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `authoritative` — authoritative command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nauthoritative;"
+  },
+  {
+    "instruction": "How to configure DHCP option 150 for provisioning",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: option 150 ip 192.168.1.10;\n   2. Apply the configuration and verify with `option status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `option` — option command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\noption 150 ip 192.168.1.10;"
+  }
+]

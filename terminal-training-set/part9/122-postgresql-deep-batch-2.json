@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Dump only globals (roles and tablespaces)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_dumpall` with the correct flags and arguments\n   2. Key flags: --globals-only\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_dumpall` — pg_dumpall command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\npg_dumpall --globals-only > globals.sql"
+  },
+  {
+    "instruction": "Restore a custom format dump",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for pg_restore\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: pg_restore -d mydb mydb.dump\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_restore` — pg_restore command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_restore -d mydb mydb.dump"
+  },
+  {
+    "instruction": "Restore with parallel jobs for speed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for pg_restore\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: pg_restore -j 4 -d mydb mydb.dump\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_restore` — pg_restore command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_restore -j 4 -d mydb mydb.dump"
+  },
+  {
+    "instruction": "Restore schema only from a dump",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for pg_restore\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: pg_restore --schema-only -d mydb mydb.dump\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_restore` — pg_restore command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_restore --schema-only -d mydb mydb.dump"
+  },
+  {
+    "instruction": "Restore to a different database name",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for pg_restore\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: pg_restore -d newdb mydb.dump\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_restore` — pg_restore command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npg_restore -d newdb mydb.dump"
+  },
+  {
+    "instruction": "Create a database owned by a specific user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `createdb` with the correct flags and arguments\n   2. Key flags: -O\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `createdb` — createdb command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncreatedb -O myuser mydb"
+  },
+  {
+    "instruction": "Create database with specific encoding",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `createdb` with the correct flags and arguments\n   2. Key flags: -E, -l, -8\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `createdb` — createdb command execution and management\n   Flag `-l`: long listing format\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncreatedb -E UTF8 -l en_US.UTF-8 mydb"
+  },
+  {
+    "instruction": "Drop a database forcefully",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dropdb` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dropdb` — dropdb command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndropdb -f mydb"
+  },
+  {
+    "instruction": "Check if PostgreSQL is ready for connections",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_isready` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_isready` — pg_isready command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npg_isready"
+  },
+  {
+    "instruction": "Check PostgreSQL connection with host and port",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_isready` with the correct flags and arguments\n   2. Key flags: -h, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_isready` — pg_isready command execution and management\n   Flag `-h`: human-readable format\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npg_isready -h localhost -p 5432"
+  },
+  {
+    "instruction": "Start PostgreSQL server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_ctl` with the correct flags and arguments\n   2. Key flags: -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_ctl` — pg_ctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npg_ctl start -D /var/lib/postgresql/15/main"
+  },
+  {
+    "instruction": "Stop PostgreSQL server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_ctl` with the correct flags and arguments\n   2. Key flags: -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_ctl` — pg_ctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npg_ctl stop -D /var/lib/postgresql/15/main"
+  },
+  {
+    "instruction": "Reload PostgreSQL configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_ctl` with the correct flags and arguments\n   2. Key flags: -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_ctl` — pg_ctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npg_ctl reload -D /var/lib/postgresql/15/main"
+  },
+  {
+    "instruction": "Show PostgreSQL server status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pg_ctl` with the correct flags and arguments\n   2. Key flags: -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pg_ctl` — pg_ctl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npg_ctl status -D /var/lib/postgresql/15/main"
+  },
+  {
+    "instruction": "Run pgbench with 10 clients and 1000 transactions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pgbench` with the correct flags and arguments\n   2. Key flags: -c, -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pgbench` — pgbench command execution and management\n   Flag `-t`: sort by time\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npgbench -c 10 -t 1000 mydb"
+  },
+  {
+    "instruction": "Initialize pgbench with scale factor 50",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pgbench` with the correct flags and arguments\n   2. Key flags: -i, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pgbench` — pgbench command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npgbench -i -s 50 mydb"
+  },
+  {
+    "instruction": "Run pgbench for 60 seconds",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pgbench` with the correct flags and arguments\n   2. Key flags: -c, -T\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pgbench` — pgbench command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npgbench -c 10 -T 60 mydb"
+  },
+  {
+    "instruction": "Run pgbench with custom script",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `pgbench` with the correct flags and arguments\n   2. Key flags: -f, -c, -T\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `pgbench` — pgbench command execution and management\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npgbench -f /path/to/script.sql -c 10 -T 30 mydb"
+  },
+  {
+    "instruction": "Execute a SQL script file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Flag `-f`: force execution, suppress errors\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -f /path/to/script.sql"
+  },
+  {
+    "instruction": "Export query result to CSV",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"COPY (SELECT * FROM users) TO STDOUT WITH CSV HEADER\" > users.csv"
+  },
+  {
+    "instruction": "Import CSV file into a table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"\\copy mytable FROM '/path/to/data.csv' WITH CSV HEADER\""
+  },
+  {
+    "instruction": "Show replication statistics",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `psql` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `psql` — PostgreSQL database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATABASE: use `--single-transaction` for InnoDB consistency; test restore on a staging DB first\n</think>\npsql -c \"SELECT * FROM pg_stat_replication\""
+  }
+]

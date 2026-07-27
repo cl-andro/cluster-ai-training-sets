@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "How to set up IPsec using EAP-MSCHAPv2 (username/password)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mschapv2, -pool\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  eap-mschapv2 {\n    version = 2\n    local_addrs = 192.168.1.10\n    remote_addrs = %any\n    pools = vpn-pool\n    local {\n      auth = pubkey\n      certs = server.crt\n      id = server.example.com\n    }\n    remote {\n      auth = eap-mschapv2\n      eap_id = %any\n    }\n    children {\n      net {\n        local_ts = 0.0.0.0/0\n      }\n    }\n  }\n  pools {\n    vpn-pool {\n      addrs = 10.5.0.0/24\n      dns = 8.8.8.8\n    }\n  }\n}' > /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set up EAP-TLS in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -tls, -pool\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  eap-tls {\n    version = 2\n    local_addrs = 192.168.1.10\n    remote_addrs = %any\n    pools = vpn-pool\n    local {\n      auth = pubkey\n      certs = server.crt\n      id = server.example.com\n    }\n    remote {\n      auth = eap-tls\n      eap_id = %any\n    }\n    children {\n      net {\n        local_ts = 0.0.0.0/0\n      }\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set up EAP-PEAP in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -peap, -pool\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  eap-peap {\n    version = 2\n    local_addrs = 192.168.1.10\n    remote_addrs = %any\n    pools = vpn-pool\n    local {\n      auth = pubkey\n      certs = server.crt\n    }\n    remote {\n      auth = eap-peap\n      eap_id = %any\n    }\n    children {\n      net {}\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set up strongSwan with LDAP auth",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -radius\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'charon {\n  plugins {\n    eap-radius {\n      servers {\n        primary {\n          address = 192.168.1.10\n          secret = radiussecret\n        }\n      }\n    }\n  }\n}' >> /etc/strongswan.d/charon-radius.conf"
+  },
+  {
+    "instruction": "How to enable RADIUS accounting for strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'charon {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'charon {\n  plugins {\n    eap-radius {\n      accounting = yes\n      servers {\n        primary {\n          address = 192.168.1.11\n          secret = radiussecret\n          acct_port = 1813\n        }\n      }\n    }\n  }\n}' >> /etc/strongswan.d/charon-radius.conf"
+  },
+  {
+    "instruction": "How to install the strongSwan RADIUS plugin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install strongswan-plugin-eap-radius"
+  },
+  {
+    "instruction": "How to set up strongSwan with NetworkManager",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -manager, -strongswan\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install network-manager-strongswan"
+  },
+  {
+    "instruction": "How to test strongSwan connection with swanctl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --initiate, --child\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --initiate --child net"
+  },
+  {
+    "instruction": "How to re-authenticate IPsec connection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --rekey, --ike, -connection, --rekey\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --rekey --ike my-connection && swanctl --rekey --child net"
+  },
+  {
+    "instruction": "How to redirect IPsec to a different gateway",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --redirect, --ike, -connection, --new-remote\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --redirect --ike my-connection --new-remote 192.168.2.20"
+  },
+  {
+    "instruction": "How to list strongSwan log entries per connection",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `journalctl` with the correct flags and arguments\n   2. Key flags: -u, -starter, -connection\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `journalctl` — query systemd journal logs\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\njournalctl -u strongswan-starter | grep my-connection"
+  },
+  {
+    "instruction": "How to check IPsec install path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the ipsec configuration with the required parameters\n   2. Apply the configuration and verify with `which status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `which` — which command execution and management\n   Supporting tool: `ipsec` — IPsec VPN management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwhich ipsec && which swanctl"
+  },
+  {
+    "instruction": "How to check charon plugin list",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ipsec` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ipsec` — IPsec VPN management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nipsec listplugins"
+  },
+  {
+    "instruction": "How to enable strongSwan plugin for testing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'charon {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'charon {\n  load_test = yes\n}' >> /etc/strongswan.d/charon.conf"
+  },
+  {
+    "instruction": "How to enable the kernel-netlink plugin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'charon {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'charon {\n  load_modular = yes\n  plugins {\n    include strongswan.d/charon/kernel-netlink.conf\n  }\n}' >> /etc/strongswan.d/charon.conf"
+  },
+  {
+    "instruction": "How to configure strongSwan virtual IP pool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'pools {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'pools {\n  office-pool {\n    addrs = 10.8.0.0/24\n    subnet = 10.8.0.0/24\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to set DNS via virtual IP pool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -pool\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'pools {\n  office-pool {\n    dns = 8.8.8.8, 1.1.1.1\n    nbns = 192.168.1.10\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to assign attribute via swanctl pool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -pool, -server\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'pools {\n  office-pool {\n    attr {\n      dhcp-server = 192.168.1.1\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to check strongSwan pool usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --list-pools, --leases\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --list-pools --leases"
+  },
+  {
+    "instruction": "How to release a specific lease from pool",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `swanctl` with the correct flags and arguments\n   2. Key flags: --release, --pool, -pool, --address\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `swanctl` — swanctl command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nswanctl --release --pool office-pool --address 10.8.0.5"
+  },
+  {
+    "instruction": "How to enable XAuth authentication in strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'connections {\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  xauth {\n    version = 1\n    local_addrs = 192.168.1.10\n    remote_addrs = %any\n    local {\n      auth = psk\n    }\n    remote {\n      auth = xauth\n    }\n    children {\n      net {}\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to combine XAuth with EAP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -mschapv2\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'connections {\n  hybrid {\n    version = 2\n    local_addrs = 192.168.1.10\n    remote_addrs = %any\n    local {\n      auth = pubkey\n    }\n    remote {\n      auth = eap-mschapv2\n      xauth = yes\n    }\n  }\n}' >> /etc/swanctl/swanctl.conf"
+  },
+  {
+    "instruction": "How to configure IPsec with 3rd-party certs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: cp mycert.crt /etc/swanctl/x509/ && cp mykey.key /etc/swanctl/private/ && swanct\n   2. Apply the configuration and verify with `cp status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `cp` — cp command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncp mycert.crt /etc/swanctl/x509/ && cp mykey.key /etc/swanctl/private/ && swanctl --load-creds"
+  },
+  {
+    "instruction": "How to convert OpenVPN cert for strongSwan",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -in, -out, -outform, -in\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl x509 -in client.crt -out client.pem -outform PEM && openssl rsa -in client.key -out client.pem -outform PEM"
+  }
+]

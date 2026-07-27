@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Create a new ext4 filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkfs.ext4` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkfs.ext4` — mkfs.ext4 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkfs.ext4 /dev/sdb1"
+  },
+  {
+    "instruction": "Create a filesystem with a label",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkfs.ext4` with the correct flags and arguments\n   2. Key flags: -L\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkfs.ext4` — mkfs.ext4 command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkfs.ext4 -L mydata /dev/sdb1"
+  },
+  {
+    "instruction": "Mount a filesystem by UUID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount UUID=abc123-... /mnt/data"
+  },
+  {
+    "instruction": "Find UUID of a device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `blkid` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `blkid` — blkid command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nblkid /dev/sdb1"
+  },
+  {
+    "instruction": "Edit /etc/fstab to auto-mount a partition",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'UUID=abc123-... /mnt/data ext4 defaults 0 2' >> /etc/fstab"
+  },
+  {
+    "instruction": "Check a filesystem for errors (ext4)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fsck.ext4` with the correct flags and arguments\n   2. Key flags: -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fsck.ext4` — fsck.ext4 command execution and management\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfsck.ext4 -f /dev/sdb1"
+  },
+  {
+    "instruction": "Force a filesystem check on next boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tune2fs` with the correct flags and arguments\n   2. Key flags: -C\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tune2fs` — tune2fs command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntune2fs -C 999 /dev/sda1"
+  },
+  {
+    "instruction": "Resize an ext4 filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `resize2fs` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `resize2fs` — resize2fs command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nresize2fs /dev/myvg/mylv"
+  },
+  {
+    "instruction": "Configure a disk partition with fdisk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the fdisk configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `fdisk` — disk partition table management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\necho -e 'g\\nn\\n\\n\\n+10G\\nw' | fdisk /dev/sdb"
+  },
+  {
+    "instruction": "Create a GPT partition table on disk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `parted` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `parted` — disk partitioning\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nparted /dev/sdb mklabel gpt"
+  },
+  {
+    "instruction": "Create a partition with parted",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `parted` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `parted` — disk partitioning\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nparted /dev/sdb mkpart primary ext4 1MiB 10GiB"
+  },
+  {
+    "instruction": "Print the partition table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `parted` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `parted` — disk partitioning\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nparted /dev/sdb print"
+  },
+  {
+    "instruction": "Resize a partition with parted",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `parted` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `parted` — disk partitioning\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nparted /dev/sdb resizepart 1 20GiB"
+  },
+  {
+    "instruction": "Create a swap partition",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkswap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkswap` — mkswap command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmkswap /dev/sdb2 && swapon /dev/sdb2"
+  },
+  {
+    "instruction": "Add swap to /etc/fstab",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '/dev/sdb2 none swap sw 0 0' >> /etc/fstab"
+  },
+  {
+    "instruction": "Configure tmpfs in /etc/fstab",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'tmpfs /var/ramdisk tmpfs defaults,size=1G 0 0' >> /etc/fstab\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'tmpfs /var/ramdisk tmpfs defaults,size=1G 0 0' >> /etc/fstab"
+  },
+  {
+    "instruction": "Configure a bind mount in /etc/fstab",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo '/original/path /bound/path none bind 0 0' >> /etc/fstab\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho '/original/path /bound/path none bind 0 0' >> /etc/fstab"
+  },
+  {
+    "instruction": "Mount all filesystems from /etc/fstab",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Flag `-a`: include hidden/all entries\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -a"
+  },
+  {
+    "instruction": "Check which filesystems are mounted read-only",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount | grep ro | head -5"
+  },
+  {
+    "instruction": "Remount a filesystem as read-write",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mount` with the correct flags and arguments\n   2. Key flags: -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mount` — mount command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmount -o remount,rw /"
+  },
+  {
+    "instruction": "Configure automount with autofs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Flag `--timeout`: set maximum execution time\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y autofs && echo '/net /etc/auto.net --timeout=60' >> /etc/auto.master && echo 'server -fstype=nfs4 192.168.1.10:/srv/nfs' > /etc/auto.net && systemctl restart autofs"
+  },
+  {
+    "instruction": "Configure NTP client (chrony)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y chrony && systemctl enable --now chrony"
+  },
+  {
+    "instruction": "Check NTP sync status with chronyc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chronyc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chronyc` — chronyc command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchronyc tracking"
+  },
+  {
+    "instruction": "List NTP sources with chronyc",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chronyc` with the correct flags and arguments\n   2. Key flags: -v\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chronyc` — chronyc command execution and management\n   Flag `-v`: verbose output for debugging\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchronyc sources -v"
+  },
+  {
+    "instruction": "Configure a local NTP server in chrony",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the systemctl configuration with the required parameters\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\necho -e 'server 0.debian.pool.ntp.org iburst\\nserver 1.debian.pool.ntp.org iburst\\nallow 192.168.1.0/24' >> /etc/chrony/chrony.conf && systemctl restart chrony"
+  }
+]

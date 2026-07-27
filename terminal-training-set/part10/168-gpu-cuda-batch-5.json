@@ -1,0 +1,94 @@
+[
+  {
+    "instruction": "Show GPU process info with utilization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -c, -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi pmon -c 1 -s u"
+  },
+  {
+    "instruction": "Show GPU topology in CPU affinity format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -m, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi topo -m -c"
+  },
+  {
+    "instruction": "Launch Python training on GPU 0 and 1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `CUDA_VISIBLE_DEVICES` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `CUDA_VISIBLE_DEVICES` — CUDA_VISIBLE_DEVICES command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nCUDA_VISIBLE_DEVICES=0,1 python train.py"
+  },
+  {
+    "instruction": "Check if GPU persistence mode is enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: nvidia-smi -q -d PERSISTENCE_MODE\n   2. Apply the configuration and verify with `nvidia-smi status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -q -d PERSISTENCE_MODE"
+  },
+  {
+    "instruction": "Enable persistence mode on all GPUs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: nvidia-smi -pm 1\n   2. Apply the configuration and verify with `nvidia-smi status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -pm 1"
+  },
+  {
+    "instruction": "List CUDA device files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls /dev/nvidia*"
+  },
+  {
+    "instruction": "Run training exclusively on GPU 1",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `CUDA_VISIBLE_DEVICES` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `CUDA_VISIBLE_DEVICES` — CUDA_VISIBLE_DEVICES command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nCUDA_VISIBLE_DEVICES=1 python train.py"
+  },
+  {
+    "instruction": "Show GPU compute mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, --query-gpu, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi --query-gpu=compute_mode --format=csv"
+  },
+  {
+    "instruction": "Show nvidia driver version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, --query-gpu, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi --query-gpu=driver_version --format=csv"
+  },
+  {
+    "instruction": "Start nvidia-persistenced service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -persistenced\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Supporting tool: `systemctl` — manage systemd services and units\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsudo systemctl start nvidia-persistenced"
+  },
+  {
+    "instruction": "Query GPU serial number",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, --query-gpu, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi --query-gpu=serial --format=csv"
+  },
+  {
+    "instruction": "Enable MIG mode on GPU 0",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: nvidia-smi -i 0 -mig 1\n   2. Apply the configuration and verify with `nvidia-smi status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -i 0 -mig 1"
+  },
+  {
+    "instruction": "Query GPU retired pages info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -q, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -q -d RETIRED_PAGES"
+  },
+  {
+    "instruction": "Display GPU clock event reasons",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -q, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -q -d CLOCK_EVENT_REASONS"
+  },
+  {
+    "instruction": "Display GPU topology matrix",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi topo -m"
+  },
+  {
+    "instruction": "Display GPU process monitor snapshot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for nvidia-smi\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: nvidia-smi pmon -c 1\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi pmon -c 1"
+  },
+  {
+    "instruction": "Generate Xorg configuration for nvidia",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -xconfig\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo nvidia-xconfig"
+  },
+  {
+    "instruction": "Display GPU memory details",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -q, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -q -d MEMORY"
+  },
+  {
+    "instruction": "List supported GPU clocks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -q, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -q -d SUPPORTED_CLOCKS"
+  },
+  {
+    "instruction": "Display GPU memory bandwidth info",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -q, -d, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -q -d MEMORY | grep -i bandwidth"
+  },
+  {
+    "instruction": "Reset GPU 0",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -r, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Flag `-r`: recursive operation\n   Flag `-i`: interactive mode or case-insensitive\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -r -i 0"
+  },
+  {
+    "instruction": "Query GPU maximum clocks",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, -q, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi -q -d MAX_CLOCKS"
+  },
+  {
+    "instruction": "Show GPU framebuffer memory usage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `nvidia-smi` with the correct flags and arguments\n   2. Key flags: -smi, --query-gpu, --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `nvidia-smi` — nvidia-smi command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnvidia-smi --query-gpu=memory.total,memory.free,memory.used --format=csv"
+  }
+]

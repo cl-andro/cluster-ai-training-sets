@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Run a network speed test from the terminal",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `curl` with the correct flags and arguments\n   2. Key flags: -s, -cli\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3"
+  },
+  {
+    "instruction": "Benchmark CPU with sysbench",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysbench` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysbench` — sysbench command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysbench cpu run"
+  },
+  {
+    "instruction": "Benchmark memory speed with sysbench",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysbench` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysbench` — sysbench command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysbench memory run"
+  },
+  {
+    "instruction": "Benchmark file IO with sysbench",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sysbench` with the correct flags and arguments\n   2. Key flags: --file-total-size, --file-total-size\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sysbench` — sysbench command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsysbench fileio --file-total-size=1G prepare && sysbench fileio --file-total-size=1G run && sysbench fileio cleanup"
+  },
+  {
+    "instruction": "Run a quick disk write speed test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dd` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dd` — dd command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\ndd if=/dev/zero of=./test bs=1M count=1024 conv=fdatasync oflag=direct 2>&1 | tail -1"
+  },
+  {
+    "instruction": "Run a quick disk read speed test",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dd` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dd` — dd command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\ndd if=./test of=/dev/null bs=1M count=1024 iflag=direct 2>&1 | tail -1"
+  },
+  {
+    "instruction": "Test network latency with ping to multiple hosts",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ping` with the correct flags and arguments\n   2. Key flags: -c, -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ping` — ping command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nping -c 4 8.8.8.8 && ping -c 4 1.1.1.1"
+  },
+  {
+    "instruction": "Measure DNS resolution time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dig` with the correct flags and arguments\n   2. Key flags: -E\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dig` — dig command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndig google.com | grep -E 'Query time'"
+  },
+  {
+    "instruction": "Benchmark HTTP server with wrk",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `apt` with the correct flags and arguments\n   2. Key flags: -y, -t12, -c400, -d30s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y wrk && wrk -t12 -c400 -d30s http://localhost:8080"
+  },
+  {
+    "instruction": "Benchmark disk IO with fio",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `fio` with the correct flags and arguments\n   2. Key flags: --name, --size, --rw, --ioengine\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `fio` — fio command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nfio --name=test --size=100M --rw=randrw --ioengine=libaio --direct=1 --bs=4k --numjobs=4 --runtime=30 --group_reporting"
+  },
+  {
+    "instruction": "Measure context switching overhead",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lmbench_all` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lmbench_all` — lmbench_all command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlmbench_all lat_ctx -s 64 2 4 8 16 32 64 128"
+  },
+  {
+    "instruction": "Show system call latency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lmbench_all` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lmbench_all` — lmbench_all command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlmbench_all lat_syscall null"
+  },
+  {
+    "instruction": "Measure pipe latency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lmbench_all` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lmbench_all` — lmbench_all command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlmbench_all lat_pipe"
+  },
+  {
+    "instruction": "Show list of all users on the system",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cut` with the correct flags and arguments\n   2. Key flags: -d, -f1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cut` — cut command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncut -d: -f1 /etc/passwd"
+  },
+  {
+    "instruction": "List all groups on the system",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cut` with the correct flags and arguments\n   2. Key flags: -d, -f1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cut` — cut command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncut -d: -f1 /etc/group"
+  },
+  {
+    "instruction": "Show user login shell",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getent` with the correct flags and arguments\n   2. Key flags: -d, -f7\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getent` — getent command execution and management\n   Supporting tool: `john` — john command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetent passwd john | cut -d: -f7"
+  },
+  {
+    "instruction": "Show user UID and GID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `id` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `id` — id command execution and management\n   Supporting tool: `john` — john command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nid john"
+  },
+  {
+    "instruction": "Show groups a user belongs to",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `groups` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `groups` — groups command execution and management\n   Supporting tool: `john` — john command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngroups john"
+  },
+  {
+    "instruction": "Show all members of a group",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getent` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getent` — getent command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngetent group sudo"
+  },
+  {
+    "instruction": "Show password expiry info for a user",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `chage` with the correct flags and arguments\n   2. Key flags: -l\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `chage` — chage command execution and management\n   Supporting tool: `john` — john command execution and management\n   Flag `-l`: long listing format\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nchage -l john"
+  },
+  {
+    "instruction": "Show the last time a user changed their password",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `passwd` with the correct flags and arguments\n   2. Key flags: -S\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `passwd` — passwd command execution and management\n   Supporting tool: `john` — john command execution and management\n   Flag `-S`: sort by size\n\n3. Safety & Edge Cases:\n   PERMISSIONS: grant least privilege; never use `chmod 777`; prefer ACLs for fine-grained access\n</think>\npasswd -S john"
+  },
+  {
+    "instruction": "List all user crontabs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nls /var/spool/cron/crontabs/ 2>/dev/null || echo no user crons"
+  },
+  {
+    "instruction": "Show system-wide cron jobs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /etc/cron.d/ /etc/cron.hourly/ /etc/cron.daily/ /etc/cron.weekly/ /etc/cron.monthly/"
+  },
+  {
+    "instruction": "Show the current user's effective UID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `id` with the correct flags and arguments\n   2. Key flags: -u\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `id` — id command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nid -u"
+  },
+  {
+    "instruction": "Check if the current user has sudo access",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-n`: dry-run mode\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsudo -n true 2>/dev/null && echo sudo access || echo no sudo"
+  }
+]

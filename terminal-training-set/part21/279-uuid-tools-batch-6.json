@@ -1,0 +1,98 @@
+[
+  {
+    "instruction": "How to generate a UUID using od from /dev/urandom",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `od` with the correct flags and arguments\n   2. Key flags: -x, -N, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `od` — od command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nod -x -N 16 /dev/urandom | head -1 | awk '{print $2$3$4$5}'"
+  },
+  {
+    "instruction": "How to generate a UUID with xxd from /dev/urandom in proper format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `xxd` with the correct flags and arguments\n   2. Key flags: -l, -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `xxd` — xxd command execution and management\n   Flag `-l`: long listing format\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nxxd -l 16 -p /dev/urandom | sed 's/^/&-/;s/-//4'"
+  },
+  {
+    "instruction": "How to format raw bytes as a UUID with sed",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `xxd` with the correct flags and arguments\n   2. Key flags: -l, -p, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `xxd` — xxd command execution and management\n   Flag `-l`: long listing format\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nxxd -l 16 -p /dev/urandom | sed -r 's/(.{8})(.{4})(.{4})(.{4})(.{12})/\\1-\\2-\\3-\\4-\\5/'"
+  },
+  {
+    "instruction": "How to generate a UUID with od in the standard format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `od` with the correct flags and arguments\n   2. Key flags: -A, -N, -t, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `od` — od command execution and management\n   Flag `-t`: sort by time\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nod -A n -N 16 -t x1 /dev/urandom | tr -d ' \\n' | sed -r 's/(.{8})(.{4})(.{4})(.{4})(.{12})/\\1-\\2-\\3-\\4-\\5/'"
+  },
+  {
+    "instruction": "How to generate a UUID with python3 using the uuid module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c 'import uuid; print(uuid.uuid4())'"
+  },
+  {
+    "instruction": "How to generate a UUID using perl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `perl` with the correct flags and arguments\n   2. Key flags: -MData, -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `perl` — perl command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nperl -MData::UUID -e 'print new Data::UUID()->create_str'"
+  },
+  {
+    "instruction": "How to generate a UUID with uuidgen and format as C struct",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `uuidgen` with the correct flags and arguments\n   2. Key flags: -F\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `uuidgen` — uuidgen command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuuidgen -F C"
+  },
+  {
+    "instruction": "How to generate a UUID from /dev/random with proper structure",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `head` with the correct flags and arguments\n   2. Key flags: -c, -p, -w, -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `head` — head command execution and management\n   Flag `-p`: create parent directories\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhead -c 16 /dev/random | xxd -p | fold -w 8 | head -1"
+  },
+  {
+    "instruction": "How to generate a UUID with bash using /dev/urandom",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `printf` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `printf` — printf command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nprintf '%04x%04x-%04x-%04x-%04x-%04x%04x%04x\\n' $((RANDOM<<16|RANDOM)) $((RANDOM<<16|RANDOM)) $((RANDOM<<16|RANDOM)) $((RANDOM<<16|RANDOM|0x4000)) $((RANDOM<<16|RANDOM|0x8000)) $((RANDOM<<16|RANDOM)) $((RANDOM<<16|RANDOM)) $((RANDOM<<16|RANDOM))"
+  },
+  {
+    "instruction": "How to generate a UUID with openssl and format it",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `openssl` with the correct flags and arguments\n   2. Key flags: -hex, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `openssl` — cryptographic operations and certificates\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   SECRETS: never echo secrets to stdout or log files; use temp files with `umask 077`\n</think>\nopenssl rand -hex 16 | sed -r 's/(.{8})(.{4})(.{4})(.{4})(.{12})/\\1-\\2-\\3-\\4-\\5/'"
+  },
+  {
+    "instruction": "How to generate a version 4 UUID with a fixed variant",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `python3` with the correct flags and arguments\n   2. Key flags: -c\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `python3` — python3 command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\npython3 -c \"import uuid; u=uuid.uuid4(); print(u)\""
+  },
+  {
+    "instruction": "How to generate a UUID with node.js",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `node` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `node` — node command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnode -e 'console.log(require(\"crypto\").randomUUID())'"
+  },
+  {
+    "instruction": "How to generate a UUID using sqlite3",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: -4\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 :memory: 'SELECT hex(randomblob(4)) || \"-\" || hex(randomblob(2)) || \"-4\" || substr(hex(randomblob(3)),2) || \"-\" || printf(\"%x\", (random() % 4) + 8) || substr(hex(randomblob(2)),2) || \"-\" || hex(randomblob(6));'"
+  },
+  {
+    "instruction": "How to convert a hexadecimal string to a UUID format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-r`: recursive operation\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho '0123456789abcdef0123456789abcdef' | sed -r 's/(.{8})(.{4})(.{4})(.{4})(.{12})/\\1-\\2-\\3-\\4-\\5/'"
+  },
+  {
+    "instruction": "How to generate a UUID with the dmidecode system UUID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -s, -uuid\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo dmidecode -s system-uuid"
+  },
+  {
+    "instruction": "How to generate a UUID using awk from /dev/urandom",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `awk` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `awk` — awk command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nawk 'BEGIN {srand(); printf \"%08x-%04x-%04x-%04x-%012x\\n\", rand()*2^32, rand()*2^16, rand()*2^16|0x4000, rand()*2^16|0x8000, rand()*2^48}'"
+  },
+  {
+    "instruction": "How to generate a UUID with the wmic command via wine",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wmic` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wmic` — wmic command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwmic path win32_computersystemproduct get uuid"
+  },
+  {
+    "instruction": "How to generate a UUID and validate it with grep",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `uuidgen` with the correct flags and arguments\n   2. Key flags: -qE, -9a, -f, -9a\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `uuidgen` — uuidgen command execution and management\n   Flag `-f`: force execution, suppress errors\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuuidgen | grep -qE '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$' && echo valid"
+  },
+  {
+    "instruction": "How to generate a UUID using /proc/sys/kernel/random/boot_id",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/sys/kernel/random/boot_id"
+  },
+  {
+    "instruction": "How to generate a UUID with libuuid directly via C",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `gcc` with the correct flags and arguments\n   2. Key flags: -luuid, -o, -xc\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `gcc` — gcc command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngcc -luuid -o uuid_gen -xc - <<< '#include <uuid/uuid.h> int main() { uuid_t u; char s[37]; uuid_generate(u); uuid_unparse(s, u); printf(\"%s\\n\", s); }' && ./uuid_gen"
+  },
+  {
+    "instruction": "How to generate a UUID using a shell function",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `genuuid` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `genuuid` — genuuid command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ngenuuid() { uuidgen; } && genuuid"
+  },
+  {
+    "instruction": "How to generate a UUID with base64 encoding for URL-safe use",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `uuidgen` with the correct flags and arguments\n   2. Key flags: -_, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `uuidgen` — uuidgen command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuuidgen | base64 | tr '+/' '-_' | tr -d '='"
+  },
+  {
+    "instruction": "How to generate a UUID with dmidecode for hardware UUID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sudo` with the correct flags and arguments\n   2. Key flags: -t\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sudo` — sudo command execution and management\n   Flag `-t`: sort by time\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   PRIVILEGE: running as root — double-check the command for typos or unintended side effects\n</think>\nsudo dmidecode -t 1 | grep UUID | awk '{print $2}'"
+  },
+  {
+    "instruction": "How to generate a UUID from the system DMI data",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/class/dmi/id/product_uuid"
+  }
+]

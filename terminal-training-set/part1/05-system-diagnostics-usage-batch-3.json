@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Show per-process CPU usage with top in batch mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `top` with the correct flags and arguments\n   2. Key flags: -bn1, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `top` — top command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntop -bn1 | head -20"
+  },
+  {
+    "instruction": "Show per-process CPU usage sorted by a specific column",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `top` with the correct flags and arguments\n   2. Key flags: -bn1, -o, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `top` — top command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntop -bn1 -o %MEM | head -20"
+  },
+  {
+    "instruction": "Show top output for a single PID",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `top` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `top` — top command execution and management\n   Flag `-p`: create parent directories\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntop -p 1234"
+  },
+  {
+    "instruction": "Show processes using swap memory",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `top` with the correct flags and arguments\n   2. Key flags: -bn1, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `top` — top command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntop -bn1 | awk '/\\%/ {print $0}' | head -20"
+  },
+  {
+    "instruction": "Show disk IO waiting processes with iostat",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `iostat` with the correct flags and arguments\n   2. Key flags: -x\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `iostat` — iostat command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\niostat -x 1 3"
+  },
+  {
+    "instruction": "Show time spent in each CPU state (idle, user, system)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mpstat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mpstat` — mpstat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmpstat 1 5"
+  },
+  {
+    "instruction": "Show per-CPU core utilization",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mpstat` with the correct flags and arguments\n   2. Key flags: -P\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mpstat` — mpstat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmpstat -P ALL 1 3"
+  },
+  {
+    "instruction": "Show CPU frequency stats per core",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq"
+  },
+  {
+    "instruction": "Show current CPU temperature",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat /sys/class/thermal/thermal_zone*/temp 2>/dev/null | awk '{print $1/1000 \"°C\"}'"
+  },
+  {
+    "instruction": "Show the 10 hottest CPU cores",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sensors` with the correct flags and arguments\n   2. Key flags: -E, -10\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sensors` — sensors command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsensors | grep -E 'Core|Package' | head -10"
+  },
+  {
+    "instruction": "Show how long since last system boot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `uptime` with the correct flags and arguments\n   2. Key flags: -s\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `uptime` — uptime command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuptime -s"
+  },
+  {
+    "instruction": "Show boot time in a pretty format",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `uptime` with the correct flags and arguments\n   2. Key flags: --pretty\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `uptime` — uptime command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuptime --pretty"
+  },
+  {
+    "instruction": "Show the number of users logged in",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `uptime` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `uptime` — uptime command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nuptime | awk '{print $4}'"
+  },
+  {
+    "instruction": "Show load average in a human-readable way",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/loadavg"
+  },
+  {
+    "instruction": "List all loaded kernel modules with size",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lsmod` with the correct flags and arguments\n   2. Key flags: -k2, -rh, -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lsmod` — lsmod command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlsmod | sort -k2 -rh | head -20"
+  },
+  {
+    "instruction": "Show detailed info about a loaded module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `modinfo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `modinfo` — modinfo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmodinfo ext4"
+  },
+  {
+    "instruction": "Show kernel module dependencies",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `modprobe` with the correct flags and arguments\n   2. Key flags: --show-depends\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `modprobe` — modprobe command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmodprobe --show-depends nvidia"
+  },
+  {
+    "instruction": "Show systemd-modules-load configuration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -load\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /etc/modules-load.d/*.conf"
+  },
+  {
+    "instruction": "Blacklist a kernel module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'blacklist pcspkr' > /etc/modprobe.d/blacklist.conf"
+  },
+  {
+    "instruction": "Show available kernel modules for a device",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lspci` with the correct flags and arguments\n   2. Key flags: -k, -A\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lspci` — lspci command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlspci -k | grep -A 3 'VGA'"
+  },
+  {
+    "instruction": "Check if a module is loaded",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `lsmod` with the correct flags and arguments\n   2. Key flags: -w\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `lsmod` — lsmod command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlsmod | grep -w nvidia && echo loaded || echo not loaded"
+  },
+  {
+    "instruction": "Load a kernel module",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `modprobe` with the correct flags and arguments\n   2. Key flags: -pci\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `modprobe` — modprobe command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nmodprobe vfio-pci"
+  },
+  {
+    "instruction": "Show interrupt requests (IRQs) assignment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/interrupts | head -20"
+  },
+  {
+    "instruction": "Show I/O ports assignment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -20\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/ioports | head -20"
+  },
+  {
+    "instruction": "Show DMA channel assignment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/dma"
+  }
+]

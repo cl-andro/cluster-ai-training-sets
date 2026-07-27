@@ -1,0 +1,82 @@
+[
+  {
+    "instruction": "Debug logrotate config showing what would happen to each log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using logrotate\n   2. Apply corrective actions: logrotate -d /etc/logrotate.conf 2>&1 | grep -E '^(rotating|considering|not trun\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `logrotate` — logrotate command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlogrotate -d /etc/logrotate.conf 2>&1 | grep -E '^(rotating|considering|not truncating)'"
+  },
+  {
+    "instruction": "Check if a specific log file needs rotation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logrotate` with the correct flags and arguments\n   2. Key flags: -d, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logrotate` — logrotate command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlogrotate -d /etc/logrotate.d/myapp 2>&1 | grep -i 'needs rotating'"
+  },
+  {
+    "instruction": "Show logrotate version and compile options",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logrotate` with the correct flags and arguments\n   2. Key flags: --version\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logrotate` — logrotate command execution and management\n   Flag `--version`: show tool version\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nlogrotate --version"
+  },
+  {
+    "instruction": "Trace logrotate system calls during dry run",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `strace` with the correct flags and arguments\n   2. Key flags: -e, -d, -50\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `strace` — trace system calls\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nstrace -e openat,read logrotate -d /etc/logrotate.conf 2>&1 | head -50"
+  },
+  {
+    "instruction": "Profile logrotate execution time",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `time` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `time` — time command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntime logrotate -d /etc/logrotate.conf"
+  },
+  {
+    "instruction": "Run logrotate for all configs and log results",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logrotate` with the correct flags and arguments\n   2. Key flags: -v, -f, -run\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logrotate` — logrotate command execution and management\n   Flag `-v`: verbose output for debugging\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlogrotate -v -f /etc/logrotate.conf 2>&1 | tee /var/log/logrotate-run.log"
+  },
+  {
+    "instruction": "Create logrotate config with errors to test validation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -bad, -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use `set -euo pipefail` for script-level error handling\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat > /etc/logrotate.d/test-bad-config << 'EOF'\n/var/log/test/*.log {\n    daily\n    rotate abc\n    compress\n}\nEOF"
+  },
+  {
+    "instruction": "Validate config file catches errors",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logrotate` with the correct flags and arguments\n   2. Key flags: -d, -bad, -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logrotate` — logrotate command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlogrotate -d /etc/logrotate.d/test-bad-config 2>&1"
+  },
+  {
+    "instruction": "Remove test config file after validation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: -bad, -config\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nrm /etc/logrotate.d/test-bad-config"
+  },
+  {
+    "instruction": "Debug specific logrotate config line by line",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using logrotate\n   2. Apply corrective actions: logrotate -d /etc/logrotate.d/nginx 2>&1 | while read line; do echo \"$line\"; sle\n   3. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `logrotate` — logrotate command execution and management\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlogrotate -d /etc/logrotate.d/nginx 2>&1 | while read line; do echo \"$line\"; sleep 0.1; done"
+  },
+  {
+    "instruction": "Run logrotate with maximum verbosity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `logrotate` with the correct flags and arguments\n   2. Key flags: -v, -v, -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `logrotate` — logrotate command execution and management\n   Flag `-v`: verbose output for debugging\n   Flag `-v`: verbose output for debugging\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nlogrotate -v -v -d /etc/logrotate.conf 2>&1"
+  },
+  {
+    "instruction": "Check if state file is readable",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ncat /var/lib/logrotate/status 2>/dev/null || echo 'No state file found'"
+  },
+  {
+    "instruction": "Reset logrotate state for a specific file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sed` with the correct flags and arguments\n   2. Key flags: -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sed` — sed command execution and management\n   Flag `-i`: interactive mode or case-insensitive\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsed -i '/\\/var\\/log\\/app\\/app.log/d' /var/lib/logrotate/status"
+  },
+  {
+    "instruction": "Force re-rotation of already rotated log",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rm` with the correct flags and arguments\n   2. Key flags: -f, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rm` — rm command execution and management\n   Flag `-f`: force execution, suppress errors\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   DATA DESTRUCTION RISK: double-check the device path (`lsblk`) before running destructive operations\n</think>\nrm -f /var/lib/logrotate/status && logrotate -f /etc/logrotate.conf"
+  },
+  {
+    "instruction": "Run logrotate with custom config from stdin",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -e, -f\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Flag `-f`: force execution, suppress errors\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\necho -e '/var/log/test/*.log { daily; rotate 3; compress; }' | logrotate -f -"
+  },
+  {
+    "instruction": "Check logrotate config syntax for all files",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor f in /etc/logrotate.d/*; do logrotate -d \"$f\" > /dev/null 2>&1 && echo \"OK: $f\" || echo \"FAIL: $f\"; done"
+  },
+  {
+    "instruction": "Monitor log file growth rate for rotation tuning",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for du\n   2. Build the command chain with error handling\n   3. Execute: du -sb /var/log/app/app.log; sleep 3600; du -sb /var/log/app/app.log\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `du` — du command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndu -sb /var/log/app/app.log; sleep 3600; du -sb /var/log/app/app.log"
+  },
+  {
+    "instruction": "Compare logrotate behavior with different configs",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `diff` with the correct flags and arguments\n   2. Key flags: -d, -a, -d, -b\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `diff` — diff command execution and management\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ndiff <(logrotate -d /etc/logrotate.d/config-a 2>&1) <(logrotate -d /etc/logrotate.d/config-b 2>&1)"
+  },
+  {
+    "instruction": "Export logrotate status as JSON",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /var/lib/logrotate/status | awk '{print \"{\\\"file\\\":\\\"\"$1\"\\\",\\\"date\\\":\\\"\"$2\"\\\"}\"}'"
+  },
+  {
+    "instruction": "Verify logrotate state file integrity",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `wc` with the correct flags and arguments\n   2. Key flags: -l, -5\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `wc` — wc command execution and management\n   Flag `-l`: long listing format\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwc -l /var/lib/logrotate/status && sort /var/lib/logrotate/status | head -5"
+  }
+]

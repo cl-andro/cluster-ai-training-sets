@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Install K3s with local storage",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -sfL https://get.k3s.io | INSTALL_K3S_FLAGS='--disable=local-storage' sh -"
+  },
+  {
+    "instruction": "K3s kubectl taint node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: -node\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl taint nodes my-node dedicated=special:NoSchedule"
+  },
+  {
+    "instruction": "Run K3s agent with custom server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: --server, --token\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nk3s agent --server https://server:6443 --token abc123"
+  },
+  {
+    "instruction": "K3s kubectl top pods",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: --all-namespaces\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Supporting tool: `top` — top command execution and management\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl top pods --all-namespaces"
+  },
+  {
+    "instruction": "K3s kubectl rollout restart",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: -deployment\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl rollout restart deployment my-deployment"
+  },
+  {
+    "instruction": "Install K3s with specific version",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.2+k3s1 sh -"
+  },
+  {
+    "instruction": "K3s etcd-snapshot prune",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for k3s\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: k3s etcd-snapshot prune --snapshot-retention 5\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nk3s etcd-snapshot prune --snapshot-retention 5"
+  },
+  {
+    "instruction": "Install K3s with flannel disabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -sfL https://get.k3s.io | INSTALL_K3S_FLAGS='--flannel-backend=none' sh -"
+  },
+  {
+    "instruction": "Install K3s server with embedded etcd",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -sfL https://get.k3s.io | sh -s - server --cluster-init --token mytoken"
+  },
+  {
+    "instruction": "Save an etcd snapshot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for k3s\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: k3s etcd-snapshot save --snapshot-dir=/var/lib/rancher/k3s/server/db/snapshots\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nk3s etcd-snapshot save --snapshot-dir=/var/lib/rancher/k3s/server/db/snapshots"
+  },
+  {
+    "instruction": "K3s get services",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: --all-namespaces\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl get svc --all-namespaces"
+  },
+  {
+    "instruction": "K3s get secrets",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: --all-namespaces\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl get secrets --all-namespaces"
+  },
+  {
+    "instruction": "K3s get events",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: --all-namespaces\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl get events --all-namespaces"
+  },
+  {
+    "instruction": "Install K3s server only on node",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the curl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -sfL https://get.k3s.io | sh -s - server --node-taint CriticalAddonsOnly=true:NoExecute"
+  },
+  {
+    "instruction": "K3s kubectl create secret generic",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: -secret, --from-literal\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl create secret generic my-secret --from-literal=password=test123"
+  },
+  {
+    "instruction": "K3s get all resources in namespace",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl get all -n default"
+  },
+  {
+    "instruction": "List etcd snapshots",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for k3s\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: k3s etcd-snapshot list\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nk3s etcd-snapshot list"
+  },
+  {
+    "instruction": "K3s kubectl top nodes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Supporting tool: `top` — top command execution and management\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl top nodes"
+  },
+  {
+    "instruction": "List nodes with k3s kubectl",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl get nodes"
+  },
+  {
+    "instruction": "K3s kubectl scale deployment",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `k3s status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl scale deployment my-deployment --replicas 5"
+  },
+  {
+    "instruction": "K3s kubectl rollout status",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `k3s` with the correct flags and arguments\n   2. Key flags: -deployment\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nk3s kubectl rollout status deployment my-deployment"
+  },
+  {
+    "instruction": "Restore etcd snapshot",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for k3s\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: k3s server --cluster-reset --cluster-reset-restore-snapshot=/var/lib/rancher/k3s\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `k3s` — k3s command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nk3s server --cluster-reset --cluster-reset-restore-snapshot=/var/lib/rancher/k3s/server/db/snapshots/on-demand-myserver-1680000000"
+  }
+]

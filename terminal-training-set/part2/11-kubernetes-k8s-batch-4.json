@@ -1,0 +1,106 @@
+[
+  {
+    "instruction": "Install Helm (K8s package manager)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Supporting tool: `helm` — manage Kubernetes Helm charts\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash"
+  },
+  {
+    "instruction": "Search Helm charts in repositories",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm search hub nginx"
+  },
+  {
+    "instruction": "Add a Helm repository",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm repo add bitnami https://charts.bitnami.com/bitnami"
+  },
+  {
+    "instruction": "Update Helm repo cache",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm repo update"
+  },
+  {
+    "instruction": "Install a Helm chart",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Supporting tool: `nginx` — web server and reverse proxy\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm install my-release bitnami/nginx"
+  },
+  {
+    "instruction": "List Helm releases",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm list"
+  },
+  {
+    "instruction": "Upgrade a Helm release",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: -release, --set\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm upgrade my-release bitnami/nginx --set replicaCount=3"
+  },
+  {
+    "instruction": "Rollback a Helm release",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: -release\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm rollback my-release 1"
+  },
+  {
+    "instruction": "Uninstall a Helm release",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm uninstall my-release"
+  },
+  {
+    "instruction": "Show Helm chart values",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Supporting tool: `nginx` — web server and reverse proxy\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm show values bitnami/nginx"
+  },
+  {
+    "instruction": "Render Helm templates locally",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: -release\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Supporting tool: `nginx` — web server and reverse proxy\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nhelm template my-release bitnami/nginx > manifests.yaml"
+  },
+  {
+    "instruction": "Get Helm release history",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `helm` with the correct flags and arguments\n   2. Key flags: -release\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm history my-release"
+  },
+  {
+    "instruction": "Install Kustomize CLI",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the apt configuration with the required parameters\n   2. Apply the configuration and verify with `apt status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `apt` — apt command execution and management\n   Supporting tool: `curl` — HTTP requests and API interaction\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n   PACKAGE: simulate the install with `--dry-run`/`-s` first; take a dpkg database backup before bulk changes\n</think>\napt install -y kustomize || curl -s https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest | grep browser_download | grep linux_amd64 | cut -d: -f2,3 | tr -d \\\" | wget -O /usr/local/bin/kustomize && chmod +x /usr/local/bin/kustomize"
+  },
+  {
+    "instruction": "Create a Kustomize overlay",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `mkdir` with the correct flags and arguments\n   2. Key flags: -p\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `mkdir` — mkdir command execution and management\n   Supporting tool: `kustomize` — kustomize command execution and management\n   Flag `-p`: create parent directories\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nmkdir -p kustomize/overlays/production && cat > kustomize/overlays/production/kustomization.yaml << 'EOF'\nresources:\n- ../../base\npatches:\n- replicas: 5\nEOF"
+  },
+  {
+    "instruction": "Apply Kustomize manifests",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -k\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Supporting tool: `kustomize` — kustomize command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -k kustomize/overlays/production"
+  },
+  {
+    "instruction": "Install Prometheus Stack with Helm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm repo add prometheus-community https://prometheus-community.github.io/helm-charts && helm install prometheus prometheus-community/kube-prometheus-stack"
+  },
+  {
+    "instruction": "Install cert-manager with Helm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm repo add jetstack https://charts.jetstack.io && helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true"
+  },
+  {
+    "instruction": "Install ingress-nginx with Helm",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the helm configuration with the required parameters\n   2. Apply the configuration and verify with `helm status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `helm` — manage Kubernetes Helm charts\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nhelm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx && helm install ingress-nginx ingress-nginx/ingress-nginx"
+  },
+  {
+    "instruction": "Create an Ingress resource",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -ingress\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `host` — host command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ncat > ingress.yaml << 'EOF'\napiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: myapp-ingress\nspec:\n  rules:\n  - host: myapp.example.com\n    http:\n      paths:\n      - path: /\n        pathType: Prefix\n        backend:\n          service:\n            name: myapp\n            port:\n              number: 80\nEOF\nkubectl apply -f ingress.yaml"
+  },
+  {
+    "instruction": "List Ingress resources",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl get ingress"
+  },
+  {
+    "instruction": "Create a TLS ingress with cert-manager",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cat` with the correct flags and arguments\n   2. Key flags: -ingress, -app, -manager, -issuer\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Supporting tool: `host` — host command execution and management\n   Supporting tool: `kubectl` — control Kubernetes clusters\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ncat > tls-ingress.yaml << 'EOF'\napiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: secure-app\n  annotations:\n    cert-manager.io/cluster-issuer: letsencrypt-prod\nspec:\n  tls:\n  - hosts:\n    - secure.example.com\n    secretName: secure-tls\n  rules:\n  - host: secure.example.com\n    http:\n      paths:\n      - path: /\n        pathType: Prefix\n        backend:\n          service:\n            name: myapp\n            port:\n              number: 80\nEOF\nkubectl apply -f tls-ingress.yaml"
+  },
+  {
+    "instruction": "Install metrics-server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `kubectl status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
+  },
+  {
+    "instruction": "Install Kubernetes Dashboard",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Validate the config file syntax before applying\n   3. Apply the configuration and verify with `kubectl status`\n   4. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-f`: force execution, suppress errors\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml"
+  },
+  {
+    "instruction": "Get dashboard admin token",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `kubectl` with the correct flags and arguments\n   2. Key flags: -n, -dashboard, -user\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Flag `-n`: dry-run mode\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl -n kubernetes-dashboard create token admin-user"
+  },
+  {
+    "instruction": "Install krew (kubectl plugin manager)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `curl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `curl` — HTTP requests and API interaction\n   Supporting tool: `kubectl` — control Kubernetes clusters\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n   HTTP: validate TLS certificates with `--cacert`; don't pipe straight to `bash` without inspection\n</think>\ncurl -fsS https://krew.sh | bash && kubectl krew update"
+  },
+  {
+    "instruction": "Install a kubectl plugin via krew",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the kubectl configuration with the required parameters\n   2. Apply the configuration and verify with `kubectl status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `kubectl` — control Kubernetes clusters\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\nkubectl krew install ctx ns"
+  }
+]

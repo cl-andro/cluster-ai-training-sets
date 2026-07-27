@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Check if file has capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Supporting tool: `ping` — ping command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap /bin/ping 2>&1"
+  },
+  {
+    "instruction": "List all capability constants available in kernel",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `grep` with the correct flags and arguments\n   2. Key flags: -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `grep` — grep command execution and management\n   Flag `-r`: recursive operation\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngrep -r 'define CAP_' /usr/include/linux/capability.h 2>/dev/null || grep 'cap_', /proc/sys/kernel/cap_last_cap 2>/dev/null"
+  },
+  {
+    "instruction": "Show capability number to name mapping",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `for` with the correct flags and arguments\n   2. Key flags: --decode\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `for` — for command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nfor i in $(seq 0 $(cat /proc/sys/kernel/cap_last_cap)); do capsh --decode=$i 2>/dev/null; done 2>/dev/null"
+  },
+  {
+    "instruction": "Compare securebits flags",
+    "output": "<think>\n1. Task Breakdown:\n   1. Audit current state before making changes\n   2. Apply security controls: cat /proc/self/status | grep -iE 'securebits|Cap'\n   3. Verify the hardening measure is active and effective\n   4. Confirm no disruption to legitimate operations\n\n2. Tool Selection & Logic:\n   Primary tool: `cat` — cat command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncat /proc/self/status | grep -iE 'securebits|Cap'"
+  },
+  {
+    "instruction": "Check file capabilities with ls",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `ls` with the correct flags and arguments\n   2. Key flags: -la\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `ls` — ls command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Supporting tool: `getcap` — check file capabilities\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nls -la /bin/ping; getcap /bin/ping"
+  },
+  {
+    "instruction": "View file system extended attributes for caps",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getfattr` with the correct flags and arguments\n   2. Key flags: -d, -m\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getfattr` — getfattr command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetfattr -d -m - /bin/ping 2>/dev/null"
+  },
+  {
+    "instruction": "Set capability and check the xattr",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `setcap` with the correct flags and arguments\n   2. Key flags: -d\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `setcap` — set file capabilities\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsetcap cap_net_raw+ep /tmp/testfile && getfattr -d /tmp/testfile"
+  },
+  {
+    "instruction": "Copy file preserving capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `cp` with the correct flags and arguments\n   2. Key flags: --preserve\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `cp` — cp command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ncp --preserve=all /bin/ping /usr/local/bin/ping"
+  },
+  {
+    "instruction": "Archive and restore capabilities with tar",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for tar\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: tar --xattrs -czf caps-backup.tar.gz /bin/ping\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar --xattrs -czf caps-backup.tar.gz /bin/ping"
+  },
+  {
+    "instruction": "Restore capabilities from tar",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for tar\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: tar --xattrs -xzf caps-backup.tar.gz -C /\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `tar` — tar command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntar --xattrs -xzf caps-backup.tar.gz -C /"
+  },
+  {
+    "instruction": "Sync capabilities across system backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for getcap\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: getcap -r / 2>/dev/null > /tmp/capabilities-backup.txt\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Flag `-r`: recursive operation\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap -r / 2>/dev/null > /tmp/capabilities-backup.txt"
+  },
+  {
+    "instruction": "Restore capabilities from backup",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for while\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: while IFS= read -r line; do setcap \"$line\"; done < /tmp/capabilities-backup.txt\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `while` — while command execution and management\n   Supporting tool: `setcap` — set file capabilities\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nwhile IFS= read -r line; do setcap \"$line\"; done < /tmp/capabilities-backup.txt"
+  },
+  {
+    "instruction": "Scan for capability differences on filesystem",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getcap` with the correct flags and arguments\n   2. Key flags: -r, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getcap` — check file capabilities\n   Flag `-r`: recursive operation\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\ngetcap -r / 2>/dev/null | sort > /tmp/caps1; sleep 60; getcap -r / 2>/dev/null | sort > /tmp/caps2; diff /tmp/caps1 /tmp/caps2"
+  },
+  {
+    "instruction": "Check if Docker uses capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --rm, -r\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Supporting tool: `getcap` — check file capabilities\n   Flag `-r`: recursive operation\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run --rm alpine getcap -r / 2>/dev/null"
+  },
+  {
+    "instruction": "Drop all capabilities in Docker container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --cap-drop, --rm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run --cap-drop=ALL --rm alpine echo 'no caps'"
+  },
+  {
+    "instruction": "Add specific cap to Docker container",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --cap-add, --rm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run --cap-add=NET_ADMIN --rm alpine ip link"
+  },
+  {
+    "instruction": "Run container with no new privileges",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --security-opt, -new, -privileges, --rm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run --security-opt=no-new-privileges --rm alpine echo 'restricted'"
+  },
+  {
+    "instruction": "Inspect container capabilities from host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker inspect --format '{{.HostConfig.CapAdd}} {{.HostConfig.CapDrop}}' container_name"
+  },
+  {
+    "instruction": "View capabilities of container process from host",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `getpcaps` with the correct flags and arguments\n   2. Key flags: --format\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `getpcaps` — getpcaps command execution and management\n   Supporting tool: `docker` — manage containers and images\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ngetpcaps $(docker inspect --format '{{.State.Pid}}' container_name)"
+  },
+  {
+    "instruction": "Grant cap for Docker container to use perf",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `docker` with the correct flags and arguments\n   2. Key flags: --cap-add, --security-opt, --rm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `docker` — manage containers and images\n   Supporting tool: `perf` — performance monitoring and profiling\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   CONTAINER: pull images from trusted registries only; avoid `--privileged` unless absolutely necessary\n</think>\ndocker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --rm alpine perf top"
+  },
+  {
+    "instruction": "Run systemd-nspawn with capabilities",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemd-nspawn` with the correct flags and arguments\n   2. Key flags: -nspawn, --capability, -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemd-nspawn` — systemd-nspawn command execution and management\n   Supporting tool: `ping` — ping command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsystemd-nspawn --capability=cap_net_raw -D /mnt/rootfs /bin/ping 8.8.8.8"
+  },
+  {
+    "instruction": "Add capability override for systemd service",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `systemctl` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `systemctl` — manage systemd services and units\n   Chain commands with `&&` to abort on first failure\n\n3. Safety & Edge Cases:\n   SERVICE: restart only during maintenance window; verify unit dependencies with `systemctl list-dependencies`\n</think>\nsystemctl edit myapp.service && cat > /etc/systemd/system/myapp.service.d/caps.conf << 'EOF'\n[Service]\nCapabilityBoundingSet=CAP_NET_BIND_SERVICE\nAmbientCapabilities=CAP_NET_BIND_SERVICE\nEOF"
+  }
+]

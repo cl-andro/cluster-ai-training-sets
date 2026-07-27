@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "How to configure BIND to forward all queries to upstream",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'options { forward only; forwarders { 8.8.8.8; 1.1.1.1; }; };' >> /etc/bind\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'options { forward only; forwarders { 8.8.8.8; 1.1.1.1; }; };' >> /etc/bind/named.conf.options"
+  },
+  {
+    "instruction": "How to set up a stealth primary server",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -transfer\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'zone \"example.com\" { type master; notify no; allow-transfer { none; }; };' >> /etc/bind/named.conf.local"
+  },
+  {
+    "instruction": "How to use rndc to add a new zone key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rndc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rndc` — BIND9 remote name daemon control\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrndc loadkeys example.com"
+  },
+  {
+    "instruction": "How to enable DNS over HTTPS in BIND",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'options { listen-on port 443 tls mytls http { any; }; };' >> /etc/bind/nam\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'options { listen-on port 443 tls mytls http { any; }; };' >> /etc/bind/named.conf.options"
+  },
+  {
+    "instruction": "How to troubleshoot SERVFAIL with dig",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify the root cause using dig\n   2. Check logs and error outputs for the specific failure pattern\n   3. Isolate whether it's a config, resource, or permission issue\n   4. Apply corrective actions: dig +cd +dnssec example.com A\n   5. Verify the fix by re-running the diagnostic check\n\n2. Tool Selection & Logic:\n   Primary tool: `dig` — dig command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndig +cd +dnssec example.com A"
+  },
+  {
+    "instruction": "How to configure named to listen on non-privileged port",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'options { listen-on port 1053 { any; }; };' >> /etc/bind/named.conf.option\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'options { listen-on port 1053 { any; }; };' >> /etc/bind/named.conf.options"
+  },
+  {
+    "instruction": "How to validate a signed zone file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnssec-verify` with the correct flags and arguments\n   2. Key flags: -verify, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnssec-verify` — dnssec-verify command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnssec-verify -o example.com /etc/bind/db.example.com.signed"
+  },
+  {
+    "instruction": "How to remove DNSSEC signatures from zone",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnssec-signzone` with the correct flags and arguments\n   2. Key flags: -signzone, -S, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnssec-signzone` — dnssec-signzone command execution and management\n   Flag `-S`: sort by size\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnssec-signzone -S -o example.com /etc/bind/db.example.com"
+  },
+  {
+    "instruction": "How to check the expiration of DNSSEC signatures",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dig` with the correct flags and arguments\n   2. Key flags: -1\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dig` — dig command execution and management\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndig +dnssec +multi example.com A | grep RRSIG | head -1 | awk '{print $9}'"
+  },
+  {
+    "instruction": "How to convert a zone from NSEC to NSEC3",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnssec-signzone` with the correct flags and arguments\n   2. Key flags: -signzone, -3, -coverage, -o\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnssec-signzone` — dnssec-signzone command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnssec-signzone -3 $(dnssec-coverage -o example.com /etc/bind/db.example.com) -A -o example.com /etc/bind/db.example.com"
+  },
+  {
+    "instruction": "How to get BIND to listen on multiple interfaces",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -on\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'options { listen-on { 192.168.1.1; 10.0.0.1; }; };' >> /etc/bind/named.conf.options"
+  },
+  {
+    "instruction": "How to query BIND for RRSIG expiration",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dig` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dig` — dig command execution and management\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndig +dnssec +short RRSIG example.com"
+  },
+  {
+    "instruction": "How to check the number of cached entries",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `rndc` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `rndc` — BIND9 remote name daemon control\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrndc status | grep \"number of entries\""
+  },
+  {
+    "instruction": "How to replace a KSK zone signing key",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnssec-settime` with the correct flags and arguments\n   2. Key flags: -settime, -D\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnssec-settime` — dnssec-settime command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnssec-settime -D +30d Kexample.com.+008+54321.key"
+  },
+  {
+    "instruction": "How to generate RFC 5011 trust anchor",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dnssec-keygen` with the correct flags and arguments\n   2. Key flags: -keygen, -a, -b, -n\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dnssec-keygen` — dnssec-keygen command execution and management\n   Flag `-a`: include hidden/all entries\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndnssec-keygen -a RSASHA256 -b 2048 -n ZONE -f KSK example.com"
+  },
+  {
+    "instruction": "How to restore factory default BIND config",
+    "output": "<think>\n1. Task Breakdown:\n   1. Identify source data and target destination for dpkg-reconfigure\n   2. Use appropriate flags for compression, encryption, and verification\n   3. Execute with verification: dpkg-reconfigure bind9\n   4. Test the restore path to ensure data integrity\n\n2. Tool Selection & Logic:\n   Primary tool: `dpkg-reconfigure` — dpkg-reconfigure command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndpkg-reconfigure bind9"
+  },
+  {
+    "instruction": "How to set up BIND to log to a separate file",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -time\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Supporting tool: `named` — BIND9 DNS server\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'logging { channel mylog { file \"/var/log/named/bind.log\" versions 3 size 10m; print-time yes; }; };' >> /etc/bind/named.conf"
+  },
+  {
+    "instruction": "How to verify named home directory is set",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `named` with the correct flags and arguments\n   2. Key flags: -V, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `named` — BIND9 DNS server\n   Flag `-i`: interactive mode or case-insensitive\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nnamed -V | grep -i directory"
+  },
+  {
+    "instruction": "How to configure BIND with GeoIP",
+    "output": "<think>\n1. Task Breakdown:\n   1. Generate the configuration: echo 'options { geoip-directory \"/usr/share/GeoIP\"; };' >> /etc/bind/named.conf.\n   2. Apply the configuration and verify with `echo status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'options { geoip-directory \"/usr/share/GeoIP\"; };' >> /etc/bind/named.conf.options"
+  },
+  {
+    "instruction": "How to test that recursion is disabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dig` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dig` — dig command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndig +recurse @192.168.1.1 example.com A"
+  },
+  {
+    "instruction": "How to resolve a name with explicit search path",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `dig` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `dig` — dig command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ndig www A +search"
+  },
+  {
+    "instruction": "How to set up cookie-based session tracking",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: -algorithm\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'options { cookie-algorithm sha256; };' >> /etc/bind/named.conf.options"
+  },
+  {
+    "instruction": "How to set up named to drop root privileges",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `echo` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `echo` — echo command execution and management\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\necho 'options { username \"bind\"; };' >> /etc/bind/named.conf"
+  },
+  {
+    "instruction": "How to check if DNSSEC validation is enabled",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the rndc configuration with the required parameters\n   2. Apply the configuration and verify with `rndc status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `rndc` — BIND9 remote name daemon control\n   Use pipes to pass data between stages without intermediate files\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nrndc dnssec -status | grep validation"
+  },
+  {
+    "instruction": "How to check the current time skew warning",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `tail` with the correct flags and arguments\n   2. Key flags: -f, -i\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `tail` — tail command execution and management\n   Supporting tool: `named` — BIND9 DNS server\n   Flag `-f`: force execution, suppress errors\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\ntail -f /var/log/syslog | grep named | grep -i skew"
+  }
+]

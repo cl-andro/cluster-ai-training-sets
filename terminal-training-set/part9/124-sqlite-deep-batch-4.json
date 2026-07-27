@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Set custom prompts in SQLite shell",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsqlite3 mydb.db \".prompt 'sqlite> ' '  ..> '\""
+  },
+  {
+    "instruction": "Turn on headers and set column mode",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \".headers on\" \".mode column\""
+  },
+  {
+    "instruction": "Enable query execution timer",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the sqlite3 configuration with the required parameters\n   2. Apply the configuration and verify with `sqlite3 status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \".timer on\" \"SELECT COUNT(*) FROM large_table;\""
+  },
+  {
+    "instruction": "Enable statistics for query analysis",
+    "output": "<think>\n1. Task Breakdown:\n   1. Prepare the sqlite3 configuration with the required parameters\n   2. Apply the configuration and verify with `sqlite3 status`\n   3. Enable persistence across reboots if applicable\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \".stats on\" \"SELECT * FROM users WHERE email LIKE '%test%';\""
+  },
+  {
+    "instruction": "Check if a table exists",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT name FROM sqlite_master WHERE type='table' AND name='users';\""
+  },
+  {
+    "instruction": "Use UPDATE FROM syntax (SQLite 3.33+)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"UPDATE orders SET status = 'archived' FROM users WHERE users.id = orders.user_id AND users.active = 0;\""
+  },
+  {
+    "instruction": "DELETE with subquery",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"DELETE FROM orders WHERE user_id IN (SELECT id FROM users WHERE active = 0);\""
+  },
+  {
+    "instruction": "Create a table with CHECK constraint",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nsqlite3 mydb.db \"CREATE TABLE products (id INT, price REAL CHECK(price > 0));\""
+  },
+  {
+    "instruction": "Create a table with default datetime",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"CREATE TABLE logs (id INT, message TEXT, created_at TEXT DEFAULT (datetime('now')));\""
+  },
+  {
+    "instruction": "Add a column to an existing table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"ALTER TABLE users ADD COLUMN phone TEXT;\""
+  },
+  {
+    "instruction": "Rename a column in SQLite 3.25+",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"ALTER TABLE users RENAME COLUMN phone TO mobile;\""
+  },
+  {
+    "instruction": "Drop a column in SQLite 3.35+",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"ALTER TABLE users DROP COLUMN old_field;\""
+  },
+  {
+    "instruction": "Rename an entire table",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"ALTER TABLE users RENAME TO customers;\""
+  },
+  {
+    "instruction": "Use EXCEPT set operation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT id FROM users EXCEPT SELECT user_id FROM orders;\""
+  },
+  {
+    "instruction": "Use INTERSECT set operation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT user_id FROM orders INTERSECT SELECT id FROM users;\""
+  },
+  {
+    "instruction": "Use UNION ALL to combine results",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT name FROM employees UNION ALL SELECT name FROM contractors;\""
+  },
+  {
+    "instruction": "Use CASE expression in a SELECT",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT id, name, CASE WHEN status = 'active' THEN 'Yes' ELSE 'No' END AS is_active FROM users;\""
+  },
+  {
+    "instruction": "Use COALESCE for NULL handling",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT id, COALESCE(phone, 'N/A') AS phone FROM users;\""
+  },
+  {
+    "instruction": "Use NULLIF to avoid divide-by-zero",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT id, NULLIF(status, 'unknown') FROM users;\""
+  },
+  {
+    "instruction": "Use GLOB for file-glob pattern matching",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT * FROM files WHERE name GLOB '*.txt';\""
+  },
+  {
+    "instruction": "Create a table with STRICT typing",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"CREATE TABLE strict_table (id INT, name TEXT) STRICT;\""
+  },
+  {
+    "instruction": "Execute multiple queries in one call",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `sqlite3` with the correct flags and arguments\n   2. Key flags: standard options\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `sqlite3` — SQLite database interaction\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nsqlite3 mydb.db \"SELECT 1; SELECT 2; SELECT 3;\""
+  }
+]

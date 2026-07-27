@@ -1,0 +1,90 @@
+[
+  {
+    "instruction": "Trace new process creation",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_execve { printf(\"exec: %s\\n\", str(args->filename)); }'"
+  },
+  {
+    "instruction": "Trace OOM killer events",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'tracepoint:oom:mark_victim { printf(\"OOM killed %s\\n\", comm); }'"
+  },
+  {
+    "instruction": "Trace signals sent to processes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'tracepoint:signal:signal_generate { printf(\"signal %d sent to %d\\n\", args->sig, args->pid); }'"
+  },
+  {
+    "instruction": "Monitor CPU scheduler latency",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for bpftrace\n   2. Build the command chain with error handling\n   3. Execute: bpftrace -e 'tracepoint:sched:sched_wakeup { @[comm] = hist(args->prio); }'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'tracepoint:sched:sched_wakeup { @[comm] = hist(args->prio); }'"
+  },
+  {
+    "instruction": "Trace block device requests",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'kprobe:blk_start_request { printf(\"block request %s\\n\", args->req->rq_disk->disk_name); }'"
+  },
+  {
+    "instruction": "Count file descriptors opened per process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_openat { @[comm] = count(); }'"
+  },
+  {
+    "instruction": "Trace network packet drops",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'kprobe:kfree_skb { printf(\"packet dropped: %s\\n\", str(args->skb->dev->name)); }'"
+  },
+  {
+    "instruction": "Track container create events (cgroup)",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'tracepoint:cgroup:cgroup_mkdir { printf(\"cgroup created: %s\\n\", str(args->path)); }'"
+  },
+  {
+    "instruction": "Monitor TCP retransmissions",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for bpftrace\n   2. Build the command chain with error handling\n   3. Execute: bpftrace -e 'kprobe:tcp_retransmit_skb { printf(\"retransmit from %s\\n\", ntop(arg\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'kprobe:tcp_retransmit_skb { printf(\"retransmit from %s\\n\", ntop(args->sk->__sk_common.skc_daddr)); }'"
+  },
+  {
+    "instruction": "Trace file close operations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_close { @[comm] = count(); }'"
+  },
+  {
+    "instruction": "Monitor write latency distribution",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for bpftrace\n   2. Build the command chain with error handling\n   3. Execute: bpftrace -e 'tracepoint:syscalls:sys_enter_write { @start[tid] = nsecs; } tracep\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_write { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_write { @usecs = hist((nsecs - @start[tid]) / 1000); delete(@start[tid]); }'"
+  },
+  {
+    "instruction": "Trace kill signals and targets",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_kill { printf(\"kill by %s to PID %d sig %d\\n\", comm, args->pid, args->sig); }'"
+  },
+  {
+    "instruction": "Track disk IOPS per process",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'kprobe:blk_account_io_start { @[comm] = count(); }'"
+  },
+  {
+    "instruction": "Count socket operations per protocol",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'kprobe:sock_sendmsg { @[comm] = count(); }'"
+  },
+  {
+    "instruction": "Monitor page cache misses",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for bpftrace\n   2. Build the command chain with error handling\n   3. Execute: bpftrace -e 'kprobe:mark_page_accessed { @[comm] = count(); }'\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'kprobe:mark_page_accessed { @[comm] = count(); }'"
+  },
+  {
+    "instruction": "Trace slab memory allocations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'kprobe:kmem_cache_alloc { @[str(args->cachep->name)] = count(); }'"
+  },
+  {
+    "instruction": "Monitor kernel module loading",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for bpftrace\n   2. Build the command chain with error handling\n   3. Execute: bpftrace -e 'kprobe:load_module { printf(\"module loaded: %s\\n\", str(args->mod->n\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'kprobe:load_module { printf(\"module loaded: %s\\n\", str(args->mod->name)); }'"
+  },
+  {
+    "instruction": "Track CPU frequency changes",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'kprobe:intel_pstate_set_pstate { printf(\"pstate changed to %u\\n\", args->target_pstate); }'"
+  },
+  {
+    "instruction": "Monitor filesystem mount operations",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for bpftrace\n   2. Build the command chain with error handling\n   3. Execute: bpftrace -e 'kprobe:do_mount { printf(\"mount %s on %s\\n\", str(args->dev_name), s\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Use shell pipes for efficient data flow\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'kprobe:do_mount { printf(\"mount %s on %s\\n\", str(args->dev_name), str(args->dir_page)); }'"
+  },
+  {
+    "instruction": "Trace interrupt handlers",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   FILE: verify the output file path is correct; use `>>` to append instead of `>` where appropriate\n</think>\nbpftrace -e 'kprobe:handle_irq_event { printf(\"IRQ %d handled\\n\", args->action->irq); }'"
+  },
+  {
+    "instruction": "Monitor softirq execution times",
+    "output": "<think>\n1. Task Breakdown:\n   1. Define the automation logic for bpftrace\n   2. Build the command chain with error handling\n   3. Execute: bpftrace -e 'tracepoint:irq:softirq_entry { @start[tid] = nsecs; } tracepoint:ir\n   4. Add monitoring or notification for failures\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Quote variables to prevent word-splitting issues\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'tracepoint:irq:softirq_entry { @start[tid] = nsecs; } tracepoint:irq:softirq_exit { @usecs = hist((nsecs - @start[tid]) / 1000); delete(@start[tid]); }'"
+  },
+  {
+    "instruction": "Track user login events",
+    "output": "<think>\n1. Task Breakdown:\n   1. Execute `bpftrace` with the correct flags and arguments\n   2. Key flags: -e\n   3. Process the output and verify the expected result\n   4. Handle any errors or edge cases in the response\n\n2. Tool Selection & Logic:\n   Primary tool: `bpftrace` — eBPF tracing and analysis\n   Combine with `&&` to halt on first failure\n\n3. Safety & Edge Cases:\n   Check the exit code (`$?`) after execution to confirm success\n   Review the output for error messages before proceeding to the next step\n</think>\nbpftrace -e 'tracepoint:syscalls:sys_enter_login { printf(\"login by %s\\n\", comm); }'"
+  }
+]
