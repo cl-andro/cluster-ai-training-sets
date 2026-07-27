@@ -120,6 +120,120 @@ print(f'Total: {total} entries across {len(files)} files')
 - Training non-thinking models for direct command output
 - Benchmarking model performance on structured infrastructure tasks
 
+---
+
+## Hybrid Agent Architecture: Using the Worker Model
+
+These datasets train the **`worker`** model (0.5B SLM) that runs locally via Ollama at `http://localhost:11434`. After fine-tuning on `terminal-training-set-nothinking/`, the model outputs bare commands only — no chatter, no markdown.
+
+Pair it with a cloud LLM (Gemini, Claude, GPT) in a **hybrid agent** to save 70–85% on API costs:
+
+```
+                       +------------------------+
+                       |       User Prompt      |
+                       +-----------+------------+
+                                   |
+                                   v
+                       +------------------------+
+                       |     Cloud Architect    |
+                       |   (Gemini / Claude)    |
+                       |  High-Level Planning   |
+                       +-----------+------------+
+                                   |
+                 Delegates CLI task| (0 Cloud Tokens)
+                                   v
+                       +------------------------+
+                       |   Local Ollama Worker  |
+                       |    Model: "worker"     |
+                       |   (0.5B Deterministic) |
+                       +-----------+------------+
+                                   |
+                       Returns raw | stdout command
+                                   v
+                       +------------------------+
+                       |  Target Linux System   |
+                       |   (Debian / Terminal)  |
+                       +------------------------+
+```
+
+### Token Cost Comparison
+
+| Workflow Step | Full Cloud Execution | Hybrid Architecture |
+| :--- | :--- | :--- |
+| **High-level Task Decomposition** | Cloud Tokens | Cloud Tokens |
+| **Drafting Terminal Commands** | Cloud Tokens ($$$) | **0 Tokens (Local SLM)** |
+| **Command Retries / Syntax Tweaks** | Cloud Tokens ($$$) | **0 Tokens (Local SLM)** |
+| **Output Parsing / Verification** | Cloud Tokens | Cloud Tokens |
+| **Average Monthly Cost Savings** | **0% Baseline** | **70–85% Saved** |
+
+### Quick Integration
+
+#### Environment Variables
+
+```bash
+export OPENAI_API_BASE="http://localhost:11434/v1"
+export OPENAI_API_KEY="ollama"
+export WORKER_MODEL="worker"
+```
+
+#### Python (OpenAI SDK)
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:11434/v1",
+    api_key="ollama"
+)
+
+response = client.chat.completions.create(
+    model="worker",
+    messages=[
+        {"role": "system", "content": "You are a strict, zero-fluff Linux terminal worker."},
+        {"role": "user", "content": "List all running services on this Debian server"}
+    ],
+    temperature=0.0
+)
+
+print(response.choices[0].message.content.strip())
+# Output: systemctl list-units --type=service --state=running
+```
+
+#### Example `opencode.json` Configuration
+
+```json
+{
+  "sub_agents": {
+    "terminal_executor": {
+      "provider": "openai",
+      "api_base": "http://localhost:11434/v1",
+      "api_key": "ollama",
+      "model": "worker",
+      "temperature": 0.0,
+      "system_prompt": "You are a strict, zero-fluff Linux terminal worker. Return strictly the bash command, no explanations, no markdown chat, no formatting."
+    }
+  },
+  "primary_agent": {
+    "provider": "anthropic",
+    "model": "claude-3-5-sonnet-20241022"
+  }
+}
+```
+
+#### Aider CLI
+
+```bash
+aider --openai-api-base http://localhost:11434/v1 --openai-api-key ollama --model openai/worker
+```
+
+### Best Practices
+
+1. **Keep Temperature at 0.0** — ensures deterministic command generation.
+2. **Dry-Run Validation** — always inspect the command before passing to `subprocess.run()`.
+3. **Combine Strengths** — use cloud models for planning/debugging, worker for syntax (`find`, `awk`, `grep`, `tar`, `systemctl`).
+
+---
+
 ## Licensing
 
 **Proprietary** — Copyright © 2026 Cluster Family / Mohammad Zaid.

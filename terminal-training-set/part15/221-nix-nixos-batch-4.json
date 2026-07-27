@@ -1,82 +1,82 @@
 [
   {
     "instruction": "How to build a specific output from a flake",
-    "output": "<think>\nThis is a straightforward system administration task that requires the right flags and arguments.\n\nExecuting: I'll use `nix` as the primary tool — nix command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nnix build .#hello"
+    "output": "<think>\nThe task requires us to build a specific output from a flake.\nThe tool for this job is nix — nix operations.\nA single command handles this cleanly — no need to overcomplicate it.\n</think>\nnix build .#hello"
   },
   {
     "instruction": "How to see the nixos configuration options",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nExecuting: `nixos-option` is the appropriate choice — nixos-option command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nnixos-option services.openssh.enable"
+    "output": "<think>\nSo the request is to see the nixos configuration options.\nHere's how I'd approach this.\nBest tool here is nixos-option — nixos-option operations.\nLet me verify afterward that it worked correctly.\n</think>\nnixos-option services.openssh.enable"
   },
   {
     "instruction": "How to install a nix package with a specific version",
-    "output": "<think>\nGoal: Configuration needs to be validated before applying to avoid service disruption.\n\nPlan: `nix-env` is the appropriate choice — Nix package manager. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nnix-env -iA nixpkgs.hello-2.12"
+    "output": "<think>\nWe're being asked to install a nix package with a specific version.\nLet me break this down.\nThe tool for this job is nix-env — nix-env operations.\nNix operations are atomic and reversible — use nix-env --rollback if something breaks.\n</think>\nnix-env -iA nixpkgs.hello-2.12"
   },
   {
     "instruction": "How to recover a corrupted nix store",
-    "output": "<think>\nThe backup strategy should balance completeness with resource usage.\n\nWe should verify the backup with a checksum or test restore step.\n\nI'll use `nix-store` as the primary tool — nix-store command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nnix-store --repair-path /nix/store/hash-name"
+    "output": "<think>\nThis is asking us to recover a corrupted nix store.\nThe tool for this job is nix-store — nix-store operations.\nOne command does the job. Simple is better.\nA quick sanity check afterward saves debugging time later.\nAfter running, I'll confirm the result looks right.\n</think>\nnix-store --repair-path /nix/store/hash-name"
   },
   {
     "instruction": "How to list the contents of a nix derivation file",
-    "output": "<think>\nTask analysis: The user wants to perform a system administration operation using nix.\n\nTool selection: I'll use `nix` as the primary tool — nix command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `nix — check the output matches expectations.\n</think>\nnix derivation show /nix/store/hash-name.drv"
+    "output": "<think>\nThis is asking us to list the contents of a nix derivation file.\nLet me consider what makes sense here.\nBest tool here is nix — nix operations.\nThe -name flag handles filter by filename pattern. Important because needed for this specific use case.\nOne command does the job. Simple is better.\nI'll check the output to make sure it did what we expected.\n</think>\nnix derivation show /nix/store/hash-name.drv"
   },
   {
     "instruction": "How to run a nix flake from a local directory",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nExecuting: I'll use `nix` as the primary tool — nix command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nnix run .#app"
+    "output": "<think>\nThe task requires us to run a nix flake from a local directory.\nI'll reach for nix here because nix operations.\n</think>\nnix run .#app"
   },
   {
     "instruction": "How to see the current generation number of nixos",
-    "output": "<think>\nGoal: The user wants to perform a package management operation using nix-env.\n\nPlan: The right tool here is `nix-env` — Nix package manager. Key flags: `-p` (create parent directories) — chosen to match the exact requirement. Pipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nPrecautions: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Confirm success by running a status check or inspecting the output for errors.\n</think>\nnix-env --list-generations -p /nix/var/nix/profiles/system | tail -1"
+    "output": "<think>\nSo the request is to see the current generation number of nixos.\nLet me think about the best approach.\nFor this, nix-env is the right tool — nix-env operations.\nI'm using -p for create parent directories as needed — this controls how the output is formatted.\nUsing pipes keeps everything in memory without intermediate files — cleaner and faster.\nNix operations are atomic and reversible — use nix-env --rollback if something breaks.\nQuick verification after execution to be safe.\n</think>\nnix-env --list-generations -p /nix/var/nix/profiles/system | tail -1"
   },
   {
     "instruction": "How to upgrade nixos to the latest channel",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nExecuting: I'll use `nix-channel` as the primary tool — nix-channel command execution and management. `&&` chaining ensures that if any step fails, the rest stops — preventing partial execution.\n\nWatch out for: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. After execution, validate that the system behaves as expected before closing the task.\n</think>\nnix-channel --update nixos && nixos-rebuild switch"
+    "output": "<think>\nWe're being asked to upgrade nixos to the latest channel.\nThis calls for nix-channel. Nix-channel operations.\nThe && chaining means each command only runs if the previous one succeeded. That's important for correctness.\nCheck the output for errors before proceeding to the next step.\n</think>\nnix-channel --update nixos && nixos-rebuild switch"
   },
   {
     "instruction": "How to copy a nix closure to a remote machine over ssh",
-    "output": "<think>\nTask analysis: We'll execute the system administration command with appropriate options for this scenario.\n\nTool selection: I'll use `nix-copy-closure` as the primary tool — nix-copy-closure command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nnix-copy-closure --to user@remote /run/current-system"
+    "output": "<think>\nSo we need to copy a nix closure to a remote machine over ssh.\nLet me reason through this.\nnix-copy-closure is what we need — nix-copy-closure operations.\nA single command handles this cleanly — no need to overcomplicate it.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nQuick verification after execution to be safe.\n</think>\nnix-copy-closure --to user@remote /run/current-system"
   },
   {
     "instruction": "How to see the full nixos configuration file path",
-    "output": "<think>\nTask analysis: The user wants to perform a system administration operation using nixos-option.\n\nTool selection: `nixos-option` is the appropriate choice — nixos-option command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nnixos-option system.build.toplevel"
+    "output": "<think>\nThis is asking us to see the full nixos configuration file path.\nI'd use nixos-option for this — nixos-option operations.\nOne command does the job. Simple is better.\nCheck the output for errors before proceeding to the next step.\nI'll check the output to make sure it did what we expected.\n</think>\nnixos-option system.build.toplevel"
   },
   {
     "instruction": "How to build a nix derivation without installing it",
-    "output": "<think>\nGoal: The goal is to configure nix-build correctly for this use case.\n\nPlan: I'll use `nix-build` as the primary tool — nix-build command execution and management. Output redirection captures the result for later review or logging.\n\nPrecautions: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Verify the result with a follow-up `nix-build — check the output matches expectations.\n</think>\nnix-build '<nixpkgs>' -A hello --no-out-link"
+    "output": "<think>\nThe user wants to build a nix derivation without installing it.\nLet me think about the best approach.\nBest tool here is nix-build — nix-build operations.\nNo need for complex pipelines here — one command is sufficient.\nA quick sanity check afterward saves debugging time later.\nAfter running, I'll confirm the result looks right.\n</think>\nnix-build '<nixpkgs>' -A hello --no-out-link"
   },
   {
     "instruction": "How to see the nixos help page for a specific option",
-    "output": "<think>\n1. Understand the task: We'll execute the system administration command with appropriate options for this scenario.\n\n2. Choose the right tooling: `nixos-help` is the appropriate choice — nixos-help command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Verify the result with a follow-up `nixos-help — check the output matches expectations.\n</think>\nnixos-help services.openssh.enable"
+    "output": "<think>\nWe should see the nixos help page for a specific option.\nLet me think about the best approach.\nnixos-help is what we need — nixos-help operations.\n</think>\nnixos-help services.openssh.enable"
   },
   {
     "instruction": "How to pin nixpkgs to a specific commit in nix-shell",
-    "output": "<think>\nThe user wants to perform a system administration operation using nix-shell.\n\nExecuting: `nix-shell` is the appropriate choice — nix-shell command execution and management. Key flags: `-p` (create parent directories) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `nix-shell — check the output matches expectations.\n</think>\nnix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/abc123.tar.gz -p hello"
+    "output": "<think>\nAlright, we need to pin nixpkgs to a specific commit in nix-shell.\nnix-shell is what we need — nix-shell operations.\nThe -I flag handles ignore case. Important because needed for this specific use case.\nNo need for complex pipelines here — one command is sufficient.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nLet me verify afterward that it worked correctly.\n</think>\nnix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/abc123.tar.gz -p hello"
   },
   {
     "instruction": "How to remove a nix channel",
-    "output": "<think>\n1. Understand the task: We'll execute the system administration command with appropriate options for this scenario.\n\n2. Choose the right tooling: I'll use `nix-channel` as the primary tool — nix-channel command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\nnix-channel --remove nixpkgs"
+    "output": "<think>\nWe should remove a nix channel.\nThis calls for nix-channel. Nix-channel operations.\nNo need for complex pipelines here — one command is sufficient.\nCheck the output for errors before proceeding to the next step.\n</think>\nnix-channel --remove nixpkgs"
   },
   {
     "instruction": "How to rebuild nixos but not switch to the new generation",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using nixos-rebuild.\n\n2. Choose the right tooling: The right tool here is `nixos-rebuild` — nixos-rebuild command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nnixos-rebuild build --flake /etc/nixos#hostname"
+    "output": "<think>\nNeed to rebuild nixos but not switch to the new generation.\nThe tool for this job is nixos-rebuild — nixos-rebuild operations.\n</think>\nnixos-rebuild build --flake /etc/nixos#hostname"
   },
   {
     "instruction": "How to see the current nixpkgs version",
-    "output": "<think>\nThe user wants to perform a system administration operation using nix-instantiate.\n\nExecuting: I'll use `nix-instantiate` as the primary tool — nix-instantiate command execution and management. Output redirection captures the result for later review or logging.\n\nWatch out for: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Verify the result with a follow-up `nix-instantiate — check the output matches expectations.\n</think>\nnix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'"
+    "output": "<think>\nAlright, we need to see the current nixpkgs version.\nLet me break this down.\nI'd use nix-instantiate for this — nix-instantiate operations.\nNo need for complex pipelines here — one command is sufficient.\nAfter running, I'll confirm the result looks right.\n</think>\nnix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'"
   },
   {
     "instruction": "How to list all generations of the user profile",
-    "output": "<think>\nTask analysis: The user wants to perform a package management operation using nix-env.\n\nTool selection: I'll use `nix-env` as the primary tool — Nix package manager.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nnix-env --list-generations"
+    "output": "<think>\nThe goal is to list all generations of the user profile.\nHere's how I'd approach this.\nnix-env is what we need — nix-env operations.\nNix operations are atomic and reversible — use nix-env --rollback if something breaks.\nQuick verification after execution to be safe.\n</think>\nnix-env --list-generations"
   },
   {
     "instruction": "How to delete a specific nixos generation",
-    "output": "<think>\nLooking at this request: This is a straightforward package management task that requires the right flags and arguments.\n\nApproach: I'll use `nix-env` as the primary tool — Nix package manager. Key flags: `-p` (create parent directories) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nnix-env --delete-generations 42 -p /nix/var/nix/profiles/system"
+    "output": "<think>\nNeed to delete a specific nixos generation.\nLet me consider what makes sense here.\nBest tool here is nix-env — nix-env operations.\nNix operations are atomic and reversible — use nix-env --rollback if something breaks.\n</think>\nnix-env --delete-generations 42 -p /nix/var/nix/profiles/system"
   },
   {
     "instruction": "How to install a nix package from a test channel",
-    "output": "<think>\nLooking at this request: The goal is to configure nix-channel correctly for this use case.\n\nApproach: `nix-channel` is the appropriate choice — nix-channel command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `nix-channel — check the output matches expectations.\n</think>\nnix-channel --add https://nixos.org/channels/nixos-unstable nixos"
+    "output": "<think>\nWe should install a nix package from a test channel.\nLet me think through this step by step.\nI'd use nix-channel for this — nix-channel operations.\nOne command does the job. Simple is better.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nnix-channel --add https://nixos.org/channels/nixos-unstable nixos"
   },
   {
     "instruction": "How to use nix-shell to test a package build with specific dependencies",
-    "output": "<think>\nLooking at this request: We'll execute the security hardening command with appropriate options for this scenario.\n\nApproach: The right tool here is `nix-shell` — nix-shell command execution and management. `openssl` will be used for cryptographic operations and certificates. Key flags: `-p` (create parent directories) — chosen to match the exact requirement.\n\nSafety check: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Check the logs or output to ensure the operation completed as intended.\n</think>\nnix-shell -p openssl pkg-config --command 'echo ready'"
+    "output": "<think>\nThe goal is to use nix-shell to test a package build with specific dependencies.\nLet me consider what makes sense here.\nThis calls for nix-shell. Nix-shell operations.\nOne command does the job. Simple is better.\nAfter running, confirm it worked as expected before moving on.\nI'll check the output to make sure it did what we expected.\n</think>\nnix-shell -p openssl pkg-config --command 'echo ready'"
   }
 ]

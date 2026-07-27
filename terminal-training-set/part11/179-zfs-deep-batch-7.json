@@ -1,102 +1,102 @@
 [
   {
     "instruction": "How to send a ZFS snapshot to a file",
-    "output": "<think>\nThe backup strategy should balance completeness with resource usage.\n\nWe should verify the backup with a checksum or test restore step.\n\nThe right tool here is `zfs` — ZFS pool and dataset management.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Check the logs or output to ensure the operation completed as intended.\n</think>\nzfs send tank/data@20240726 > /backup/data.zfs"
+    "output": "<think>\nWe should send a ZFS snapshot to a file.\nThe tool for this job is zfs — ZFS storage management.\nAfter running, confirm it worked as expected before moving on.\n</think>\nzfs send tank/data@20240726 > /backup/data.zfs"
   },
   {
     "instruction": "How to send a ZFS snapshot over SSH",
-    "output": "<think>\nTask analysis: Data integrity is the primary concern here — verification is essential.\n\nTool selection: I'll use `zfs` as the primary tool — ZFS pool and dataset management.\nPipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nRisk assessment: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. After execution, validate that the system behaves as expected before closing the task.\n</think>\nzfs send tank/data@20240726 | ssh backup-server zfs recv tank/backup"
+    "output": "<think>\nThis is asking us to send a ZFS snapshot over SSH.\nLet me consider what makes sense here.\nI'd use zfs for this — ZFS storage management.\nI'm piping because each stage transforms the data before passing it to the next.\nCheck the output for errors before proceeding to the next step.\nI'll check the output to make sure it did what we expected.\n</think>\nzfs send tank/data@20240726 | ssh backup-server zfs recv tank/backup"
   },
   {
     "instruction": "How to send an incremental ZFS snapshot",
-    "output": "<think>\nThe backup strategy should balance completeness with resource usage.\n\nWe should verify the backup with a checksum or test restore step.\n\n`zfs` is the appropriate choice — ZFS pool and dataset management.\nKey flags: `-i` (interactive mode or case-insensitive) — chosen to match the exact requirement.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Check the logs or output to ensure the operation completed as intended.\n</think>\nzfs send -i tank/data@prev tank/data@cur > inc.zfs"
+    "output": "<think>\nAlright, we need to send an incremental ZFS snapshot.\nThis calls for zfs. ZFS storage management.\nWhy -i? Interactive, prompt before action. standard practice for this kind of operation.\nOne command does the job. Simple is better.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nzfs send -i tank/data@prev tank/data@cur > inc.zfs"
   },
   {
     "instruction": "How to receive a ZFS snapshot from a file",
-    "output": "<think>\nWe need to safely back up or restore data using zfs. We should verify the backup with a checksum or test restore step.\n\nExecuting: The right tool here is `zfs` — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nzfs receive tank/restore < /backup/data.zfs"
+    "output": "<think>\nSo we need to receive a ZFS snapshot from a file.\nLet me break this down.\nI'd use zfs for this — ZFS storage management.\nNo need for complex pipelines here — one command is sufficient.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nzfs receive tank/restore < /backup/data.zfs"
   },
   {
     "instruction": "How to receive a ZFS snapshot over SSH",
-    "output": "<think>\nData integrity is the primary concern here — verification is essential.\n\nWe should verify the backup with a checksum or test restore step.\n\nI'll use `ssh` as the primary tool — secure shell remote access.\n`zfs` will be used for ZFS pool and dataset management.\nPipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nBefore executing: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Verify the result with a follow-up `ssh — check the output matches expectations.\n</think>\nssh source-server zfs send tank/data@20240726 | zfs receive tank/backup"
+    "output": "<think>\nSo we need to receive a ZFS snapshot over SSH.\nLet me consider what makes sense here.\nssh is what we need — remote system access.\nThe command looks straightforward, but let me check the details.\nUsing pipes keeps everything in memory without intermediate files — cleaner and faster.\nVerify with a follow-up status command to make sure everything looks right.\nAfter running, I'll confirm the result looks right.\n</think>\nssh source-server zfs send tank/data@20240726 | zfs receive tank/backup"
   },
   {
     "instruction": "How to roll back to a ZFS snapshot",
-    "output": "<think>\nGoal: We need to safely back up or restore data using zfs.\nWe should verify the backup with a checksum or test restore step.\n\nPlan: `zfs` is the appropriate choice — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nzfs rollback tank/data@20240726"
+    "output": "<think>\nThe user wants to roll back to a ZFS snapshot.\nLet me reason through this.\nI'd use zfs for this — ZFS storage management.\nQuick verification after execution to be safe.\n</think>\nzfs rollback tank/data@20240726"
   },
   {
     "instruction": "How to destroy a ZFS snapshot",
-    "output": "<think>\nThe backup strategy should balance completeness with resource usage.\n\nWe should verify the backup with a checksum or test restore step.\n\nI'll use `zfs` as the primary tool — ZFS pool and dataset management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nzfs destroy tank/data@20240726"
+    "output": "<think>\nThe task requires us to destroy a ZFS snapshot.\nBest tool here is zfs — ZFS storage management.\nVerify with a follow-up status command to make sure everything looks right.\n</think>\nzfs destroy tank/data@20240726"
   },
   {
     "instruction": "How to destroy a ZFS dataset",
-    "output": "<think>\nGoal: This is a straightforward storage management task that requires the right flags and arguments.\n\nPlan: I'll use `zfs` as the primary tool — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nzfs destroy tank/data"
+    "output": "<think>\nThis is asking us to destroy a ZFS dataset.\nLet me think through this step by step.\nThe tool for this job is zfs — ZFS storage management.\nA single command handles this cleanly — no need to overcomplicate it.\n</think>\nzfs destroy tank/data"
   },
   {
     "instruction": "How to set compression on a ZFS dataset",
-    "output": "<think>\nThis is a straightforward storage management task that requires the right flags and arguments.\n\nExecuting: `zfs` is the appropriate choice — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `zfs — check the output matches expectations.\n</think>\nzfs set compression=lz4 tank/data"
+    "output": "<think>\nAlright, we need to set compression on a ZFS dataset.\nThis calls for zfs. ZFS storage management.\nA single command handles this cleanly — no need to overcomplicate it.\nAfter running, confirm it worked as expected before moving on.\n</think>\nzfs set compression=lz4 tank/data"
   },
   {
     "instruction": "How to set the mountpoint on a ZFS dataset",
-    "output": "<think>\nLooking at this request: This is a straightforward storage management task that requires the right flags and arguments.\n\nApproach: I'll use `zfs` as the primary tool — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nzfs set mountpoint=/srv/data tank/data"
+    "output": "<think>\nSo we need to set the mountpoint on a ZFS dataset.\nLet me think about the best approach.\nI'd use zfs for this — ZFS storage management.\nI'll check the output to make sure it did what we expected.\n</think>\nzfs set mountpoint=/srv/data tank/data"
   },
   {
     "instruction": "How to disable atime on a ZFS dataset",
-    "output": "<think>\nThe user wants to perform a storage management operation using zfs.\n\nExecuting: `zfs` is the appropriate choice — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nzfs set atime=off tank/data"
+    "output": "<think>\nThis is asking us to disable atime on a ZFS dataset.\nLet me break this down.\nBest tool here is zfs — ZFS storage management.\nCheck the output for errors before proceeding to the next step.\nQuick verification after execution to be safe.\n</think>\nzfs set atime=off tank/data"
   },
   {
     "instruction": "How to enable dedup on a ZFS dataset",
-    "output": "<think>\nGoal: The goal is to configure zfs correctly for this use case.\n\nPlan: I'll use `zfs` as the primary tool — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nzfs set dedup=on tank/data"
+    "output": "<think>\nThe task requires us to enable dedup on a ZFS dataset.\nHere's how I'd approach this.\nFor this, zfs is the right tool — ZFS storage management.\nOne command does the job. Simple is better.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nQuick verification after execution to be safe.\n</think>\nzfs set dedup=on tank/data"
   },
   {
     "instruction": "How to show all properties of a ZFS dataset",
-    "output": "<think>\nTask analysis: We'll execute the storage management command with appropriate options for this scenario.\n\nTool selection: I'll use `zfs` as the primary tool — ZFS pool and dataset management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nzfs get all tank/data"
+    "output": "<think>\nThe user wants to show all properties of a ZFS dataset.\nThe tool for this job is zfs — ZFS storage management.\n</think>\nzfs get all tank/data"
   },
   {
     "instruction": "How to show compression ratio of a ZFS dataset",
-    "output": "<think>\n1. Understand the task: This is a straightforward storage management task that requires the right flags and arguments.\n\n2. Choose the right tooling: `zfs` is the appropriate choice — ZFS pool and dataset management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\nzfs get compressratio tank/data"
+    "output": "<think>\nThe goal is to show compression ratio of a ZFS dataset.\nHere's how I'd approach this.\nzfs is what we need — ZFS storage management.\nNo need for complex pipelines here — one command is sufficient.\nQuick verification after execution to be safe.\n</think>\nzfs get compressratio tank/data"
   },
   {
     "instruction": "How to set recordsize on a ZFS dataset",
-    "output": "<think>\nThe user wants to perform a storage management operation using zfs.\n\nExecuting: The right tool here is `zfs` — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nzfs set recordsize=1M tank/data"
+    "output": "<think>\nWe should set recordsize on a ZFS dataset.\nThis calls for zfs. ZFS storage management.\nAfter running, confirm it worked as expected before moving on.\nQuick verification after execution to be safe.\n</think>\nzfs set recordsize=1M tank/data"
   },
   {
     "instruction": "How to set a quota on a ZFS dataset",
-    "output": "<think>\nTask analysis: The user wants to perform a storage management operation using zfs.\n\nTool selection: `zfs` is the appropriate choice — ZFS pool and dataset management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `zfs — check the output matches expectations.\n</think>\nzfs set quota=50G tank/home"
+    "output": "<think>\nWe should set a quota on a ZFS dataset.\nI'd use zfs for this — ZFS storage management.\nA quick sanity check afterward saves debugging time later.\n</think>\nzfs set quota=50G tank/home"
   },
   {
     "instruction": "How to set a reservation on a ZFS dataset",
-    "output": "<think>\nLooking at this request: We'll execute the storage management command with appropriate options for this scenario.\n\nApproach: The right tool here is `zfs` — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nzfs set reservation=10G tank/db"
+    "output": "<think>\nSo we need to set a reservation on a ZFS dataset.\nI'll reach for zfs here because ZFS storage management.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nAfter running, I'll confirm the result looks right.\n</think>\nzfs set reservation=10G tank/db"
   },
   {
     "instruction": "How to check ZFS pool health",
-    "output": "<think>\nThe user wants to perform a storage management operation using zpool.\n\nExecuting: The right tool here is `zpool` — zpool command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nzpool status -x tank"
+    "output": "<think>\nSo the request is to check ZFS pool health.\nLet me think through this step by step.\nFor this, zpool is the right tool — zpool operations.\nOne command does the job. Simple is better.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nQuick verification after execution to be safe.\n</think>\nzpool status -x tank"
   },
   {
     "instruction": "How to clear errors on a ZFS pool",
-    "output": "<think>\n1. Understand the task: We'll execute the storage management command with appropriate options for this scenario.\n\n2. Choose the right tooling: `zpool` is the appropriate choice — zpool command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nzpool clear tank"
+    "output": "<think>\nNeed to clear errors on a ZFS pool.\nThis calls for zpool. Zpool operations.\nA quick sanity check afterward saves debugging time later.\nQuick verification after execution to be safe.\n</think>\nzpool clear tank"
   },
   {
     "instruction": "How to rotate a ZFS encryption key",
-    "output": "<think>\nThis is a straightforward storage management task that requires the right flags and arguments.\n\nThe right tool here is `zfs` — ZFS pool and dataset management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nzfs change-key -o keyformat=raw tank/data"
+    "output": "<think>\nSo we need to rotate a ZFS encryption key.\nLet me reason through this.\nThe tool for this job is zfs — ZFS storage management.\nI've added -o to output to file, OR operator in find — without it the command won't work as we need.\nA quick sanity check afterward saves debugging time later.\nLet me verify afterward that it worked correctly.\n</think>\nzfs change-key -o keyformat=raw tank/data"
   },
   {
     "instruction": "How to unload a ZFS encryption key",
-    "output": "<think>\nWe'll execute the storage management command with appropriate options for this scenario.\n\n`zfs` is the appropriate choice — ZFS pool and dataset management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nzfs unload-key tank/data"
+    "output": "<think>\nNeed to unload a ZFS encryption key.\nI'd use zfs for this — ZFS storage management.\n</think>\nzfs unload-key tank/data"
   },
   {
     "instruction": "How to load a ZFS encryption key",
-    "output": "<think>\nThis is a straightforward storage management task that requires the right flags and arguments.\n\nExecuting: `zfs` is the appropriate choice — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nzfs load-key tank/data"
+    "output": "<think>\nThe user wants to load a ZFS encryption key.\nThis calls for zfs. ZFS storage management.\nOne command does the job. Simple is better.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nI'll check the output to make sure it did what we expected.\n</think>\nzfs load-key tank/data"
   },
   {
     "instruction": "How to set a ZFS dataset to read-only",
-    "output": "<think>\nThe user wants to perform a storage management operation using zfs.\n\nExecuting: I'll use `zfs` as the primary tool — ZFS pool and dataset management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `zfs — check the output matches expectations.\n</think>\nzfs set readonly=on tank/data"
+    "output": "<think>\nThe user wants to set a ZFS dataset to read-only.\nLet me consider what makes sense here.\nThis calls for zfs. ZFS storage management.\nOne command does the job. Simple is better.\n</think>\nzfs set readonly=on tank/data"
   },
   {
     "instruction": "How to set ZFS snapdir visibility",
-    "output": "<think>\nThis is a straightforward storage management task that requires the right flags and arguments.\n\nThe right tool here is `zfs` — ZFS pool and dataset management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nzfs set snapdir=visible tank/data"
+    "output": "<think>\nThis is asking us to set ZFS snapdir visibility.\nLet me think about the best approach.\nThe tool for this job is zfs — ZFS storage management.\nA single command handles this cleanly — no need to overcomplicate it.\n</think>\nzfs set snapdir=visible tank/data"
   },
   {
     "instruction": "How to create a new ZFS pool",
-    "output": "<think>\nGoal: This is a straightforward storage management task that requires the right flags and arguments.\n\nPlan: `zpool` is the appropriate choice — zpool command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nzpool create tank /dev/sda /dev/sdb"
+    "output": "<think>\nAlright, we need to create a new ZFS pool.\nHere's how I'd approach this.\nzpool is what we need — zpool operations.\nCheck the output for errors before proceeding to the next step.\nAfter running, I'll confirm the result looks right.\n</think>\nzpool create tank /dev/sda /dev/sdb"
   }
 ]

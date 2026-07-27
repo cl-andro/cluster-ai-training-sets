@@ -1,82 +1,82 @@
 [
   {
     "instruction": "How to show Varnish statistics in JSON",
-    "output": "<think>\nThis is a straightforward system administration task that requires the right flags and arguments.\n\nExecuting: The right tool here is `varnishstat` — varnishstat command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nvarnishstat -j"
+    "output": "<think>\nWe're being asked to show Varnish statistics in JSON.\nHere's how I'd approach this.\nI'll reach for varnishstat here because varnishstat operations.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nvarnishstat -j"
   },
   {
     "instruction": "How to reload VCL in Varnish without restart",
-    "output": "<think>\nThe user wants to perform a network operations operation using varnishadm.\n\nExecuting: I'll use `varnishadm` as the primary tool — Varnish cache administration. `&&` chaining ensures that if any step fails, the rest stops — preventing partial execution.\n\nWatch out for: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Confirm success by running a status check or inspecting the output for errors.\n</think>\nvarnishadm vcl.load reloaded /etc/varnish/default.vcl && varnishadm vcl.use reloaded"
+    "output": "<think>\nWe should reload VCL in Varnish without restart.\nLet me reason through this.\nvarnishadm is what we need — Varnish cache administration.\nThe && chaining means each command only runs if the previous one succeeded. That's important for correctness.\n</think>\nvarnishadm vcl.load reloaded /etc/varnish/default.vcl && varnishadm vcl.use reloaded"
   },
   {
     "instruction": "How to show Varnish transaction log for a specific tag",
-    "output": "<think>\nTask analysis: This is a straightforward system administration task that requires the right flags and arguments.\n\nTool selection: `varnishlog` is the appropriate choice — varnishlog command execution and management.\nKey flags: `-i` (interactive mode or case-insensitive) — chosen to match the exact requirement.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nvarnishlog -g vxid -i TxStatus,TxURL"
+    "output": "<think>\nThe task requires us to show Varnish transaction log for a specific tag.\nI'll reach for varnishlog here because varnishlog operations.\nI'll check the output to make sure it did what we expected.\n</think>\nvarnishlog -g vxid -i TxStatus,TxURL"
   },
   {
     "instruction": "How to show Varnish version",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\n`varnishd` is the appropriate choice — varnishd command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `varnishd — check the output matches expectations.\n</think>\nvarnishd -V"
+    "output": "<think>\nThis is asking us to show Varnish version.\nI'll reach for varnishd here because varnishd operations.\nI'll check the output to make sure it did what we expected.\n</think>\nvarnishd -V"
   },
   {
     "instruction": "How to show Varnish backend list",
-    "output": "<think>\nLooking at this request: This is a straightforward network operations task that requires the right flags and arguments.\n\nApproach: `varnishadm` is the appropriate choice — Varnish cache administration. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nvarnishadm backend.list"
+    "output": "<think>\nWe're being asked to show Varnish backend list.\nThe tool for this job is varnishadm — Varnish cache administration.\nOne command does the job. Simple is better.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nAfter running, I'll confirm the result looks right.\n</think>\nvarnishadm backend.list"
   },
   {
     "instruction": "How to watch Varnish live statistics",
-    "output": "<think>\nGoal: Automation should be idempotent — running it multiple times produces the same result.\n\nPlan: `varnishstat` is the appropriate choice — varnishstat command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nvarnishstat -w 2"
+    "output": "<think>\nWe should watch Varnish live statistics.\nLet me reason through this.\nThe tool for this job is varnishstat — varnishstat operations.\nA single command handles this cleanly — no need to overcomplicate it.\nVerify with a follow-up status command to make sure everything looks right.\n</think>\nvarnishstat -w 2"
   },
   {
     "instruction": "How to show Varnish statistics with rate counters",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nExecuting: `varnishstat` is the appropriate choice — varnishstat command execution and management. Key flags: `-r` (recursive operation) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nvarnishstat -r"
+    "output": "<think>\nNeed to show Varnish statistics with rate counters.\nvarnishstat is what we need — varnishstat operations.\nWhy -r? Recursive operation (descend into subdirectories). standard practice for this kind of operation.\nAfter running, confirm it worked as expected before moving on.\n</think>\nvarnishstat -r"
   },
   {
     "instruction": "How to add caching rules for specific content types",
-    "output": "<think>\nTask analysis: We'll execute the system administration command with appropriate options for this scenario.\n\nTool selection: `echo` is the appropriate choice — echo command execution and management.\nOutput redirection captures the result for later review or logging.\n\nRisk assessment: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. After execution, validate that the system behaves as expected before closing the task.\n</think>\necho 'sub vcl_backend_response { if (beresp.http.content-type ~ \"text/css\") { set beresp.ttl = 1h; } if (beresp.http.content-type ~ \"image/\") { set beresp.ttl = 24h; } }' > /etc/varnish/cache-rules.vcl"
+    "output": "<think>\nSo we need to add caching rules for specific content types.\nFirst, let me understand what's needed here.\nThe -type flag handles filter by file type. Important because important to get the expected behavior.\nThe -type flag means filter by file type, which matters here because without it the command won't work as we need.\n</think>\necho 'sub vcl_backend_response { if (beresp.http.content-type ~ \"text/css\") { set beresp.ttl = 1h; } if (beresp.http.content-type ~ \"image/\") { set beresp.ttl = 24h; } }' > /etc/varnish/cache-rules.vcl"
   },
   {
     "instruction": "How to start Varnish with multiple backends",
-    "output": "<think>\n1. Understand the task: We'll execute the system administration command with appropriate options for this scenario.\n\n2. Choose the right tooling: I'll use `varnishd` as the primary tool — varnishd command execution and management.\n   Key flags: `-a` (include hidden/all entries), `-f` (force execution, suppress errors), `-p` (create parent directories) — chosen to match the exact requirement.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nvarnishd -a :80 -f /etc/varnish/multi.vcl -s malloc,512m -p default_ttl=120"
+    "output": "<think>\nWe're being asked to start Varnish with multiple backends.\nLet me break this down.\nBest tool here is varnishd — varnishd operations.\nNo need for complex pipelines here — one command is sufficient.\nAfter running, I'll confirm the result looks right.\n</think>\nvarnishd -a :80 -f /etc/varnish/multi.vcl -s malloc,512m -p default_ttl=120"
   },
   {
     "instruction": "How to show Varnish runtime parameters",
-    "output": "<think>\nThis is a straightforward network operations task that requires the right flags and arguments.\n\nI'll use `varnishadm` as the primary tool — Varnish cache administration.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `varnishadm — check the output matches expectations.\n</think>\nvarnishadm param.show"
+    "output": "<think>\nThe task requires us to show Varnish runtime parameters.\nI'd use varnishadm for this — Varnish cache administration.\nA single command handles this cleanly — no need to overcomplicate it.\nCheck the output for errors before proceeding to the next step.\n</think>\nvarnishadm param.show"
   },
   {
     "instruction": "How to add a health probe in VCL",
-    "output": "<think>\nThe user wants to perform a network operations operation using echo.\n\nI'll use `echo` as the primary tool — echo command execution and management.\n`host` will be used for host command execution and management.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Verify the result with a follow-up `echo — check the output matches expectations.\n</think>\necho 'probe health_check { .url = \"/health\"; .interval = 5s; .timeout = 1s; .window = 5; .threshold = 3; } backend server1 { .host = \"10.0.0.1\"; .port = \"80\"; .probe = health_check; }' > /etc/varnish/health.vcl"
+    "output": "<think>\nWe're being asked to add a health probe in VCL.\nLet me verify afterward that it worked correctly.\n</think>\necho 'probe health_check { .url = \"/health\"; .interval = 5s; .timeout = 1s; .window = 5; .threshold = 3; } backend server1 { .host = \"10.0.0.1\"; .port = \"80\"; .probe = health_check; }' > /etc/varnish/health.vcl"
   },
   {
     "instruction": "How to show Varnish log with client IP",
-    "output": "<think>\nTask analysis: The user wants to perform a system administration operation using varnishlog.\n\nTool selection: `varnishlog` is the appropriate choice — varnishlog command execution and management.\nKey flags: `-i` (interactive mode or case-insensitive) — chosen to match the exact requirement.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `varnishlog — check the output matches expectations.\n</think>\nvarnishlog -g request -i ReqStart,RxRequest"
+    "output": "<think>\nThe goal is to show Varnish log with client IP.\nBest tool here is varnishlog — varnishlog operations.\nQuick verification after execution to be safe.\n</think>\nvarnishlog -g request -i ReqStart,RxRequest"
   },
   {
     "instruction": "How to add custom header in VCL",
-    "output": "<think>\nLooking at this request: We'll execute the system administration command with appropriate options for this scenario.\n\nApproach: The right tool here is `echo` — echo command execution and management. Output redirection captures the result for later review or logging.\n\nSafety check: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Confirm success by running a status check or inspecting the output for errors.\n</think>\necho 'sub vcl_deliver { set resp.http.X-Cache = \"HIT\"; }' > /etc/varnish/custom-header.vcl"
+    "output": "<think>\nThe task requires us to add custom header in VCL.\nLet me break this down.\n</think>\necho 'sub vcl_deliver { set resp.http.X-Cache = \"HIT\"; }' > /etc/varnish/custom-header.vcl"
   },
   {
     "instruction": "How to add cookie stripping in VCL",
-    "output": "<think>\nLooking at this request: This is a straightforward system administration task that requires the right flags and arguments.\n\nApproach: `echo` is the appropriate choice — echo command execution and management. Output redirection captures the result for later review or logging.\n\nSafety check: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Check the logs or output to ensure the operation completed as intended.\n</think>\necho 'sub vcl_recv { if (req.url ~ \"^/static/\") { unset req.http.cookie; } }' > /etc/varnish/strip-cookies.vcl"
+    "output": "<think>\nAlright, we need to add cookie stripping in VCL.\nLet me consider what makes sense here.\nOne command does the job. Simple is better.\nVerify with a follow-up status command to make sure everything looks right.\n</think>\necho 'sub vcl_recv { if (req.url ~ \"^/static/\") { unset req.http.cookie; } }' > /etc/varnish/strip-cookies.vcl"
   },
   {
     "instruction": "How to test VCL syntax",
-    "output": "<think>\nLooking at this request: This is a straightforward system administration task that requires the right flags and arguments.\n\nApproach: `varnishd` is the appropriate choice — varnishd command execution and management. Key flags: `-f` (force execution, suppress errors) — chosen to match the exact requirement. Output redirection captures the result for later review or logging.\n\nSafety check: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. After execution, validate that the system behaves as expected before closing the task.\n</think>\nvarnishd -C -f /etc/varnish/default.vcl > /dev/null 2>&1"
+    "output": "<think>\nWe should test VCL syntax.\nLet me think through this step by step.\nFor this, varnishd is the right tool — varnishd operations.\nQuick verification after execution to be safe.\n</think>\nvarnishd -C -f /etc/varnish/default.vcl > /dev/null 2>&1"
   },
   {
     "instruction": "How to ban all objects from a backend in Varnish",
-    "output": "<think>\nLooking at this request: We'll execute the network operations command with appropriate options for this scenario.\n\nApproach: `varnishadm` is the appropriate choice — Varnish cache administration. `&&` chaining ensures that if any step fails, the rest stops — preventing partial execution.\n\nSafety check: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Confirm success by running a status check or inspecting the output for errors.\n</think>\nvarnishadm ban req.http.host ~ '.*' && varnishadm ban req.url ~ '.*'"
+    "output": "<think>\nNeed to ban all objects from a backend in Varnish.\nLet me think about the best approach.\nThe tool for this job is varnishadm — Varnish cache administration.\nThe && chaining means each command only runs if the previous one succeeded. That's important for correctness.\n</think>\nvarnishadm ban req.http.host ~ '.*' && varnishadm ban req.url ~ '.*'"
   },
   {
     "instruction": "How to purge by cache tag in Varnish",
-    "output": "<think>\nWe'll execute the network operations command with appropriate options for this scenario.\n\nExecuting: I'll use `varnishadm` as the primary tool — Varnish cache administration. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nvarnishadm ban obj.http.x-cache-tag ~ '^product_1234'"
+    "output": "<think>\nSo the request is to purge by cache tag in Varnish.\nFor this, varnishadm is the right tool — Varnish cache administration.\nVerify with a follow-up status command to make sure everything looks right.\n</think>\nvarnishadm ban obj.http.x-cache-tag ~ '^product_1234'"
   },
   {
     "instruction": "How to show Varnish storage usage",
-    "output": "<think>\nGoal: We'll execute the system administration command with appropriate options for this scenario.\n\nPlan: I'll use `varnishstat` as the primary tool — varnishstat command execution and management. Pipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nPrecautions: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Check the logs or output to ensure the operation completed as intended.\n</think>\nvarnishstat -1 | grep -E 'SMA|SMF'"
+    "output": "<think>\nWe're being asked to show Varnish storage usage.\nBest tool here is varnishstat — varnishstat operations.\nI'm piping because each stage transforms the data before passing it to the next.\nQuick verification after execution to be safe.\n</think>\nvarnishstat -1 | grep -E 'SMA|SMF'"
   },
   {
     "instruction": "How to show Varnish statistics summary",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nExecuting: The right tool here is `varnishstat` — varnishstat command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nvarnishstat -1"
+    "output": "<think>\nThe goal is to show Varnish statistics summary.\nThe tool for this job is varnishstat — varnishstat operations.\nVerify with a follow-up status command to make sure everything looks right.\nI'll check the output to make sure it did what we expected.\n</think>\nvarnishstat -1"
   },
   {
     "instruction": "How to purge a specific URL in Varnish",
-    "output": "<think>\n1. Understand the task: This is a straightforward network operations task that requires the right flags and arguments.\n\n2. Choose the right tooling: The right tool here is `varnishadm` — Varnish cache administration.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nvarnishadm ban req.url == '/path/to/page'"
+    "output": "<think>\nWe should purge a specific URL in Varnish.\nThe tool for this job is varnishadm — Varnish cache administration.\nCheck the output for errors before proceeding to the next step.\n</think>\nvarnishadm ban req.url == '/path/to/page'"
   }
 ]

@@ -1,90 +1,90 @@
 [
   {
     "instruction": "Create network config with multiple addresses",
-    "output": "<think>\nThis is a straightforward system administration task that requires the right flags and arguments.\n\nExecuting: I'll use `printf` as the primary tool — printf command execution and management. Output redirection captures the result for later review or logging.\n\nWatch out for: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. After execution, validate that the system behaves as expected before closing the task.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nAddress=192.168.1.10/24\\nAddress=10.0.0.10/24\\n' > /etc/systemd/network/10-multi-ip.network"
+    "output": "<think>\nWe're being asked to create network config with multiple addresses.\nBest tool here is printf — printf operations.\nCheck the output for errors before proceeding to the next step.\nQuick verification after execution to be safe.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nAddress=192.168.1.10/24\\nAddress=10.0.0.10/24\\n' > /etc/systemd/network/10-multi-ip.network"
   },
   {
     "instruction": "Enable networkd at boot",
-    "output": "<think>\nThe goal is to configure systemctl correctly for this use case.\n\nExecuting: `systemctl` is the appropriate choice — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Confirm success by running a status check or inspecting the output for errors.\n</think>\nsystemctl enable systemd-networkd"
+    "output": "<think>\nThe task requires us to enable networkd at boot.\nThe tool for this job is systemctl — managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\nLet me verify afterward that it worked correctly.\n</think>\nsystemctl enable systemd-networkd"
   },
   {
     "instruction": "Set DHCP lease timeout",
-    "output": "<think>\n1. Understand the task: We'll execute the system administration command with appropriate options for this scenario.\n\n2. Choose the right tooling: I'll use `printf` as the primary tool — printf command execution and management.\n   Output redirection captures the result for later review or logging.\n\n3. Safety precautions:\n   - Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters.\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\nprintf '[DHCPv4]\\nMaxAttempts=10\\n' > /etc/systemd/network/10-dhcp-timeout.network"
+    "output": "<think>\nThis is asking us to set DHCP lease timeout.\nBest tool here is printf — printf operations.\nCheck the output for errors before proceeding to the next step.\n</think>\nprintf '[DHCPv4]\\nMaxAttempts=10\\n' > /etc/systemd/network/10-dhcp-timeout.network"
   },
   {
     "instruction": "List all network links",
-    "output": "<think>\nThe user wants to perform a service management operation using networkctl.\n\nExecuting: I'll use `networkctl` as the primary tool — networkctl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nnetworkctl list"
+    "output": "<think>\nThe task requires us to list all network links.\nLet me think about the best approach.\nI'll reach for networkctl here because network link status.\nOne command does the job. Simple is better.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nnetworkctl list"
   },
   {
     "instruction": "Create a VLAN netdev",
-    "output": "<think>\nTask analysis: The user wants to perform a system administration operation using printf.\n\nTool selection: `printf` is the appropriate choice — printf command execution and management.\nOutput redirection captures the result for later review or logging.\n\nRisk assessment: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Verify the result with a follow-up `printf — check the output matches expectations.\n</think>\nprintf '[NetDev]\\nName=vlan10\\nKind=vlan\\n[VLAN]\\nId=10\\n' > /etc/systemd/network/15-vlan10.netdev"
+    "output": "<think>\nSo the request is to create a VLAN netdev.\nFor this, printf is the right tool — printf operations.\nLet me verify afterward that it worked correctly.\n</think>\nprintf '[NetDev]\\nName=vlan10\\nKind=vlan\\n[VLAN]\\nId=10\\n' > /etc/systemd/network/15-vlan10.netdev"
   },
   {
     "instruction": "Create bond member config for eth0",
-    "output": "<think>\nThe user wants to perform a system administration operation using printf.\n\nThe right tool here is `printf` — printf command execution and management.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Verify the result with a follow-up `printf — check the output matches expectations.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nBond=bond0\\n' > /etc/systemd/network/20-eth0-bond-member.network"
+    "output": "<think>\nThe user wants to create bond member config for eth0.\nThe tool for this job is printf — printf operations.\nA single command handles this cleanly — no need to overcomplicate it.\nI'll check the output to make sure it did what we expected.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nBond=bond0\\n' > /etc/systemd/network/20-eth0-bond-member.network"
   },
   {
     "instruction": "Create network config with DNS server list",
-    "output": "<think>\nLooking at this request: The user wants to perform a system administration operation using printf.\n\nApproach: I'll use `printf` as the primary tool — printf command execution and management. Output redirection captures the result for later review or logging.\n\nSafety check: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Confirm success by running a status check or inspecting the output for errors.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nDHCP=no\\nDNS=8.8.8.8\\nDNS=1.1.1.1\\nAddress=192.168.1.10/24\\nGateway=192.168.1.1\\n' > /etc/systemd/network/10-static-dns.network"
+    "output": "<think>\nWe should create network config with DNS server list.\nLet me think through this step by step.\nI'd use printf for this — printf operations.\nNo need for complex pipelines here — one command is sufficient.\nQuick verification after execution to be safe.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nDHCP=no\\nDNS=8.8.8.8\\nDNS=1.1.1.1\\nAddress=192.168.1.10/24\\nGateway=192.168.1.1\\n' > /etc/systemd/network/10-static-dns.network"
   },
   {
     "instruction": "Create a VXLAN netdev",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using printf.\n\n2. Choose the right tooling: I'll use `printf` as the primary tool — printf command execution and management.\n   Output redirection captures the result for later review or logging.\n\n3. Safety precautions:\n   - Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters.\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nprintf '[NetDev]\\nName=vxlan100\\nKind=vxlan\\n[VXLAN]\\nId=100\\nRemote=10.0.0.1\\n' > /etc/systemd/network/15-vxlan.netdev"
+    "output": "<think>\nThe goal is to create a VXLAN netdev.\nBest tool here is printf — printf operations.\n</think>\nprintf '[NetDev]\\nName=vxlan100\\nKind=vxlan\\n[VXLAN]\\nId=100\\nRemote=10.0.0.1\\n' > /etc/systemd/network/15-vxlan.netdev"
   },
   {
     "instruction": "Create bridge port config",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nExecuting: The right tool here is `printf` — printf command execution and management. Output redirection captures the result for later review or logging.\n\nWatch out for: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Check the logs or output to ensure the operation completed as intended.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nBridge=br0\\n' > /etc/systemd/network/20-eth0-bridge-member.network"
+    "output": "<think>\nSo the request is to create bridge port config.\nLet me break this down.\nI'd use printf for this — printf operations.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nBridge=br0\\n' > /etc/systemd/network/20-eth0-bridge-member.network"
   },
   {
     "instruction": "Configure interface MTU",
-    "output": "<think>\nWe need to prepare a configuration that matches the user's requirements.\n\nI'll use `printf` as the primary tool — printf command execution and management.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. After execution, validate that the system behaves as expected before closing the task.\n</think>\nprintf '[Match]\\nName=eth0\\n[Link]\\nMTUBytes=9000\\n' > /etc/systemd/network/10-mtu.network"
+    "output": "<think>\nWe're being asked to configure interface MTU.\nI'd use printf for this — printf operations.\nAfter running, confirm it worked as expected before moving on.\nLet me verify afterward that it worked correctly.\n</think>\nprintf '[Match]\\nName=eth0\\n[Link]\\nMTUBytes=9000\\n' > /etc/systemd/network/10-mtu.network"
   },
   {
     "instruction": "Configure interface speed and duplex",
-    "output": "<think>\nWe need to prepare a configuration that matches the user's requirements.\n\nThe right tool here is `printf` — printf command execution and management.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Verify the result with a follow-up `printf — check the output matches expectations.\n</think>\nprintf '[Link]\\nSpeedBytesPerSec=1G\\nDuplex=full\\n' > /etc/systemd/network/10-speed-duplex.link"
+    "output": "<think>\nThe goal is to configure interface speed and duplex.\nLet me consider what makes sense here.\nprintf is what we need — printf operations.\n</think>\nprintf '[Link]\\nSpeedBytesPerSec=1G\\nDuplex=full\\n' > /etc/systemd/network/10-speed-duplex.link"
   },
   {
     "instruction": "List all link config files",
-    "output": "<think>\nTask analysis: We'll execute the system administration command with appropriate options for this scenario.\n\nTool selection: I'll use `ls` as the primary tool — ls command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `ls — check the output matches expectations.\n</think>\nls /etc/systemd/network/*.link"
+    "output": "<think>\nThe user wants to list all link config files.\nThe tool for this job is ls — ls operations.\nI'll check the output to make sure it did what we expected.\n</think>\nls /etc/systemd/network/*.link"
   },
   {
     "instruction": "Check networkd service status",
-    "output": "<think>\nWe'll execute the service management command with appropriate options for this scenario.\n\n`systemctl` is the appropriate choice — manage systemd services and units.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. After execution, validate that the system behaves as expected before closing the task.\n</think>\nsystemctl status systemd-networkd"
+    "output": "<think>\nSo the request is to check networkd service status.\nBest tool here is systemctl — managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\nLet me verify afterward that it worked correctly.\n</think>\nsystemctl status systemd-networkd"
   },
   {
     "instruction": "List all netdev config files",
-    "output": "<think>\nTask analysis: The user wants to perform a system administration operation using ls.\n\nTool selection: I'll use `ls` as the primary tool — ls command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nls /etc/systemd/network/*.netdev"
+    "output": "<think>\nThe task requires us to list all netdev config files.\nls is what we need — ls operations.\nVerify with a follow-up status command to make sure everything looks right.\nAfter running, I'll confirm the result looks right.\n</think>\nls /etc/systemd/network/*.netdev"
   },
   {
     "instruction": "Restart networkd service",
-    "output": "<think>\n1. Understand the task: This is a straightforward service management task that requires the right flags and arguments.\n\n2. Choose the right tooling: I'll use `systemctl` as the primary tool — manage systemd services and units.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`.\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nsystemctl restart systemd-networkd"
+    "output": "<think>\nThe goal is to restart networkd service.\nThis calls for systemctl. Managing systemd services.\nOne command does the job. Simple is better.\nRestarting services has downtime. If possible, use reload instead of restart.\nLet me verify afterward that it worked correctly.\n</think>\nsystemctl restart systemd-networkd"
   },
   {
     "instruction": "Create a bond netdev config",
-    "output": "<think>\nGoal: This is a straightforward system administration task that requires the right flags and arguments.\n\nPlan: I'll use `printf` as the primary tool — printf command execution and management. Output redirection captures the result for later review or logging.\n\nPrecautions: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. After execution, validate that the system behaves as expected before closing the task.\n</think>\nprintf '[NetDev]\\nName=bond0\\nKind=bond\\n[Bond]\\nMode=802.3ad\\nMIIMonitorSec=1s\\n' > /etc/systemd/network/10-bond0.netdev"
+    "output": "<think>\nAlright, we need to create a bond netdev config.\nLet me think through this step by step.\nThe tool for this job is printf — printf operations.\nOne command does the job. Simple is better.\nAfter running, confirm it worked as expected before moving on.\nAfter running, I'll confirm the result looks right.\n</think>\nprintf '[NetDev]\\nName=bond0\\nKind=bond\\n[Bond]\\nMode=802.3ad\\nMIIMonitorSec=1s\\n' > /etc/systemd/network/10-bond0.netdev"
   },
   {
     "instruction": "Forcibly reconfigure all interfaces",
-    "output": "<think>\nTask analysis: This requires setting up or modifying networkctl configuration.\n\nTool selection: I'll use `networkctl` as the primary tool — networkctl command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nnetworkctl reconfigure"
+    "output": "<think>\nWe're being asked to forcibly reconfigure all interfaces.\nI'd use networkctl for this — network link status.\nA quick sanity check afterward saves debugging time later.\nAfter running, I'll confirm the result looks right.\n</think>\nnetworkctl reconfigure"
   },
   {
     "instruction": "Configure DHCP use NTP from server",
-    "output": "<think>\nThe goal is to configure printf correctly for this use case.\n\n`printf` is the appropriate choice — printf command execution and management.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Confirm success by running a status check or inspecting the output for errors.\n</think>\nprintf '[DHCPv4]\\nUseNTP=true\\n' > /etc/systemd/network/10-dhcp-ntp.network"
+    "output": "<think>\nAlright, we need to configure DHCP use NTP from server.\nLet me reason through this.\nFor this, printf is the right tool — printf operations.\nCheck the output for errors before proceeding to the next step.\n</think>\nprintf '[DHCPv4]\\nUseNTP=true\\n' > /etc/systemd/network/10-dhcp-ntp.network"
   },
   {
     "instruction": "Set DHCP server on network config",
-    "output": "<think>\nThe user wants to perform a system administration operation using printf.\n\nExecuting: `printf` is the appropriate choice — printf command execution and management. Output redirection captures the result for later review or logging.\n\nWatch out for: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Check the logs or output to ensure the operation completed as intended.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nDHCPServer=yes\\n' > /etc/systemd/network/10-dhcp-server.network"
+    "output": "<think>\nThe user wants to set DHCP server on network config.\nLet me break this down.\nBest tool here is printf — printf operations.\nVerify with a follow-up status command to make sure everything looks right.\nLet me verify afterward that it worked correctly.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nDHCPServer=yes\\n' > /etc/systemd/network/10-dhcp-server.network"
   },
   {
     "instruction": "Display link LLDP neighbors",
-    "output": "<think>\nWe'll execute the service management command with appropriate options for this scenario.\n\nExecuting: `networkctl` is the appropriate choice — networkctl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nnetworkctl lldp"
+    "output": "<think>\nSo we need to display link LLDP neighbors.\nThis calls for networkctl. Network link status.\nOne command does the job. Simple is better.\nCheck the output for errors before proceeding to the next step.\n</think>\nnetworkctl lldp"
   },
   {
     "instruction": "Configure IPv6 on interface",
-    "output": "<think>\nGoal: We need to prepare a configuration that matches the user's requirements.\n\nPlan: I'll use `printf` as the primary tool — printf command execution and management. Output redirection captures the result for later review or logging.\n\nPrecautions: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Confirm success by running a status check or inspecting the output for errors.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nIPv6AcceptRA=yes\\nAddress=2001:db8::1/64\\nGateway=2001:db8::ff\\n' > /etc/systemd/network/10-ipv6.network"
+    "output": "<think>\nAlright, we need to configure IPv6 on interface.\nThis calls for printf. Printf operations.\nNo need for complex pipelines here — one command is sufficient.\nAfter running, I'll confirm the result looks right.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nIPv6AcceptRA=yes\\nAddress=2001:db8::1/64\\nGateway=2001:db8::ff\\n' > /etc/systemd/network/10-ipv6.network"
   },
   {
     "instruction": "Configure DHCP with hostname",
-    "output": "<think>\nThe goal is to configure printf correctly for this use case.\n\n`printf` is the appropriate choice — printf command execution and management.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. After execution, validate that the system behaves as expected before closing the task.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nDHCP=ipv4\\n[DHCPv4]\\nHostname=myhost\\n' > /etc/systemd/network/10-dhcp-hostname.network"
+    "output": "<think>\nThe goal is to configure DHCP with hostname.\nI'll reach for printf here because printf operations.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nprintf '[Match]\\nName=eth0\\n[Network]\\nDHCP=ipv4\\n[DHCPv4]\\nHostname=myhost\\n' > /etc/systemd/network/10-dhcp-hostname.network"
   }
 ]

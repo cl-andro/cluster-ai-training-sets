@@ -1,102 +1,102 @@
 [
   {
     "instruction": "Rsync removing source files after transfer",
-    "output": "<think>\n1. Understand the task: The user wants to perform a storage management operation using rsync.\n\n2. Choose the right tooling: The right tool here is `rsync` — efficient file synchronization.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore.\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nrsync -avh --remove-source-files /home/user/ /backup/data/"
+    "output": "<think>\nThe goal is to rsync removing source files after transfer.\nLet me break this down.\nThis calls for rsync. Efficient file synchronization.\nAfter running, confirm it worked as expected before moving on.\n</think>\nrsync -avh --remove-source-files /home/user/ /backup/data/"
   },
   {
     "instruction": "Borg create with lock wait timeout",
-    "output": "<think>\nGoal: The user wants to perform a storage management operation using borg.\n\nPlan: `borg` is the appropriate choice — deduplicating backup tool. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore. Verify the result with a follow-up `borg — check the output matches expectations.\n</think>\nborg create --lock-wait 60 /backup/borg::home-{now:%Y-%m-%d} /home/user"
+    "output": "<think>\nSo we need to borg create with lock wait timeout.\nLet me think about the best approach.\nFor this, borg is the right tool — deduplicating backups.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nborg create --lock-wait 60 /backup/borg::home-{now:%Y-%m-%d} /home/user"
   },
   {
     "instruction": "Restic backup with upload speed limit",
-    "output": "<think>\nThe backup strategy should balance completeness with resource usage.\n\nWe should verify the backup with a checksum or test restore step.\n\n`restic` is the appropriate choice — encrypted backup solution.\nKey flags: `-r` (recursive operation) — chosen to match the exact requirement.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore. After execution, validate that the system behaves as expected before closing the task.\n</think>\nrestic -r /backup/restic backup --limit-upload 1000 /home/user"
+    "output": "<think>\nNeed to restic backup with upload speed limit.\nLet me reason through this.\nBest tool here is restic — encrypted backups.\nThe -r flag means recursive operation (descend into subdirectories), which matters here because standard practice for this kind of operation.\nAfter running, confirm it worked as expected before moving on.\nQuick verification after execution to be safe.\n</think>\nrestic -r /backup/restic backup --limit-upload 1000 /home/user"
   },
   {
     "instruction": "Skip file-stat comparison in rdiff-backup",
-    "output": "<think>\nGoal: We need to safely back up or restore data using rdiff-backup.\nWe should verify the backup with a checksum or test restore step.\n\nPlan: `rdiff-backup` is the appropriate choice — rdiff-backup command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nrdiff-backup --no-file-stat /etc /backup/etc"
+    "output": "<think>\nThe user wants to skip file-stat comparison in rdiff-backup.\nI'd use rdiff-backup for this — rdiff-backup operations.\nAfter running, confirm it worked as expected before moving on.\n</think>\nrdiff-backup --no-file-stat /etc /backup/etc"
   },
   {
     "instruction": "Duplicity with custom volume size",
-    "output": "<think>\nWe'll execute the storage management command with appropriate options for this scenario.\n\nI'll use `duplicity` as the primary tool — duplicity command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore. Confirm success by running a status check or inspecting the output for errors.\n</think>\nduplicity --volsize 250 /home/user file:///backup/duplicity"
+    "output": "<think>\nThe user wants to duplicity with custom volume size.\nI'd use duplicity for this — duplicity operations.\nAfter running, confirm it worked as expected before moving on.\n</think>\nduplicity --volsize 250 /home/user file:///backup/duplicity"
   },
   {
     "instruction": "Skip nodump files in DAR",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using dar.\n\n2. Choose the right tooling: The right tool here is `dar` — dar command execution and management.\n   Key flags: `-R` (recursive operation) — chosen to match the exact requirement.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\ndar -c /backup/home-dar --nodump -R /home/user"
+    "output": "<think>\nNeed to skip nodump files in DAR.\nThe tool for this job is dar — dar operations.\nThe -c flag means count or create, which matters here because this controls how the output is formatted.\nWhy -R? Recursive operation. this controls how the output is formatted.\nAfter running, confirm it worked as expected before moving on.\nLet me verify afterward that it worked correctly.\n</think>\ndar -c /backup/home-dar --nodump -R /home/user"
   },
   {
     "instruction": "Check dump progress",
-    "output": "<think>\nThis is a straightforward system administration task that requires the right flags and arguments.\n\nExecuting: I'll use `dump` as the primary tool — dump command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ndump -0uf /backup/sda1.dump /dev/sda1 &; sleep 5; dump -W"
+    "output": "<think>\nAlright, we need to check dump progress.\nLet me consider what makes sense here.\nBest tool here is dump — dump operations.\nNo need for complex pipelines here — one command is sufficient.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\ndump -0uf /backup/sda1.dump /dev/sda1 &; sleep 5; dump -W"
   },
   {
     "instruction": "Restore file system interactively",
-    "output": "<think>\nLooking at this request: We need to safely back up or restore data using restore.\n\nApproach: I'll use `restore` as the primary tool — restore command execution and management. Key flags: `-i` (interactive mode or case-insensitive), `-f` (force execution, suppress errors) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `restore — check the output matches expectations.\n</think>\nrestore -i -f /backup/sda1.dump"
+    "output": "<think>\nNeed to restore file system interactively.\nLet me consider what makes sense here.\nI'd use restore for this — restore operations.\nThe -i flag means interactive, prompt before action, which matters here because without it the command won't work as we need.\nThe -f flag means force, suppress errors, which matters here because needed for this specific use case.\n</think>\nrestore -i -f /backup/sda1.dump"
   },
   {
     "instruction": "Sparse file handling in dd",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using dd.\n\n2. Choose the right tooling: The right tool here is `dd` — dd command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing.\n   - Verify the result with a follow-up `dd — check the output matches expectations.\n</think>\ndd if=/dev/sda of=/backup/sda.img bs=4M conv=sparse status=progress"
+    "output": "<think>\nThe user wants to sparse file handling in dd.\nLet me think through this step by step.\nThe tool for this job is dd — dd operations.\ndd is dangerous if you get the device wrong — you could wipe the wrong disk. Triple-check the target device.\n</think>\ndd if=/dev/sda of=/backup/sda.img bs=4M conv=sparse status=progress"
   },
   {
     "instruction": "Synchronous ddrescue mode",
-    "output": "<think>\n1. Understand the task: This is a straightforward system administration task that requires the right flags and arguments.\n\n2. Choose the right tooling: The right tool here is `ddrescue` — ddrescue command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nddrescue --synchronous /dev/sda /backup/sda.img /backup/sda.log"
+    "output": "<think>\nWe should synchronous ddrescue mode.\nHere's how I'd approach this.\nThe tool for this job is ddrescue — ddrescue operations.\nCheck the output for errors before proceeding to the next step.\nAfter running, I'll confirm the result looks right.\n</think>\nddrescue --synchronous /dev/sda /backup/sda.img /backup/sda.log"
   },
   {
     "instruction": "Tar incremental with snapshot bookkeeping",
-    "output": "<think>\nTask analysis: The backup strategy should balance completeness with resource usage.\n\nTool selection: I'll use `tar` as the primary tool — tar command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore. Check the logs or output to ensure the operation completed as intended.\n</think>\ntar --listed-incremental=/backup/snapshot.snar -czvf /backup/home-$(date +%Y%m%d).tar.gz /home/user"
+    "output": "<think>\nSo we need to tar incremental with snapshot bookkeeping.\nLet me break this down.\nBest tool here is tar — file archiving.\nOne command does the job. Simple is better.\nCheck that the target device has enough space before extracting large archives.\n</think>\ntar --listed-incremental=/backup/snapshot.snar -czvf /backup/home-$(date +%Y%m%d).tar.gz /home/user"
   },
   {
     "instruction": "Cpio with progress dots",
-    "output": "<think>\nTask analysis: The user wants to perform a system administration operation using find.\n\nTool selection: I'll use `find` as the primary tool — find command execution and management.\nPipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nRisk assessment: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Check the logs or output to ensure the operation completed as intended.\n</think>\nfind /home/user -type f | cpio -o | pv | gzip > /backup/home.cpio.gz"
+    "output": "<think>\nThis is asking us to cpio with progress dots.\nLet me reason through this.\nI'd use find for this — file searching.\nThere are a few moving parts here, so let me be careful.\nI'm piping because each stage transforms the data before passing it to the next.\nfind can walk a huge directory tree and cause disk thrashing — limit with -maxdepth if possible.\n</think>\nfind /home/user -type f | cpio -o | pv | gzip > /backup/home.cpio.gz"
   },
   {
     "instruction": "Pass extended options to pax",
-    "output": "<think>\nThe user wants to perform a system administration operation using pax.\n\nExecuting: I'll use `pax` as the primary tool — pax command execution and management. Key flags: `-f` (force execution, suppress errors) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `pax — check the output matches expectations.\n</think>\npax -w -o 'mtime=@0' -f /backup/www.pax /var/www"
+    "output": "<think>\nThe task requires us to pass extended options to pax.\nHere's how I'd approach this.\nThis calls for pax. Pax operations.\nNo need for complex pipelines here — one command is sufficient.\nI'll check the output to make sure it did what we expected.\n</think>\npax -w -o 'mtime=@0' -f /backup/www.pax /var/www"
   },
   {
     "instruction": "Configure rclone with interactive setup",
-    "output": "<think>\nWe need to prepare a configuration that matches the user's requirements.\n\nThe right tool here is `rclone` — cloud storage synchronization.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore. Check the logs or output to ensure the operation completed as intended.\n</think>\nrclone config"
+    "output": "<think>\nThe user wants to configure rclone with interactive setup.\nLet me break this down.\nBest tool here is rclone — cloud storage sync.\nLike rsync — --dry-run first. Cloud transfers might incur costs for large syncs.\n</think>\nrclone config"
   },
   {
     "instruction": "Exclude patterns with s3cmd sync",
-    "output": "<think>\nWe'll execute the version control command with appropriate options for this scenario.\n\nExecuting: The right tool here is `s3cmd` — s3cmd command execution and management. `git` will be used for version control and repository management. Key flags: `--exclude` (skip matching patterns), `--exclude` (skip matching patterns) — chosen to match the exact requirement.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\ns3cmd sync --exclude '.git/*' --exclude '*.log' /home/user/ s3://my-backup-bucket/"
+    "output": "<think>\nThe goal is to exclude patterns with s3cmd sync.\nLet me think through this step by step.\nFor this, s3cmd is the right tool — s3cmd operations.\nA quick sanity check afterward saves debugging time later.\n</think>\ns3cmd sync --exclude '.git/*' --exclude '*.log' /home/user/ s3://my-backup-bucket/"
   },
   {
     "instruction": "Dump PostgreSQL with clean drop statements",
-    "output": "<think>\nLooking at this request: We'll execute the database operations command with appropriate options for this scenario.\n\nApproach: I'll use `pg_dump` as the primary tool — PostgreSQL backup. Output redirection captures the result for later review or logging.\n\nSafety check: DATABASE CAUTION: Use `--single-transaction` for live InnoDB backups to avoid locking. Test restore on a staging environment first. Confirm success by running a status check or inspecting the output for errors.\n</think>\npg_dump --clean mydb > /backup/mydb.sql"
+    "output": "<think>\nNeed to dump PostgreSQL with clean drop statements.\nLet me think through this step by step.\nI'll reach for pg_dump here because PostgreSQL database backup.\nFor live databases, use --lock-wait-timeout to avoid blocking production queries.\nLet me verify afterward that it worked correctly.\n</think>\npg_dump --clean mydb > /backup/mydb.sql"
   },
   {
     "instruction": "Compact MySQL dump output",
-    "output": "<think>\nThis is a straightforward database operations task that requires the right flags and arguments.\n\nI'll use `mysqldump` as the primary tool — MySQL backup.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: DATABASE CAUTION: Use `--single-transaction` for live InnoDB backups to avoid locking. Test restore on a staging environment first. Confirm success by running a status check or inspecting the output for errors.\n</think>\nmysqldump --compact --no-create-info mydb > /backup/mydb-data.sql"
+    "output": "<think>\nSo the request is to compact MySQL dump output.\nBest tool here is mysqldump — MySQL database backup.\nUse --single-transaction for InnoDB to get a consistent snapshot without locking.\n</think>\nmysqldump --compact --no-create-info mydb > /backup/mydb-data.sql"
   },
   {
     "instruction": "Restore MongoDB with namespace include",
-    "output": "<think>\nLooking at this request: Data integrity is the primary concern here — verification is essential.\n\nApproach: `mongorestore` is the appropriate choice — mongorestore command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nmongorestore --nsInclude 'mydb.users' /backup/mongodb"
+    "output": "<think>\nThe user wants to restore MongoDB with namespace include.\nFirst, let me understand what's needed here.\nThis calls for mongorestore. Mongorestore operations.\nA quick sanity check afterward saves debugging time later.\n</think>\nmongorestore --nsInclude 'mydb.users' /backup/mongodb"
   },
   {
     "instruction": "Borg with custom remote SSH path",
-    "output": "<think>\nGoal: The user wants to perform a storage management operation using borg.\n\nPlan: `borg` is the appropriate choice — deduplicating backup tool. `host` will be used for host command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore. After execution, validate that the system behaves as expected before closing the task.\n</think>\nborg create --remote-path /usr/local/bin/borg user@host:/backup/borg::home-{now:%Y-%m-%d} /home/user"
+    "output": "<think>\nThe goal is to borg with custom remote SSH path.\nLet me think through this step by step.\nFor this, borg is the right tool — deduplicating backups.\nAfter running, confirm it worked as expected before moving on.\nLet me verify afterward that it worked correctly.\n</think>\nborg create --remote-path /usr/local/bin/borg user@host:/backup/borg::home-{now:%Y-%m-%d} /home/user"
   },
   {
     "instruction": "Generate Restic bash completion",
-    "output": "<think>\nLooking at this request: We'll execute the storage management command with appropriate options for this scenario.\n\nApproach: The right tool here is `restic` — encrypted backup solution. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore. After execution, validate that the system behaves as expected before closing the task.\n</think>\nrestic generate --bash-completion /etc/bash_completion.d/restic"
+    "output": "<think>\nWe're being asked to generate Restic bash completion.\nrestic is what we need — encrypted backups.\nQuick verification after execution to be safe.\n</think>\nrestic generate --bash-completion /etc/bash_completion.d/restic"
   },
   {
     "instruction": "Restore specific inode from dump",
-    "output": "<think>\nThe backup strategy should balance completeness with resource usage.\n\nWe should verify the backup with a checksum or test restore step.\n\n`restore` is the appropriate choice — restore command execution and management.\nKey flags: `-f` (force execution, suppress errors), `-i` (interactive mode or case-insensitive) — chosen to match the exact requirement.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `restore — check the output matches expectations.\n</think>\nrestore -x -f /backup/sda1.dump -i 123456"
+    "output": "<think>\nWe should restore specific inode from dump.\nFirst, let me understand what's needed here.\nThis calls for restore. Restore operations.\nI'm using -f for force, suppress errors — needed for this specific use case.\nThe -i flag handles interactive, prompt before action. Important because standard practice for this kind of operation.\nLet me verify afterward that it worked correctly.\n</think>\nrestore -x -f /backup/sda1.dump -i 123456"
   },
   {
     "instruction": "List directories in dump archive",
-    "output": "<think>\nThe user wants to perform a system administration operation using restore.\n\nThe right tool here is `restore` — restore command execution and management.\nKey flags: `-t` (sort by time), `-f` (force execution, suppress errors) — chosen to match the exact requirement.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nrestore -t -f /backup/sda1.dump"
+    "output": "<think>\nThe user wants to list directories in dump archive.\nFor this, restore is the right tool — restore operations.\nOne command does the job. Simple is better.\nAfter running, confirm it worked as expected before moving on.\nAfter running, I'll confirm the result looks right.\n</think>\nrestore -t -f /backup/sda1.dump"
   },
   {
     "instruction": "Create incremental level 3 dump",
-    "output": "<think>\nThe user wants to perform a system administration operation using dump.\n\nExecuting: The right tool here is `dump` — dump command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `dump — check the output matches expectations.\n</think>\ndump -3uf /backup/sda1-level3.dump /dev/sda1"
+    "output": "<think>\nSo the request is to create incremental level 3 dump.\nFirst, let me understand what's needed here.\ndump is what we need — dump operations.\n</think>\ndump -3uf /backup/sda1-level3.dump /dev/sda1"
   },
   {
     "instruction": "Borg list with JSON output",
-    "output": "<think>\n1. Understand the task: We'll execute the storage management command with appropriate options for this scenario.\n\n2. Choose the right tooling: The right tool here is `borg` — deduplicating backup tool.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore.\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nborg list /backup/borg --json"
+    "output": "<think>\nThis is asking us to borg list with JSON output.\nThe tool for this job is borg — deduplicating backups.\nCheck the output for errors before proceeding to the next step.\n</think>\nborg list /backup/borg --json"
   },
   {
     "instruction": "Restic backup to SFTP repository",
-    "output": "<think>\nTask analysis: We need to safely back up or restore data using restic.\n\nTool selection: The right tool here is `restic` — encrypted backup solution.\n`host` will be used for host command execution and management.\n\nRisk assessment: BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore. Check the logs or output to ensure the operation completed as intended.\n</think>\nrestic -r sftp:user@host:/backup/restic backup /home/user"
+    "output": "<think>\nSo we need to restic backup to SFTP repository.\nHere's how I'd approach this.\nBest tool here is restic — encrypted backups.\nThe -r flag handles recursive operation (descend into subdirectories). Important because without it the command won't work as we need.\nI'll check the output to make sure it did what we expected.\n</think>\nrestic -r sftp:user@host:/backup/restic backup /home/user"
   }
 ]

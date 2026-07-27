@@ -1,90 +1,90 @@
 [
   {
     "instruction": "Set DNS over TLS for interface",
-    "output": "<think>\nThe user wants to perform a service management operation using resolvectl.\n\nExecuting: The right tool here is `resolvectl` — resolvectl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nresolvectl dnsovertls eth0 true"
+    "output": "<think>\nThe task requires us to set DNS over TLS for interface.\nLet me think about the best approach.\nresolvectl is what we need — DNS resolver management.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nresolvectl dnsovertls eth0 true"
   },
   {
     "instruction": "View resolved journal logs",
-    "output": "<think>\n1. Understand the task: We'll execute the service management command with appropriate options for this scenario.\n\n2. Choose the right tooling: I'll use `journalctl` as the primary tool — query systemd journal logs.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`.\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\njournalctl -u systemd-resolved"
+    "output": "<think>\nThis is asking us to view resolved journal logs.\nHere's how I'd approach this.\njournalctl is what we need — checking systemd logs.\nWhy -u? Show or sort by access time. this controls how the output is formatted.\nA single command handles this cleanly — no need to overcomplicate it.\nOld logs can be large — add --since to limit the range and avoid huge output.\n</think>\njournalctl -u systemd-resolved"
   },
   {
     "instruction": "Check DNSSEC setting for an interface",
-    "output": "<think>\nWe'll execute the service management command with appropriate options for this scenario.\n\n`resolvectl` is the appropriate choice — resolvectl command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nresolvectl dnssec eth0"
+    "output": "<think>\nThis is asking us to check DNSSEC setting for an interface.\nLet me think through this step by step.\nFor this, resolvectl is the right tool — DNS resolver management.\nVerify with a follow-up status command to make sure everything looks right.\n</think>\nresolvectl dnssec eth0"
   },
   {
     "instruction": "Set DNS search domain for interface",
-    "output": "<think>\nWe'll execute the service management command with appropriate options for this scenario.\n\nExecuting: The right tool here is `resolvectl` — resolvectl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `resolvectl — check the output matches expectations.\n</think>\nresolvectl domain eth0 example.com"
+    "output": "<think>\nThis is asking us to set DNS search domain for interface.\nFirst, let me understand what's needed here.\nThis calls for resolvectl. DNS resolver management.\nOne command does the job. Simple is better.\nAfter running, I'll confirm the result looks right.\n</think>\nresolvectl domain eth0 example.com"
   },
   {
     "instruction": "Query TXT record for domain",
-    "output": "<think>\nThe user wants to perform a service management operation using resolvectl.\n\nThe right tool here is `resolvectl` — resolvectl command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nresolvectl query --type=TXT example.com"
+    "output": "<think>\nAlright, we need to query TXT record for domain.\nI'd use resolvectl for this — DNS resolver management.\n</think>\nresolvectl query --type=TXT example.com"
   },
   {
     "instruction": "Check which interface handles a domain",
-    "output": "<think>\nWe'll execute the service management command with appropriate options for this scenario.\n\n`resolvectl` is the appropriate choice — resolvectl command execution and management.\nKey flags: `-i` (interactive mode or case-insensitive) — chosen to match the exact requirement.\nPipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nBefore executing: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. After execution, validate that the system behaves as expected before closing the task.\n</think>\nresolvectl query example.com | grep -i link"
+    "output": "<think>\nThe user wants to check which interface handles a domain.\nI'll reach for resolvectl here because DNS resolver management.\nThe -i flag handles interactive, prompt before action. Important because needed for this specific use case.\nThe command looks straightforward, but let me check the details.\nEach pipe stage handles one transformation, keeping the logic composable.\nAfter running, confirm it worked as expected before moving on.\n</think>\nresolvectl query example.com | grep -i link"
   },
   {
     "instruction": "Check resolved service status",
-    "output": "<think>\nLooking at this request: The user wants to perform a service management operation using systemctl.\n\nApproach: `systemctl` is the appropriate choice — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Verify the result with a follow-up `systemctl — check the output matches expectations.\n</think>\nsystemctl status systemd-resolved"
+    "output": "<think>\nThe user wants to check resolved service status.\nHere's how I'd approach this.\nThe tool for this job is systemctl — managing systemd services.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nsystemctl status systemd-resolved"
   },
   {
     "instruction": "Query all record types for a domain",
-    "output": "<think>\nTask analysis: This is a straightforward service management task that requires the right flags and arguments.\n\nTool selection: The right tool here is `resolvectl` — resolvectl command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `resolvectl — check the output matches expectations.\n</think>\nresolvectl query --type=ANY example.com"
+    "output": "<think>\nNeed to query all record types for a domain.\nThe tool for this job is resolvectl — DNS resolver management.\n</think>\nresolvectl query --type=ANY example.com"
   },
   {
     "instruction": "Flush all DNS caches",
-    "output": "<think>\nThis is a straightforward service management task that requires the right flags and arguments.\n\nExecuting: I'll use `resolvectl` as the primary tool — resolvectl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nresolvectl flush-caches"
+    "output": "<think>\nSo the request is to flush all DNS caches.\nLet me reason through this.\nresolvectl is what we need — DNS resolver management.\nLet me verify afterward that it worked correctly.\n</think>\nresolvectl flush-caches"
   },
   {
     "instruction": "Query SRV record with service and proto",
-    "output": "<think>\nWe'll execute the service management command with appropriate options for this scenario.\n\nThe right tool here is `resolvectl` — resolvectl command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nresolvectl query --type=SRV _ldap._tcp.example.com"
+    "output": "<think>\nThe user wants to query SRV record with service and proto.\nFirst, let me understand what's needed here.\nI'll reach for resolvectl here because DNS resolver management.\nAfter running, confirm it worked as expected before moving on.\n</think>\nresolvectl query --type=SRV _ldap._tcp.example.com"
   },
   {
     "instruction": "Set read-ethers for mDNS",
-    "output": "<think>\nLooking at this request: This is a straightforward service management task that requires the right flags and arguments.\n\nApproach: `resolvectl` is the appropriate choice — resolvectl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nresolvectl mdns eth0 resolve"
+    "output": "<think>\nWe should set read-ethers for mDNS.\nLet me consider what makes sense here.\nresolvectl is what we need — DNS resolver management.\nNo need for complex pipelines here — one command is sufficient.\nCheck the output for errors before proceeding to the next step.\n</think>\nresolvectl mdns eth0 resolve"
   },
   {
     "instruction": "Disable mDNS on an interface",
-    "output": "<think>\n1. Understand the task: This is a straightforward service management task that requires the right flags and arguments.\n\n2. Choose the right tooling: `resolvectl` is the appropriate choice — resolvectl command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nresolvectl mdns eth0 no"
+    "output": "<think>\nWe should disable mDNS on an interface.\nLet me think about the best approach.\nThe tool for this job is resolvectl — DNS resolver management.\nNo need for complex pipelines here — one command is sufficient.\nA quick sanity check afterward saves debugging time later.\n</think>\nresolvectl mdns eth0 no"
   },
   {
     "instruction": "Point /etc/resolv.conf to stub resolver",
-    "output": "<think>\nLooking at this request: We'll execute the system administration command with appropriate options for this scenario.\n\nApproach: I'll use `ln` as the primary tool — ln command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf"
+    "output": "<think>\nNeed to point /etc/resolv.conf to stub resolver.\nFor this, ln is the right tool — ln operations.\nNo need for complex pipelines here — one command is sufficient.\nBe careful with symlink paths — a wrong absolute path breaks the link.\n</think>\nln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf"
   },
   {
     "instruction": "Show all search domains per link",
-    "output": "<think>\nGoal: The user wants to perform a service management operation using resolvectl.\n\nPlan: The right tool here is `resolvectl` — resolvectl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `resolvectl — check the output matches expectations.\n</think>\nresolvectl domain --all"
+    "output": "<think>\nThe user wants to show all search domains per link.\nresolvectl is what we need — DNS resolver management.\nA single command handles this cleanly — no need to overcomplicate it.\n</think>\nresolvectl domain --all"
   },
   {
     "instruction": "Check which DNS server resolved a query",
-    "output": "<think>\nLooking at this request: The user wants to perform a service management operation using resolvectl.\n\nApproach: I'll use `resolvectl` as the primary tool — resolvectl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nresolvectl query example.com --no-pager"
+    "output": "<think>\nAlright, we need to check which DNS server resolved a query.\nI'd use resolvectl for this — DNS resolver management.\nNo need for complex pipelines here — one command is sufficient.\nAfter running, I'll confirm the result looks right.\n</think>\nresolvectl query example.com --no-pager"
   },
   {
     "instruction": "Query a specific record type (SRV) for service",
-    "output": "<think>\nThe user wants to perform a service management operation using resolvectl.\n\nExecuting: `resolvectl` is the appropriate choice — resolvectl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `resolvectl — check the output matches expectations.\n</think>\nresolvectl query --type=SRV _http._tcp.example.com"
+    "output": "<think>\nThis is asking us to query a specific record type (SRV) for service.\nHere's how I'd approach this.\nBest tool here is resolvectl — DNS resolver management.\n</think>\nresolvectl query --type=SRV _http._tcp.example.com"
   },
   {
     "instruction": "Query DNS statistics",
-    "output": "<think>\nTask analysis: This is a straightforward service management task that requires the right flags and arguments.\n\nTool selection: I'll use `resolvectl` as the primary tool — resolvectl command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nresolvectl statistics"
+    "output": "<think>\nThe goal is to query DNS statistics.\nLet me think about the best approach.\nBest tool here is resolvectl — DNS resolver management.\nAfter running, confirm it worked as expected before moving on.\nAfter running, I'll confirm the result looks right.\n</think>\nresolvectl statistics"
   },
   {
     "instruction": "Show all DNS server info per link",
-    "output": "<think>\n1. Understand the task: We'll execute the service management command with appropriate options for this scenario.\n\n2. Choose the right tooling: `resolvectl` is the appropriate choice — resolvectl command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nresolvectl dns --all"
+    "output": "<think>\nWe're being asked to show all DNS server info per link.\nLet me consider what makes sense here.\nresolvectl is what we need — DNS resolver management.\nOne command does the job. Simple is better.\n</think>\nresolvectl dns --all"
   },
   {
     "instruction": "Perform multicast DNS query",
-    "output": "<think>\nTask analysis: This is a straightforward service management task that requires the right flags and arguments.\n\nTool selection: I'll use `resolvectl` as the primary tool — resolvectl command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nresolvectl query --type=AAAA myhost.local"
+    "output": "<think>\nWe're being asked to perform multicast DNS query.\nI'd use resolvectl for this — DNS resolver management.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nresolvectl query --type=AAAA myhost.local"
   },
   {
     "instruction": "Set DNS cache negative TTL",
-    "output": "<think>\nThe user wants to perform a system administration operation using printf.\n\nExecuting: I'll use `printf` as the primary tool — printf command execution and management. Output redirection captures the result for later review or logging.\n\nWatch out for: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. Check the logs or output to ensure the operation completed as intended.\n</think>\nprintf '[Resolve]\\nCacheNegativeTTL=10\\n' >> /etc/systemd/resolved.conf"
+    "output": "<think>\nSo we need to set DNS cache negative TTL.\nHere's how I'd approach this.\nI'll reach for printf here because printf operations.\nLet me verify afterward that it worked correctly.\n</think>\nprintf '[Resolve]\\nCacheNegativeTTL=10\\n' >> /etc/systemd/resolved.conf"
   },
   {
     "instruction": "Set multiple search domains",
-    "output": "<think>\nWe'll execute the service management command with appropriate options for this scenario.\n\nExecuting: I'll use `resolvectl` as the primary tool — resolvectl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nresolvectl domain eth0 example.com example.org"
+    "output": "<think>\nWe should set multiple search domains.\nLet me reason through this.\nBest tool here is resolvectl — DNS resolver management.\n</think>\nresolvectl domain eth0 example.com example.org"
   },
   {
     "instruction": "Set default DNS server for all interfaces",
-    "output": "<think>\nThis is a straightforward service management task that requires the right flags and arguments.\n\nExecuting: I'll use `resolvectl` as the primary tool — resolvectl command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `resolvectl — check the output matches expectations.\n</think>\nresolvectl dns 8.8.8.8"
+    "output": "<think>\nAlright, we need to set default DNS server for all interfaces.\nFor this, resolvectl is the right tool — DNS resolver management.\nA single command handles this cleanly — no need to overcomplicate it.\nQuick verification after execution to be safe.\n</think>\nresolvectl dns 8.8.8.8"
   }
 ]

@@ -1,102 +1,102 @@
 [
   {
     "instruction": "How to add a new key to a LUKS device",
-    "output": "<think>\nThis is a straightforward storage management task that requires the right flags and arguments.\n\nThe right tool here is `cryptsetup` — LUKS disk encryption.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\ncryptsetup luksAddKey /dev/sda1"
+    "output": "<think>\nWe're being asked to add a new key to a LUKS device.\nLet me consider what makes sense here.\nI'd use cryptsetup for this — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksAddKey /dev/sda1"
   },
   {
     "instruction": "How to add a key from a key file",
-    "output": "<think>\nLooking at this request: We'll execute the storage management command with appropriate options for this scenario.\n\nApproach: I'll use `cryptsetup` as the primary tool — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\ncryptsetup luksAddKey /dev/sda1 /etc/newkeyfile"
+    "output": "<think>\nThe goal is to add a key from a key file.\nHere's how I'd approach this.\ncryptsetup is what we need — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksAddKey /dev/sda1 /etc/newkeyfile"
   },
   {
     "instruction": "How to add a key to a specific slot",
-    "output": "<think>\n1. Understand the task: The user wants to perform a storage management operation using cryptsetup.\n\n2. Choose the right tooling: I'll use `cryptsetup` as the primary tool — LUKS disk encryption.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\ncryptsetup luksAddKey --key-slot 1 /dev/sda1"
+    "output": "<think>\nWe're being asked to add a key to a specific slot.\nLet me reason through this.\nBest tool here is cryptsetup — disk encryption management.\nNo need for complex pipelines here — one command is sufficient.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksAddKey --key-slot 1 /dev/sda1"
   },
   {
     "instruction": "How to remove a key from LUKS",
-    "output": "<think>\n1. Understand the task: This is a straightforward storage management task that requires the right flags and arguments.\n\n2. Choose the right tooling: The right tool here is `cryptsetup` — LUKS disk encryption.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\ncryptsetup luksRemoveKey /dev/sda1"
+    "output": "<think>\nThe goal is to remove a key from LUKS.\nThe tool for this job is cryptsetup — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\nQuick verification after execution to be safe.\n</think>\ncryptsetup luksRemoveKey /dev/sda1"
   },
   {
     "instruction": "How to remove a key by slot number",
-    "output": "<think>\n1. Understand the task: This is a straightforward storage management task that requires the right flags and arguments.\n\n2. Choose the right tooling: I'll use `cryptsetup` as the primary tool — LUKS disk encryption.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\ncryptsetup luksKillSlot /dev/sda1 0"
+    "output": "<think>\nNeed to remove a key by slot number.\nI'll reach for cryptsetup here because disk encryption management.\nA single command handles this cleanly — no need to overcomplicate it.\nluksFormat destroys all data on the device. Triple-check the device path.\nLet me verify afterward that it worked correctly.\n</think>\ncryptsetup luksKillSlot /dev/sda1 0"
   },
   {
     "instruction": "How to change a LUKS passphrase",
-    "output": "<think>\nLooking at this request: The user wants to perform a storage management operation using cryptsetup.\n\nApproach: The right tool here is `cryptsetup` — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\ncryptsetup luksChangeKey /dev/sda1"
+    "output": "<think>\nWe're being asked to change a LUKS passphrase.\nLet me consider what makes sense here.\nI'd use cryptsetup for this — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksChangeKey /dev/sda1"
   },
   {
     "instruction": "How to backup the LUKS header",
-    "output": "<think>\nData integrity is the primary concern here — verification is essential.\n\nWe should verify the backup with a checksum or test restore step.\n\n`cryptsetup` is the appropriate choice — LUKS disk encryption.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ncryptsetup luksHeaderBackup /dev/sda1 --header-backup-file /root/luks-header.bak"
+    "output": "<think>\nAlright, we need to backup the LUKS header.\nLet me reason through this.\ncryptsetup is what we need — disk encryption management.\nA single command handles this cleanly — no need to overcomplicate it.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksHeaderBackup /dev/sda1 --header-backup-file /root/luks-header.bak"
   },
   {
     "instruction": "How to restore a LUKS header from backup",
-    "output": "<think>\nTask analysis: Data integrity is the primary concern here — verification is essential.\n\nTool selection: I'll use `cryptsetup` as the primary tool — LUKS disk encryption.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\ncryptsetup luksHeaderRestore /dev/sda1 --header-backup-file /root/luks-header.bak"
+    "output": "<think>\nWe're being asked to restore a LUKS header from backup.\nThe tool for this job is cryptsetup — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksHeaderRestore /dev/sda1 --header-backup-file /root/luks-header.bak"
   },
   {
     "instruction": "How to dump LUKS header information",
-    "output": "<think>\nTask analysis: This is a straightforward storage management task that requires the right flags and arguments.\n\nTool selection: I'll use `cryptsetup` as the primary tool — LUKS disk encryption.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ncryptsetup luksDump /dev/sda1"
+    "output": "<think>\nWe should dump LUKS header information.\nI'll reach for cryptsetup here because disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\nI'll check the output to make sure it did what we expected.\n</think>\ncryptsetup luksDump /dev/sda1"
   },
   {
     "instruction": "How to dump the LUKS2 JSON metadata area",
-    "output": "<think>\nTask analysis: The user wants to perform a storage management operation using cryptsetup.\n\nTool selection: `cryptsetup` is the appropriate choice — LUKS disk encryption.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ncryptsetup luksDump --dump-json-metadata /dev/sda1"
+    "output": "<think>\nAlright, we need to dump the LUKS2 JSON metadata area.\nThe tool for this job is cryptsetup — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksDump --dump-json-metadata /dev/sda1"
   },
   {
     "instruction": "How to check LUKS device status",
-    "output": "<think>\nLooking at this request: The user wants to perform a storage management operation using cryptsetup.\n\nApproach: I'll use `cryptsetup` as the primary tool — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\ncryptsetup status secret"
+    "output": "<think>\nWe're being asked to check LUKS device status.\nLet me reason through this.\nBest tool here is cryptsetup — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\nQuick verification after execution to be safe.\n</think>\ncryptsetup status secret"
   },
   {
     "instruction": "How to resize a LUKS device",
-    "output": "<think>\nThe user wants to perform a storage management operation using cryptsetup.\n\nExecuting: I'll use `cryptsetup` as the primary tool — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ncryptsetup resize secret"
+    "output": "<think>\nThis is asking us to resize a LUKS device.\nHere's how I'd approach this.\nFor this, cryptsetup is the right tool — disk encryption management.\nA quick sanity check afterward saves debugging time later.\n</think>\ncryptsetup resize secret"
   },
   {
     "instruction": "How to format LUKS as LUKS2 type",
-    "output": "<think>\nThe user wants to perform a storage management operation using cryptsetup.\n\nExecuting: The right tool here is `cryptsetup` — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `cryptsetup — check the output matches expectations.\n</think>\ncryptsetup luksFormat --type luks2 /dev/sda1"
+    "output": "<think>\nThe user wants to format LUKS as LUKS2 type.\nLet me reason through this.\nFor this, cryptsetup is the right tool — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksFormat --type luks2 /dev/sda1"
   },
   {
     "instruction": "How to erase all keys from a LUKS device",
-    "output": "<think>\nGoal: This is a straightforward storage management task that requires the right flags and arguments.\n\nPlan: `cryptsetup` is the appropriate choice — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `cryptsetup — check the output matches expectations.\n</think>\ncryptsetup luksErase /dev/sda1"
+    "output": "<think>\nThe task requires us to erase all keys from a LUKS device.\nThe tool for this job is cryptsetup — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksErase /dev/sda1"
   },
   {
     "instruction": "How to convert LUKS1 to LUKS2",
-    "output": "<think>\nThe user wants to perform a storage management operation using cryptsetup.\n\nExecuting: `cryptsetup` is the appropriate choice — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ncryptsetup convert --type luks2 /dev/sda1"
+    "output": "<think>\nThe user wants to convert LUKS1 to LUKS2.\nLet me think about the best approach.\nThe tool for this job is cryptsetup — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\nQuick verification after execution to be safe.\n</think>\ncryptsetup convert --type luks2 /dev/sda1"
   },
   {
     "instruction": "How to convert LUKS2 to LUKS1",
-    "output": "<think>\nGoal: This is a straightforward storage management task that requires the right flags and arguments.\n\nPlan: I'll use `cryptsetup` as the primary tool — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\ncryptsetup convert --type luks1 /dev/sda1"
+    "output": "<think>\nWe're being asked to convert LUKS2 to LUKS1.\nLet me think through this step by step.\nI'd use cryptsetup for this — disk encryption management.\nAfter running, I'll confirm the result looks right.\n</think>\ncryptsetup convert --type luks1 /dev/sda1"
   },
   {
     "instruction": "How to add a LUKS2 token for TPM2",
-    "output": "<think>\nLooking at this request: We'll execute the storage management command with appropriate options for this scenario.\n\nApproach: `cryptsetup` is the appropriate choice — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\ncryptsetup token import /dev/sda1 --token-id 0 --key-description tpm2-token"
+    "output": "<think>\nWe should add a LUKS2 token for TPM2.\nLet me reason through this.\nI'll reach for cryptsetup here because disk encryption management.\nA single command handles this cleanly — no need to overcomplicate it.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup token import /dev/sda1 --token-id 0 --key-description tpm2-token"
   },
   {
     "instruction": "How to remove a LUKS2 token",
-    "output": "<think>\nGoal: We'll execute the storage management command with appropriate options for this scenario.\n\nPlan: The right tool here is `cryptsetup` — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ncryptsetup token remove /dev/sda1 --token-id 0"
+    "output": "<think>\nWe're being asked to remove a LUKS2 token.\nLet me reason through this.\nI'd use cryptsetup for this — disk encryption management.\nOne command does the job. Simple is better.\n</think>\ncryptsetup token remove /dev/sda1 --token-id 0"
   },
   {
     "instruction": "How to list LUKS2 tokens",
-    "output": "<think>\nLooking at this request: This is a straightforward storage management task that requires the right flags and arguments.\n\nApproach: `cryptsetup` is the appropriate choice — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ncryptsetup token list /dev/sda1"
+    "output": "<think>\nThe task requires us to list LUKS2 tokens.\nFirst, let me understand what's needed here.\nBest tool here is cryptsetup — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\nLet me verify afterward that it worked correctly.\n</think>\ncryptsetup token list /dev/sda1"
   },
   {
     "instruction": "How to encrypt an existing ext4 filesystem in-place",
-    "output": "<think>\nLooking at this request: This is a straightforward storage management task that requires the right flags and arguments.\n\nApproach: I'll use `cryptsetup` as the primary tool — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `cryptsetup — check the output matches expectations.\n</think>\ncryptsetup reencrypt --encrypt --reduce-device-size 32M /dev/sda1"
+    "output": "<think>\nWe're being asked to encrypt an existing ext4 filesystem in-place.\nBest tool here is cryptsetup — disk encryption management.\nOne command does the job. Simple is better.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup reencrypt --encrypt --reduce-device-size 32M /dev/sda1"
   },
   {
     "instruction": "How to decrypt an encrypted device in-place",
-    "output": "<think>\n1. Understand the task: This is a straightforward storage management task that requires the right flags and arguments.\n\n2. Choose the right tooling: The right tool here is `cryptsetup` — LUKS disk encryption.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Verify the result with a follow-up `cryptsetup — check the output matches expectations.\n</think>\ncryptsetup reencrypt --decrypt /dev/sda1"
+    "output": "<think>\nThe task requires us to decrypt an encrypted device in-place.\nLet me consider what makes sense here.\nBest tool here is cryptsetup — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\nI'll check the output to make sure it did what we expected.\n</think>\ncryptsetup reencrypt --decrypt /dev/sda1"
   },
   {
     "instruction": "How to pause reencryption",
-    "output": "<think>\nGoal: The user wants to perform a storage management operation using cryptsetup.\n\nPlan: The right tool here is `cryptsetup` — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\ncryptsetup reencrypt --pause-only /dev/sda1"
+    "output": "<think>\nNeed to pause reencryption.\nLet me reason through this.\nI'll reach for cryptsetup here because disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup reencrypt --pause-only /dev/sda1"
   },
   {
     "instruction": "How to resume reencryption",
-    "output": "<think>\nTask analysis: This is a straightforward storage management task that requires the right flags and arguments.\n\nTool selection: The right tool here is `cryptsetup` — LUKS disk encryption.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ncryptsetup reencrypt --resume-only /dev/sda1"
+    "output": "<think>\nNeed to resume reencryption.\nBest tool here is cryptsetup — disk encryption management.\nOne command does the job. Simple is better.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup reencrypt --resume-only /dev/sda1"
   },
   {
     "instruction": "How to format a detached LUKS header",
-    "output": "<think>\nGoal: This is a straightforward storage management task that requires the right flags and arguments.\n\nPlan: The right tool here is `cryptsetup` — LUKS disk encryption. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `cryptsetup — check the output matches expectations.\n</think>\ncryptsetup luksFormat --header /boot/luks-header.img /dev/sda1"
+    "output": "<think>\nSo we need to format a detached LUKS header.\nI'll reach for cryptsetup here because disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksFormat --header /boot/luks-header.img /dev/sda1"
   },
   {
     "instruction": "How to open LUKS with a detached header",
-    "output": "<think>\nWe'll execute the storage management command with appropriate options for this scenario.\n\nI'll use `cryptsetup` as the primary tool — LUKS disk encryption.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `cryptsetup — check the output matches expectations.\n</think>\ncryptsetup luksOpen --header /boot/luks-header.img /dev/sda1 secret"
+    "output": "<think>\nThe goal is to open LUKS with a detached header.\nLet me think about the best approach.\ncryptsetup is what we need — disk encryption management.\nluksFormat destroys all data on the device. Triple-check the device path.\n</think>\ncryptsetup luksOpen --header /boot/luks-header.img /dev/sda1 secret"
   }
 ]

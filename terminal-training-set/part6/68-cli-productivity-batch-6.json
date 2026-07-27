@@ -1,86 +1,86 @@
 [
   {
     "instruction": "Use rg to find 'async def' in all Python files with context",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using rg.\n\n2. Choose the right tooling: I'll use `rg` as the primary tool — rg command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\nrg --type py -C 2 'async def' ./src"
+    "output": "<think>\nThis is asking us to use rg to find 'async def' in all Python files with context.\nHere's how I'd approach this.\nrg is what we need — rg operations.\nNo need for complex pipelines here — one command is sufficient.\nLet me verify afterward that it worked correctly.\n</think>\nrg --type py -C 2 'async def' ./src"
   },
   {
     "instruction": "rg: find all files containing a regex with JSON output",
-    "output": "<think>\n1. Understand the task: This is a straightforward system administration task that requires the right flags and arguments.\n\n2. Choose the right tooling: The right tool here is `rg` — rg command execution and management.\n   Output redirection captures the result for later review or logging.\n\n3. Safety precautions:\n   - Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters.\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nrg --json 'ERROR' /var/log/syslog > errors.json"
+    "output": "<think>\nNeed to rg: find all files containing a regex with JSON output.\nLet me reason through this.\nrg is what we need — rg operations.\nAfter running, I'll confirm the result looks right.\n</think>\nrg --json 'ERROR' /var/log/syslog > errors.json"
   },
   {
     "instruction": "rg: only show filenames with matches sorted by modification time",
-    "output": "<think>\nGoal: This is a straightforward system administration task that requires the right flags and arguments.\n\nPlan: `rg` is the appropriate choice — rg command execution and management. Key flags: `-l` (long listing format) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nrg -l 'TODO' --sort modified ./"
+    "output": "<think>\nThe task requires us to rg: only show filenames with matches sorted by modification time.\nLet me break this down.\nI'd use rg for this — rg operations.\nWhy -l? Long format with details. important to get the expected behavior.\nA quick sanity check afterward saves debugging time later.\nI'll check the output to make sure it did what we expected.\n</think>\nrg -l 'TODO' --sort modified ./"
   },
   {
     "instruction": "fd: find all symlinks",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nExecuting: The right tool here is `fd` — fd command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nfd --type symlink ."
+    "output": "<think>\nNeed to fd: find all symlinks.\nLet me consider what makes sense here.\nI'd use fd for this — fd operations.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nfd --type symlink ."
   },
   {
     "instruction": "fd: find empty files",
-    "output": "<think>\nGoal: We'll execute the system administration command with appropriate options for this scenario.\n\nPlan: The right tool here is `fd` — fd command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nfd --type empty ."
+    "output": "<think>\nWe're being asked to fd: find empty files.\nLet me break this down.\nThe tool for this job is fd — fd operations.\nOne command does the job. Simple is better.\n</think>\nfd --type empty ."
   },
   {
     "instruction": "fd: find files owned by a specific user",
-    "output": "<think>\nGoal: We'll execute the system administration command with appropriate options for this scenario.\n\nPlan: The right tool here is `fd` — fd command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nfd --owner $(whoami) ."
+    "output": "<think>\nThe task requires us to fd: find files owned by a specific user.\nFor this, fd is the right tool — fd operations.\nOne command does the job. Simple is better.\nQuick verification after execution to be safe.\n</think>\nfd --owner $(whoami) ."
   },
   {
     "instruction": "fzf: combined with rg for content search",
-    "output": "<think>\nThe user wants to perform a system administration operation using rg.\n\nExecuting: The right tool here is `rg` — rg command execution and management. Key flags: `-l` (long listing format) — chosen to match the exact requirement. Pipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nWatch out for: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Confirm success by running a status check or inspecting the output for errors.\n</think>\nrg -l 'error' | fzf --preview 'bat --color=always {}'"
+    "output": "<think>\nThe goal is to fzf: combined with rg for content search.\nLet me reason through this.\nThe tool for this job is rg — rg operations.\nThe -l flag handles long format with details. Important because without it the command won't work as we need.\nThe command looks straightforward, but let me check the details.\nPipes let me chain these operations efficiently without writing temp files.\nCheck the output for errors before proceeding to the next step.\n</think>\nrg -l 'error' | fzf --preview 'bat --color=always {}'"
   },
   {
     "instruction": "fzf: select a process to kill by port",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using ss.\n\n2. Choose the right tooling: The right tool here is `ss` — socket statistics and connection monitoring.\n   Pipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\n3. Safety precautions:\n   - Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded.\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nss -tlnp | fzf | awk '{print \\$NF}' | cut -d',' -f2 | tr -d 'pid=' | xargs kill"
+    "output": "<think>\nThis is asking us to fzf: select a process to kill by port.\nHere's how I'd approach this.\nThis calls for ss. Socket diagnostics.\nI'm piping because each stage transforms the data before passing it to the next.\n</think>\nss -tlnp | fzf | awk '{print \\$NF}' | cut -d',' -f2 | tr -d 'pid=' | xargs kill"
   },
   {
     "instruction": "bat: diff a file against git HEAD",
-    "output": "<think>\nThis is a straightforward system administration task that requires the right flags and arguments.\n\nThe right tool here is `bat` — bat command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nbat --diff file.txt"
+    "output": "<think>\nThe task requires us to bat: diff a file against git HEAD.\nLet me break this down.\nFor this, bat is the right tool — bat operations.\nA single command handles this cleanly — no need to overcomplicate it.\nAfter running, confirm it worked as expected before moving on.\nI'll check the output to make sure it did what we expected.\n</think>\nbat --diff file.txt"
   },
   {
     "instruction": "eza: sort by newest first and show git status",
-    "output": "<think>\n1. Understand the task: This is a straightforward version control task that requires the right flags and arguments.\n\n2. Choose the right tooling: `eza` is the appropriate choice — eza command execution and management.\n   `git` will be used for version control and repository management.\n   Key flags: `-l` (long listing format) — chosen to match the exact requirement.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Verify the result with a follow-up `eza — check the output matches expectations.\n</think>\neza -l --sort newest --git --header"
+    "output": "<think>\nThe goal is to eza: sort by newest first and show git status.\nLet me reason through this.\neza is what we need — eza operations.\n</think>\neza -l --sort newest --git --header"
   },
   {
     "instruction": "fd: find all files named 'Dockerfile' in any subdirectory",
-    "output": "<think>\nLooking at this request: This is a straightforward system administration task that requires the right flags and arguments.\n\nApproach: The right tool here is `fd` — fd command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nfd --full-path 'Dockerfile$' ."
+    "output": "<think>\nNeed to fd: find all files named 'Dockerfile' in any subdirectory.\nFirst, let me understand what's needed here.\nFor this, fd is the right tool — fd operations.\nA single command handles this cleanly — no need to overcomplicate it.\n</think>\nfd --full-path 'Dockerfile$' ."
   },
   {
     "instruction": "fd: find all Python files and count total lines",
-    "output": "<think>\nThe user wants to perform a system administration operation using fd.\n\nExecuting: I'll use `fd` as the primary tool — fd command execution and management. Key flags: `-l` (long listing format) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nfd -e py -X wc -l"
+    "output": "<think>\nNeed to fd: find all Python files and count total lines.\nLet me reason through this.\nThe tool for this job is fd — fd operations.\nI'm using -e for edit or executable — needed for this specific use case.\nOne command does the job. Simple is better.\n</think>\nfd -e py -X wc -l"
   },
   {
     "instruction": "rg: count total matches across all files",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using rg.\n\n2. Choose the right tooling: I'll use `rg` as the primary tool — rg command execution and management.\n   Pipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\n3. Safety precautions:\n   - Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded.\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nrg -c 'import' --type py ./ | awk -F: '{s+=\\$2} END {print s}'"
+    "output": "<think>\nAlright, we need to rg: count total matches across all files.\nFor this, rg is the right tool — rg operations.\nThe -c flag handles count or create. Important because important to get the expected behavior.\nUsing pipes keeps everything in memory without intermediate files — cleaner and faster.\nAfter running, I'll confirm the result looks right.\n</think>\nrg -c 'import' --type py ./ | awk -F: '{s+=\\$2} END {print s}'"
   },
   {
     "instruction": "fzf: use preview with bat for searching git log",
-    "output": "<think>\nTask analysis: We'll execute the version control command with appropriate options for this scenario.\n\nTool selection: The right tool here is `git` — version control and repository management.\nPipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nRisk assessment: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Confirm success by running a status check or inspecting the output for errors.\n</think>\ngit log --oneline --color=always | fzf --ansi --preview 'git show --stat {+1}'"
+    "output": "<think>\nThe goal is to fzf: use preview with bat for searching git log.\nLet me reason through this.\nThe tool for this job is git — version control operations.\nSimple on the surface, but there are some subtleties to consider.\nI'm piping because each stage transforms the data before passing it to the next.\nI'll check the output to make sure it did what we expected.\n</think>\ngit log --oneline --color=always | fzf --ansi --preview 'git show --stat {+1}'"
   },
   {
     "instruction": "cheat: get cheatsheet from cheatsheets repository",
-    "output": "<think>\nGoal: The user wants to perform a system administration operation using cheat.\n\nPlan: The right tool here is `cheat` — cheat command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\ncheat ls"
+    "output": "<think>\nWe're being asked to cheat: get cheatsheet from cheatsheets repository.\nLet me think through this step by step.\nFor this, cheat is the right tool — cheat operations.\n</think>\ncheat ls"
   },
   {
     "instruction": "navi: browse all available snippets",
-    "output": "<think>\nLooking at this request: We'll execute the system administration command with appropriate options for this scenario.\n\nApproach: `navi` is the appropriate choice — navi command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `navi — check the output matches expectations.\n</think>\nnavi --print"
+    "output": "<think>\nAlright, we need to navi: browse all available snippets.\nBest tool here is navi — navi operations.\n</think>\nnavi --print"
   },
   {
     "instruction": "rg: search pattern with Perl-compatible regex",
-    "output": "<think>\n1. Understand the task: This is a straightforward system administration task that requires the right flags and arguments.\n\n2. Choose the right tooling: I'll use `rg` as the primary tool — rg command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nrg -P '(?<=foo)bar' ./src"
+    "output": "<think>\nThe goal is to rg: search pattern with Perl-compatible regex.\nThe tool for this job is rg — rg operations.\nLet me verify afterward that it worked correctly.\n</think>\nrg -P '(?<=foo)bar' ./src"
   },
   {
     "instruction": "fd: find files with permissions 755",
-    "output": "<think>\n1. Understand the task: Security hardening requires understanding the threat model and applying layered controls.\n\n2. Choose the right tooling: The right tool here is `fd` — fd command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Verify the result with a follow-up `fd — check the output matches expectations.\n</think>\nfd --type f --perm 755 ."
+    "output": "<think>\nWe should fd: find files with permissions 755.\nLet me consider what makes sense here.\nBest tool here is fd — fd operations.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nfd --type f --perm 755 ."
   },
   {
     "instruction": "fzf: use header to show context at top",
-    "output": "<think>\nLooking at this request: This is a straightforward system administration task that requires the right flags and arguments.\n\nApproach: `fzf` is the appropriate choice — fzf command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `fzf — check the output matches expectations.\n</think>\nfzf --header 'Select a file to edit' --preview 'bat --color=always {}'"
+    "output": "<think>\nSo we need to fzf: use header to show context at top.\nLet me think through this step by step.\nBest tool here is fzf — fzf operations.\nA single command handles this cleanly — no need to overcomplicate it.\nVerify with a follow-up status command to make sure everything looks right.\nQuick verification after execution to be safe.\n</think>\nfzf --header 'Select a file to edit' --preview 'bat --color=always {}'"
   },
   {
     "instruction": "rg: search without showing file paths (only match text)",
-    "output": "<think>\nTask analysis: This is a straightforward system administration task that requires the right flags and arguments.\n\nTool selection: I'll use `rg` as the primary tool — rg command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nrg -N 'pattern' ./file"
+    "output": "<think>\nSo the request is to rg: search without showing file paths (only match text).\nLet me think through this step by step.\nI'd use rg for this — rg operations.\nNo need for complex pipelines here — one command is sufficient.\nLet me verify afterward that it worked correctly.\n</think>\nrg -N 'pattern' ./file"
   },
   {
     "instruction": "fd: find and chmod files",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using fd.\n\n2. Choose the right tooling: I'll use `fd` as the primary tool — fd command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nfd -e sh -X chmod +x"
+    "output": "<think>\nThe goal is to fd: find and chmod files.\nI'll reach for fd here because fd operations.\nCheck the output for errors before proceeding to the next step.\n</think>\nfd -e sh -X chmod +x"
   }
 ]

@@ -1,86 +1,86 @@
 [
   {
     "instruction": "How to show UUIDs of partitions with blkid",
-    "output": "<think>\nLooking at this request: We'll execute the system administration command with appropriate options for this scenario.\n\nApproach: `blkid` is the appropriate choice — blkid command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nblkid /dev/sda1"
+    "output": "<think>\nWe're being asked to show UUIDs of partitions with blkid.\nLet me consider what makes sense here.\nThe tool for this job is blkid — block device attribute lookup.\nAfter running, confirm it worked as expected before moving on.\n</think>\nblkid /dev/sda1"
   },
   {
     "instruction": "How to convert an MBR disk to GPT with gdisk",
-    "output": "<think>\nGoal: The user wants to perform a storage management operation using gdisk.\n\nPlan: I'll use `gdisk` as the primary tool — gdisk command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\ngdisk /dev/sda <<< 'w\n'"
+    "output": "<think>\nThe goal is to convert an MBR disk to GPT with gdisk.\nThe tool for this job is gdisk — gdisk operations.\nAfter running, I'll confirm the result looks right.\n</think>\ngdisk /dev/sda <<< 'w\n'"
   },
   {
     "instruction": "How to resize a GPT partition to grow it",
-    "output": "<think>\nTask analysis: This is a straightforward storage management task that requires the right flags and arguments.\n\nTool selection: The right tool here is `parted` — disk partitioning.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing. After execution, validate that the system behaves as expected before closing the task.\n</think>\nparted /dev/sda resizepart 1 500MiB"
+    "output": "<think>\nWe're being asked to resize a GPT partition to grow it.\nLet me reason through this.\nThe tool for this job is parted — disk partitioning.\nPartition changes are risky — verify with lsblk before applying.\n</think>\nparted /dev/sda resizepart 1 500MiB"
   },
   {
     "instruction": "How to create a logical partition inside extended",
-    "output": "<think>\nWe'll execute the storage management command with appropriate options for this scenario.\n\nThe right tool here is `parted` — disk partitioning.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing. Confirm success by running a status check or inspecting the output for errors.\n</think>\nparted /dev/sda mkpart logical 512MiB 1GiB"
+    "output": "<think>\nNeed to create a logical partition inside extended.\nLet me think through this step by step.\nparted is what we need — disk partitioning.\nA single command handles this cleanly — no need to overcomplicate it.\nPartition changes are risky — verify with lsblk before applying.\n</think>\nparted /dev/sda mkpart logical 512MiB 1GiB"
   },
   {
     "instruction": "How to create a partition aligned to optimal I/O",
-    "output": "<think>\nGoal: We'll execute the storage management command with appropriate options for this scenario.\n\nPlan: The right tool here is `parted` — disk partitioning. Key flags: `-a` (include hidden/all entries) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing. Check the logs or output to ensure the operation completed as intended.\n</think>\nparted -a optimal /dev/sda mkpart primary 0% 100%"
+    "output": "<think>\nWe're being asked to create a partition aligned to optimal I/O.\nHere's how I'd approach this.\nBest tool here is parted — disk partitioning.\nI'm using -a for AND operator in find — standard practice for this kind of operation.\nA single command handles this cleanly — no need to overcomplicate it.\nPartition changes are risky — verify with lsblk before applying.\n</think>\nparted -a optimal /dev/sda mkpart primary 0% 100%"
   },
   {
     "instruction": "How to create a swap partition with sgdisk",
-    "output": "<think>\nThis is a straightforward system administration task that requires the right flags and arguments.\n\nExecuting: I'll use `sgdisk` as the primary tool — sgdisk command execution and management. Key flags: `-n` (dry-run mode), `-t` (sort by time) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `sgdisk — check the output matches expectations.\n</think>\nsgdisk -n 2:0:+8G -t 2:8200 /dev/sda"
+    "output": "<think>\nWe're being asked to create a swap partition with sgdisk.\nLet me think through this step by step.\nI'll reach for sgdisk here because sgdisk operations.\nOne command does the job. Simple is better.\nAfter running, I'll confirm the result looks right.\n</think>\nsgdisk -n 2:0:+8G -t 2:8200 /dev/sda"
   },
   {
     "instruction": "How to list the partition table of a disk with fdisk",
-    "output": "<think>\nWe'll execute the storage management command with appropriate options for this scenario.\n\nExecuting: The right tool here is `fdisk` — disk partition table management. Key flags: `-l` (long listing format) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing. Confirm success by running a status check or inspecting the output for errors.\n</think>\nfdisk -l /dev/sda"
+    "output": "<think>\nThe goal is to list the partition table of a disk with fdisk.\nLet me break this down.\nI'll reach for fdisk here because disk management.\nWhy -l? Long format with details. without it the command won't work as we need.\nModifying partition tables can nuke all data on the disk. Double-check the device name.\nI'll check the output to make sure it did what we expected.\n</think>\nfdisk -l /dev/sda"
   },
   {
     "instruction": "How to list all disks and partitions",
-    "output": "<think>\nTask analysis: This is a straightforward storage management task that requires the right flags and arguments.\n\nTool selection: `fdisk` is the appropriate choice — disk partition table management.\nKey flags: `-l` (long listing format) — chosen to match the exact requirement.\n\nRisk assessment: DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing. After execution, validate that the system behaves as expected before closing the task.\n</think>\nfdisk -l"
+    "output": "<think>\nThe task requires us to list all disks and partitions.\nLet me think through this step by step.\nI'll reach for fdisk here because disk management.\nI've added -l to long format with details — needed for this specific use case.\nModifying partition tables can nuke all data on the disk. Double-check the device name.\nI'll check the output to make sure it did what we expected.\n</think>\nfdisk -l"
   },
   {
     "instruction": "How to open fdisk interactively on a disk",
-    "output": "<think>\nLooking at this request: This is a straightforward storage management task that requires the right flags and arguments.\n\nApproach: I'll use `fdisk` as the primary tool — disk partition table management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing. After execution, validate that the system behaves as expected before closing the task.\n</think>\nfdisk /dev/sda"
+    "output": "<think>\nWe're being asked to open fdisk interactively on a disk.\nThe tool for this job is fdisk — disk management.\nModifying partition tables can nuke all data on the disk. Double-check the device name.\n</think>\nfdisk /dev/sda"
   },
   {
     "instruction": "How to create a GPT partition table with fdisk",
-    "output": "<think>\n1. Understand the task: The user wants to perform a storage management operation using fdisk.\n\n2. Choose the right tooling: I'll use `fdisk` as the primary tool — disk partition table management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing.\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nfdisk /dev/sda <<< 'g\nw\n'"
+    "output": "<think>\nThe task requires us to create a GPT partition table with fdisk.\nFor this, fdisk is the right tool — disk management.\nModifying partition tables can nuke all data on the disk. Double-check the device name.\n</think>\nfdisk /dev/sda <<< 'g\nw\n'"
   },
   {
     "instruction": "How to create an MBR partition table with fdisk",
-    "output": "<think>\nGoal: This is a straightforward storage management task that requires the right flags and arguments.\n\nPlan: The right tool here is `fdisk` — disk partition table management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing. Confirm success by running a status check or inspecting the output for errors.\n</think>\nfdisk /dev/sda <<< 'o\nw\n'"
+    "output": "<think>\nAlright, we need to create an MBR partition table with fdisk.\nLet me think through this step by step.\nBest tool here is fdisk — disk management.\nOne command does the job. Simple is better.\nModifying partition tables can nuke all data on the disk. Double-check the device name.\nI'll check the output to make sure it did what we expected.\n</think>\nfdisk /dev/sda <<< 'o\nw\n'"
   },
   {
     "instruction": "How to delete a partition with fdisk",
-    "output": "<think>\n1. Understand the task: We'll execute the storage management command with appropriate options for this scenario.\n\n2. Choose the right tooling: I'll use `fdisk` as the primary tool — disk partition table management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - DATA DESTRUCTION RISK: This command can destroy data. Verify the target path with `lsblk` before executing.\n   - Verify the result with a follow-up `fdisk — check the output matches expectations.\n</think>\nfdisk /dev/sda <<< 'd\nw\n'"
+    "output": "<think>\nThe task requires us to delete a partition with fdisk.\nLet me break this down.\nI'll reach for fdisk here because disk management.\nOne command does the job. Simple is better.\nLet me verify afterward that it worked correctly.\n</think>\nfdisk /dev/sda <<< 'd\nw\n'"
   },
   {
     "instruction": "How to list the partition table with gdisk",
-    "output": "<think>\nWe'll execute the storage management command with appropriate options for this scenario.\n\nI'll use `gdisk` as the primary tool — gdisk command execution and management.\nKey flags: `-l` (long listing format) — chosen to match the exact requirement.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `gdisk — check the output matches expectations.\n</think>\ngdisk -l /dev/sda"
+    "output": "<think>\nThe user wants to list the partition table with gdisk.\nI'd use gdisk for this — gdisk operations.\nThe -l flag means long format with details, which matters here because needed for this specific use case.\nNo need for complex pipelines here — one command is sufficient.\nA quick sanity check afterward saves debugging time later.\nQuick verification after execution to be safe.\n</think>\ngdisk -l /dev/sda"
   },
   {
     "instruction": "How to open gdisk interactively",
-    "output": "<think>\nWe'll execute the storage management command with appropriate options for this scenario.\n\nExecuting: The right tool here is `gdisk` — gdisk command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\ngdisk /dev/sda"
+    "output": "<think>\nWe're being asked to open gdisk interactively.\nLet me think through this step by step.\nI'd use gdisk for this — gdisk operations.\nOne command does the job. Simple is better.\nQuick verification after execution to be safe.\n</think>\ngdisk /dev/sda"
   },
   {
     "instruction": "How to create a GPT table with sgdisk",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using sgdisk.\n\n2. Choose the right tooling: I'll use `sgdisk` as the primary tool — sgdisk command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Verify the result with a follow-up `sgdisk — check the output matches expectations.\n</think>\nsgdisk -o /dev/sda"
+    "output": "<think>\nThis is asking us to create a GPT table with sgdisk.\nThe tool for this job is sgdisk — sgdisk operations.\nNo need for complex pipelines here — one command is sufficient.\nA quick sanity check afterward saves debugging time later.\n</think>\nsgdisk -o /dev/sda"
   },
   {
     "instruction": "How to create a 100MB partition with sgdisk",
-    "output": "<think>\nTask analysis: The user wants to perform a system administration operation using sgdisk.\n\nTool selection: `sgdisk` is the appropriate choice — sgdisk command execution and management.\nKey flags: `-n` (dry-run mode) — chosen to match the exact requirement.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nsgdisk -n 1:0:+100M /dev/sda"
+    "output": "<think>\nThe user wants to create a 100MB partition with sgdisk.\nsgdisk is what we need — sgdisk operations.\nThe -n flag handles dry-run, no changes. Important because important to get the expected behavior.\n</think>\nsgdisk -n 1:0:+100M /dev/sda"
   },
   {
     "instruction": "How to create a partition filling the entire disk",
-    "output": "<think>\nTask analysis: This is a straightforward system administration task that requires the right flags and arguments.\n\nTool selection: `sgdisk` is the appropriate choice — sgdisk command execution and management.\nKey flags: `-n` (dry-run mode) — chosen to match the exact requirement.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `sgdisk — check the output matches expectations.\n</think>\nsgdisk -n 1:0:0 /dev/sda"
+    "output": "<think>\nSo the request is to create a partition filling the entire disk.\nThe tool for this job is sgdisk — sgdisk operations.\nI'm using -n for dry-run, no changes — needed for this specific use case.\nA quick sanity check afterward saves debugging time later.\nQuick verification after execution to be safe.\n</think>\nsgdisk -n 1:0:0 /dev/sda"
   },
   {
     "instruction": "How to set a partition type code with sgdisk",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nExecuting: The right tool here is `sgdisk` — sgdisk command execution and management. Key flags: `-t` (sort by time) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nsgdisk -t 1:8200 /dev/sda"
+    "output": "<think>\nThis is asking us to set a partition type code with sgdisk.\nFirst, let me understand what's needed here.\nBest tool here is sgdisk — sgdisk operations.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nAfter running, I'll confirm the result looks right.\n</think>\nsgdisk -t 1:8200 /dev/sda"
   },
   {
     "instruction": "How to set a partition name with sgdisk",
-    "output": "<think>\n1. Understand the task: We'll execute the system administration command with appropriate options for this scenario.\n\n2. Choose the right tooling: `sgdisk` is the appropriate choice — sgdisk command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nsgdisk -c 1:boot /dev/sda"
+    "output": "<think>\nThis is asking us to set a partition name with sgdisk.\nFor this, sgdisk is the right tool — sgdisk operations.\nI'm using -c for count or create — important to get the expected behavior.\nOne command does the job. Simple is better.\nAfter running, I'll confirm the result looks right.\n</think>\nsgdisk -c 1:boot /dev/sda"
   },
   {
     "instruction": "How to delete a partition with sgdisk",
-    "output": "<think>\nTask analysis: We'll execute the system administration command with appropriate options for this scenario.\n\nTool selection: `sgdisk` is the appropriate choice — sgdisk command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nsgdisk -d 1 /dev/sda"
+    "output": "<think>\nThe task requires us to delete a partition with sgdisk.\nI'll reach for sgdisk here because sgdisk operations.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nsgdisk -d 1 /dev/sda"
   },
   {
     "instruction": "How to zap GPT and MBR headers with sgdisk",
-    "output": "<think>\nGoal: We'll execute the system administration command with appropriate options for this scenario.\n\nPlan: The right tool here is `sgdisk` — sgdisk command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `sgdisk — check the output matches expectations.\n</think>\nsgdisk --zap-all /dev/sda"
+    "output": "<think>\nThe goal is to zap GPT and MBR headers with sgdisk.\nLet me think about the best approach.\nsgdisk is what we need — sgdisk operations.\nI'll check the output to make sure it did what we expected.\n</think>\nsgdisk --zap-all /dev/sda"
   }
 ]

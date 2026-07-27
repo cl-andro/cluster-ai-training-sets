@@ -1,102 +1,102 @@
 [
   {
     "instruction": "How to encrypt a file with armor output",
-    "output": "<think>\nGoal: The user wants to perform a security hardening operation using gpg.\n\nPlan: I'll use `gpg` as the primary tool — file encryption and signing. Key flags: `-r` (recursive operation) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Confirm success by running a status check or inspecting the output for errors.\n</think>\ngpg --armor --encrypt -r user@example.com file.txt"
+    "output": "<think>\nThis is asking us to encrypt a file with armor output.\nI'll reach for gpg here because file encryption, decryption, and signing.\nThe -r flag means recursive operation (descend into subdirectories), which matters here because important to get the expected behavior.\nNo need for complex pipelines here — one command is sufficient.\nGPG keys are sensitive — don't expose them in logs or share private keys.\n</think>\ngpg --armor --encrypt -r user@example.com file.txt"
   },
   {
     "instruction": "How to encrypt a file and sign with armor",
-    "output": "<think>\nGoal: We'll execute the security hardening command with appropriate options for this scenario.\n\nPlan: `gpg` is the appropriate choice — file encryption and signing. Key flags: `-r` (recursive operation) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. After execution, validate that the system behaves as expected before closing the task.\n</think>\ngpg --armor --encrypt --sign -r user@example.com file.txt"
+    "output": "<think>\nAlright, we need to encrypt a file and sign with armor.\nThe tool for this job is gpg — file encryption, decryption, and signing.\nThe -r flag handles recursive operation (descend into subdirectories). Important because important to get the expected behavior.\nGPG keys are sensitive — don't expose them in logs or share private keys.\n</think>\ngpg --armor --encrypt --sign -r user@example.com file.txt"
   },
   {
     "instruction": "How to decrypt an armored file",
-    "output": "<think>\nThe user wants to perform a security hardening operation using gpg.\n\nI'll use `gpg` as the primary tool — file encryption and signing.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Check the logs or output to ensure the operation completed as intended.\n</think>\ngpg --decrypt file.txt.asc"
+    "output": "<think>\nWe should decrypt an armored file.\nI'll reach for gpg here because file encryption, decryption, and signing.\nNo need for complex pipelines here — one command is sufficient.\nGPG keys are sensitive — don't expose them in logs or share private keys.\nI'll check the output to make sure it did what we expected.\n</think>\ngpg --decrypt file.txt.asc"
   },
   {
     "instruction": "How to encrypt a directory (tar pipe)",
-    "output": "<think>\n1. Understand the task: We'll execute the security hardening command with appropriate options for this scenario.\n\n2. Choose the right tooling: `tar` is the appropriate choice — tar command execution and management.\n   `gpg` will be used for file encryption and signing.\n   Key flags: `-r` (recursive operation) — chosen to match the exact requirement.\n\n3. Safety precautions:\n   - SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`.\n   - BACKUP VERIFICATION: Run with `--dry-run` first. Verify backup integrity with the tool's check command. Test a restore.\n</think>\ntar czf - dir/ | gpg --encrypt -r user@example.com > dir.tar.gz.gpg"
+    "output": "<think>\nSo we need to encrypt a directory (tar pipe).\nLet me think through this step by step.\ntar is what we need — file archiving.\nThe -r flag means recursive operation (descend into subdirectories), which matters here because standard practice for this kind of operation.\nPipes let me chain these operations efficiently without writing temp files.\nCheck that the target device has enough space before extracting large archives.\n</think>\ntar czf - dir/ | gpg --encrypt -r user@example.com > dir.tar.gz.gpg"
   },
   {
     "instruction": "How to decrypt a directory archive",
-    "output": "<think>\nLooking at this request: The user wants to perform a security hardening operation using gpg.\n\nApproach: The right tool here is `gpg` — file encryption and signing. Pipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nSafety check: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Check the logs or output to ensure the operation completed as intended.\n</think>\ngpg --decrypt dir.tar.gz.gpg | tar xzf -"
+    "output": "<think>\nWe're being asked to decrypt a directory archive.\nBest tool here is gpg — file encryption, decryption, and signing.\nI'm piping because each stage transforms the data before passing it to the next.\nGPG keys are sensitive — don't expose them in logs or share private keys.\nI'll check the output to make sure it did what we expected.\n</think>\ngpg --decrypt dir.tar.gz.gpg | tar xzf -"
   },
   {
     "instruction": "How to sign a file with armor output",
-    "output": "<think>\nThe user wants to perform a security hardening operation using gpg.\n\nExecuting: The right tool here is `gpg` — file encryption and signing. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Check the logs or output to ensure the operation completed as intended.\n</think>\ngpg --armor --sign file.txt"
+    "output": "<think>\nThis is asking us to sign a file with armor output.\nHere's how I'd approach this.\ngpg is what we need — file encryption, decryption, and signing.\nA single command handles this cleanly — no need to overcomplicate it.\nGPG keys are sensitive — don't expose them in logs or share private keys.\n</think>\ngpg --armor --sign file.txt"
   },
   {
     "instruction": "How to sign a file using a specific key",
-    "output": "<think>\nLooking at this request: We'll execute the security hardening command with appropriate options for this scenario.\n\nApproach: I'll use `gpg` as the primary tool — file encryption and signing. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. After execution, validate that the system behaves as expected before closing the task.\n</think>\ngpg --local-user KEYID --sign file.txt"
+    "output": "<think>\nWe're being asked to sign a file using a specific key.\nThis calls for gpg. File encryption, decryption, and signing.\nOne command does the job. Simple is better.\n</think>\ngpg --local-user KEYID --sign file.txt"
   },
   {
     "instruction": "How to verify a file with a specific keyring",
-    "output": "<think>\nTask analysis: We'll execute the security hardening command with appropriate options for this scenario.\n\nTool selection: The right tool here is `gpg` — file encryption and signing.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Verify the result with a follow-up `gpg — check the output matches expectations.\n</think>\ngpg --keyring ./custom-keyring.pub --verify file.txt.sig file.txt"
+    "output": "<think>\nThe user wants to verify a file with a specific keyring.\nLet me consider what makes sense here.\nI'll reach for gpg here because file encryption, decryption, and signing.\nGPG keys are sensitive — don't expose them in logs or share private keys.\n</think>\ngpg --keyring ./custom-keyring.pub --verify file.txt.sig file.txt"
   },
   {
     "instruction": "How to verify a signature with no output on success",
-    "output": "<think>\nLooking at this request: The user wants to perform a security hardening operation using gpg.\n\nApproach: The right tool here is `gpg` — file encryption and signing. Key flags: `--quiet` (suppress non-essential output) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Verify the result with a follow-up `gpg — check the output matches expectations.\n</think>\ngpg --quiet --verify file.txt.sig file.txt"
+    "output": "<think>\nSo the request is to verify a signature with no output on success.\nLet me think through this step by step.\nThis calls for gpg. File encryption, decryption, and signing.\nGPG keys are sensitive — don't expose them in logs or share private keys.\nQuick verification after execution to be safe.\n</think>\ngpg --quiet --verify file.txt.sig file.txt"
   },
   {
     "instruction": "How to add a UID to an existing key",
-    "output": "<think>\nGoal: This is a straightforward security hardening task that requires the right flags and arguments.\n\nPlan: `gpg` is the appropriate choice — file encryption and signing. Output redirection captures the result for later review or logging.\n\nPrecautions: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Check the logs or output to ensure the operation completed as intended.\n</think>\ngpg --quick-add-uid KEYID 'New User <new@example.com>'"
+    "output": "<think>\nSo we need to add a UID to an existing key.\nFor this, gpg is the right tool — file encryption, decryption, and signing.\n</think>\ngpg --quick-add-uid KEYID 'New User <new@example.com>'"
   },
   {
     "instruction": "How to revoke a UID on a key",
-    "output": "<think>\nWe'll execute the security hardening command with appropriate options for this scenario.\n\nExecuting: The right tool here is `gpg` — file encryption and signing. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Confirm success by running a status check or inspecting the output for errors.\n</think>\ngpg --quick-revoke-uid KEYID 'user@example.com'"
+    "output": "<think>\nThe user wants to revoke a UID on a key.\nThis calls for gpg. File encryption, decryption, and signing.\nGPG keys are sensitive — don't expose them in logs or share private keys.\nLet me verify afterward that it worked correctly.\n</think>\ngpg --quick-revoke-uid KEYID 'user@example.com'"
   },
   {
     "instruction": "How to generate a revocation certificate",
-    "output": "<think>\nLooking at this request: The user wants to perform a security hardening operation using gpg.\n\nApproach: `gpg` is the appropriate choice — file encryption and signing. Output redirection captures the result for later review or logging.\n\nSafety check: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Check the logs or output to ensure the operation completed as intended.\n</think>\ngpg --gen-revoke user@example.com > revoke.asc"
+    "output": "<think>\nSo the request is to generate a revocation certificate.\nFirst, let me understand what's needed here.\nThis calls for gpg. File encryption, decryption, and signing.\nGPG keys are sensitive — don't expose them in logs or share private keys.\nLet me verify afterward that it worked correctly.\n</think>\ngpg --gen-revoke user@example.com > revoke.asc"
   },
   {
     "instruction": "How to import a revocation certificate",
-    "output": "<think>\nThe user wants to perform a security hardening operation using gpg.\n\nThe right tool here is `gpg` — file encryption and signing.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. After execution, validate that the system behaves as expected before closing the task.\n</think>\ngpg --import revoke.asc"
+    "output": "<think>\nNeed to import a revocation certificate.\nThe tool for this job is gpg — file encryption, decryption, and signing.\nA single command handles this cleanly — no need to overcomplicate it.\nGPG keys are sensitive — don't expose them in logs or share private keys.\nI'll check the output to make sure it did what we expected.\n</think>\ngpg --import revoke.asc"
   },
   {
     "instruction": "How to edit a key to add a photo",
-    "output": "<think>\n1. Understand the task: This is a straightforward security hardening task that requires the right flags and arguments.\n\n2. Choose the right tooling: The right tool here is `gpg` — file encryption and signing.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`.\n   - Verify the result with a follow-up `gpg — check the output matches expectations.\n</think>\ngpg --edit-key user@example.com addphoto quit"
+    "output": "<think>\nNeed to edit a key to add a photo.\nThis calls for gpg. File encryption, decryption, and signing.\nGPG keys are sensitive — don't expose them in logs or share private keys.\nAfter running, I'll confirm the result looks right.\n</think>\ngpg --edit-key user@example.com addphoto quit"
   },
   {
     "instruction": "How to set a key to expire in 1 year",
-    "output": "<think>\nLooking at this request: This is a straightforward security hardening task that requires the right flags and arguments.\n\nApproach: `gpg` is the appropriate choice — file encryption and signing. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Confirm success by running a status check or inspecting the output for errors.\n</think>\ngpg --quick-set-expire KEYID 1y"
+    "output": "<think>\nThe task requires us to set a key to expire in 1 year.\nHere's how I'd approach this.\nI'd use gpg for this — file encryption, decryption, and signing.\nNo need for complex pipelines here — one command is sufficient.\nVerify with a follow-up status command to make sure everything looks right.\n</think>\ngpg --quick-set-expire KEYID 1y"
   },
   {
     "instruction": "How to change the key expiration to never",
-    "output": "<think>\nThis is a straightforward security hardening task that requires the right flags and arguments.\n\nExecuting: I'll use `gpg` as the primary tool — file encryption and signing. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Verify the result with a follow-up `gpg — check the output matches expectations.\n</think>\ngpg --quick-set-expire KEYID 0"
+    "output": "<think>\nThe task requires us to change the key expiration to never.\nFor this, gpg is the right tool — file encryption, decryption, and signing.\nA single command handles this cleanly — no need to overcomplicate it.\nGPG keys are sensitive — don't expose them in logs or share private keys.\nAfter running, I'll confirm the result looks right.\n</think>\ngpg --quick-set-expire KEYID 0"
   },
   {
     "instruction": "How to set the passphrase for symmetric encryption",
-    "output": "<think>\nThe user wants to perform a security hardening operation using gpg.\n\nThe right tool here is `gpg` — file encryption and signing.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Check the logs or output to ensure the operation completed as intended.\n</think>\ngpg --symmetric --passphrase 'mypass' file.txt"
+    "output": "<think>\nNeed to set the passphrase for symmetric encryption.\nLet me consider what makes sense here.\nI'll reach for gpg here because file encryption, decryption, and signing.\n</think>\ngpg --symmetric --passphrase 'mypass' file.txt"
   },
   {
     "instruction": "How to encrypt with a specific cipher algorithm",
-    "output": "<think>\n1. Understand the task: We'll execute the security hardening command with appropriate options for this scenario.\n\n2. Choose the right tooling: I'll use `gpg` as the primary tool — file encryption and signing.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`.\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\ngpg --cipher-algo CAMELLIA256 --symmetric file.txt"
+    "output": "<think>\nThe task requires us to encrypt with a specific cipher algorithm.\nThis calls for gpg. File encryption, decryption, and signing.\nGPG keys are sensitive — don't expose them in logs or share private keys.\n</think>\ngpg --cipher-algo CAMELLIA256 --symmetric file.txt"
   },
   {
     "instruction": "How to show encryption algorithm used in a file",
-    "output": "<think>\nLooking at this request: We'll execute the security hardening command with appropriate options for this scenario.\n\nApproach: I'll use `gpg` as the primary tool — file encryption and signing. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Check the logs or output to ensure the operation completed as intended.\n</think>\ngpg --list-packets file.txt.gpg"
+    "output": "<think>\nWe should show encryption algorithm used in a file.\ngpg is what we need — file encryption, decryption, and signing.\nOne command does the job. Simple is better.\nGPG keys are sensitive — don't expose them in logs or share private keys.\nAfter running, I'll confirm the result looks right.\n</think>\ngpg --list-packets file.txt.gpg"
   },
   {
     "instruction": "How to decrypt with a specific key",
-    "output": "<think>\nThis is a straightforward security hardening task that requires the right flags and arguments.\n\nExecuting: I'll use `gpg` as the primary tool — file encryption and signing. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. After execution, validate that the system behaves as expected before closing the task.\n</think>\ngpg --decrypt --recipient KEYID file.txt.gpg"
+    "output": "<think>\nThe goal is to decrypt with a specific key.\nI'd use gpg for this — file encryption, decryption, and signing.\nOne command does the job. Simple is better.\nGPG keys are sensitive — don't expose them in logs or share private keys.\n</think>\ngpg --decrypt --recipient KEYID file.txt.gpg"
   },
   {
     "instruction": "How to export only the public key in SSH format",
-    "output": "<think>\nLooking at this request: This is a straightforward security hardening task that requires the right flags and arguments.\n\nApproach: I'll use `gpg` as the primary tool — file encryption and signing. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SECRETS HANDLING: Ensure keys and tokens are never written to logs or stdout. Restrict file permissions to `600`. Confirm success by running a status check or inspecting the output for errors.\n</think>\ngpg --export-ssh-key user@example.com"
+    "output": "<think>\nThe goal is to export only the public key in SSH format.\nFirst, let me understand what's needed here.\nThis calls for gpg. File encryption, decryption, and signing.\nA single command handles this cleanly — no need to overcomplicate it.\nGPG keys are sensitive — don't expose them in logs or share private keys.\n</think>\ngpg --export-ssh-key user@example.com"
   },
   {
     "instruction": "How to add a key to an SSH agent",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nI'll use `gpgconf` as the primary tool — gpgconf command execution and management.\nKey flags: `-l` (long listing format) — chosen to match the exact requirement.\n`&&` chaining ensures that if any step fails, the rest stops — preventing partial execution.\n\nBefore executing: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Check the logs or output to ensure the operation completed as intended.\n</think>\ngpgconf --launch gpg-agent && ssh-add -l"
+    "output": "<think>\nThe task requires us to add a key to an SSH agent.\nLet me think about the best approach.\nI'd use gpgconf for this — gpgconf operations.\nI'm using -l for long format with details — this controls how the output is formatted.\nThe && chaining means each command only runs if the previous one succeeded. That's important for correctness.\nAfter running, I'll confirm the result looks right.\n</think>\ngpgconf --launch gpg-agent && ssh-add -l"
   },
   {
     "instruction": "How to change the GPG agent cache TTL",
-    "output": "<think>\nThis is a straightforward system administration task that requires the right flags and arguments.\n\nThe right tool here is `echo` — echo command execution and management.\nOutput redirection captures the result for later review or logging.\n\nBefore executing: Check that the output path exists and is writable. Use `>>` to append instead of `>` if preserving existing content matters. After execution, validate that the system behaves as expected before closing the task.\n</think>\necho 'default-cache-ttl 3600' >> ~/.gnupg/gpg-agent.conf"
+    "output": "<think>\nWe should change the GPG agent cache TTL.\nLet me think through this step by step.\nA single command handles this cleanly — no need to overcomplicate it.\nVerify with a follow-up status command to make sure everything looks right.\n</think>\necho 'default-cache-ttl 3600' >> ~/.gnupg/gpg-agent.conf"
   },
   {
     "instruction": "How to reload the GPG agent configuration",
-    "output": "<think>\nGoal: We'll execute the system administration command with appropriate options for this scenario.\n\nPlan: `gpg-connect-agent` is the appropriate choice — gpg-connect-agent command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `gpg-connect-agent — check the output matches expectations.\n</think>\ngpg-connect-agent reloadagent /bye"
+    "output": "<think>\nNeed to reload the GPG agent configuration.\nLet me think through this step by step.\nI'll reach for gpg-connect-agent here because gpg-connect-agent operations.\n</think>\ngpg-connect-agent reloadagent /bye"
   },
   {
     "instruction": "How to kill the GPG agent",
-    "output": "<think>\nGoal: The user wants to perform a system administration operation using gpgconf.\n\nPlan: `gpgconf` is the appropriate choice — gpgconf command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\ngpgconf --kill gpg-agent"
+    "output": "<think>\nSo the request is to kill the GPG agent.\nLet me break this down.\nThe tool for this job is gpgconf — gpgconf operations.\nCheck the output for errors before proceeding to the next step.\n</think>\ngpgconf --kill gpg-agent"
   }
 ]

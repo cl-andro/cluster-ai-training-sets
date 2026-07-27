@@ -1,98 +1,98 @@
 [
   {
     "instruction": "Delete port mapping",
-    "output": "<think>\n1. Understand the task: We'll execute the security hardening command with appropriate options for this scenario.\n\n2. Choose the right tooling: `semanage` is the appropriate choice — SELinux policy management.\n   Key flags: `-p` (create parent directories) — chosen to match the exact requirement.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\nsemanage port -d -p tcp 8080"
+    "output": "<think>\nThe task requires us to delete port mapping.\nI'd use semanage for this — semanage operations.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nsemanage port -d -p tcp 8080"
   },
   {
     "instruction": "List SELinux ports",
-    "output": "<think>\n1. Understand the task: We'll execute the security hardening command with appropriate options for this scenario.\n\n2. Choose the right tooling: The right tool here is `semanage` — SELinux policy management.\n   Key flags: `-l` (long listing format) — chosen to match the exact requirement.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nsemanage port -l"
+    "output": "<think>\nThe user wants to list SELinux ports.\nBest tool here is semanage — semanage operations.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nsemanage port -l"
   },
   {
     "instruction": "Add file context mapping",
-    "output": "<think>\nWe'll execute the security hardening command with appropriate options for this scenario.\n\nExecuting: `semanage` is the appropriate choice — SELinux policy management. Key flags: `-a` (include hidden/all entries), `-t` (sort by time) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `semanage — check the output matches expectations.\n</think>\nsemanage fcontext -a -t httpd_sys_content_t '/web(/.*)?'"
+    "output": "<think>\nThe user wants to add file context mapping.\nI'll reach for semanage here because semanage operations.\nThe -a flag means AND operator in find, which matters here because without it the command won't work as we need.\nThe -t flag handles sort by modification time. Important because important to get the expected behavior.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nsemanage fcontext -a -t httpd_sys_content_t '/web(/.*)?'"
   },
   {
     "instruction": "Modify file context",
-    "output": "<think>\nGoal: This is a straightforward security hardening task that requires the right flags and arguments.\n\nPlan: `semanage` is the appropriate choice — SELinux policy management. Key flags: `-t` (sort by time) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `semanage — check the output matches expectations.\n</think>\nsemanage fcontext -m -t httpd_sys_content_t '/web(/.*)?'"
+    "output": "<think>\nSo we need to modify file context.\nThe tool for this job is semanage — semanage operations.\nAfter running, I'll confirm the result looks right.\n</think>\nsemanage fcontext -m -t httpd_sys_content_t '/web(/.*)?'"
   },
   {
     "instruction": "Delete file context",
-    "output": "<think>\nLooking at this request: The user wants to perform a security hardening operation using semanage.\n\nApproach: The right tool here is `semanage` — SELinux policy management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `semanage — check the output matches expectations.\n</think>\nsemanage fcontext -d '/web(/.*)?'"
+    "output": "<think>\nAlright, we need to delete file context.\nHere's how I'd approach this.\nI'd use semanage for this — semanage operations.\nThe -d flag means directory listing, don't descend, which matters here because without it the command won't work as we need.\nLet me verify afterward that it worked correctly.\n</think>\nsemanage fcontext -d '/web(/.*)?'"
   },
   {
     "instruction": "List file contexts",
-    "output": "<think>\n1. Understand the task: We'll execute the security hardening command with appropriate options for this scenario.\n\n2. Choose the right tooling: The right tool here is `semanage` — SELinux policy management.\n   Key flags: `-l` (long listing format) — chosen to match the exact requirement.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nsemanage fcontext -l"
+    "output": "<think>\nThis is asking us to list file contexts.\nThe tool for this job is semanage — semanage operations.\nThe -l flag means long format with details, which matters here because important to get the expected behavior.\nNo need for complex pipelines here — one command is sufficient.\nVerify with a follow-up status command to make sure everything looks right.\nAfter running, I'll confirm the result looks right.\n</think>\nsemanage fcontext -l"
   },
   {
     "instruction": "Add SELinux user",
-    "output": "<think>\nThis is a straightforward security hardening task that requires the right flags and arguments.\n\nExecuting: I'll use `semanage` as the primary tool — SELinux policy management. Key flags: `-a` (include hidden/all entries), `-R` (recursive operation) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsemanage user -a -R staff_r staff_u"
+    "output": "<think>\nAlright, we need to add SELinux user.\nLet me consider what makes sense here.\nI'll reach for semanage here because semanage operations.\nWhy -a? AND operator in find. standard practice for this kind of operation.\nWhy -R? Recursive operation. standard practice for this kind of operation.\nI'll check the output to make sure it did what we expected.\n</think>\nsemanage user -a -R staff_r staff_u"
   },
   {
     "instruction": "List SELinux users",
-    "output": "<think>\nGoal: We'll execute the security hardening command with appropriate options for this scenario.\n\nPlan: I'll use `semanage` as the primary tool — SELinux policy management. Key flags: `-l` (long listing format) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nsemanage user -l"
+    "output": "<think>\nThe user wants to list SELinux users.\nLet me reason through this.\nBest tool here is semanage — semanage operations.\nThe -l flag means long format with details, which matters here because this controls how the output is formatted.\nA single command handles this cleanly — no need to overcomplicate it.\nAfter running, I'll confirm the result looks right.\n</think>\nsemanage user -l"
   },
   {
     "instruction": "Add login mapping",
-    "output": "<think>\n1. Understand the task: This is a straightforward security hardening task that requires the right flags and arguments.\n\n2. Choose the right tooling: I'll use `semanage` as the primary tool — SELinux policy management.\n   Key flags: `-a` (include hidden/all entries) — chosen to match the exact requirement.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Verify the result with a follow-up `semanage — check the output matches expectations.\n</think>\nsemanage login -a -s staff_u jdoe"
+    "output": "<think>\nWe should add login mapping.\nLet me consider what makes sense here.\nBest tool here is semanage — semanage operations.\nI'm using -a for AND operator in find — standard practice for this kind of operation.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nAfter running, I'll confirm the result looks right.\n</think>\nsemanage login -a -s staff_u jdoe"
   },
   {
     "instruction": "List login mappings",
-    "output": "<think>\nLooking at this request: This is a straightforward security hardening task that requires the right flags and arguments.\n\nApproach: `semanage` is the appropriate choice — SELinux policy management. Key flags: `-l` (long listing format) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsemanage login -l"
+    "output": "<think>\nThe user wants to list login mappings.\nFor this, semanage is the right tool — semanage operations.\nI'm using -l for long format with details — this controls how the output is formatted.\nNo need for complex pipelines here — one command is sufficient.\nQuick verification after execution to be safe.\n</think>\nsemanage login -l"
   },
   {
     "instruction": "List booleans with descriptions",
-    "output": "<think>\nWe'll execute the security hardening command with appropriate options for this scenario.\n\n`semanage` is the appropriate choice — SELinux policy management.\nKey flags: `-l` (long listing format) — chosen to match the exact requirement.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nsemanage boolean -l"
+    "output": "<think>\nSo the request is to list booleans with descriptions.\nLet me think through this step by step.\nI'll reach for semanage here because semanage operations.\nCheck the output for errors before proceeding to the next step.\nQuick verification after execution to be safe.\n</think>\nsemanage boolean -l"
   },
   {
     "instruction": "Search policy for httpd_t",
-    "output": "<think>\nGoal: We'll execute the system administration command with appropriate options for this scenario.\n\nPlan: `sesearch` is the appropriate choice — sesearch command execution and management. Key flags: `-t` (sort by time) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsesearch -t httpd_t"
+    "output": "<think>\nNeed to search policy for httpd_t.\nLet me think through this step by step.\nThe tool for this job is sesearch — sesearch operations.\nWhy -t? Sort by modification time. needed for this specific use case.\nVerify with a follow-up status command to make sure everything looks right.\nLet me verify afterward that it worked correctly.\n</think>\nsesearch -t httpd_t"
   },
   {
     "instruction": "Search allow rules for httpd_t",
-    "output": "<think>\nThis is a straightforward system administration task that requires the right flags and arguments.\n\nExecuting: I'll use `sesearch` as the primary tool — sesearch command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nsesearch --allow -s httpd_t"
+    "output": "<think>\nSo the request is to search allow rules for httpd_t.\nLet me think through this step by step.\nBest tool here is sesearch — sesearch operations.\nQuick verification after execution to be safe.\n</think>\nsesearch --allow -s httpd_t"
   },
   {
     "instruction": "Check policy type with seinfo",
-    "output": "<think>\nThe user wants to perform a system administration operation using seinfo.\n\nExecuting: The right tool here is `seinfo` — seinfo command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nseinfo --type=httpd_t"
+    "output": "<think>\nWe should check policy type with seinfo.\nI'll reach for seinfo here because seinfo operations.\nNo need for complex pipelines here — one command is sufficient.\nI'll check the output to make sure it did what we expected.\n</think>\nseinfo --type=httpd_t"
   },
   {
     "instruction": "Search role with seinfo",
-    "output": "<think>\nThe user wants to perform a system administration operation using seinfo.\n\nExecuting: I'll use `seinfo` as the primary tool — seinfo command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `seinfo — check the output matches expectations.\n</think>\nseinfo --role=staff_r"
+    "output": "<think>\nWe should search role with seinfo.\nI'll reach for seinfo here because seinfo operations.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nseinfo --role=staff_r"
   },
   {
     "instruction": "View alert details",
-    "output": "<think>\nLooking at this request: The automation should include error handling and logging for debuggability.\n\nApproach: I'll use `sealert` as the primary tool — sealert command execution and management. Key flags: `-l` (long listing format) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nsealert -l abc-def-123"
+    "output": "<think>\nThe user wants to view alert details.\nHere's how I'd approach this.\nFor this, sealert is the right tool — sealert operations.\nThe -l flag means long format with details, which matters here because standard practice for this kind of operation.\n</think>\nsealert -l abc-def-123"
   },
   {
     "instruction": "List denials from audit log",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\nI'll use `sealert` as the primary tool — sealert command execution and management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsealert -b /var/log/audit/audit.log"
+    "output": "<think>\nWe should list denials from audit log.\nFirst, let me understand what's needed here.\nThe tool for this job is sealert — sealert operations.\nThe -b flag handles brief output. Important because needed for this specific use case.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nI'll check the output to make sure it did what we expected.\n</think>\nsealert -b /var/log/audit/audit.log"
   },
   {
     "instruction": "Generate policy module from audit",
-    "output": "<think>\nGoal: The user wants to perform a system administration operation using audit2allow.\n\nPlan: `audit2allow` is the appropriate choice — audit2allow command execution and management. Key flags: `-a` (include hidden/all entries) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\naudit2allow -w -a"
+    "output": "<think>\nThis is asking us to generate policy module from audit.\nLet me think through this step by step.\naudit2allow is what we need — audit2allow operations.\nA single command handles this cleanly — no need to overcomplicate it.\nCheck the output for errors before proceeding to the next step.\n</think>\naudit2allow -w -a"
   },
   {
     "instruction": "Create policy module to allow",
-    "output": "<think>\n1. Understand the task: We'll execute the system administration command with appropriate options for this scenario.\n\n2. Choose the right tooling: The right tool here is `audit2allow` — audit2allow command execution and management.\n   Key flags: `-a` (include hidden/all entries) — chosen to match the exact requirement.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\naudit2allow -a -M mypolicy"
+    "output": "<think>\nSo we need to create policy module to allow.\nLet me consider what makes sense here.\nI'll reach for audit2allow here because audit2allow operations.\nWhy -a? AND operator in find. needed for this specific use case.\nCheck the output for errors before proceeding to the next step.\n</think>\naudit2allow -a -M mypolicy"
   },
   {
     "instruction": "Install policy module",
-    "output": "<think>\nLooking at this request: The goal is to configure semodule correctly for this use case.\n\nApproach: The right tool here is `semodule` — semodule command execution and management. Key flags: `-i` (interactive mode or case-insensitive) — chosen to match the exact requirement. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `semodule — check the output matches expectations.\n</think>\nsemodule -i mypolicy.pp"
+    "output": "<think>\nSo the request is to install policy module.\nsemodule is what we need — semodule operations.\nThe -i flag means interactive, prompt before action, which matters here because this controls how the output is formatted.\n</think>\nsemodule -i mypolicy.pp"
   },
   {
     "instruction": "Remove policy module",
-    "output": "<think>\nWe'll execute the system administration command with appropriate options for this scenario.\n\n`semodule` is the appropriate choice — semodule command execution and management.\nKey flags: `-r` (recursive operation) — chosen to match the exact requirement.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsemodule -r mypolicy"
+    "output": "<think>\nNeed to remove policy module.\nFirst, let me understand what's needed here.\nThe tool for this job is semodule — semodule operations.\nI've added -r to recursive operation (descend into subdirectories) — without it the command won't work as we need.\nI'll check the output to make sure it did what we expected.\n</think>\nsemodule -r mypolicy"
   },
   {
     "instruction": "List policy modules",
-    "output": "<think>\n1. Understand the task: The user wants to perform a system administration operation using semodule.\n\n2. Choose the right tooling: The right tool here is `semodule` — semodule command execution and management.\n   Key flags: `-l` (long listing format) — chosen to match the exact requirement.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Verify the result with a follow-up `semodule — check the output matches expectations.\n</think>\nsemodule -l"
+    "output": "<think>\nThe user wants to list policy modules.\nHere's how I'd approach this.\nI'd use semodule for this — semodule operations.\nI'm using -l for long format with details — this controls how the output is formatted.\nOne command does the job. Simple is better.\nQuick verification after execution to be safe.\n</think>\nsemodule -l"
   },
   {
     "instruction": "Check path context match",
-    "output": "<think>\n1. Understand the task: We'll execute the system administration command with appropriate options for this scenario.\n\n2. Choose the right tooling: The right tool here is `matchpathcon` — matchpathcon command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\nmatchpathcon /var/www/html/index.html"
+    "output": "<think>\nSo we need to check path context match.\nLet me think through this step by step.\nThe tool for this job is matchpathcon — matchpathcon operations.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nLet me verify afterward that it worked correctly.\n</think>\nmatchpathcon /var/www/html/index.html"
   },
   {
     "instruction": "Set enforcing mode at boot",
-    "output": "<think>\nTask analysis: We'll execute the system administration command with appropriate options for this scenario.\n\nTool selection: The right tool here is `sed` — sed command execution and management.\nKey flags: `-i` (interactive mode or case-insensitive) — chosen to match the exact requirement.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsed -i \"s/SELINUX=permissive/SELINUX=enforcing/\" /etc/selinux/config"
+    "output": "<think>\nThe user wants to set enforcing mode at boot.\nLet me think through this step by step.\nFor this, sed is the right tool — text stream editing.\nVerify with a follow-up status command to make sure everything looks right.\n</think>\nsed -i \"s/SELINUX=permissive/SELINUX=enforcing/\" /etc/selinux/config"
   }
 ]

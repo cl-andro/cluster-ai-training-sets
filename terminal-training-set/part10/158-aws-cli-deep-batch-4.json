@@ -1,86 +1,86 @@
 [
   {
     "instruction": "Send a message to an SQS queue",
-    "output": "<think>\nLooking at this request: We'll execute the cloud infrastructure command with appropriate options for this scenario.\n\nApproach: The right tool here is `aws` — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\naws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/my-queue --message-body 'Hello World'"
+    "output": "<think>\nNeed to send a message to an SQS queue.\nLet me break this down.\nFor this, aws is the right tool — AWS cloud management.\nA single command handles this cleanly — no need to overcomplicate it.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nLet me verify afterward that it worked correctly.\n</think>\naws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/123456789012/my-queue --message-body 'Hello World'"
   },
   {
     "instruction": "Publish to SNS topic",
-    "output": "<think>\nWe need to deploy aws with the correct environment settings.\n\nDeployment should be atomic or have a rollback plan.\n\n`aws` is the appropriate choice — AWS cloud service management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `aws — check the output matches expectations.\n</think>\naws sns publish --topic-arn arn:aws:sns:us-east-1:123456789012:my-topic --message 'Alert message'"
+    "output": "<think>\nAlright, we need to publish to SNS topic.\nLet me consider what makes sense here.\nI'd use aws for this — AWS cloud management.\nAfter running, confirm it worked as expected before moving on.\n</think>\naws sns publish --topic-arn arn:aws:sns:us-east-1:123456789012:my-topic --message 'Alert message'"
   },
   {
     "instruction": "List all EC2 instances with their state",
-    "output": "<think>\nThis is a straightforward cloud infrastructure task that requires the right flags and arguments.\n\nExecuting: The right tool here is `aws` — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `aws — check the output matches expectations.\n</think>\naws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId,State.Name]' --output table"
+    "output": "<think>\nNeed to list all EC2 instances with their state.\nThe tool for this job is aws — AWS cloud management.\nNo need for complex pipelines here — one command is sufficient.\nCheck the output for errors before proceeding to the next step.\nQuick verification after execution to be safe.\n</think>\naws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId,State.Name]' --output table"
   },
   {
     "instruction": "List running EC2 instances with name tag",
-    "output": "<think>\nThe user wants to perform a cloud infrastructure operation using aws.\n\n`aws` is the appropriate choice — AWS cloud service management.\nPipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nBefore executing: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Confirm success by running a status check or inspecting the output for errors.\n</think>\naws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[*].Instances[*].[InstanceId,Tags[?Key==`Name`].Value|[0]]' --output table"
+    "output": "<think>\nThe task requires us to list running EC2 instances with name tag.\nFor this, aws is the right tool — AWS cloud management.\nWhy -name? Filter by filename pattern. this controls how the output is formatted.\nPipes let me chain these operations efficiently without writing temp files.\n</think>\naws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[*].Instances[*].[InstanceId,Tags[?Key==`Name`].Value|[0]]' --output table"
   },
   {
     "instruction": "List CloudFormation stacks",
-    "output": "<think>\nLooking at this request: This is a straightforward cloud infrastructure task that requires the right flags and arguments.\n\nApproach: `aws` is the appropriate choice — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\naws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE --query 'StackSummaries[*].[StackName,CreationTime]' --output table"
+    "output": "<think>\nNeed to list CloudFormation stacks.\nLet me think through this step by step.\nBest tool here is aws — AWS cloud management.\nNo need for complex pipelines here — one command is sufficient.\nVerify with a follow-up status command to make sure everything looks right.\nQuick verification after execution to be safe.\n</think>\naws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE --query 'StackSummaries[*].[StackName,CreationTime]' --output table"
   },
   {
     "instruction": "List instances with pagination",
-    "output": "<think>\nThis is a straightforward cloud infrastructure task that requires the right flags and arguments.\n\nExecuting: `aws` is the appropriate choice — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\naws ec2 describe-instances --max-items 50 --query 'Reservations[*].Instances[*].[InstanceId]' --output table"
+    "output": "<think>\nThe user wants to list instances with pagination.\nLet me break this down.\nI'd use aws for this — AWS cloud management.\nA single command handles this cleanly — no need to overcomplicate it.\nAfter running, I'll confirm the result looks right.\n</think>\naws ec2 describe-instances --max-items 50 --query 'Reservations[*].Instances[*].[InstanceId]' --output table"
   },
   {
     "instruction": "Subscribe to SNS topic",
-    "output": "<think>\n1. Understand the task: This is a straightforward cloud infrastructure task that requires the right flags and arguments.\n\n2. Choose the right tooling: The right tool here is `aws` — AWS cloud service management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\naws sns subscribe --topic-arn arn:aws:sns:us-east-1:123456789012:my-topic --protocol email --notification-endpoint user@example.com"
+    "output": "<think>\nWe should subscribe to SNS topic.\nLet me think through this step by step.\naws is what we need — AWS cloud management.\n</think>\naws sns subscribe --topic-arn arn:aws:sns:us-east-1:123456789012:my-topic --protocol email --notification-endpoint user@example.com"
   },
   {
     "instruction": "Get CloudFormation stack events",
-    "output": "<think>\nLooking at this request: We'll execute the cloud infrastructure command with appropriate options for this scenario.\n\nApproach: `aws` is the appropriate choice — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\naws cloudformation describe-stack-events --stack-name my-stack"
+    "output": "<think>\nThe goal is to get CloudFormation stack events.\nI'd use aws for this — AWS cloud management.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\naws cloudformation describe-stack-events --stack-name my-stack"
   },
   {
     "instruction": "Sync an S3 bucket to local directory",
-    "output": "<think>\nLooking at this request: This is a straightforward cloud infrastructure task that requires the right flags and arguments.\n\nApproach: The right tool here is `aws` — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\naws s3 sync s3://my-bucket/ ./local-folder/"
+    "output": "<think>\nNeed to sync an S3 bucket to local directory.\nI'd use aws for this — AWS cloud management.\nQuick verification after execution to be safe.\n</think>\naws s3 sync s3://my-bucket/ ./local-folder/"
   },
   {
     "instruction": "Invoke a Lambda function",
-    "output": "<think>\n1. Understand the task: We'll execute the cloud infrastructure command with appropriate options for this scenario.\n\n2. Choose the right tooling: `aws` is the appropriate choice — AWS cloud service management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\naws lambda invoke --function-name my-function --payload '{\"key\":\"value\"}' response.json"
+    "output": "<think>\nThe user wants to invoke a Lambda function.\nLet me think about the best approach.\nBest tool here is aws — AWS cloud management.\n</think>\naws lambda invoke --function-name my-function --payload '{\"key\":\"value\"}' response.json"
   },
   {
     "instruction": "Associate Elastic IP",
-    "output": "<think>\nLooking at this request: The user wants to perform a cloud infrastructure operation using aws.\n\nApproach: `aws` is the appropriate choice — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\naws ec2 associate-address --instance-id i-1234567890abcdef0 --allocation-id eipalloc-12345678"
+    "output": "<think>\nAlright, we need to associate Elastic IP.\nLet me break this down.\nI'll reach for aws here because AWS cloud management.\nCheck the output for errors before proceeding to the next step.\n</think>\naws ec2 associate-address --instance-id i-1234567890abcdef0 --allocation-id eipalloc-12345678"
   },
   {
     "instruction": "Create Lambda function",
-    "output": "<think>\nThis is a straightforward cloud infrastructure task that requires the right flags and arguments.\n\nExecuting: `aws` is the appropriate choice — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\naws lambda create-function --function-name my-func --runtime python3.9 --role arn:aws:iam::123456789012:role/lambda-role --handler index.handler --zip-file fileb://func.zip"
+    "output": "<think>\nSo the request is to create Lambda function.\nI'll reach for aws here because AWS cloud management.\nQuick verification after execution to be safe.\n</think>\naws lambda create-function --function-name my-func --runtime python3.9 --role arn:aws:iam::123456789012:role/lambda-role --handler index.handler --zip-file fileb://func.zip"
   },
   {
     "instruction": "Update Lambda code",
-    "output": "<think>\nThe user wants to perform a cloud infrastructure operation using aws.\n\nExecuting: `aws` is the appropriate choice — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\naws lambda update-function-code --function-name my-func --zip-file fileb://func.zip"
+    "output": "<think>\nThe user wants to update Lambda code.\nThis calls for aws. AWS cloud management.\nNo need for complex pipelines here — one command is sufficient.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nI'll check the output to make sure it did what we expected.\n</think>\naws lambda update-function-code --function-name my-func --zip-file fileb://func.zip"
   },
   {
     "instruction": "Register targets with target group",
-    "output": "<think>\nThis is a straightforward cloud infrastructure task that requires the right flags and arguments.\n\n`aws` is the appropriate choice — AWS cloud service management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\naws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/my-targets/1234567890123456 --targets Id=i-1234567890abcdef0"
+    "output": "<think>\nAlright, we need to register targets with target group.\nLet me consider what makes sense here.\nFor this, aws is the right tool — AWS cloud management.\nAfter running, confirm it worked as expected before moving on.\nAfter running, I'll confirm the result looks right.\n</think>\naws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/my-targets/1234567890123456 --targets Id=i-1234567890abcdef0"
   },
   {
     "instruction": "Attach EBS volume",
-    "output": "<think>\nLooking at this request: We'll execute the cloud infrastructure command with appropriate options for this scenario.\n\nApproach: The right tool here is `aws` — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\naws ec2 attach-volume --volume-id vol-1234567890abcdef0 --instance-id i-1234567890abcdef0 --device /dev/sdf"
+    "output": "<think>\nNeed to attach EBS volume.\nFor this, aws is the right tool — AWS cloud management.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\naws ec2 attach-volume --volume-id vol-1234567890abcdef0 --instance-id i-1234567890abcdef0 --device /dev/sdf"
   },
   {
     "instruction": "Describe VPCs",
-    "output": "<think>\nTask analysis: This is a straightforward cloud infrastructure task that requires the right flags and arguments.\n\nTool selection: I'll use `aws` as the primary tool — AWS cloud service management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\naws ec2 describe-vpcs --query 'Vpcs[*].[VpcId,IsDefault]' --output table"
+    "output": "<think>\nThis is asking us to describe VPCs.\nThe tool for this job is aws — AWS cloud management.\n</think>\naws ec2 describe-vpcs --query 'Vpcs[*].[VpcId,IsDefault]' --output table"
   },
   {
     "instruction": "Stop an EC2 instance",
-    "output": "<think>\nTask analysis: The user wants to perform a cloud infrastructure operation using aws.\n\nTool selection: `aws` is the appropriate choice — AWS cloud service management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\naws ec2 stop-instances --instance-ids i-1234567890abcdef0"
+    "output": "<think>\nSo we need to stop an EC2 instance.\nBest tool here is aws — AWS cloud management.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nLet me verify afterward that it worked correctly.\n</think>\naws ec2 stop-instances --instance-ids i-1234567890abcdef0"
   },
   {
     "instruction": "Describe EC2 subnets",
-    "output": "<think>\nThe user wants to perform a cloud infrastructure operation using aws.\n\nThe right tool here is `aws` — AWS cloud service management.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\naws ec2 describe-subnets --filters Name=vpc-id,Values=vpc-12345678 --query 'Subnets[*].[SubnetId,CidrBlock,AvailabilityZone]' --output table"
+    "output": "<think>\nThe task requires us to describe EC2 subnets.\nThis calls for aws. AWS cloud management.\n</think>\naws ec2 describe-subnets --filters Name=vpc-id,Values=vpc-12345678 --query 'Subnets[*].[SubnetId,CidrBlock,AvailabilityZone]' --output table"
   },
   {
     "instruction": "Delete S3 bucket contents",
-    "output": "<think>\n1. Understand the task: We'll execute the cloud infrastructure command with appropriate options for this scenario.\n\n2. Choose the right tooling: The right tool here is `aws` — AWS cloud service management.\n   Key flags: `--recursive` (operate on all subdirectories) — chosen to match the exact requirement.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\naws s3 rm s3://my-bucket/ --recursive"
+    "output": "<think>\nThe user wants to delete S3 bucket contents.\nBest tool here is aws — AWS cloud management.\nOne command does the job. Simple is better.\nQuick verification after execution to be safe.\n</think>\naws s3 rm s3://my-bucket/ --recursive"
   },
   {
     "instruction": "Copy file to S3",
-    "output": "<think>\n1. Understand the task: We'll execute the cloud infrastructure command with appropriate options for this scenario.\n\n2. Choose the right tooling: I'll use `aws` as the primary tool — AWS cloud service management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\naws s3 cp myfile.txt s3://my-bucket/"
+    "output": "<think>\nNeed to copy file to S3.\nThe tool for this job is aws — AWS cloud management.\nAfter running, confirm it worked as expected before moving on.\nLet me verify afterward that it worked correctly.\n</think>\naws s3 cp myfile.txt s3://my-bucket/"
   },
   {
     "instruction": "Create an EC2 instance",
-    "output": "<think>\nLooking at this request: We'll execute the cloud infrastructure command with appropriate options for this scenario.\n\nApproach: I'll use `aws` as the primary tool — AWS cloud service management. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\naws ec2 run-instances --image-id ami-0abcdef1234567890 --instance-type t3.micro --key-name my-key"
+    "output": "<think>\nSo we need to create an EC2 instance.\nI'll reach for aws here because AWS cloud management.\nAlways verify the result — check the exit code with echo $? or inspect the output.\nAfter running, I'll confirm the result looks right.\n</think>\naws ec2 run-instances --image-id ami-0abcdef1234567890 --instance-type t3.micro --key-name my-key"
   }
 ]

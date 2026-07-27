@@ -1,90 +1,90 @@
 [
   {
     "instruction": "Perform FTS5 full-text search",
-    "output": "<think>\nLooking at this request: We'll execute the database operations command with appropriate options for this scenario.\n\nApproach: `sqlite3` is the appropriate choice — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `sqlite3 — check the output matches expectations.\n</think>\nsqlite3 mydb.db \"SELECT * FROM articles WHERE content MATCH 'search term'\""
+    "output": "<think>\nWe should perform FTS5 full-text search.\nHere's how I'd approach this.\nsqlite3 is what we need — SQLite database operations.\nVerify with a follow-up status command to make sure everything looks right.\n</think>\nsqlite3 mydb.db \"SELECT * FROM articles WHERE content MATCH 'search term'\""
   },
   {
     "instruction": "Create an FTS5 virtual table",
-    "output": "<think>\nTask analysis: The user wants to perform a database operations operation using sqlite3.\n\nTool selection: The right tool here is `sqlite3` — SQLite database interaction.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `sqlite3 — check the output matches expectations.\n</think>\nsqlite3 mydb.db \"CREATE VIRTUAL TABLE articles_fts USING fts5(title, content, content=articles, content_rowid=id);\""
+    "output": "<think>\nAlright, we need to create an FTS5 virtual table.\nLet me break this down.\nThis calls for sqlite3. SQLite database operations.\nNo need for complex pipelines here — one command is sufficient.\nAfter running, I'll confirm the result looks right.\n</think>\nsqlite3 mydb.db \"CREATE VIRTUAL TABLE articles_fts USING fts5(title, content, content=articles, content_rowid=id);\""
   },
   {
     "instruction": "Rebuild an FTS5 index",
-    "output": "<think>\nThis is a straightforward database operations task that requires the right flags and arguments.\n\nExecuting: I'll use `sqlite3` as the primary tool — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsqlite3 mydb.db \"INSERT INTO articles_fts(articles_fts) VALUES('rebuild');\""
+    "output": "<think>\nSo the request is to rebuild an FTS5 index.\nThe tool for this job is sqlite3 — SQLite database operations.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nsqlite3 mydb.db \"INSERT INTO articles_fts(articles_fts) VALUES('rebuild');\""
   },
   {
     "instruction": "Create a regular index on a table",
-    "output": "<think>\nWe'll execute the database operations command with appropriate options for this scenario.\n\n`sqlite3` is the appropriate choice — SQLite database interaction.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `sqlite3 — check the output matches expectations.\n</think>\nsqlite3 mydb.db \"CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);\""
+    "output": "<think>\nSo we need to create a regular index on a table.\nLet me think about the best approach.\nFor this, sqlite3 is the right tool — SQLite database operations.\nQuick verification after execution to be safe.\n</think>\nsqlite3 mydb.db \"CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);\""
   },
   {
     "instruction": "Create a unique index",
-    "output": "<think>\nThe user wants to perform a database operations operation using sqlite3.\n\nThe right tool here is `sqlite3` — SQLite database interaction.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nsqlite3 mydb.db \"CREATE UNIQUE INDEX idx_users_username ON users(username);\""
+    "output": "<think>\nWe should create a unique index.\nI'll reach for sqlite3 here because SQLite database operations.\n</think>\nsqlite3 mydb.db \"CREATE UNIQUE INDEX idx_users_username ON users(username);\""
   },
   {
     "instruction": "Create a partial index on a condition",
-    "output": "<think>\nWe'll execute the database operations command with appropriate options for this scenario.\n\nExecuting: `sqlite3` is the appropriate choice — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nsqlite3 mydb.db \"CREATE INDEX idx_active_users ON users(email) WHERE active = 1;\""
+    "output": "<think>\nThe task requires us to create a partial index on a condition.\nLet me reason through this.\nI'd use sqlite3 for this — SQLite database operations.\nAlways verify the result — check the exit code with echo $? or inspect the output.\n</think>\nsqlite3 mydb.db \"CREATE INDEX idx_active_users ON users(email) WHERE active = 1;\""
   },
   {
     "instruction": "Drop an existing index",
-    "output": "<think>\n1. Understand the task: This is a straightforward database operations task that requires the right flags and arguments.\n\n2. Choose the right tooling: I'll use `sqlite3` as the primary tool — SQLite database interaction.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Check the logs or output to ensure the operation completed as intended.\n</think>\nsqlite3 mydb.db \"DROP INDEX IF EXISTS idx_old_index;\""
+    "output": "<think>\nThe task requires us to drop an existing index.\nLet me think through this step by step.\nBest tool here is sqlite3 — SQLite database operations.\nA single command handles this cleanly — no need to overcomplicate it.\nA quick sanity check afterward saves debugging time later.\n</think>\nsqlite3 mydb.db \"DROP INDEX IF EXISTS idx_old_index;\""
   },
   {
     "instruction": "Show the query plan for a SELECT",
-    "output": "<think>\nWe'll execute the database operations command with appropriate options for this scenario.\n\n`sqlite3` is the appropriate choice — SQLite database interaction.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nsqlite3 mydb.db \"EXPLAIN QUERY PLAN SELECT * FROM users JOIN orders ON users.id = orders.user_id WHERE users.active = 1;\""
+    "output": "<think>\nThe task requires us to show the query plan for a SELECT.\nFor this, sqlite3 is the right tool — SQLite database operations.\nCheck the output for errors before proceeding to the next step.\nAfter running, I'll confirm the result looks right.\n</think>\nsqlite3 mydb.db \"EXPLAIN QUERY PLAN SELECT * FROM users JOIN orders ON users.id = orders.user_id WHERE users.active = 1;\""
   },
   {
     "instruction": "Enable full query plan output",
-    "output": "<think>\nThe goal is to configure sqlite3 correctly for this use case.\n\nExecuting: `sqlite3` is the appropriate choice — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsqlite3 mydb.db \".eqp full\" \"SELECT * FROM users WHERE email LIKE '%@example.com';\""
+    "output": "<think>\nAlright, we need to enable full query plan output.\nsqlite3 is what we need — SQLite database operations.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nsqlite3 mydb.db \".eqp full\" \"SELECT * FROM users WHERE email LIKE '%@example.com';\""
   },
   {
     "instruction": "Attach another SQLite database",
-    "output": "<think>\n1. Understand the task: We'll execute the database operations command with appropriate options for this scenario.\n\n2. Choose the right tooling: `sqlite3` is the appropriate choice — SQLite database interaction.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - Confirm success by running a status check or inspecting the output for errors.\n</think>\nsqlite3 mydb.db \"ATTACH DATABASE 'other.db' AS other;\" \"SELECT * FROM other.products;\""
+    "output": "<think>\nThe task requires us to attach another SQLite database.\nLet me reason through this.\nsqlite3 is what we need — SQLite database operations.\nA single command handles this cleanly — no need to overcomplicate it.\nI'll check the output to make sure it did what we expected.\n</think>\nsqlite3 mydb.db \"ATTACH DATABASE 'other.db' AS other;\" \"SELECT * FROM other.products;\""
   },
   {
     "instruction": "Detach an attached database",
-    "output": "<think>\nTask analysis: This is a straightforward database operations task that requires the right flags and arguments.\n\nTool selection: The right tool here is `sqlite3` — SQLite database interaction.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nsqlite3 mydb.db \"DETACH DATABASE other;\""
+    "output": "<think>\nAlright, we need to detach an attached database.\nLet me break this down.\nBest tool here is sqlite3 — SQLite database operations.\nAfter running, confirm it worked as expected before moving on.\nAfter running, I'll confirm the result looks right.\n</think>\nsqlite3 mydb.db \"DETACH DATABASE other;\""
   },
   {
     "instruction": "Add a generated column to a table",
-    "output": "<think>\nTask analysis: We'll execute the database operations command with appropriate options for this scenario.\n\nTool selection: I'll use `sqlite3` as the primary tool — SQLite database interaction.\nThe command uses pipes for data flow and `&&` for conditional execution — this handles both transformation and error propagation correctly.\n\nRisk assessment: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Verify the result with a follow-up `sqlite3 — check the output matches expectations.\n</think>\nsqlite3 mydb.db \"ALTER TABLE users ADD COLUMN full_name TEXT GENERATED ALWAYS AS (first_name || ' ' || last_name) STORED;\""
+    "output": "<think>\nNeed to add a generated column to a table.\nLet me reason through this.\nI'll reach for sqlite3 here because SQLite database operations.\nThis is more involved than it first seems.\nEach pipe stage handles one transformation, keeping the logic composable.\nUsing && for chaining ensures if any step fails, the whole thing stops — safer than running separately.\nI'll check the output to make sure it did what we expected.\n</think>\nsqlite3 mydb.db \"ALTER TABLE users ADD COLUMN full_name TEXT GENERATED ALWAYS AS (first_name || ' ' || last_name) STORED;\""
   },
   {
     "instruction": "Create an in-memory database and run queries",
-    "output": "<think>\nLooking at this request: This is a straightforward database operations task that requires the right flags and arguments.\n\nApproach: The right tool here is `sqlite3` — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsqlite3 :memory: \"CREATE TABLE test(id INT); INSERT INTO test VALUES(1); SELECT * FROM test;\""
+    "output": "<think>\nAlright, we need to create an in-memory database and run queries.\nHere's how I'd approach this.\nThe tool for this job is sqlite3 — SQLite database operations.\nA single command handles this cleanly — no need to overcomplicate it.\nI'll check the output to make sure it did what we expected.\n</think>\nsqlite3 :memory: \"CREATE TABLE test(id INT); INSERT INTO test VALUES(1); SELECT * FROM test;\""
   },
   {
     "instruction": "Export the database to an SQL file",
-    "output": "<think>\nLooking at this request: This is a straightforward database operations task that requires the right flags and arguments.\n\nApproach: I'll use `sqlite3` as the primary tool — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nsqlite3 mydb.db \".output /tmp/db.sql\" \".dump\" \".output stdout\""
+    "output": "<think>\nNeed to export the database to an SQL file.\nLet me reason through this.\nThis calls for sqlite3. SQLite database operations.\nA single command handles this cleanly — no need to overcomplicate it.\nQuick verification after execution to be safe.\n</think>\nsqlite3 mydb.db \".output /tmp/db.sql\" \".dump\" \".output stdout\""
   },
   {
     "instruction": "Enable case-insensitive LIKE comparisons",
-    "output": "<think>\nConfiguration needs to be validated before applying to avoid service disruption.\n\n`sqlite3` is the appropriate choice — SQLite database interaction.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nsqlite3 mydb.db \"PRAGMA case_sensitive_like=OFF;\""
+    "output": "<think>\nThe goal is to enable case-insensitive LIKE comparisons.\nLet me reason through this.\nBest tool here is sqlite3 — SQLite database operations.\nA single command handles this cleanly — no need to overcomplicate it.\nQuick verification after execution to be safe.\n</think>\nsqlite3 mydb.db \"PRAGMA case_sensitive_like=OFF;\""
   },
   {
     "instruction": "Create a TRIGGER for audit logging",
-    "output": "<think>\nWe'll execute the database operations command with appropriate options for this scenario.\n\nExecuting: The right tool here is `sqlite3` — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `sqlite3 — check the output matches expectations.\n</think>\nsqlite3 mydb.db \"CREATE TRIGGER IF NOT EXISTS audit_users AFTER UPDATE ON users BEGIN INSERT INTO audit(table_name, action, old_data, new_data) VALUES('users', 'UPDATE', old.email, new.email); END;\""
+    "output": "<think>\nWe're being asked to create a TRIGGER for audit logging.\nLet me think about the best approach.\nI'd use sqlite3 for this — SQLite database operations.\nQuick verification after execution to be safe.\n</think>\nsqlite3 mydb.db \"CREATE TRIGGER IF NOT EXISTS audit_users AFTER UPDATE ON users BEGIN INSERT INTO audit(table_name, action, old_data, new_data) VALUES('users', 'UPDATE', old.email, new.email); END;\""
   },
   {
     "instruction": "Create a VIEW",
-    "output": "<think>\nGoal: The user wants to perform a database operations operation using sqlite3.\n\nPlan: `sqlite3` is the appropriate choice — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nsqlite3 mydb.db \"CREATE VIEW IF NOT EXISTS active_orders AS SELECT * FROM orders WHERE status != 'cancelled';\""
+    "output": "<think>\nSo we need to create a VIEW.\nLet me think about the best approach.\nThis calls for sqlite3. SQLite database operations.\nAfter running, confirm it worked as expected before moving on.\n</think>\nsqlite3 mydb.db \"CREATE VIEW IF NOT EXISTS active_orders AS SELECT * FROM orders WHERE status != 'cancelled';\""
   },
   {
     "instruction": "Delete all rows from a table and VACUUM",
-    "output": "<think>\nWe'll execute the database operations command with appropriate options for this scenario.\n\nThe right tool here is `sqlite3` — SQLite database interaction.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nsqlite3 mydb.db \"DELETE FROM temp_logs;\" \"VACUUM;\""
+    "output": "<think>\nWe should delete all rows from a table and VACUUM.\nFirst, let me understand what's needed here.\nI'd use sqlite3 for this — SQLite database operations.\nA quick sanity check afterward saves debugging time later.\nI'll check the output to make sure it did what we expected.\n</think>\nsqlite3 mydb.db \"DELETE FROM temp_logs;\" \"VACUUM;\""
   },
   {
     "instruction": "Use a correlated subquery in SELECT",
-    "output": "<think>\nLooking at this request: The user wants to perform a database operations operation using sqlite3.\n\nApproach: The right tool here is `sqlite3` — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nsqlite3 mydb.db \"SELECT name, (SELECT COUNT(*) FROM orders WHERE orders.user_id = users.id) AS order_count FROM users;\""
+    "output": "<think>\nThe goal is to use a correlated subquery in SELECT.\nFirst, let me understand what's needed here.\nBest tool here is sqlite3 — SQLite database operations.\nI'll check the output to make sure it did what we expected.\n</think>\nsqlite3 mydb.db \"SELECT name, (SELECT COUNT(*) FROM orders WHERE orders.user_id = users.id) AS order_count FROM users;\""
   },
   {
     "instruction": "Use recursive CTE for tree traversal",
-    "output": "<think>\nThe user wants to perform a database operations operation using sqlite3.\n\nI'll use `sqlite3` as the primary tool — SQLite database interaction.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Confirm success by running a status check or inspecting the output for errors.\n</think>\nsqlite3 mydb.db \"WITH RECURSIVE org_tree AS (SELECT id, name, manager_id FROM employees WHERE manager_id IS NULL UNION ALL SELECT e.id, e.name, e.manager_id FROM employees e JOIN org_tree t ON e.manager_id = t.id) SELECT * FROM org_tree;\""
+    "output": "<think>\nThe user wants to use recursive CTE for tree traversal.\nHere's how I'd approach this.\nBest tool here is sqlite3 — SQLite database operations.\nVerify with a follow-up status command to make sure everything looks right.\nQuick verification after execution to be safe.\n</think>\nsqlite3 mydb.db \"WITH RECURSIVE org_tree AS (SELECT id, name, manager_id FROM employees WHERE manager_id IS NULL UNION ALL SELECT e.id, e.name, e.manager_id FROM employees e JOIN org_tree t ON e.manager_id = t.id) SELECT * FROM org_tree;\""
   },
   {
     "instruction": "Format dates with STRFTIME",
-    "output": "<think>\nThe user wants to perform a database operations operation using sqlite3.\n\nI'll use `sqlite3` as the primary tool — SQLite database interaction.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `sqlite3 — check the output matches expectations.\n</think>\nsqlite3 mydb.db \"SELECT strftime('%Y-%m-%d', 'now') AS today;\""
+    "output": "<think>\nWe're being asked to format dates with STRFTIME.\nHere's how I'd approach this.\nsqlite3 is what we need — SQLite database operations.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nsqlite3 mydb.db \"SELECT strftime('%Y-%m-%d', 'now') AS today;\""
   },
   {
     "instruction": "Extract values from JSON with json_extract",
-    "output": "<think>\nWe'll execute the database operations command with appropriate options for this scenario.\n\nExecuting: `sqlite3` is the appropriate choice — SQLite database interaction. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Verify the result with a follow-up `sqlite3 — check the output matches expectations.\n</think>\nsqlite3 mydb.db \"SELECT json_extract('{\\\"name\\\": \\\"John\\\"}', '$.name');\""
+    "output": "<think>\nSo the request is to extract values from JSON with json_extract.\nLet me consider what makes sense here.\nFor this, sqlite3 is the right tool — SQLite database operations.\nNo need for complex pipelines here — one command is sufficient.\n</think>\nsqlite3 mydb.db \"SELECT json_extract('{\\\"name\\\": \\\"John\\\"}', '$.name');\""
   }
 ]

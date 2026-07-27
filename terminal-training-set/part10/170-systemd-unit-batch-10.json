@@ -1,102 +1,102 @@
 [
   {
     "instruction": "Restart a service",
-    "output": "<think>\nTask analysis: This is a straightforward service management task that requires the right flags and arguments.\n\nTool selection: `systemctl` is the appropriate choice — manage systemd services and units.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Check the logs or output to ensure the operation completed as intended.\n</think>\nsystemctl restart nginx.service"
+    "output": "<think>\nNeed to restart a service.\nLet me reason through this.\nI'll reach for systemctl here because managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\nQuick verification after execution to be safe.\n</think>\nsystemctl restart nginx.service"
   },
   {
     "instruction": "Show specific property of a unit",
-    "output": "<think>\nThe user wants to perform a service management operation using systemctl.\n\nThe right tool here is `systemctl` — manage systemd services and units.\nKey flags: `-p` (create parent directories) — chosen to match the exact requirement.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Verify the result with a follow-up `systemctl — check the output matches expectations.\n</think>\nsystemctl show -p ConditionPathExists nginx.service"
+    "output": "<think>\nThis is asking us to show specific property of a unit.\nLet me consider what makes sense here.\nI'll reach for systemctl here because managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\n</think>\nsystemctl show -p ConditionPathExists nginx.service"
   },
   {
     "instruction": "List all wants directories",
-    "output": "<think>\nGoal: We'll execute the system administration command with appropriate options for this scenario.\n\nPlan: `ls` is the appropriate choice — ls command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nls -d /etc/systemd/system/*.wants/"
+    "output": "<think>\nNeed to list all wants directories.\nLet me break this down.\nThis calls for ls. Ls operations.\nThe -d flag means directory listing, don't descend, which matters here because needed for this specific use case.\nA single command handles this cleanly — no need to overcomplicate it.\nCheck the output for errors before proceeding to the next step.\n</think>\nls -d /etc/systemd/system/*.wants/"
   },
   {
     "instruction": "Check if a service has failed",
-    "output": "<think>\nWe'll execute the service management command with appropriate options for this scenario.\n\nI'll use `systemctl` as the primary tool — manage systemd services and units.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Verify the result with a follow-up `systemctl — check the output matches expectations.\n</think>\nsystemctl is-failed nginx.service"
+    "output": "<think>\nThe goal is to check if a service has failed.\nI'd use systemctl for this — managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\n</think>\nsystemctl is-failed nginx.service"
   },
   {
     "instruction": "Set CPU shares property on a unit",
-    "output": "<think>\nLooking at this request: We'll execute the service management command with appropriate options for this scenario.\n\nApproach: I'll use `systemctl` as the primary tool — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Check the logs or output to ensure the operation completed as intended.\n</think>\nsystemctl set-property nginx.service CPUShares=512"
+    "output": "<think>\nWe're being asked to set CPU shares property on a unit.\nLet me reason through this.\nThis calls for systemctl. Managing systemd services.\nNo need for complex pipelines here — one command is sufficient.\nRestarting services has downtime. If possible, use reload instead of restart.\nLet me verify afterward that it worked correctly.\n</think>\nsystemctl set-property nginx.service CPUShares=512"
   },
   {
     "instruction": "Create override to set restart limit",
-    "output": "<think>\nGoal: The user wants to perform a system administration operation using printf.\n\nPlan: `printf` is the appropriate choice — printf command execution and management. Pipes pass data between stages without intermediate files, keeping the operation efficient and atomic.\n\nPrecautions: Check the exit code of each stage (`echo $?` or `$PIPESTATUS`) to verify every step succeeded. Verify the result with a follow-up `printf — check the output matches expectations.\n</think>\nprintf '[Service]\\nStartLimitIntervalSec=30\\nStartLimitBurst=3\\n' | sudo tee /etc/systemd/system/nginx.service.d/restart.conf"
+    "output": "<think>\nAlright, we need to create override to set restart limit.\nprintf is what we need — printf operations.\nI'm piping because each stage transforms the data before passing it to the next.\nI'll check the output to make sure it did what we expected.\n</think>\nprintf '[Service]\\nStartLimitIntervalSec=30\\nStartLimitBurst=3\\n' | sudo tee /etc/systemd/system/nginx.service.d/restart.conf"
   },
   {
     "instruction": "Disable service from starting at boot",
-    "output": "<think>\nLooking at this request: This is a straightforward service management task that requires the right flags and arguments.\n\nApproach: `systemctl` is the appropriate choice — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. After execution, validate that the system behaves as expected before closing the task.\n</think>\nsystemctl disable nginx.service"
+    "output": "<think>\nSo the request is to disable service from starting at boot.\nLet me think about the best approach.\nFor this, systemctl is the right tool — managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\n</think>\nsystemctl disable nginx.service"
   },
   {
     "instruction": "Dump full systemd manager state",
-    "output": "<think>\n1. Understand the task: This is a straightforward service management task that requires the right flags and arguments.\n\n2. Choose the right tooling: I'll use `systemctl` as the primary tool — manage systemd services and units.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`.\n   - Verify the result with a follow-up `systemctl — check the output matches expectations.\n</think>\nsystemctl dump"
+    "output": "<think>\nSo we need to dump full systemd manager state.\nI'll reach for systemctl here because managing systemd services.\n</think>\nsystemctl dump"
   },
   {
     "instruction": "List wants symlinks in multi-user target",
-    "output": "<think>\nThe user wants to perform a system administration operation using ls.\n\nExecuting: I'll use `ls` as the primary tool — ls command execution and management. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). After execution, validate that the system behaves as expected before closing the task.\n</think>\nls /etc/systemd/system/multi-user.target.wants/"
+    "output": "<think>\nAlright, we need to list wants symlinks in multi-user target.\nI'll reach for ls here because ls operations.\nWhy -user? Filter by owner. this controls how the output is formatted.\n</think>\nls /etc/systemd/system/multi-user.target.wants/"
   },
   {
     "instruction": "List all masked unit files",
-    "output": "<think>\nGoal: This is a straightforward service management task that requires the right flags and arguments.\n\nPlan: The right tool here is `systemctl` — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nPrecautions: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Verify the result with a follow-up `systemctl — check the output matches expectations.\n</think>\nsystemctl list-unit-files --state=masked"
+    "output": "<think>\nThe task requires us to list all masked unit files.\nFirst, let me understand what's needed here.\nI'll reach for systemctl here because managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\nQuick verification after execution to be safe.\n</think>\nsystemctl list-unit-files --state=masked"
   },
   {
     "instruction": "Set memory limit on a unit",
-    "output": "<think>\nThis is a straightforward service management task that requires the right flags and arguments.\n\nExecuting: The right tool here is `systemctl` — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Verify the result with a follow-up `systemctl — check the output matches expectations.\n</think>\nsystemctl set-property nginx.service MemoryMax=512M"
+    "output": "<think>\nThis is asking us to set memory limit on a unit.\nLet me reason through this.\nI'd use systemctl for this — managing systemd services.\nOne command does the job. Simple is better.\nRestarting services has downtime. If possible, use reload instead of restart.\n</think>\nsystemctl set-property nginx.service MemoryMax=512M"
   },
   {
     "instruction": "Restart service only if running",
-    "output": "<think>\nWe'll execute the service management command with appropriate options for this scenario.\n\n`systemctl` is the appropriate choice — manage systemd services and units.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Confirm success by running a status check or inspecting the output for errors.\n</think>\nsystemctl try-restart nginx.service"
+    "output": "<think>\nWe're being asked to restart service only if running.\nLet me think through this step by step.\nI'll reach for systemctl here because managing systemd services.\nNo need for complex pipelines here — one command is sufficient.\nRestarting services has downtime. If possible, use reload instead of restart.\nLet me verify afterward that it worked correctly.\n</think>\nsystemctl try-restart nginx.service"
   },
   {
     "instruction": "List system sockets",
-    "output": "<think>\nLooking at this request: The user wants to perform a service management operation using systemctl.\n\nApproach: The right tool here is `systemctl` — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Confirm success by running a status check or inspecting the output for errors.\n</think>\nsystemctl list-sockets"
+    "output": "<think>\nThe user wants to list system sockets.\nsystemctl is what we need — managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\n</think>\nsystemctl list-sockets"
   },
   {
     "instruction": "List enabled and disabled service unit files",
-    "output": "<think>\nTask analysis: The goal is to configure systemctl correctly for this use case.\n\nTool selection: `systemctl` is the appropriate choice — manage systemd services and units.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Check the logs or output to ensure the operation completed as intended.\n</think>\nsystemctl list-unit-files --type=service --state=enabled,disabled"
+    "output": "<think>\nSo we need to list enabled and disabled service unit files.\nLet me think about the best approach.\nFor this, systemctl is the right tool — managing systemd services.\nOne command does the job. Simple is better.\nLet me verify afterward that it worked correctly.\n</think>\nsystemctl list-unit-files --type=service --state=enabled,disabled"
   },
   {
     "instruction": "Edit unit file directly as full file",
-    "output": "<think>\nLooking at this request: We'll execute the service management command with appropriate options for this scenario.\n\nApproach: `systemctl` is the appropriate choice — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Confirm success by running a status check or inspecting the output for errors.\n</think>\nsystemctl edit --full nginx.service"
+    "output": "<think>\nThe user wants to edit unit file directly as full file.\nHere's how I'd approach this.\nI'd use systemctl for this — managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\n</think>\nsystemctl edit --full nginx.service"
   },
   {
     "instruction": "Reenable service (disable then enable)",
-    "output": "<think>\nLooking at this request: The goal is to configure systemctl correctly for this use case.\n\nApproach: I'll use `systemctl` as the primary tool — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Verify the result with a follow-up `systemctl — check the output matches expectations.\n</think>\nsystemctl reenable nginx.service"
+    "output": "<think>\nSo the request is to reenable service (disable then enable).\nsystemctl is what we need — managing systemd services.\nA single command handles this cleanly — no need to overcomplicate it.\nAfter running, confirm it worked as expected before moving on.\n</think>\nsystemctl reenable nginx.service"
   },
   {
     "instruction": "Add SSH as required for multi-user target",
-    "output": "<think>\nThe user wants to perform a service management operation using systemctl.\n\nExecuting: I'll use `systemctl` as the primary tool — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Confirm success by running a status check or inspecting the output for errors.\n</think>\nsystemctl add-requires multi-user.target ssh.service"
+    "output": "<think>\nWe're being asked to add SSH as required for multi-user target.\nLet me reason through this.\nThis calls for systemctl. Managing systemd services.\nI'm using -user for filter by owner — this controls how the output is formatted.\nRestarting services has downtime. If possible, use reload instead of restart.\nI'll check the output to make sure it did what we expected.\n</think>\nsystemctl add-requires multi-user.target ssh.service"
   },
   {
     "instruction": "Reload a service without restarting",
-    "output": "<think>\nLooking at this request: We'll execute the service management command with appropriate options for this scenario.\n\nApproach: I'll use `systemctl` as the primary tool — manage systemd services and units. A single command suffices for this task — keeping it simple reduces error surface.\n\nSafety check: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. After execution, validate that the system behaves as expected before closing the task.\n</think>\nsystemctl reload nginx.service"
+    "output": "<think>\nThe goal is to reload a service without restarting.\nLet me break this down.\nThe tool for this job is systemctl — managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\n</think>\nsystemctl reload nginx.service"
   },
   {
     "instruction": "Create drop-in directory for overrides",
-    "output": "<think>\nTask analysis: The user wants to perform a system administration operation using mkdir.\n\nTool selection: `mkdir` is the appropriate choice — mkdir command execution and management.\nKey flags: `-p` (create parent directories) — chosen to match the exact requirement.\n\nRisk assessment: Verify the command succeeded by checking the exit code with `echo $?` (0 = success). Check the logs or output to ensure the operation completed as intended.\n</think>\nmkdir -p /etc/systemd/system/nginx.service.d"
+    "output": "<think>\nAlright, we need to create drop-in directory for overrides.\nFirst, let me understand what's needed here.\nThis calls for mkdir. Directory creation.\nOne command does the job. Simple is better.\nQuick verification after execution to be safe.\n</think>\nmkdir -p /etc/systemd/system/nginx.service.d"
   },
   {
     "instruction": "List all installed unit files",
-    "output": "<think>\nThis requires setting up or modifying systemctl configuration.\n\nThe right tool here is `systemctl` — manage systemd services and units.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. After execution, validate that the system behaves as expected before closing the task.\n</think>\nsystemctl list-unit-files"
+    "output": "<think>\nSo the request is to list all installed unit files.\nI'll reach for systemctl here because managing systemd services.\nOne command does the job. Simple is better.\nRestarting services has downtime. If possible, use reload instead of restart.\n</think>\nsystemctl list-unit-files"
   },
   {
     "instruction": "List all unit files by state and type",
-    "output": "<think>\nThis is a straightforward service management task that requires the right flags and arguments.\n\nThe right tool here is `systemctl` — manage systemd services and units.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nBefore executing: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Check the logs or output to ensure the operation completed as intended.\n</think>\nsystemctl list-unit-files --type=service --state=indirect,generated"
+    "output": "<think>\nAlright, we need to list all unit files by state and type.\nBest tool here is systemctl — managing systemd services.\nRestarting services has downtime. If possible, use reload instead of restart.\nLet me verify afterward that it worked correctly.\n</think>\nsystemctl list-unit-files --type=service --state=indirect,generated"
   },
   {
     "instruction": "Check systemd-analyze for unit config verify",
-    "output": "<think>\n1. Understand the task: The user wants to perform a service management operation using systemd-analyze.\n\n2. Choose the right tooling: `systemd-analyze` is the appropriate choice — systemd-analyze command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\nsystemd-analyze verify nginx.service"
+    "output": "<think>\nWe should check systemd-analyze for unit config verify.\nBest tool here is systemd-analyze — systemd-analyze operations.\nA quick sanity check afterward saves debugging time later.\nI'll check the output to make sure it did what we expected.\n</think>\nsystemd-analyze verify nginx.service"
   },
   {
     "instruction": "Link a unit file from another location",
-    "output": "<think>\nThis is a straightforward web server configuration task that requires the right flags and arguments.\n\nExecuting: I'll use `systemctl` as the primary tool — manage systemd services and units. `nginx` will be used for web server and reverse proxy. A single command suffices for this task — keeping it simple reduces error surface.\n\nWatch out for: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. After execution, validate that the system behaves as expected before closing the task.\n</think>\nsystemctl link /opt/nginx/nginx.service"
+    "output": "<think>\nWe should link a unit file from another location.\nLet me reason through this.\nI'll reach for systemctl here because managing systemd services.\n</think>\nsystemctl link /opt/nginx/nginx.service"
   },
   {
     "instruction": "Send signal to a service process",
-    "output": "<think>\nTask analysis: This is a straightforward service management task that requires the right flags and arguments.\n\nTool selection: The right tool here is `systemctl` — manage systemd services and units.\nA single command suffices for this task — keeping it simple reduces error surface.\n\nRisk assessment: SERVICE CONSIDERATION: Restart services during maintenance windows. Check unit dependencies beforehand with `systemctl list-dependencies`. Confirm success by running a status check or inspecting the output for errors.\n</think>\nsystemctl kill -s HUP nginx.service"
+    "output": "<think>\nWe should send signal to a service process.\nLet me think through this step by step.\nThe tool for this job is systemctl — managing systemd services.\nThe -s flag means summarize or silent mode, which matters here because important to get the expected behavior.\nRestarting services has downtime. If possible, use reload instead of restart.\n</think>\nsystemctl kill -s HUP nginx.service"
   },
   {
     "instruction": "Read full unit file from etc",
-    "output": "<think>\n1. Understand the task: We'll execute the system administration command with appropriate options for this scenario.\n\n2. Choose the right tooling: I'll use `cat` as the primary tool — cat command execution and management.\n   A single command suffices for this task — keeping it simple reduces error surface.\n\n3. Safety precautions:\n   - Verify the command succeeded by checking the exit code with `echo $?` (0 = success).\n   - After execution, validate that the system behaves as expected before closing the task.\n</think>\ncat /etc/systemd/system/nginx.service"
+    "output": "<think>\nThe user wants to read full unit file from etc.\nThe tool for this job is cat — cat operations.\nI'll check the output to make sure it did what we expected.\n</think>\ncat /etc/systemd/system/nginx.service"
   }
 ]
