@@ -14,18 +14,34 @@ This repository contains two datasets:
 
 ### 2. `terminal-training-set-nothinking/` (direct command pairs)
 
-**~14,600** instruction-output command pairs across **61 categories**, designed for training models that output direct Bash commands. Each entry is `{"instruction": "...", "output": "..."}` — no conversational filler.
+**65,463** instruction-output command pairs across **280 categories**, designed for training models that output direct Bash commands. Each entry is `{"instruction": "How to ...", "output": "bare command"}` — no conversational filler, no markdown, no explanations.
 
 ### Dataset Structure
 
 ```
 terminal-training-set/               (10 files, 1000 entries)
-terminal-training-set-nothinking/    (610 files, ~14,600 entries)
-  ├── part1/   (categories 01–10)   100 files
-  ├── part2/   (categories 11–20)   100 files
-  ├── part3/   (category 21)         10 files
-  ├── part4/   (categories 22–41)   200 files
-  └── part5/   (categories 42–61)   200 files
+terminal-training-set-nothinking/    (2,800 files, 65,463 entries)
+  ├── part1/   (categories 01–10)     100 files
+  ├── part2/   (categories 11–20)     100 files
+  ├── part3/   (category 21)           10 files
+  ├── part4/   (categories 22–41)     200 files
+  ├── part5/   (categories 42–61)     200 files
+  ├── part6/   (categories 62–95)     340 files
+  ├── part7/   (categories 96–105)    100 files
+  ├── part8/   (categories 106–116)   110 files
+  ├── part9/   (categories 117–136)   200 files
+  ├── part10/  (categories 137–176)   400 files
+  ├── part11/  (categories 177–186)   100 files
+  ├── part12/  (categories 187–196)   100 files
+  ├── part13/  (categories 197–206)   100 files
+  ├── part14/  (categories 207–216)   100 files
+  ├── part15/  (categories 217–226)   100 files
+  ├── part16/  (categories 227–236)   100 files
+  ├── part17/  (categories 237–246)   100 files
+  ├── part18/  (categories 247–256)   100 files
+  ├── part19/  (categories 257–266)   100 files
+  ├── part20/  (categories 267–276)   100 files
+  └── part21/  (categories 277–280)    40 files
 ```
 
 ### Dataset Statistics
@@ -45,85 +61,39 @@ terminal-training-set-nothinking/    (610 files, ~14,600 entries)
 
 | Metric | Value |
 |--------|-------|
-| Total entries | ~14,600 |
-| Total size | ~3.5 MB |
-| Files | 610 |
-| Categories | 61 |
-| Target OS | Debian 12 |
+| Total entries | **65,463** |
+| Total size | ~62 MB |
+| Files | **2,800** (10 per category) |
+| Categories | **280** |
 | Format | JSON with `instruction` + `output` (plain command pairs) |
+| Entries per file | 20-26 |
+| Quality | Output validated — bare commands only, no prompts/explanation |
 
-### All 61 Categories
+### Coverage Areas
 
-| # | Folder | Category | Files | ~Entries |
-|---|--------|----------|-------|----------|
-| 01 | part1/ | File & directory management | 10 | 250 |
-| 02 | part1/ | Git operations | 10 | 250 |
-| 03 | part1/ | Package management | 10 | 250 |
-| 04 | part1/ | Process & service control | 10 | 250 |
-| 05 | part1/ | System diagnostics & usage | 10 | 250 |
-| 06 | part1/ | Networking & downloading | 10 | 250 |
-| 07 | part1/ | Text & file processing | 10 | 250 |
-| 08 | part1/ | Archiving & compression | 10 | 250 |
-| 09 | part1/ | Virtual envs & runtimes | 10 | 250 |
-| 10 | part1/ | Docker & containers | 10 | 250 |
-| 11 | part2/ | Kubernetes (K8s) | 10 | 250 |
-| 12 | part2/ | Databases | 10 | 250 |
-| 13 | part2/ | Security & permissions | 10 | 250 |
-| 14 | part2/ | Monitoring & alerting | 10 | 250 |
-| 15 | part2/ | Cloud CLI tools | 10 | 250 |
-| 16 | part2/ | Shell scripting & automation | 10 | 250 |
-| 17 | part2/ | System configuration | 10 | 250 |
-| 18 | part2/ | Performance tuning | 10 | 250 |
-| 19 | part2/ | Web servers & proxies | 10 | 250 |
-| 20 | part2/ | SSH & remote access | 10 | 250 |
-| 21 | part3/ | Contrastive edge cases | 10 | 251 |
-| 22 | part4/ | systemd deep dive | 10 | 250 |
-| 23 | part4/ | Network troubleshooting | 10 | 250 |
-| 24 | part4/ | Backup & recovery | 10 | 250 |
-| 25 | part4/ | CI/CD pipelines | 10 | 250 |
-| 26 | part4/ | Infrastructure as Code | 10 | 250 |
-| 27 | part4/ | Log management | 10 | 250 |
-| 28 | part4/ | Storage & filesystem | 10 | 250 |
-| 29 | part4/ | Kernel & hardware | 10 | 250 |
-| 30 | part4/ | Secret management | 10 | 250 |
-| 31 | part4/ | DNS & domain | 10 | 250 |
-| 32 | part4/ | Email servers | 10 | 250 |
-| 33 | part4/ | Certificate management | 10 | 250 |
-| 34 | part4/ | API gateways | 10 | 250 |
-| 35 | part4/ | Message queues | 10 | 250 |
-| 36 | part4/ | Load balancing | 10 | 250 |
-| 37 | part4/ | Service mesh | 10 | 250 |
-| 38 | part4/ | Package building | 10 | 250 |
-| 39 | part4/ | Container registries | 10 | 250 |
-| 40 | part4/ | Storage LVM/ZFS | 10 | 250 |
-| 41 | part4/ | VPN & tunneling | 10 | 250 |
-| 42 | part5/ | Hardware diagnostics & stress | 10 | 250 |
-| 43 | part5/ | Desktop & display | 10 | 250 |
-| 44 | part5/ | Time synchronization | 10 | 250 |
-| 45 | part5/ | Fonts & localization | 10 | 250 |
-| 46 | part5/ | Printing (CUPS) | 10 | 250 |
-| 47 | part5/ | Audio (PulseAudio/PipeWire) | 10 | 250 |
-| 48 | part5/ | Bluetooth | 10 | 250 |
-| 49 | part5/ | Power management | 10 | 250 |
-| 50 | part5/ | Filesystem mount & automount | 10 | 250 |
-| 51 | part5/ | Container orchestration | 10 | 250 |
-| 52 | part5/ | Service discovery | 10 | 250 |
-| 53 | part5/ | API clients | 10 | 250 |
-| 54 | part5/ | Data serialization | 10 | 250 |
-| 55 | part5/ | File transfer deep | 10 | 250 |
-| 56 | part5/ | Terminal multiplexers | 10 | 250 |
-| 57 | part5/ | System rescue & recovery | 10 | 250 |
-| 58 | part5/ | Disk cloning & imaging | 10 | 250 |
-| 59 | part5/ | Binary analysis | 10 | 250 |
-| 60 | part5/ | Process debugging | 10 | 250 |
-| 61 | part5/ | USB debugging / ADB | 10 | 250 |
-
-## Use Cases
-
-- Fine-tuning language models for Linux/DevOps assistant capabilities
-- Training thinking models that reason before acting (chain-of-thought)
-- Training non-thinking models for direct command output
-- Benchmarking model performance on structured infrastructure tasks
+- **01-10**: File management, Git, packages, processes, networking, archiving, Docker
+- **11-21**: K8s, databases, security, monitoring, cloud CLI, scripting, config, tuning
+- **22-41**: systemd, networking, backup, CI/CD, IaC, logs, storage, kernel, secrets, DNS, email, certs, API gateways, message queues, load balancing, service mesh, packaging, registries, LVM/ZFS, VPN
+- **42-61**: Hardware, display, time, fonts, printing, audio, Bluetooth, power, mounts, orchestration, service discovery, API clients, serialization, file transfer, tmux, rescue, cloning, binary analysis, debugging, ADB
+- **62-95**: Python (pip/poetry/conda), Node (npm/yarn/pnpm), Rust/Cargo, Go, C/C++ toolchains, tmux/screen, SSH config, rsync/SSHFS, Mosh, socat/ncat, netcat, tcpdump, Wireshark/tshark, curl/wget, HTTPie, jq, yq, XML/CSV, sed, awk, perf/bench, stress-ng, fio, iperf3, sysbench, LACP/bonding, bridge, VXLAN, VLAN, BGP, WireGuard, OpenVPN, IPSec, HAProxy, nftables/iptables, conntrack, tc, tcpdump analysis, Wireshark CLI, dpkt/scapy, ntopng, Caddy
+- **96-105**: Ansible, Terraform/OpenTofu, Pulumi, Packer, Vagrant, Podman, Docker Compose, GitHub CLI, Drone/Woodpecker, Prometheus
+- **106-116**: Grafana, Loki, Datadog, OpenTelemetry, iptables/nftables, firewalld, SELinux, AppArmor, auditd, WireGuard, Dockerfile/BuildKit
+- **117-136**: kubectl, Helm, Kustomize, containerd/nerdctl, Istio, PostgreSQL, MySQL, SQLite, MongoDB, Elasticsearch, Redis, DB migration, DB benchmarking, Java/JVM, Ruby, PHP, .NET, shell scripting, Make, task runners
+- **137-146**: nmap, vulnerability scanning, web app security, password cracking, OSINT, malware analysis, YARA, forensics, rsyslog, journalctl
+- **147-156**: logrotate, GoAccess, promtail, bpftrace, perf, strace/ltrace, gdb, valgrind, Linux capabilities, namespaces
+- **157-166**: seccomp, AWS CLI, Azure CLI, GCP CLI, K8s operators, serverless, K3s, MicroK8s, OpenShift CLI
+- **167-176**: CPU/topology, memory/hugepages, GPU/CUDA, IPMI/BMC, systemd unit/timers/journal/portable/networkd/resolved/boot
+- **177-186**: Btrfs, XFS, ZFS, LVM, mdadm RAID, disk partitioning, LUKS, TPM2, PAM, SSSD
+- **187-196**: FreeIPA, Postfix, Dovecot, Apache, Nginx, Caddy, HAProxy, Squid, Varnish, Memcached
+- **197-206**: BIND9, Unbound, PowerDNS, OpenStack, OpenDaylight, Open vSwitch, conntrack, tc, OpenVPN, StrongSwan
+- **207-216**: Tailscale, Netbird/ZeroTier, FRR/BGP, DHCP, NTP, FTP/SFTP, iSCSI, Ceph, GlusterFS, Restic/Borg
+- **217-226**: Duplicity, rclone, rsync, Flatpak/Snap, Nix, AppImage, Gentoo/Portage, Arch/Pacman, Alpine/apk, rpm-ostree
+- **227-236**: Buildah, Skopeo, Kaniko, Tekton, ArgoCD, Argo Workflows, FluxCD, Crossplane, Vault, Consul
+- **237-246**: Nomad, Boundary, Waypoint, Packer, Spring Boot, GraalVM, Flutter/Dart, React Native, Swift, Kotlin
+- **247-256**: Haskell, OCaml, Erlang/Elixir, Lua, R, Julia, Octave, SageMath, Gnuplot, Graphviz
+- **257-266**: D2/Mermaid, PlantUML, Pandoc, wkhtmltopdf, LibreOffice, LaTeX, Sphinx, MkDocs, Hugo, Jekyll
+- **267-276**: Taskwarrior, Timewarrior, Org-mode, Vim/Neovim, Helix, Micro/Nano, GPG, OpenSSL, hashing, Certbot
+- **277-280**: acme.sh/lego, password generation, UUID tools, certificates/TLS
 
 ## Format Example
 
@@ -136,12 +106,19 @@ terminal-training-set-nothinking/    (610 files, ~14,600 entries)
 ```bash
 # Quick stats
 python3 -c "
-import json, os
-d = 'terminal-training-set-nothinking'
-total = sum(len(json.load(open(os.path.join(d, f)))) for _,_,fs in os.walk(d) for f in fs if f.endswith('.json'))
-print(f'Total: {total} entries')
+import json, glob
+files = glob.glob('terminal-training-set-nothinking/**/*.json', recursive=True)
+total = sum(len(json.load(open(f))) for f in files)
+print(f'Total: {total} entries across {len(files)} files')
 "
 ```
+
+## Use Cases
+
+- Fine-tuning language models for Linux/DevOps assistant capabilities
+- Training thinking models that reason before acting (chain-of-thought)
+- Training non-thinking models for direct command output
+- Benchmarking model performance on structured infrastructure tasks
 
 ## Licensing
 
