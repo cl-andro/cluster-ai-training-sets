@@ -62,7 +62,7 @@ terminal-training-set-nothinking/    (2,800 files, 65,463 entries)
 | Metric | Value |
 |--------|-------|
 | Total entries | **65,463** |
-| Total size | ~62 MB |
+| Total size | ~8.4 MB |
 | Files | **2,800** (10 per category) |
 | Categories | **280** |
 | Format | JSON with `instruction` + `output` (plain command pairs) |
